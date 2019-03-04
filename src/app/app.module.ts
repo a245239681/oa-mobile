@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -8,14 +8,36 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { API_URL } from 'src/infrastructure/host-address';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CachingInterceptor, AuthInterceptor } from 'src/infrastructure/http-interceptor';
+import { RequestCache, RequestCacheWithMap } from 'src/infrastructure/request-cache';
+import { UserInfo } from 'src/infrastructure/user-info';
+import { CommonHelper } from 'src/infrastructure/commonHelper';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule,AppRoutingModule],
   providers: [
     StatusBar,
     SplashScreen,
+    UserInfo,
+    CommonHelper,
+    {
+      provide: API_URL,
+      useValue: 'http://192.168.50.230:6688/'
+    },
+    [
+      { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+      },
+    ],
+    { provide: RequestCache, useClass: RequestCacheWithMap },
+
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
