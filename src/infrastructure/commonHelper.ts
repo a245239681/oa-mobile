@@ -30,6 +30,8 @@ export class CommonHelper {
     this.toast = await this.toastController.create({
       message: message,
       duration: duration,
+      color: 'secondary',
+      mode: 'ios',
       position: 'middle',
       showCloseButton: showCloseButton
     });

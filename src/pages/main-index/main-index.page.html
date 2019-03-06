@@ -1,9 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>MainIndex</ion-title>
+    <ion-title>我的工作</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of titleArr,let i = index">
+      <ion-label>{{item}} <span class="red" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</span>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
