@@ -10,10 +10,20 @@ export class LoginService {
 
   constructor(private httpclient:HttpClient) { }
 
-  login(username:String, password:String) : Observable<any> {
-    return this.httpclient.post<any>(ApiUrlManagement.login,{
-      'username': username,
-      'PassWord': password
-    });
+
+/**
+ * 登录接口
+ * @param loginmodel 登录相关参数 用户名 密码
+ */ 
+ login(loginmodel : loginModel) : Observable<any> {
+    return this.httpclient.post<any>(ApiUrlManagement.login,loginmodel);
   }
+}
+
+
+export interface loginModel {
+
+  username: string,
+
+  PassWord: string,
 }

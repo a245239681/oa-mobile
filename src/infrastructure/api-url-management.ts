@@ -7,8 +7,15 @@ export const ApiUrlManagement = {
    */
 login:'api/oa/GetTokenData',
 
+/**
+ * 首页数据接口
+ */
+MainindexData: 'api/recieve/GetWidgetData',
 
-
+/**
+ * 获取待办数据列表
+ */
+needtododata: 'api/recieve/GetRecieveData',
 
 }
 

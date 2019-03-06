@@ -98,7 +98,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authHeader = 'bearer ' + this.userInfo.GetToken();
+    const authHeader = 'Bearer ' + this.userInfo.GetToken();
     const authReq = req.clone({
       headers: req.headers.set('Authorization', authHeader).set('Content-Type', 'application/x-www-form-urlencoded'),
       url: this.apiUrl + req.url,

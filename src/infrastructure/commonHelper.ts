@@ -43,8 +43,9 @@ export class CommonHelper {
   public async presentLoading(content?: string) {
     this.loading && this.loading.dismiss();
     this.loading = await this.loadingCtrl.create({
-      spinner: null,
+      spinner: 'crescent',
       message: content,
+      translucent: true,
     });
     this.loading.present();
   }

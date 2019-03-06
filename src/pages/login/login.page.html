@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>登录</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="login">
+
+  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+    <div>
+    <div>用户名<ion-input type="text" placeholder="请输入用户名" formControlName="username"></ion-input></div>
+    <app-verification *ngIf="formErrors.username" [text]="formErrors.username">
+    </app-verification>
+    </div>
+
+    <div>
+    <div>密码:<ion-input type="password" placeholder="请输入密码" formControlName="PassWord" ></ion-input></div>
+    <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
+   </div>
+    <div><input type="submit" value="登录" [disabled]="!loginForm.valid" /></div>
+  </form>
+  <button (click)="output()">获取数据</button>
+</ion-content>

@@ -14,15 +14,18 @@ import { CachingInterceptor, AuthInterceptor } from 'src/infrastructure/http-int
 import { RequestCache, RequestCacheWithMap } from 'src/infrastructure/request-cache';
 import { UserInfo } from 'src/infrastructure/user-info';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ComponentsModule } from 'src/components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule,AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, FormsModule, ReactiveFormsModule, AppRoutingModule,ComponentsModule],
   providers: [
     StatusBar,
     SplashScreen,
     UserInfo,
+    FormBuilder,
     CommonHelper,
     {
       provide: API_URL,
@@ -42,4 +45,4 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
