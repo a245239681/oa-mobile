@@ -15,6 +15,7 @@ npm-debug.log*
 .idea/
 .ionic/
 .sourcemaps/
+.history/
 .sass-cache/
 .tmp/
 .versions/
