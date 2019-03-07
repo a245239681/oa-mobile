@@ -59,8 +59,8 @@ export class LoginPage {
   login(value: any) {
     console.log(value);
     this.loginservice.login(this.loginForm.value).subscribe((res) => {
-      if (res['strat'] == '1') {
-        var userinfo = res['data'];
+      if (res['State'] == '1') {
+        var userinfo = res['Data'];
         console.log(userinfo);
         this.userinfo.SetToken(userinfo['OaApiToken']);
         this.userinfo.SetUserName(userinfo['Name']);

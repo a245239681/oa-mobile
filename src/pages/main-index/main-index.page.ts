@@ -1,8 +1,9 @@
+import { Router } from '@angular/router';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { count } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-main-index',
@@ -15,7 +16,7 @@ export class MainIndexPage implements OnInit {
 
   countArr: number[] = [];
 
-  constructor(private mainindexservice: MainindexService, private nav: NavController, private toast: CommonHelper) { }
+  constructor(private mainindexservice: MainindexService, private nav: NavController, private toast: CommonHelper,private route: Router) { }
 
   ngOnInit() {
     this.getdata();
@@ -44,5 +45,20 @@ export class MainIndexPage implements OnInit {
       this.toast.presentToast('请求失败');
     });
   }
+
+  /**
+   * 进入公文列表 1 收文 2 发文 3 传阅件
+   */
+  pushDocumentList(index:number) {
+
+    this.route.navigate(['documentlist'],{
+      queryParams:{
+        'type': ++index
+      }
+    });
+  }
+
+
+
 
 }

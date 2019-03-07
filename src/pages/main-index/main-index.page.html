@@ -6,7 +6,7 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let item of titleArr,let i = index">
+    <ion-item *ngFor="let item of titleArr,let i = index" (click)="pushDocumentList(i)">
       <ion-label>{{item}} <span class="red" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</span>
       </ion-label>
     </ion-item>

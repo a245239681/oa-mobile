@@ -18,13 +18,37 @@ export class MainindexService {
   }
 
   /**
-   * 收文待办列表数据
+   * 收文待办列表数据 
+   * type 1 收文待办
    */
-  getneedtodolist(page: number): Observable<any> {
-    return this.httpclient.post<any>(ApiUrlManagement.needtododata,{
-      'type': '传阅件;批办件',
+  getneedtodolist(page: number, type: number = 1): Observable<any> {
+    //收文待办
+    if (type == 1) {
+      return this.httpclient.post<any>(ApiUrlManagement.needtododata, {
+        'type': '传阅件;批办件',
+        'pageNumber': page,
+        'pageSize': 10
+      });
+    }
+    // 2 发文待办  3传阅件
+    else {
+      var url = type == 2 ? ApiUrlManagement.getsendsneedtodo : ApiUrlManagement.getReceives_read;
+      return this.httpclient.post<any>(url, {
+        'pageNumber': page,
+        'pageSize': 10
+      });
+    }
+  }
+
+  /**
+   * 获取已办 1-收文  2-发文 
+   */
+  getBrowserFile(type: number,page:number) {
+    var url = type == 1 ? ApiUrlManagement.GetBrowsers_Receive : ApiUrlManagement.GetBrowsers_Send;
+    return this.httpclient.post<any>(url, {
       'pageNumber': page,
       'pageSize': 10
     });
   }
+
 }
