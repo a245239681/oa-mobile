@@ -1,25 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>登录</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="login">
+  <div class="bg">
 
-  <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-    <div>
-      <div>用户名:<ion-input  type="text" placeholder="请输入用户名" formControlName="username"></ion-input>
-      </div>
-      <app-verification *ngIf="formErrors.username" [text]="formErrors.username">
-      </app-verification>
-    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+      <div class="login-form">
 
-    <div>
-      <div>密码:<ion-input type="password" placeholder="请输入密码" formControlName="PassWord"></ion-input>
+
+        <ion-input type="text" placeholder="请输入用户名" formControlName="username">
+          <ion-icon class="icon" name="person"></ion-icon>
+        </ion-input>
+
+        <div class="line"></div>
+
+        <ion-input type="password" placeholder="请输入密码" formControlName="PassWord">
+          <ion-icon class="icon" name="lock"></ion-icon>
+        </ion-input>
+        
+        <app-verification *ngIf="formErrors.username" [text]="formErrors.username"></app-verification>
+        <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
       </div>
-      <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
-    </div>
-    <div><input type="submit" value="登录" [disabled]="!loginForm.valid" /></div>
-  </form>
+
+      <br/>
+      
+      <ion-button expand="full" color="primary" type="submit" value="登录" [disabled]="!loginForm.valid">登录</ion-button>
+
+    </form>
+  </div>
 
 </ion-content>

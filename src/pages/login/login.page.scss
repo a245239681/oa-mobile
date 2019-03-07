@@ -1,0 +1,33 @@
+.bg{
+    height: 100%;
+    padding: 80% 10px 0 10px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+    background-image: url(../../assets/bg.jpg);
+}
+
+.login-form{
+    padding: 20px;
+    background-color: white;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px; 
+    border-radius:5px;           
+}
+
+.line {
+    height:1px;
+    border-top: solid 1px whitesmoke;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.icon{
+    size: 20px;
+    margin-right: 20px;
+    color: #4978fc;
+}
+
+// .error-text{
+//     font-size: 14px;
+// }
