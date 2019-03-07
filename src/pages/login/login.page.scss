@@ -1,6 +1,6 @@
 .bg{
     height: 100%;
-    padding: 80% 10px 0 10px;
+    padding: 50% 10px 0 10px;
     background-repeat:no-repeat;
     background-size:100% 100%;
     -moz-background-size:100% 100%;
@@ -20,6 +20,14 @@
     border-top: solid 1px whitesmoke;
     text-align: center;
     margin-top: 10px;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    text-shadow:2px 1px 0px black;
+    color: white;
+    margin-bottom: 100px;
 }
 
 .icon{

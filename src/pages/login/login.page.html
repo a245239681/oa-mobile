@@ -1,9 +1,10 @@
 <ion-content class="login">
   <div class="bg">
 
+    <h1 class="title">南宁市住房局OA管理系统</h1>
+
     <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
       <div class="login-form">
-
 
         <ion-input type="text" placeholder="请输入用户名" formControlName="username">
           <ion-icon class="icon" name="person"></ion-icon>
