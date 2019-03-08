@@ -1,0 +1,43 @@
+.bg{
+    height: 100%;
+    padding: 50% 10px 0 10px;
+    background-repeat:no-repeat;
+    background-size: auto 100%;
+    background-position: bottom;
+    -moz-background-size: auto 100%;
+    overflow:scroll; 
+    background-image: url(../../assets/bg.jpg);
+}
+
+.login-form{
+    padding: 20px;
+    background-color: white;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px; 
+    border-radius:5px;           
+}
+
+.line {
+    height:1px;
+    border-top: solid 1px whitesmoke;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    text-shadow:2px 1px 0px black;
+    color: white;
+    margin-bottom: 100px;
+}
+
+.icon{
+    size: 20px;
+    margin-right: 20px;
+    color: #4978fc;
+}
+
+// .error-text{
+//     font-size: 14px;
+// }

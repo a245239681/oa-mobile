@@ -25,7 +25,7 @@ export class LoginPage {
 
   validationMessages = {              // 错误信息模板
     username: {
-      required: '手机号不能为空',
+      required: '用户名不能为空',
     },
     PassWord: {
       required: '密码不能为空',
