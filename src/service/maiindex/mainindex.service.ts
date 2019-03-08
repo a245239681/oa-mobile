@@ -80,4 +80,11 @@ export class MainindexService {
     return this.httpclient.get(ApiUrlManagement.getReciveDetailInfo + '?receiveId=' + receiveId + '&ID=' + subid);
   }
 
+  /**
+   * 获取一级部门
+   */
+  getDeptTreeUntilMainDept(): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getDeptTreeUntilMainDept);
+  }
+
 }

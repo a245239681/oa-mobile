@@ -1,15 +1,18 @@
 <ion-header>
-  <ion-toolbar>
+  <!-- <ion-toolbar color="primary">
     <ion-title>我的工作</ion-title>
-  </ion-toolbar>
+  </ion-toolbar> -->
+  <div class="bg">
+    <h1 class="title">南宁市住房局OA管理系统</h1>
+  </div>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
     <ion-item *ngFor="let item of titleArr,let i = index" (click)="pushDocumentList(i)">
-      <ion-label>{{item}} <span class="red" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</span>
-      </ion-label>
+      <ion-icon color="primary" name="list-box"></ion-icon>
+      <ion-label padding>{{item}}</ion-label>
+      <ion-note color="danger" *ngIf="countArr.length && countArr[i] > 0">{{countArr[i]}}</ion-note>
     </ion-item>
   </ion-list>
-
 </ion-content>

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AttachmentlistComponent } from './attachmentlist/attachmentlist.component';
 import { CirculationinfoComponent } from './circulationinfo/circulationinfo.component';
 import { SignComponent } from './sign/sign.component';
+import { DepartmentSelectComponent } from './department-select/department-select.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SignComponent } from './sign/sign.component';
         HandleinfoComponent,
         AttachmentlistComponent,
         CirculationinfoComponent,
-        SignComponent
+        SignComponent,
+        DepartmentSelectComponent,
     ],
     imports: [
         IonicModule,
@@ -27,7 +29,8 @@ import { SignComponent } from './sign/sign.component';
         HandleinfoComponent,
         AttachmentlistComponent,
         CirculationinfoComponent,
-        SignComponent
+        SignComponent,
+        DepartmentSelectComponent,
     ]
 })
 export class ComponentsModule { }

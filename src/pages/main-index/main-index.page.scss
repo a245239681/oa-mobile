@@ -1,3 +1,17 @@
-.red {
-    color: red;
+.bg{
+    height: 130PX;
+    background-repeat:no-repeat;
+    background-size: 100% auto;
+    background-position: bottom;
+    -moz-background-size:100% auto;
+    overflow:scroll; 
+    background-image: url(../../assets/bg.jpg);
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    text-shadow:2px 1px 0px black;
+    color: white;
+    margin-bottom: 100px;
 }

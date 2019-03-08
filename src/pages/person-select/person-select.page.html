@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'></ion-icon>
+    <ion-title>人员机构</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment mode="md" (ionChange)="segmentChanged($event)">
+    <ion-segment-button mode="md" value="1" *ngIf="true" checked>
+      <ion-label>主办</ion-label>
+    </ion-segment-button>
+    <ion-segment-button mode="md" value="2" *ngIf="true">
+      <ion-label>协办</ion-label>
+    </ion-segment-button>
+    <ion-segment-button mode="md" value="3" *ngIf="false">
+      <ion-label>传阅</ion-label>
+    </ion-segment-button>
+    <ion-segment-button mode="md" value="4" *ngIf="false">
+      <ion-label>下一步</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <department-select [isSingleSlect]="true" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
+  <department-select [isSingleSlect]="false" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
+</ion-content>

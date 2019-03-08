@@ -53,6 +53,10 @@ export const ApiUrlManagement = {
    */
   getReciveDetailInfo: 'api/recieve/Receive_ActDetailTree',
 
+  /**
+   * 获取一级部门
+   */
+  getDeptTreeUntilMainDept: 'api/recieve/GetDeptTreeUntilMainDept',
 
 }
 
