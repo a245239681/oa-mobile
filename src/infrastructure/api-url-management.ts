@@ -35,7 +35,23 @@ export const ApiUrlManagement = {
   /**
    * 发文已办
    */
-  GetBrowsers_Send: 'api/recieve/GetBrowsers_Send'
+  GetBrowsers_Send: 'api/recieve/GetBrowsers_Send',
+
+  /**
+   * 获取意见
+   */
+  getAttitudeList: 'api/recieve/GetAttitudeList',
+
+
+  /**
+   * 附件列表
+   */
+  getattchmentlist: 'api/recieve/GetAttachmentList',
+
+  /**
+   * 收文流转信息
+   */
+  getReciveDetailInfo: 'api/recieve/Receive_ActDetailTree',
 
 
 }

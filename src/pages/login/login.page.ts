@@ -64,7 +64,7 @@ export class LoginPage {
         console.log(userinfo);
         this.userinfo.SetToken(userinfo['OaApiToken']);
         this.userinfo.SetUserName(userinfo['Name']);
-        this.nav.navigateForward("/tabs/tabs");
+        this.nav.navigateRoot("/tabs/tabs");
       } else {
         this.toast.presentToast('登录失败');
       }

@@ -16,7 +16,7 @@ export class MainIndexPage implements OnInit {
 
   countArr: number[] = [];
 
-  constructor(private mainindexservice: MainindexService, private nav: NavController, private toast: CommonHelper,private route: Router) { }
+  constructor(private mainindexservice: MainindexService, private nav: NavController, private toast: CommonHelper, private route: Router) { }
 
   ngOnInit() {
     this.getdata();
@@ -38,7 +38,7 @@ export class MainIndexPage implements OnInit {
             this.countArr.push(-1);
           }
         }
-      }else {
+      } else {
         this.toast.presentToast('请求出错');
       }
     }, (err) => {
@@ -49,13 +49,21 @@ export class MainIndexPage implements OnInit {
   /**
    * 进入公文列表 1 收文 2 发文 3 传阅件
    */
-  pushDocumentList(index:number) {
+  pushDocumentList(index: number) {
 
-    this.route.navigate(['documentlist'],{
-      queryParams:{
-        'type': ++index
-      }
-    });
+    if (index == 3) {
+      this.route.navigate(['havedonework'], {
+        queryParams: {
+          'type': ++index
+        }
+      });
+    } else {
+      this.route.navigate(['documentlist'], {
+        queryParams: {
+          'type': ++index
+        }
+      });
+    }
   }
 
 

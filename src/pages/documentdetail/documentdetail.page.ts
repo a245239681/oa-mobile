@@ -1,0 +1,54 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+
+@Component({
+  selector: 'app-documentdetail',
+  templateUrl: './documentdetail.page.html',
+  styleUrls: ['./documentdetail.page.scss'],
+})
+export class DocumentdetailPage implements OnInit {
+
+  /**
+   * 列表传进来的item
+   */
+  itemmodel: any;
+
+  //标题切换
+  title: string = '办理信息';
+
+  /**
+   * 1 办理信息 2 流转信息 3 附件列表 4 办文签
+   */
+  type: number = 1;
+
+  constructor(private activeRoute: ActivatedRoute) {
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      console.log(params['item']);
+      this.itemmodel = JSON.parse(params['item']);
+    });
+  }
+
+  ngOnInit() {
+
+  }
+
+  segmentChanged(event: any) {
+    console.log('Segment changed', event.target.value);
+    this.type = event.target.value;
+    switch (event.target.value) {
+      case '1':
+        this.title = '办理信息';
+        break;
+      case '2':
+        this.title = '流转信息';
+        break;
+      case '3':
+        this.title = '附件列表';
+        break;
+      default:
+        this.title = '办文签'
+    }
+  }
+
+}

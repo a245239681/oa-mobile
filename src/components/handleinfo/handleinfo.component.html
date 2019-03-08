@@ -1,0 +1,11 @@
+<ion-content>
+  <p>标题：{{itemmodel['Title']}}</p>
+  <p>来文文号：{{itemmodel['SerialNumber']}}</p>
+  <p>来文单位：{{itemmodel['Department']}}</p>
+  <p>完成时限：{{itemmodel['FinishDate']}}</p>
+  <ion-list>
+    <ion-item *ngFor="let item of adcviceArr">
+      {{item['Content']}}
+      </ion-item>
+  </ion-list>
+</ion-content>

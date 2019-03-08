@@ -16,17 +16,20 @@ import { UserInfo } from 'src/infrastructure/user-info';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from 'src/components/components.module';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, FormsModule, ReactiveFormsModule, AppRoutingModule,ComponentsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, FormsModule, ReactiveFormsModule, IonicModule, AppRoutingModule,ComponentsModule],
   providers: [
     StatusBar,
     SplashScreen,
     UserInfo,
     FormBuilder,
     CommonHelper,
+    InAppBrowser,
     {
       provide: API_URL,
       useValue: 'http://192.168.50.230:6688/'

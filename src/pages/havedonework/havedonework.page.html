@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>已办工作</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="1" checked>
+      <ion-label>收文已办</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>发文已办</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div style="height: 10px"></div>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
+      refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let item of listdataArr,let i = index">
+      <ion-label>{{item['Title']}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" [disabled]="nohasmore">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

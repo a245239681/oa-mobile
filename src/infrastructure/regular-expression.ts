@@ -40,6 +40,20 @@ export function equalValidetor(group: FormGroup): any {
   return valid ? null : { equal: { descs: '密码和确认密码不匹配' } };
 }
 
+
+/**
+ * 比较日期天数
+ * @param startDate 开始日期
+ * @param endDate  借宿日期
+ * 返回负数说明日期已过 正数说明还有几天到期
+ */
+export function getDateDiff(startDate:string,endDate:string) : number {
+    var startTime = new Date(Date.parse(startDate.replace(/-/g,   "/"))).getTime();     
+    var endTime = new Date(Date.parse(endDate.replace(/-/g,   "/"))).getTime();     
+    var dates = (startTime - endTime)/(1000*60*60*24);     
+    return  dates;    
+}
+
 /**
  * 比较日期 参数为string或者date类型
  * return number >0 则是大于0 等于0等于0 -1小于0

@@ -2,8 +2,9 @@ import { CommonHelper } from './../../infrastructure/commonHelper';
 import { MainindexService } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, IonRefresher, IonInfiniteScroll, NavParams } from '@ionic/angular';
-import { templateJitUrl } from '@angular/compiler';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { getDateDiff } from 'src/infrastructure/regular-expression';
+
 
 @Component({
   selector: 'app-documentlist',
@@ -15,7 +16,10 @@ export class DocumentlistPage implements OnInit {
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
   //列表数据
   listdataArr: any[] = [];
-
+  
+  object = {
+    'key':'11111'
+  };
   //当前页
   currentPage: number = 1;
 
@@ -23,10 +27,10 @@ export class DocumentlistPage implements OnInit {
   nohasmore: boolean = true;
 
   //1 收文 2 发文 3 传阅件
-  type:number = 1;
+  type: number = 1;
 
-  constructor(private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper,public activeRoute: ActivatedRoute,) { 
-    this.activeRoute.queryParams.subscribe((params:Params) => {
+  constructor(private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper, private activeRoute: ActivatedRoute, private route :Router ) {
+    this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params['type']);
       this.type = params['type'];
     });
@@ -42,7 +46,7 @@ export class DocumentlistPage implements OnInit {
     this.currentPage = 1;
     this.listdataArr = [];
     this.ionInfiniteScroll.disabled = false;
-    this.mainindexservice.getneedtodolist(this.currentPage,this.type).subscribe((res) => {
+    this.mainindexservice.getneedtodolist(this.currentPage, this.type).subscribe((res) => {
       this.ionRefresh.complete();
       if (res['State'] == '1') {
         console.log(res);
@@ -52,6 +56,20 @@ export class DocumentlistPage implements OnInit {
         } else {
           this.nohasmore = false;
           this.currentPage += 1;
+        }
+
+        if (this.type == 1) {
+          this.listdataArr = this.listdataArr.map((item) => {
+            var dates = getDateDiff(item['FinishDate'], new Date().toDateString());
+            if (item['Emergency'] == '特急' || item['Emergency'] == '紧急' || dates <= 3) {
+              item['color'] = 'red';
+            } else if (dates > 3 && dates <= 7) {
+              item['color'] = 'yellow';
+            } else {
+              item['color'] = 'black';
+            }
+            return item;
+          });
         }
       } else {
         this.toast.presentToast('已无数据');
@@ -77,7 +95,7 @@ export class DocumentlistPage implements OnInit {
    */
   loadMoreData(event) {
     console.log('上拉加载');
-    this.mainindexservice.getneedtodolist(this.currentPage,this.type).subscribe((res) => {
+    this.mainindexservice.getneedtodolist(this.currentPage, this.type).subscribe((res) => {
       this.ionInfiniteScroll.complete();
       if (res['State'] == '1') {
         var tempArr: any[] = res['Data']['PageOfResult'];
@@ -91,6 +109,21 @@ export class DocumentlistPage implements OnInit {
           this.nohasmore = false;
           this.currentPage++;
         }
+
+        if (this.type == 1) {
+          this.listdataArr = this.listdataArr.map((item) => {
+            var dates = getDateDiff(item['FinishDate'], new Date().toDateString());
+            if (item['Emergency'] == '特急' || item['Emergency'] == '紧急' || dates <= 3) {
+              item['color'] = 'red';
+            } else if (dates > 3 && dates <= 7) {
+              item['color'] = 'yellow';
+            } else {
+              item['color'] = 'black';
+            }
+            return item;
+          });
+        }
+        
       } else {
         this.toast.presentToast('已无数据');
       }
@@ -102,8 +135,22 @@ export class DocumentlistPage implements OnInit {
 
   }
 
+  /**
+   * 返回
+   */
   canGoBack() {
     this.nav.back();
+  }
+
+  /**
+   * 进入详情
+   */
+  pushIntodetail(item: any) {
+    this.route.navigate(['documentdetail'],{
+      queryParams: {
+        'item': JSON.stringify(item)
+      },
+    });
   }
 
 }

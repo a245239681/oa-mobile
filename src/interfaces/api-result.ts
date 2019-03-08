@@ -1,7 +1,9 @@
 // API结果返回接口
 
 export interface ApiResult<T> {
-    StateCode?: number;
+    ActionName?: string;
+    tag?: string;
+    State?: number;
     Data?: T;
     Message?: string;
 }
