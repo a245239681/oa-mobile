@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>已办工作</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-segment (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="1" checked>
+<ion-content>
+  <ion-segment mode="md" (ionChange)="segmentChanged($event)">
+    <ion-segment-button mode="md" value="1" checked>
       <ion-label>收文已办</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="2">
+    <ion-segment-button mode="md" value="2">
       <ion-label>发文已办</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -19,7 +19,7 @@
       refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-list>
+  <ion-list mode="md">
     <ion-item *ngFor="let item of listdataArr,let i = index">
       <ion-label>{{item['Title']}}
       </ion-label>
