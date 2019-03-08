@@ -14,6 +14,11 @@ export class HandleinfoComponent implements OnInit {
   //意见数组 
   adcviceArr:any[] = [];
 
+  bodyData:any;
+
+  //保存key的数组
+  keyArr:string[] = [];
+
   constructor(private service: MainindexService,public toast: CommonHelper) { 
     
   }
@@ -27,9 +32,15 @@ export class HandleinfoComponent implements OnInit {
    */  
   getdata() {
     this.service.getallAttitudeList(this.itemmodel['Id'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
-      if (res.State == 1) {
-        console.log(res);
-        this.adcviceArr = res.Data['BodyData'];
+      if (res['State'] == 1) {
+        this.bodyData = res['Data']['BodyData'];
+        this.adcviceArr = [];
+        this.keyArr = [];
+        for (var key in this.bodyData) {
+          console.log(key);
+          this.keyArr.push(key);
+          this.adcviceArr.push(this.bodyData[key]);
+        }
       }else {
         this.toast.presentToast('暂无数据');
       }

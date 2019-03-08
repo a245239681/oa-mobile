@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -22,7 +22,7 @@ export class DocumentdetailPage implements OnInit {
    */
   type: number = 1;
 
-  constructor(private activeRoute: ActivatedRoute) {
+  constructor(private activeRoute: ActivatedRoute, private route: Router) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params['item']);
       this.itemmodel = JSON.parse(params['item']);
@@ -49,6 +49,15 @@ export class DocumentdetailPage implements OnInit {
       default:
         this.title = '办文签'
     }
+  }
+
+  pushtoadvice() {
+    console.log('意见');
+    this.route.navigate(['submission'],{
+      queryParams: {
+        'item': JSON.stringify(this.itemmodel),
+      },
+    });
   }
 
 }

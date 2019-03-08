@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'documentlist', loadChildren: '../pages/documentlist/documentlist.module#DocumentlistPageModule' },
   { path: 'havedonework', loadChildren: '../pages/havedonework/havedonework.module#HavedoneworkPageModule' },
   { path: 'documentdetail', loadChildren: '../pages/documentdetail/documentdetail.module#DocumentdetailPageModule' },
+  { path: 'submission', loadChildren: '../pages/submission/submission.module#SubmissionPageModule' },
 ];
 
 @NgModule({

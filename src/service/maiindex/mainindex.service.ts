@@ -56,7 +56,7 @@ export class MainindexService {
   /**
    * 获取意见列表
    */
-  getallAttitudeList(Id:string, processType:string, coorType:string): Observable<ApiResult<{}>> {
+  getallAttitudeList(Id:string, processType:string, coorType:string): Observable<any> {
     return this.httpclient.post(ApiUrlManagement.getAttitudeList,{
       'RelationId': Id,
       'ProcessType': processType,

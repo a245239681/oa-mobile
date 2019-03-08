@@ -4,8 +4,17 @@
   <p>来文单位：{{itemmodel['Department']}}</p>
   <p>完成时限：{{itemmodel['FinishDate']}}</p>
   <ion-list>
-    <ion-item *ngFor="let item of adcviceArr">
-      {{item['Content']}}
-      </ion-item>
+    <ion-item *ngFor="let item of adcviceArr,let i = index">
+      <!-- 头部视图是否显示要看该头部下有没有意见，没有就不显示了 -->
+      <div *ngIf="item.length > 0">
+        <p>{{keyArr[i]}}</p>
+        <ion-item *ngFor="let subitem of item">
+          <p style="width: 100%">{{subitem['StaffName']}} {{subitem['StaffDuty']}}: ({{subitem['TimeStr']}})</p>
+          <p style="width: 100%">
+            {{subitem['Content']}}
+          </p>
+        </ion-item>
+      </div>
+    </ion-item>
   </ion-list>
 </ion-content>

@@ -7,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SignComponent implements OnInit {
 
-  @Input() itemmodel:any;
-  
+  @Input() itemmodel: any;
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

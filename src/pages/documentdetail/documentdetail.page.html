@@ -1,8 +1,11 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{title}}</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-title>{{title}}</ion-title>
+      <ion-buttons *ngIf="type == 1" slot="end" (click)="pushtoadvice()">
+          意见
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content padding>
     <ion-segment (ionChange)="segmentChanged($event)">
@@ -19,7 +22,7 @@
             <ion-label>办文签</ion-label>
           </ion-segment-button>
       </ion-segment>
-      <div style="height: 10px"></div>
+      <div style="height: 1rem"></div>
       <!-- 在四个组件中切换 -->
       <app-handleinfo [itemmodel] = "itemmodel" *ngIf="type == 1"></app-handleinfo>
       <app-circulationinfo [itemmodel]="itemmodel" *ngIf="type == 2"></app-circulationinfo>
