@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'></ion-icon>
     <ion-title>已办工作</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +21,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-list mode="md">
-    <ion-item *ngFor="let item of listdataArr,let i = index">
+    <ion-item *ngFor="let item of listdataArr,let i = index" (click)="pushIntodetail(item)">
       <ion-label>{{item['Title']}}
       </ion-label>
     </ion-item>

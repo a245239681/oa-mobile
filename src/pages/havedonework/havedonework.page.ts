@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonRefresher, IonInfiniteScroll, NavController } from '@ionic/angular';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -21,20 +21,21 @@ export class HavedoneworkPage implements OnInit {
   currentPage: number = 1;
 
   //收文已办 发文已办
-  type:number = 1;
+  type: number = 1;
 
   //是否可以继续上拉
   nohasmore: boolean = true;
-  constructor(private nav: NavController, 
-    private mainindexservice: MainindexService, 
-    private toast: CommonHelper, 
+  constructor(private nav: NavController,
+    private route: Router,
+    private mainindexservice: MainindexService,
+    private toast: CommonHelper,
     public activeRoute: ActivatedRoute) { }
 
   /**
    * 
    * @param event 点击Segment
    */
-  segmentChanged(event:any) {
+  segmentChanged(event: any) {
     console.log('Segment changed', event.target.value);
     this.type = event.target.value;
     this.getdata();
@@ -99,7 +100,7 @@ export class HavedoneworkPage implements OnInit {
           this.nohasmore = false;
           this.currentPage++;
         }
-        
+
       } else {
         this.toast.presentToast('已无数据');
       }
@@ -109,6 +110,24 @@ export class HavedoneworkPage implements OnInit {
       this.toast.presentToast('请求失败');
     });
 
+  }
+
+  /**
+  * 返回
+  */
+  canGoBack() {
+    this.nav.back();
+  }
+
+  /**
+   * 进入详情
+   */
+  pushIntodetail(item: any) {
+    this.route.navigate(['documentdetail'], {
+      queryParams: {
+        'item': JSON.stringify(item)
+      },
+    });
   }
 
 }
