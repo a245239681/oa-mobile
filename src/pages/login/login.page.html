@@ -15,13 +15,16 @@
         <ion-input type="password" placeholder="请输入密码" formControlName="PassWord">
           <ion-icon class="icon" name="lock"></ion-icon>
         </ion-input>
-        
+
+        <div class="line" *ngIf="formErrors.username || formErrors.PassWord"></div>
+
         <app-verification *ngIf="formErrors.username" [text]="formErrors.username"></app-verification>
+
         <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
       </div>
 
-      <br/>
-      
+      <br />
+
       <ion-button expand="full" color="primary" type="submit" value="登录" [disabled]="!loginForm.valid">登录</ion-button>
 
     </form>
