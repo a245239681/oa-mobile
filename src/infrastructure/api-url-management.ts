@@ -66,8 +66,12 @@ export const ApiUrlManagement = {
   /**
    * 常用语
    */
-  oftenuser: 'api/recieve/DailyMaxList'
+  oftenuser: 'api/recieve/DailyMaxList',
   
+  /**
+   * 获取一级部门
+   */
+  getDeptTreeUntilMainDept: 'api/recieve/GetDeptTreeUntilMainDept',
 
 }
 

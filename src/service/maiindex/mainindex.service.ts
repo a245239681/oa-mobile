@@ -107,6 +107,13 @@ export class MainindexService {
     return this.httpclient.get(ApiUrlManagement.oftenuser + '?count=10');
   }
 
+  /**
+   * 获取一级部门
+   */
+ getDeptTreeUntilMainDept(): Observable<any> {
+   return this.httpclient.get(ApiUrlManagement.getDeptTreeUntilMainDept);
+ }
+
 }
 
 export interface saveadviceModel {
