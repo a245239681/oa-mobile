@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-documentdetail',
@@ -22,7 +23,7 @@ export class DocumentdetailPage implements OnInit {
    */
   type: number = 1;
 
-  constructor(private activeRoute: ActivatedRoute, private route: Router) {
+  constructor(private activeRoute: ActivatedRoute, private route: Router,private nav:NavController) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params['item']);
       this.itemmodel = JSON.parse(params['item']);
@@ -60,4 +61,10 @@ export class DocumentdetailPage implements OnInit {
     });
   }
 
+  /**
+   * 返回
+   */
+  canGoBack() {
+    this.nav.back();
+  }
 }

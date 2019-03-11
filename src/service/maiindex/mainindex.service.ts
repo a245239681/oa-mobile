@@ -45,7 +45,7 @@ export class MainindexService {
   /**
    * 获取已办 1-收文  2-发文 
    */
-  getBrowserFile(page:number,type: number) {
+  getBrowserFile(page: number, type: number) {
     var url = type == 1 ? ApiUrlManagement.GetBrowsers_Receive : ApiUrlManagement.GetBrowsers_Send;
     return this.httpclient.post<any>(url, {
       'pageNumber': page,
@@ -56,8 +56,8 @@ export class MainindexService {
   /**
    * 获取意见列表
    */
-  getallAttitudeList(Id:string, processType:string, coorType:string): Observable<any> {
-    return this.httpclient.post(ApiUrlManagement.getAttitudeList,{
+  getallAttitudeList(Id: string, processType: string, coorType: string): Observable<any> {
+    return this.httpclient.post(ApiUrlManagement.getAttitudeList, {
       'RelationId': Id,
       'ProcessType': processType,
       'CoorType': coorType
@@ -67,7 +67,7 @@ export class MainindexService {
   /**
    * 获取附件
    */
-  getattchmentlist(Id: string) : Observable<any> {
+  getattchmentlist(Id: string): Observable<any> {
     return this.httpclient.get(ApiUrlManagement.getattchmentlist + '?relationId=' + Id);
   }
 
@@ -80,4 +80,41 @@ export class MainindexService {
     return this.httpclient.get(ApiUrlManagement.getReciveDetailInfo + '?receiveId=' + receiveId + '&ID=' + subid);
   }
 
+  /**
+   * 保存意见
+   */
+  saveadvice(saveadvicemodel: saveadviceModel): Observable<any> {
+
+    return this.httpclient.post(ApiUrlManagement.saveAdvice, saveadvicemodel);
+  }
+
+  /**
+   * 获取保存
+   */
+  getattitudeType(Id: string, processType: number, coorType: number): Observable<any> {
+    return this.httpclient.post(ApiUrlManagement.attitudeType, {
+      'relationId': Id,
+      'processType': processType,
+      'coorType': coorType
+    });
+  }
+
+  /**
+   * 获取常用语
+   */
+  getoftenuse(): Observable<any> {
+
+    return this.httpclient.get(ApiUrlManagement.oftenuser + '?count=10');
+  }
+
 }
+
+export interface saveadviceModel {
+  relationId: string,
+  processType: number,
+  coorType: number,
+  attitudeType: string,
+  content: string,
+  skipValid: boolean
+}
+

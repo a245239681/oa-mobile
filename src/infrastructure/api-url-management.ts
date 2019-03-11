@@ -53,6 +53,21 @@ export const ApiUrlManagement = {
    */
   getReciveDetailInfo: 'api/recieve/Receive_ActDetailTree',
 
+  /**
+   * 保存意见
+   */
+  saveAdvice: '/api/recieve/SaveAttitude',
+
+  /**
+   * 获取保存意见时需要填的参数的attitudeType
+   */
+  attitudeType: '/api/recieve/Open',
+
+  /**
+   * 常用语
+   */
+  oftenuser: 'api/recieve/DailyMaxList'
+  
 
 }
 
