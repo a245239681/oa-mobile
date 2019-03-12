@@ -1,3 +1,4 @@
+import { MainindexService } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 

@@ -128,6 +128,21 @@ export class MainindexService {
     return this.httpclient.post(ApiUrlManagement.lasthandin, lasthandinmodel);
   }
 
+  /**
+   * 获取局领导数据
+   */
+  getLeaderTree(): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getLeaderTree + '?hasSelectAll=true');
+  }
+
+  /**
+   * 获取部门人员
+   * @param id 部门id
+   */
+  getDeptTreeCY(id: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getDeptTreeCY + '?id=' + id);
+  }
+
 }
 
 //保存意见的参数模型

@@ -29,6 +29,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [LoginPage],
-  providers: [LoginService,MainindexService]
+  providers: [LoginService, MainindexService]
 })
 export class LoginPageModule {}
