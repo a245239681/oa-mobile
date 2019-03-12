@@ -4,8 +4,8 @@
 </ion-button>
 
 <ion-list mode="md">
-  <ion-item *ngFor="let item of showList,let i = index" (click)="itemClick(item)">
-    <ion-checkbox></ion-checkbox>
-    <ion-label>{{item['text']}}</ion-label>
-  </ion-item>
+  <div *ngFor="let item of showList,let i = index">
+    <ion-checkbox (ionChange)="checkboxClick(item,$event.detail.checked)"></ion-checkbox>
+    <ion-label (click)="itemClick(item)">{{item['text']}}</ion-label>
+  </div>
 </ion-list>
