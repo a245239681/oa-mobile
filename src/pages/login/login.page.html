@@ -1,33 +1,26 @@
 <ion-content class="login">
   <div class="bg">
-
-    <h1 class="title">南宁市住房局OA管理系统</h1>
-
-    <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
-      <div class="login-form">
-
-        <ion-input type="text" placeholder="请输入用户名" formControlName="username">
-          <ion-icon class="icon" name="person"></ion-icon>
-        </ion-input>
-
-        <div class="line"></div>
-
-        <ion-input type="password" placeholder="请输入密码" formControlName="PassWord">
-          <ion-icon class="icon" name="lock"></ion-icon>
-        </ion-input>
-
-        <div class="line" *ngIf="formErrors.username || formErrors.PassWord"></div>
-
-        <app-verification *ngIf="formErrors.username" [text]="formErrors.username"></app-verification>
-
-        <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
-      </div>
-
-      <br />
-
-      <ion-button expand="full" color="primary" type="submit" value="登录" [disabled]="!loginForm.valid">登录</ion-button>
-
-    </form>
+    <div>
+      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" class="login-form">
+        <div>
+          <ion-input class="srk" type="text" placeholder="请输入用户名" formControlName="username">
+            <ion-icon class="icon" name="person"></ion-icon>
+          </ion-input>
+          <div class="line"></div>
+          <ion-input class="srk" type="password" placeholder="请输入密码" formControlName="PassWord">
+            <ion-icon class="icon" name="lock"></ion-icon>
+          </ion-input>
+          <div class="line" *ngIf="formErrors.username || formErrors.PassWord"></div>
+          <app-verification *ngIf="formErrors.username" [text]="formErrors.username"></app-verification>
+          <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
+          <div class='wjma'><span class="wjma-zt">忘记密码</span></div>
+        </div>
+        <br />
+        <ion-button expand="block" color="primary" style="border-radius: 25px !important;" type="submit" value="登录"
+          [disabled]="!loginForm.valid">登录</ion-button>
+      </form>
+    </div>
+    <div class="db-bg">
+    </div>
   </div>
-
 </ion-content>
