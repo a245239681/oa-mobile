@@ -74,6 +74,11 @@ export const ApiUrlManagement = {
   getDeptTreeUntilMainDept: 'api/recieve/GetDeptTreeUntilMainDept',
 
   /**
+   * 获取拟办部门及其人员
+   */
+  getreader: 'GetDeptTree_CY',
+
+  /**
    * 点击提交返回给一个弹框的类型
    */
   getToastType: 'api/recieve/validnext',
