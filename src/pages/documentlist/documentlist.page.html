@@ -6,21 +6,47 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content style="--background: #EFEFEF;">
+  <div class="sykys">
+    <input type="text" placeholder="请输入标题" class="input">
+    <ion-icon name="search" class="syktb"></ion-icon>
+  </div>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
-      refreshingText="刷新中...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-list>
+  <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
+    <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
+      <ion-note color="danger" class="kpbt" *ngIf="type == 1 && item['color'] == '#B8303B'">{{item.Title}}</ion-note>
+      <ion-note color="warning" class="kpbt" *ngIf="type == 1 && item['color'] == '#F99D31'">{{item.Title}}</ion-note>
+      <ion-note color="primary" class="kpbt" *ngIf="type == 1 && item['color'] == '#2D3479'">{{item.Title}}</ion-note>
+      <div style="max-width: 285px">
+        <div>
+          <ion-label class="label">
+            拟稿部门：{{item.Staff}}
+          </ion-label>
+          <ion-label class="label">
+            经办人：{{item.Staff}}
+          </ion-label>
+        </div>
+        <div>
+          <ion-label class="label">
+            当前获取：{{item.Staff}}
+          </ion-label>
+          <ion-label class="label">
+            主&#12288;送：{{item.Staff}}
+          </ion-label>
+        </div>
+      </div>
+    </ion-card-content>
+    <span class="kpysj">...</span>
+  </ion-card>
+  <!-- <ion-list>
     <ion-item *ngFor="let item of listdataArr,let i = index" (click)="pushIntodetail(item)">
       <ion-note color="danger" *ngIf="type == 1 && item['color'] == 'red'">{{item.Emergency}}</ion-note>
       <ion-note color="warning" *ngIf="type == 1 && item['color'] == 'yellow'">{{item.Emergency}}</ion-note>
       <ion-note color="primary" *ngIf="type == 1 && item['color'] == 'black'">{{item.Emergency}}</ion-note>
-      <!-- <span *ngIf="type == 1 && item['color'] == 'red'" style="color: red">{{item.Emergency}} &nbsp;&nbsp;</span>
-     <span *ngIf="type == 1 && item['color'] == 'yellow'" style="color: yellow">{{item.Emergency}} &nbsp;&nbsp; </span>
-     <span *ngIf="type == 1 && item['color'] == 'black'" style="color: black">{{item.Emergency}} &nbsp;&nbsp; </span> -->
+     
       <div padding style="max-width: 285px">
         <ion-label>
           {{item['Title']}}
@@ -30,9 +56,14 @@
         </ion-label>
       </div>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" [disabled]="nohasmore">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+
+<!-- <span *ngIf="type == 1 && item['color'] == 'red'" style="color: red">{{item.Emergency}} &nbsp;&nbsp;</span>
+     <span *ngIf="type == 1 && item['color'] == 'yellow'" style="color: yellow">{{item.Emergency}} &nbsp;&nbsp; </span>
+     <span *ngIf="type == 1 && item['color'] == 'black'" style="color: black">{{item.Emergency}} &nbsp;&nbsp; </span> -->
