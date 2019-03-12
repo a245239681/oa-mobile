@@ -9,8 +9,22 @@ import { NavController } from '@ionic/angular';
 export class PersonSelectPage implements OnInit {
 
   type = 1;
+
   isDepartmentSelect = true;
+
   isSingleSelect = true;
+
+  //记录主办的数组
+  hostArr:any[] = [];
+
+  //记录协办数组
+  coorperationArr: any[] = [];
+
+  //记录传阅的数组
+  readerArr:any[] = [];
+
+  //记录下一步的数组
+  nextArr:any[] =[];
 
   constructor(
     private nav: NavController,
@@ -42,7 +56,15 @@ export class PersonSelectPage implements OnInit {
   }
 
   hostSelected(items: any[]) {
-    console.log(items);
+    console.log('host主办');
+    if (this.type == 1) {
+      this.hostArr = items;
+    }else if (this.type == 2) {
+      this.coorperationArr = items;
+    }
+    console.log(this.hostArr);
+
+    console.log(this.coorperationArr);
   }
 
   /**

@@ -1,7 +1,7 @@
 import { saveadviceModel } from './../../service/maiindex/mainindex.service';
 import { NavController } from '@ionic/angular';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
@@ -31,7 +31,7 @@ export class SubmissionPage implements OnInit {
   /**
    * 常用语数组
    */
-  oftenuseArr:any[] = [];
+  oftenuseArr: any[] = [];
 
   formErrors = {                        // 错误信息
     advice: ''
@@ -50,6 +50,7 @@ export class SubmissionPage implements OnInit {
     private fb: FormBuilder,
     private toast: CommonHelper,
     private nav: NavController,
+    private route: Router,
     private mainservice: MainindexService
 
   ) {
@@ -71,6 +72,11 @@ export class SubmissionPage implements OnInit {
     this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
   }
 
+  /**
+   * 点击提交或者保存进入相应的方法
+   * @param type 
+   * @param value 获取到的输入框的值
+   */
   handleAdvice(type: number, value: any) {
     console.log(value);
     if (type == 0) {
@@ -78,12 +84,9 @@ export class SubmissionPage implements OnInit {
       this.saveadvice(value['advice']);
     } else {
       console.log('提交');
+      this.handleInfo(value['advice']);
     }
   }
-
-  /**
-   * 
-   */
 
   ngOnInit() {
 
@@ -115,7 +118,7 @@ export class SubmissionPage implements OnInit {
         console.log(res);
         this.oftenuseArr = res['Data'];
       }
-    },err => {
+    }, err => {
       this.toast.presentToast('请求失败');
     });
   }
@@ -125,17 +128,14 @@ export class SubmissionPage implements OnInit {
    */
   saveadvice(content: string) {
     if (this.attitudeType) {
-    var savemodel = <saveadviceModel>{
-      attitudeType: this.attitudeType,
-      content: content,
-      coorType: this.itemmodel['CoorType'],
-      processType: this.itemmodel['ProcessType'],
-      relationId: this.itemmodel['Id'],
-      skipValid: false
-    }
-      
-     
-    //  console.log(savemodel);
+      var savemodel = <saveadviceModel>{
+        attitudeType: this.attitudeType,
+        content: content,
+        coorType: this.itemmodel['CoorType'],
+        processType: this.itemmodel['ProcessType'],
+        relationId: this.itemmodel['Id'],
+        skipValid: false
+      }
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
         if (res['State'] == 1) {
           console.log(res);
@@ -144,16 +144,58 @@ export class SubmissionPage implements OnInit {
       }, err => {
         this.toast.presentToast('请求失败');
       });
-    }else {
+    } else {
       this.toast.presentToast('缺少参数');
     }
+  }
 
+  /**
+   * 提交
+   */
+  handleInfo(content: string) {
+    if (this.attitudeType) {
+      var savemodel = <saveadviceModel>{
+        attitudeType: this.attitudeType,
+        content: content,
+        coorType: this.itemmodel['CoorType'],
+        processType: this.itemmodel['ProcessType'],
+        relationId: this.itemmodel['Id'],
+        skipValid: false
+      }
+      this.mainservice.saveadvice(savemodel).subscribe((res) => {
+        if (res['State'] == 1) {
+          console.log(res);
+          //调用提交的接口
+          this.mainservice.getToastType(this.itemmodel['Id'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
+            console.log(res);
+            if (res['State'] == 1) {
+              //增加一个模态框的type的字段
+              this.itemmodel['commitType'] = res['Type'];
+              this.route.navigate(['person-select'],{
+                queryParams: {
+                  'item': JSON.stringify(this.itemmodel),
+                },
+              });
+            }
+          },err => {
+            console.log(err);
+          });
+          
+        }else {
+          this.toast.presentToast(res['Message']);
+        }
+      }, err => {
+        this.toast.presentToast('请求失败');
+      });
+    } else {
+      this.toast.presentToast('缺少参数');
+    }
   }
 
   /**
    * 点击常用语
    */
-  gettheoftenuse(index:number) {
+  gettheoftenuse(index: number) {
     this.CurAttitude = this.oftenuseArr[index]['Text'];
   }
 

@@ -44,6 +44,7 @@ export class DepartmentSelectComponent implements OnInit {
     if (checked) {
       this.selectedList.push(item);
     } else {
+      //去掉没选中的如果之前选过的
       this.selectedList = this.selectedList.filter(data => data.id === item.id);
     }
     this.selected.emit({ items: this.selectedList });
