@@ -44,6 +44,16 @@ export class NextSelectComponent implements OnInit {
   }];
 
   /**
+   * 传阅第一层显示的列表
+   */
+  cyList = [
+    {
+      text: '南宁市住房保障和房产管理局',
+      id: 'root',
+    }
+  ];
+
+  /**
    * 页面显示的列表
    */
   showList = [];
@@ -78,6 +88,12 @@ export class NextSelectComponent implements OnInit {
           id: 'root',
         });
         break;
+      case '1':
+        this.showList = this.cyList;
+        this.buttonList.push({
+          text: '传阅',
+          id: 'root',
+        });
     }
   }
 
@@ -116,6 +132,23 @@ export class NextSelectComponent implements OnInit {
           id: 'root',
         }, {
           text: '拟办',
+          id: 'root',
+        }];
+        break;
+      case '传阅':
+        this.showList = this.cyList;
+        this.buttonList = [{
+          text: '传阅',
+          id: 'root',
+        }];
+        break;
+      case '南宁市住房保障和房产管理局':
+        this.showList = this.allList;
+        this.buttonList = [{
+          text: '传阅',
+          id: 'root',
+        }, {
+          text: '南宁市住房保障和房产管理局',
           id: 'root',
         }];
         break;
@@ -159,6 +192,20 @@ export class NextSelectComponent implements OnInit {
           this.showList = this.allList;
         }
         break;
+      case '南宁市住房保障和房产管理局':
+        this.buttonList.push({
+          text: '南宁市住房保障和房产管理局',
+          id: '1',
+        });
+        if (this.allList.length === 0) {
+          this.getPerson((list) => {
+            this.allList = list;
+            this.showList = this.allList;
+          }, '1');
+        } else {
+          this.showList = this.allList;
+        }
+        break;
       default:
         if (item['attributes']['NodeType'] !== 'Dept') { return; }
         this.buttonList.push({
@@ -169,6 +216,7 @@ export class NextSelectComponent implements OnInit {
           this.showList = item.children;
         } else {
           this.getPerson((list) => {
+            // TODO: 未保存请求数据
             this.showList = list;
           }, item.id);
         }
@@ -188,7 +236,7 @@ export class NextSelectComponent implements OnInit {
       } else {
         this.toast.presentToast('已无数据');
       }
-    }, err => {
+    }, () => {
       this.toast.presentToast('请求失败');
     });
   }
@@ -205,7 +253,7 @@ export class NextSelectComponent implements OnInit {
       } else {
         this.toast.presentToast('已无数据');
       }
-    }, err => {
+    }, () => {
       this.toast.presentToast('请求失败');
     });
   }
@@ -222,7 +270,7 @@ export class NextSelectComponent implements OnInit {
       } else {
         this.toast.presentToast('已无数据');
       }
-    }, err => {
+    }, () => {
       this.toast.presentToast('请求失败');
     });
   }

@@ -3,16 +3,14 @@
     <ion-title>我的工作</ion-title>
   </ion-toolbar> -->
   <div class="bg">
-    <h1 class="title">南宁市住房局OA管理系统</h1>
+    <h1 class="title"></h1>
   </div>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of titleArr,let i = index" (click)="pushDocumentList(i)">
-      <ion-icon color="primary" name="list-box"></ion-icon>
-      <ion-label padding>{{item}}</ion-label>
-      <ion-note color="danger" *ngIf="countArr.length && countArr[i] > 0">{{countArr[i]}}</ion-note>
-    </ion-item>
-  </ion-list>
+  <div class="block" [ngStyle]="{'background-color':item.bgcolor,'background-image':'url(/assets/'+(i+1)+'.png)','color':item.forecolor}" *ngFor="let item of titleArr, let i = index" (click)="pushDocumentList(i)">
+    <ion-label [ngStyle]="{'borderTopColor':item.forecolor}">{{item.text}}</ion-label>
+    <ion-note color="danger" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</ion-note>
+    <ion-icon name="arrow-round-forward"></ion-icon>
+  </div>
 </ion-content>

@@ -1,0 +1,28 @@
+.sc-ion-segment-ios-h {
+  display: block;
+  /* float: left; */
+  width: 20vw;
+  /* height: 100vh; */
+  /* margin-bottom: -10vh; */
+  position: absolute;
+  background-color: #e0e0e0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  ion-segment-button {
+    display: block;
+    border-radius: 0;
+    height: 20vw;
+    border: none;
+    ion-label {
+      margin-top: 7.5vw;
+      color: #333333;
+    }
+    &.segment-button-checked {
+      background-color: #efefef;
+      ion-label {
+        color: #4877fb;
+      }
+    }
+  }
+}
