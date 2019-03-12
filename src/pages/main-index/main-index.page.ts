@@ -12,7 +12,12 @@ import { NavController } from '@ionic/angular';
 })
 export class MainIndexPage implements OnInit {
 
-  titleArr: string[] = ['收文待办', '发文待办', '传阅件', '已办工作'];
+  titleArr = [
+    { text: '收文待办', bgcolor: '#e7fae3', forecolor: '#67c554' },
+    { text: '发文待办', bgcolor: '#fdeff0', forecolor: '#f87a85' },
+    { text: '传阅件', bgcolor: '#e3f6fc', forecolor: '#4877fb' },
+    { text: '已办工作', bgcolor: '#faf7e4', forecolor: '#f1cb14' }
+  ];
 
   countArr: number[] = [];
 

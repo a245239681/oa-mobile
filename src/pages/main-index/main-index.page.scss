@@ -1,17 +1,52 @@
-.bg{
-    height: 130PX;
-    background-repeat:no-repeat;
-    background-size: 100% auto;
-    background-position: bottom;
-    -moz-background-size:100% auto;
-    overflow:scroll; 
-    background-image: url(../../assets/bg.jpg);
+.bg {
+  height: 45vw;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top center;
+  background-image: url(/assets/bg.png);
 }
 
 .title {
-    width: 100%;
-    text-align: center;
-    text-shadow:2px 1px 0px black;
-    color: white;
-    margin-bottom: 100px;
+  position: absolute;
+  width: 16vw;
+  height: 16vw;
+  margin: 0 0 0 -8vw;
+  background: url(/assets/head.png) center;
+  left: 50%;
+  top: 25vw;
+  background-size: 100%;
+  border-radius: 50%;
+}
+
+.block {
+  float: left;
+  width: 47vw;
+  margin: 4vw 0 0 2vw;
+  height: 23vw;
+  background: right top no-repeat;
+  background-origin: content-box;
+  background-size: 10vw;
+  padding: 2vw;
+  position: relative;
+}
+
+ion-icon {
+  position: absolute;
+  right: 4vw;
+  bottom: 1vw;
+  font-size: 6vw;
+  font-weight: bold;
+}
+
+ion-label {
+  font-size: 5vw;
+  font-weight: bold;
+  padding: 2vw 0;
+  border-top: 1vw solid;
+  display: inline-block;
+  margin: -2vw 2vw 0 0;
+}
+
+ion-note {
+  font-size: 3vw;
 }
