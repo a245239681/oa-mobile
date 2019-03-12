@@ -110,9 +110,24 @@ export class MainindexService {
   /**
    * 获取一级部门
    */
- getDeptTreeUntilMainDept(): Observable<any> {
-   return this.httpclient.get(ApiUrlManagement.getDeptTreeUntilMainDept);
- }
+  getDeptTreeUntilMainDept(): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getDeptTreeUntilMainDept);
+  }
+
+  /**
+   * 获取局领导数据
+   */
+  getLeaderTree(): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getLeaderTree + '?hasSelectAll=true');
+  }
+
+  /**
+   * 获取部门人员
+   * @param id 部门id
+   */
+  getDeptTreeCY(id: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getDeptTreeCY + '?id=' + id);
+  }
 
 }
 

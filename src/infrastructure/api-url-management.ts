@@ -67,11 +67,21 @@ export const ApiUrlManagement = {
    * 常用语
    */
   oftenuser: 'api/recieve/DailyMaxList',
-  
+
   /**
    * 获取一级部门
    */
   getDeptTreeUntilMainDept: 'api/recieve/GetDeptTreeUntilMainDept',
+
+  /**
+   * 获取局领导数据
+   */
+  getLeaderTree: 'api/recieve/GetLeaderTree',
+
+  /**
+   * 获取部门人员数据
+   */
+  getDeptTreeCY: 'api/recieve/GetDeptTree_CY',
 
 }
 
