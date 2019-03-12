@@ -1,0 +1,11 @@
+<ion-button *ngFor="let item of buttonList,let i = index" style="white-space:nowrap" size="small" color="primary"
+  (click)="indexClick(item,i)">
+  {{item.text}}<ion-icon name="arrow-forward"></ion-icon>
+</ion-button>
+
+<ion-list mode="md">
+  <ion-item *ngFor="let item of showList,let i = index" (click)="itemClick(item)">
+    <ion-checkbox></ion-checkbox>
+    <ion-label>{{item['text']}}</ion-label>
+  </ion-item>
+</ion-list>

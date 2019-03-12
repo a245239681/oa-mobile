@@ -67,7 +67,7 @@ export const ApiUrlManagement = {
    * 常用语
    */
   oftenuser: 'api/recieve/DailyMaxList',
-  
+
   /**
    * 获取一级部门
    */
@@ -84,9 +84,19 @@ export const ApiUrlManagement = {
   getToastType: 'api/recieve/validnext',
 
   /**
-   * 最后一步 人员机构的提交按钮 
+   * 最后一步 人员机构的提交按钮
    */
   lasthandin: 'api/recieve/commit',
+
+  /**
+   * 获取局领导数据
+   */
+  getLeaderTree: 'api/recieve/GetLeaderTree',
+
+  /**
+   * 获取部门人员数据
+   */
+  getDeptTreeCY: 'api/recieve/GetDeptTree_CY',
 
 }
 
