@@ -108,14 +108,29 @@ export class MainindexService {
   }
 
   /**
+   * 获取弹框的类型
+   */
+  getToastType(Id: string, processType: number, coorType: number): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getToastType + '?id=' + Id + '&processType=' + processType + '&coorType=' + coorType)
+  }
+
+  /**
    * 获取一级部门
    */
- getDeptTreeUntilMainDept(): Observable<any> {
-   return this.httpclient.get(ApiUrlManagement.getDeptTreeUntilMainDept);
- }
+  getDeptTreeUntilMainDept(): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getDeptTreeUntilMainDept);
+  }
+
+  /**
+   * 最后一步的接口
+   */
+  lasthandinStep(lasthandinmodel: lasthandinStepModel): Observable<any> {
+    return this.httpclient.post(ApiUrlManagement.lasthandin, lasthandinmodel);
+  }
 
 }
 
+//保存意见的参数模型
 export interface saveadviceModel {
   relationId: string,
   processType: number,
@@ -125,3 +140,34 @@ export interface saveadviceModel {
   skipValid: boolean
 }
 
+//人员机构提交时的参数模型
+
+export interface lasthandinStepModel {
+  id: string,
+  //主办id 单选
+  primaryDeptId: string,
+  //下一步 如果选的是部门的话就是整个部门下的所有人的id数组
+  leaders: string[],
+
+  //协办id
+  cooperaters: string[],
+
+  //传阅件
+  readers: PendingReaderModel[],
+
+  //模态框
+  commitType: number,
+
+  CoorType: number,
+
+  ProcessType: number,
+
+}
+
+export interface PendingReaderModel {
+  //如果传阅只是选择人的话就只有staffid有值
+  staffId: string,
+
+  //如果选择的是整个部门的话就是部门id有值 staffId没有值
+  deptId: string,
+}

@@ -10,10 +10,10 @@
 
   <form [formGroup]="adviceForm">
     <div class="login-form">
-      <button ion-button color="secondary" value="保存" [disabled]="!adviceForm.valid"
-        (click)="handleAdvice(0,adviceForm.value)">保存</button>
-      <button ion-button color="danger" value="提交" [disabled]="!adviceForm.valid"
-        (click)="handleAdvice(1,adviceForm.value)">提交</button>
+      <ion-button color="secondary" value="保存" [disabled]="!adviceForm.valid"
+        (click)="handleAdvice(0,adviceForm.value)">保存</ion-button>
+      <ion-button ion-button color="danger" value="提交" [disabled]="!adviceForm.valid"
+        (click)="handleAdvice(1,adviceForm.value)">提交</ion-button>
 
       <ion-input style="width:100%; height: 100px;" type="text" placeholder="请输入您的意见" [(ngModel)]="CurAttitude" formControlName="advice">
       </ion-input>

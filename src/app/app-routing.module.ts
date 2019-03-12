@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'documentdetail', loadChildren: '../pages/documentdetail/documentdetail.module#DocumentdetailPageModule' },
   { path: 'submission', loadChildren: '../pages/submission/submission.module#SubmissionPageModule' },
   { path: 'person-select', loadChildren: '../pages/person-select/person-select.module#PersonSelectPageModule' },
-
 ];
 
 @NgModule({

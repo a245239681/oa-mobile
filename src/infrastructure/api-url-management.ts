@@ -56,12 +56,12 @@ export const ApiUrlManagement = {
   /**
    * 保存意见
    */
-  saveAdvice: '/api/recieve/SaveAttitude',
+  saveAdvice: 'api/recieve/SaveAttitude',
 
   /**
    * 获取保存意见时需要填的参数的attitudeType
    */
-  attitudeType: '/api/recieve/Open',
+  attitudeType: 'api/recieve/Open',
 
   /**
    * 常用语
@@ -72,6 +72,16 @@ export const ApiUrlManagement = {
    * 获取一级部门
    */
   getDeptTreeUntilMainDept: 'api/recieve/GetDeptTreeUntilMainDept',
+
+  /**
+   * 点击提交返回给一个弹框的类型
+   */
+  getToastType: 'api/recieve/validnext',
+
+  /**
+   * 最后一步 人员机构的提交按钮 
+   */
+  lasthandin: 'api/recieve/commit',
 
 }
 
