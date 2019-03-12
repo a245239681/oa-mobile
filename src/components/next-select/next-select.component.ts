@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { Observable } from 'rxjs';
-import { async } from 'q';
 import { DepartmentSelectComponent } from '../department-select/department-select.component';
 import { getNodeInjectable } from '@angular/core/src/render3/di';
 
@@ -88,6 +87,9 @@ export class NextSelectComponent implements OnInit {
    * @param index Index
    */
   indexClick(item: any, index: number) {
+    /**
+     * 点击按钮的最后一个 不作任何操作
+     */
     if (index === this.buttonList.length - 1) { return; }
     switch (item.text) {
       case '下一步':
