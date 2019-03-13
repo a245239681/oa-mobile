@@ -6,22 +6,20 @@
 
 <ion-content class="main">
   <ion-list class="personList">
-    <div class="flexBox" (click)="detailCheck()">
+    <div class="flexBox" (click)="detailCheck('头像')">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">头像</span>
           <span class="flexRightContent flex1W100 text-right">
-            <img src="bg.jpg" alt="" />
+            <img src="../../assets/image/bg.jpg" alt="" />
           </span>
         </p>
       </div>
-      <div class="flexRightContent icon-right">
+      <div class="flexRightContent iconRight">
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>
-  </ion-list>
-  <ion-list class="personList">
-    <div class="flexBox">
+    <div class="flexBox" (click)="detailCheck('性别')">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">性别</span>
@@ -30,12 +28,10 @@
           </span>
         </p>
       </div>
-      <div class="flexRightContent icon-right">
+      <div class="flexRightContent iconRight">
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>
-  </ion-list>
-  <ion-list class="personList">
     <div class="flexBox">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
@@ -45,13 +41,11 @@
           </span>
         </p>
       </div>
-      <div class="flexRightContent icon-right">
+      <div class="flexRightContent iconRight">
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>
-  </ion-list>
-  <ion-list class="personList">
-    <div class="flexBox">
+    <div class="flexBox" [routerLink]="['/change-phonenumber']">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">手机号码</span>
@@ -60,12 +54,10 @@
           </span>
         </p>
       </div>
-      <div class="flexRightContent icon-right">
+      <div class="flexRightContent iconRight">
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>
-  </ion-list>
-  <ion-list class="personList">
     <div class="flexBox">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
@@ -75,7 +67,7 @@
           </span>
         </p>
       </div>
-      <div class="flexRightContent icon-right">
+      <div class="flexRightContent iconRight">
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>

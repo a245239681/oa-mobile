@@ -27,6 +27,10 @@
   content: '\e639';
 }
 
+.icon-right:before {
+  content: '\e955';
+}
+
 .icon-tuichudenglu:before {
   content: '\e608';
 }
