@@ -29,6 +29,7 @@ export class PersonSelectPage implements OnInit {
 
   constructor(
     private nav: NavController,
+    private mainservice: MainindexService
   ) { }
 
   ngOnInit() {
@@ -62,6 +63,10 @@ export class PersonSelectPage implements OnInit {
       this.hostArr = items;
     }else if (this.type == 2) {
       this.coorperationArr = items;
+    }else if (this.type == 3) {
+      this.readerArr = items;
+    }else {
+      this.nextArr = items;
     }
     console.log(this.hostArr);
 
@@ -74,5 +79,16 @@ export class PersonSelectPage implements OnInit {
   canGoBack() {
     this.nav.back();
   }
+
+  /**
+   * 提交
+   */
+  handin() {
+    console.log('提交'),
+    this.mainservice.lasthandinStep(null).subscribe((res) => {
+
+    });
+  }
+
 
 }
