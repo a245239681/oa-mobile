@@ -98,7 +98,11 @@ export const ApiUrlManagement = {
    */
   getDeptTreeCY: 'api/recieve/GetDeptTree_CY',
 
-}
+  /**
+   * 获取已勾选
+   */
+  commitSimulateEnd: 'api/recieve/CommitSimulateEnd',
+};
 
 
 

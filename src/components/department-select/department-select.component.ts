@@ -11,6 +11,8 @@ export class DepartmentSelectComponent implements OnInit {
 
   @Input() isSingleSlect = false;
 
+  @Input() hasSelected: any;
+
   @Output() selected = new EventEmitter<{ items: any[] }>();
 
   // 列表数据
@@ -21,13 +23,30 @@ export class DepartmentSelectComponent implements OnInit {
   constructor(
     private mainindexservice: MainindexService,
     private toast: CommonHelper,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.mainindexservice.getDeptTreeUntilMainDept().subscribe((res) => {
       if (res['State'] === 1) {
         this.listdataArr = res['Data'];
-        console.log(this.listdataArr);
+        for (let i = 0; i < this.listdataArr.length; i++) {
+          if (this.isSingleSlect) {
+            if (this.listdataArr[i].id === this.hasSelected.PrimaryDeptId) {
+              this.listdataArr[i].checked = true;
+              this.selectedList.push(this.listdataArr[i]);
+            }
+          } else {
+            this.hasSelected.Cooperaters.forEach((element: string) => {
+              if (this.listdataArr[i].id === element) {
+                this.listdataArr[i].checked = true;
+                this.selectedList.push(this.listdataArr[i]);
+              }
+            });
+          }
+        }
+        this.selected.emit({ items: this.selectedList });
+        console.log('==========', this.listdataArr);
       } else {
         this.toast.presentToast('已无数据');
       }
@@ -37,15 +56,17 @@ export class DepartmentSelectComponent implements OnInit {
   }
 
   singleSelect(item: any) {
+    console.log(this.hasSelected);
     this.selected.emit({ items: [item] });
   }
 
   mutiSelect(item: any, checked: boolean) {
+    console.log('==========', this.listdataArr);
     if (checked) {
       this.selectedList.push(item);
     } else {
-      //去掉没选中的如果之前选过的
-      this.selectedList = this.selectedList.filter(data => data.id === item.id);
+      // 去掉没选中的如果之前选过的
+      this.selectedList = this.selectedList.filter(data => data.id !== item.id);
     }
     this.selected.emit({ items: this.selectedList });
   }

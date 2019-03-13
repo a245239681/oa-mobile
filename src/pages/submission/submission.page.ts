@@ -166,22 +166,35 @@ export class SubmissionPage implements OnInit {
         if (res['State'] == 1) {
           console.log(res);
           //调用提交的接口
-          this.mainservice.getToastType(this.itemmodel['Id'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
+          this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
             console.log(res);
             if (res['State'] == 1) {
               //增加一个模态框的type的字段
               this.itemmodel['commitType'] = res['Type'];
-              this.route.navigate(['person-select'],{
-                queryParams: {
-                  'item': JSON.stringify(this.itemmodel),
-                },
-              });
+              this.mainservice.commitSimulateEnd(
+                this.itemmodel.Id,
+                this.itemmodel.ProcessType,
+                this.itemmodel.CoorType).subscribe((data: any) => {
+                  if (data['State'] === 1) {
+                    this.route.navigate(['person-select'], {
+                      queryParams: {
+                        'item': JSON.stringify(data.Data),
+                      },
+                    });
+                  } else {
+                    this.toast.presentToast('已无数据');
+                  }
+                }, () => {
+                  this.toast.presentToast('请求失败');
+                });
+
+
             }
-          },err => {
+          }, err => {
             console.log(err);
           });
-          
-        }else {
+
+        } else {
           this.toast.presentToast(res['Message']);
         }
       }, err => {
