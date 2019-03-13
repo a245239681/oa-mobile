@@ -1,18 +1,71 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.main {
+  // --background-color: #f3f3f3;
+  --background: var(--ion-background-color, #f3f3f3);
+}
 .mybg {
   height: 32.2vh;
   width: 100%;
   background-image: url(../../assets/image/bg3.png);
-  background-size: 100%;
+  background-size: 100% 100%;
   display: inline-block;
+  margin-bottom: 1.5vh;
+  // border-bottom: 1.5vh solid #f3f3f3;
 }
 .personal {
   margin-top: 9.74vh;
   height: 11.24vh;
-  margin-left: 2rem;
+  margin-left: 4.5vw;
+  display: table;
 }
 .headPortrait {
   width: 11.24vh;
   height: 100%;
   border-radius: 50%;
   background-color: red;
+  float: left;
+}
+.personText {
+  height: 100%;
+  color: #fff;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+.personText p {
+  font-size: 16px;
+  line-height: 24px;
+}
+.personText p:last-child {
+  font-size: 14px;
+}
+.personList .flexBox {
+  height: 99%;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  background-color: #fff;
+}
+.personList .flex1W100 {
+  width: 100%;
+}
+.personList > .flexBox {
+  width: 100%;
+  height: 9.45vh;
+  border-bottom: #ddd solid 0.05rem;
+}
+.personList > .flexBox > .flexBox > .flexLeftContent {
+  height: 100%;
+  width: 9.45vh;
+  line-height: 9.45vh;
+  text-align: center;
+}
+.personList > .flexBox > .flexRightContent {
+  width: 10vw;
+}
+.iconRight {
+  text-align: center;
 }

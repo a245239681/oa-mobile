@@ -111,9 +111,15 @@ export const ApiUrlManagement = {
   /**
    * 协办提交
    */
-  xiebanhandin: 'api/recieve/Commit_BMCL'
+  xiebanhandin: 'api/recieve/Commit_BMCL',
+
+  /** 获取已勾选
+   */
+  commitSimulateEnd: 'api/recieve/CommitSimulateEnd',
 
 }
+   
+
 
 
 

@@ -13,6 +13,16 @@ const routes: Routes = [
   { path: 'documentdetail', loadChildren: '../pages/documentdetail/documentdetail.module#DocumentdetailPageModule' },
   { path: 'submission', loadChildren: '../pages/submission/submission.module#SubmissionPageModule' },
   { path: 'person-select', loadChildren: '../pages/person-select/person-select.module#PersonSelectPageModule' },
+  { path: 'personal-information', loadChildren: '../pages/personal-information/personal-information.module#PersonalInformationPageModule' },
+  { path: 'change-password', loadChildren: '../pages/change-password/change-password.module#ChangePasswordPageModule' },
+  { path: 'change-phonenumber', loadChildren: '../pages/change-phonenumber/change-phonenumber.module#ChangePhonenumberPageModule' },
+  { path: 'phrasing', loadChildren: '../pages/phrasing/phrasing.module#PhrasingPageModule' },
+  { path: 'qr-code', loadChildren: '../pages/qr-code/qr-code.module#QrCodePageModule' },
+
+
+
+
+
 ];
 
 @NgModule({

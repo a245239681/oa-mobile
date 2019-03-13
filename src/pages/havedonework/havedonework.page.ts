@@ -123,12 +123,11 @@ export class HavedoneworkPage implements OnInit {
    * 进入详情
    */
   pushIntodetail(item: any) {
-    // this.route.navigate(['documentdetail'], {
-    //   queryParams: {
-    //     'item': JSON.stringify(item)
-    //   },
-    // });
-    this.route.navigate(['person-select']);
+    this.route.navigate(['documentdetail'], {
+      queryParams: {
+        'item': JSON.stringify(item)
+      },
+    });
   }
 
 }

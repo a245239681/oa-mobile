@@ -30,11 +30,15 @@ export class DocumentlistPage implements OnInit {
 
   //1 收文 2 发文 3 传阅件
   type: number = 1;
+  title = '公文列表';
+
+  loading = false;
 
   constructor(private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper, private activeRoute: ActivatedRoute, private route: Router) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params['type']);
-      this.type = params['type'];
+      this.type = +params['type'];
+      this.title = this.type === 1 ? '收文待办' : this.type === 2 ? '发文待办' : '传阅件';
     });
   }
 
@@ -49,6 +53,7 @@ export class DocumentlistPage implements OnInit {
     this.listdataArr = [];
     this.ionInfiniteScroll.disabled = false;
     this.mainindexservice.getneedtodolist(this.currentPage, this.type, this.searchStr).subscribe((res) => {
+      this.loading = false;
       this.ionRefresh.complete();
       if (res['State'] == '1') {
         console.log(res);

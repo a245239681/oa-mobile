@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { last } from 'rxjs/operators';
 import { TouchSequence } from 'selenium-webdriver';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-person-select',
@@ -20,30 +23,30 @@ export class PersonSelectPage implements OnInit {
   /**
    * 控制显示隐藏某个tab
    */
-  TabTitltArr:any[] = [
+  TabTitltArr: any[] = [
     {
       'title': '主办',
-      'show':true,
+      'show': true,
       'value': 1
     },
     {
       'title': '协办',
-      'show':true,
+      'show': true,
       'value': 2
     },
     {
       'title': '传阅',
-      'show':true,
+      'show': true,
       'value': 3
     },
     {
       'title': '下一步',
-      'show':true,
+      'show': true,
       'value': 4
     },
   ];
 
-  
+
 
   handleModel: lasthandinStepModel;
 
@@ -54,9 +57,10 @@ export class PersonSelectPage implements OnInit {
   isSingleSelect = true;
 
   //记录主办的数组
+  // 记录主办的数组
   hostArr: any[] = [];
 
-  //记录协办数组
+  // 记录协办数组
   coorperationArr: any[] = [];
 
   //记录传阅的数组
@@ -77,7 +81,6 @@ export class PersonSelectPage implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   segmentChanged(event: any) {
@@ -107,7 +110,6 @@ export class PersonSelectPage implements OnInit {
       this.hostArr = items;
       console.log(this.hostArr);
     } else if (this.type == 2) {
-      console.log(items);
       this.coorperationArr = items;
       this.coorperationArr = this.coorperationArr.map((item) => {
         return item['id'];
@@ -134,6 +136,10 @@ export class PersonSelectPage implements OnInit {
 
   }
 
+  nextSelected(items: any) {
+    console.log(items);
+  }
+
   /**
   * 返回
   */
@@ -146,31 +152,31 @@ export class PersonSelectPage implements OnInit {
    */
   handin() {
     console.log('提交'),
-    this.handleModel = {
-      id: this.itemmodel['Id'],
-      //主办id 单选
-      primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0]['id'] : '',
+      this.handleModel = {
+        id: this.itemmodel['Id'],
+        //主办id 单选
+        primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0]['id'] : '',
 
-      cooperaters: this.coorperationArr,
+        cooperaters: this.coorperationArr,
 
-      /**
-       * 下一步
-       */
-      leaders: this.nextArr,
+        /**
+         * 下一步
+         */
+        leaders: this.nextArr,
 
-      /**
-       * 传阅
-       */
-      readers: this.readerArr,
+        /**
+         * 传阅
+         */
+        readers: this.readerArr,
 
-      //模态框
-      commitType: this.itemmodel['commitType'],
+        //模态框
+        commitType: this.itemmodel['commitType'],
 
-      CoorType: this.itemmodel['CoorType'],
+        CoorType: this.itemmodel['CoorType'],
 
-      ProcessType: this.itemmodel['ProcessType'],
+        ProcessType: this.itemmodel['ProcessType'],
 
-    };
+      };
 
     console.log(this.handleModel);
     this.mainservice.lasthandinStep(this.handleModel).subscribe((res) => {
