@@ -73,7 +73,7 @@ export class NextSelectComponent implements OnInit {
     if (item.id === 'root') {
       this.showList = this.departmentTree;
     } else {
-      this.showList = this.getNode(this.departmentTree, item.id).children;
+      this.showList = this.searchData(this.departmentTree, item.id).children;
     }
     this.popMenu(item.id);
   }
@@ -95,6 +95,7 @@ export class NextSelectComponent implements OnInit {
         if (item.children.length === 0) {
           this.getLeader((list) => {
             item.children = list;
+            this.enterParent(item.children, item.id, item.checked);
             this.showList = item.children;
           });
         } else {
@@ -105,6 +106,7 @@ export class NextSelectComponent implements OnInit {
         if (item.children.length === 0) {
           this.getDept((list) => {
             item.children = list;
+            this.enterParent(item.children, item.id, item.checked);
             this.showList = item.children;
           });
         } else {
@@ -115,6 +117,7 @@ export class NextSelectComponent implements OnInit {
         if (item.children.length === 0) {
           this.getPerson(item.id, (list) => {
             item.children = list;
+            this.enterParent(item.children, item.id, item.checked);
             this.showList = item.children;
           });
         } else {
@@ -125,18 +128,64 @@ export class NextSelectComponent implements OnInit {
   }
 
   /**
-   * 搜索所有列表
-   * @param id id
-   */
-  searchList(id: string) {
-  }
-
-  /**
    * 勾选事件
    * @param item 该行数据
    * @param checked 是否选中
    */
   checkboxClick(item: any, checked: boolean) {
+    this.personAllSelect(item, checked);
+    this.childrenAllSelect(item, checked);
+    if (checked) {
+
+    } else {
+
+    }
+  }
+
+  /**
+   * 子级勾选
+   * @param node 节点
+   * @param checked 勾选
+   */
+  childrenAllSelect(node: any, checked: boolean) {
+    if (node.children.length === 0) { return; }
+    for (let i = 0; i < node.children.length; i++) {
+      node.children[i].checked = checked;
+      this.childrenAllSelect(node.children[i], checked);
+    }
+  }
+
+  /**
+   * 父级勾选
+   * @param node 节点
+   * @param checked 勾选
+   */
+  personAllSelect(node: any, checked: boolean) {
+    if (!node.parent_id) { return; }
+    const parent = this.searchData(this.departmentTree, node.parent_id);
+    if (checked) {
+      for (let i = 0; i < parent.children.length; i++) {
+        if (!parent.children[i].checked) { return; }
+      }
+    } else {
+      if (!parent.checked) { return; }
+    }
+    parent.checked = checked;
+    if (node.attributes) { return; }
+    this.personAllSelect(parent, checked);
+  }
+
+  /**
+   * 填入父id
+   * @param enterList 需要填入的列表
+   * @param parentId 父id
+   * @param checked 是否全选
+   */
+  enterParent(enterList: any[], parentId: string, checked: boolean) {
+    for (let i = 0; i < enterList.length; i++) {
+      enterList[i].parent_id = parentId;
+      enterList[i].checked = checked;
+    }
   }
 
   /**
@@ -204,6 +253,17 @@ export class NextSelectComponent implements OnInit {
     }
 
     this.buttonList = newList;
+  }
+
+  /**
+  * 查找前清空临时数据
+  * @param json 要查找的Json
+  * @param nodeId 要查找的节点Id
+  */
+  searchData(json: any, nodeId: string) {
+    this.node = null;
+    this.parentNode = null;
+    return this.getNode(json, nodeId);
   }
 
   /**
