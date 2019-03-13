@@ -55,6 +55,22 @@ export class HandleinfoComponent implements OnInit {
         }
       );
   }
+
+  /**
+   * 标题颜色
+   */
+  btys(i: any) {
+    console.log(i);
+    if (i === '拟办部门意见') {
+      return '#4877FB';
+    } else if (i === '局领导批示') {
+      return '#F87A85';
+    } else if (i === '主办意见') {
+      return '#67C554';
+    } else {
+      return '#4877FB';
+    }
+  }
   /**
    * 分割线
    */

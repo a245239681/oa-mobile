@@ -1,9 +1,6 @@
-.sc-ion-segment-ios-h {
+ion-segment {
   display: block;
-  /* float: left; */
   width: 20vw;
-  /* height: 100vh; */
-  /* margin-bottom: -10vh; */
   position: absolute;
   background-color: #e0e0e0;
   left: 0;
@@ -15,7 +12,7 @@
     border-radius: 0;
     height: 20vw;
     border: none;
-
+    min-width: auto;
     ion-label {
       margin-top: 7.5vw;
       color: #333333;
@@ -29,4 +26,5 @@
       }
     }
   }
+  --indicator-color-checked : transparent;
 }
