@@ -10,28 +10,28 @@ export class PersonalInformationPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController) {}
 
   ngOnInit() {}
-  async presentActionSheet() {
+  async headPortraitSheet() {
     const actionSheet = await this.actionSheetController.create({
       buttons: [
         {
           text: '拍照',
           // icon: 'trash',
-          cssClass: 'sheetClass',
+          // cssClass: 'sheetClass',
           handler: () => {
             console.log('拍照 clicked');
           }
         },
         {
           text: '从手机相册选择',
-          cssClass: 'sheetClass',
+          // cssClass: 'sheetClass',
           handler: () => {
             console.log('从手机相册选择 clicked');
           }
         },
         {
           text: '取消',
-          icon: 'close',
-          cssClass: 'cacelClass',
+          // icon: 'close',
+          // cssClass: 'cacelClass',
           handler: () => {
             console.log('取消 clicked');
           }
@@ -40,7 +40,42 @@ export class PersonalInformationPage implements OnInit {
     });
     await actionSheet.present();
   }
-  detailCheck() {
-    this.presentActionSheet();
+  async geenderSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      buttons: [
+        {
+          text: '男',
+          handler: () => {
+            console.log('拍照 clicked');
+          }
+        },
+        {
+          text: '女',
+          handler: () => {
+            console.log('从手机相册选择 clicked');
+          }
+        },
+        {
+          text: '取消',
+          // icon: 'close',
+          handler: () => {
+            console.log('取消 clicked');
+          }
+        }
+      ]
+    });
+    await actionSheet.present();
+  }
+  detailCheck(s: string) {
+    switch (s) {
+      case '头像':
+        this.headPortraitSheet();
+        break;
+      case '性别':
+        this.geenderSheet();
+      // tslint:disable-next-line:no-switch-case-fall-through
+      default:
+        break;
+    }
   }
 }

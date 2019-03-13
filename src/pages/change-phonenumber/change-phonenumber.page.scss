@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.phoneNumber {
+  --background: var(--ion-background-color, #f3f3f3);
+}
+.changeFrom {
+  margin-top: 1rem;
+  height: 9.45vh;
+  line-height: 9.45vh;
+  display: flex;
+  background: #fff;
+}
+.changeFrom span {
+  padding: 0 1rem;
+  font-weight: 400;
+}
