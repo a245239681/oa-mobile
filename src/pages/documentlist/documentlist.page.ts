@@ -62,11 +62,11 @@ export class DocumentlistPage implements OnInit {
           this.listdataArr = this.listdataArr.map((item) => {
             var dates = getDateDiff(item['FinishDate'], new Date().toDateString());
             if (item['Emergency'] == '特急' || item['Emergency'] == '紧急' || dates <= 3) {
-              item['color'] = 'red';
+              item['color'] = '#B8303B';
             } else if (dates > 3 && dates <= 7) {
-              item['color'] = 'yellow';
+              item['color'] = '#F99D31';
             } else {
-              item['color'] = 'black';
+              item['color'] = '#2D3479';
             }
             return item;
           });
@@ -114,11 +114,11 @@ export class DocumentlistPage implements OnInit {
           this.listdataArr = this.listdataArr.map((item) => {
             var dates = getDateDiff(item['FinishDate'], new Date().toDateString());
             if (item['Emergency'] == '特急' || item['Emergency'] == '紧急' || dates <= 3) {
-              item['color'] = 'red';
+              item['color'] = '#B8303B';
             } else if (dates > 3 && dates <= 7) {
-              item['color'] = 'yellow';
+              item['color'] = '#F99D31';
             } else {
-              item['color'] = 'black';
+              item['color'] = '#2D3479';
             }
             return item;
           });
