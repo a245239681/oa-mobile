@@ -1,20 +1,48 @@
 <ion-content>
-  <p>标题：{{itemmodel['Title']}}</p>
-  <p>来文文号：{{itemmodel['SerialNumber']}}</p>
-  <p>来文单位：{{itemmodel['Department']}}</p>
-  <p>完成时限：{{itemmodel['FinishDate']}}</p>
-  <ion-list>
-    <ion-item *ngFor="let item of adcviceArr,let i = index">
+  <div class="kp">
+    <div class="bt">
+      <span>{{itemmodel['Title']}}</span>
+    </div>
+    <div>
+      <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ itemmodel['Emergency'] }}</span>
+      <span class='texts' style="width: 58%;display: inline-block;vertical-align: top;">完成时限：{{ itemmodel['FinishDate']
+        }}</span>
+    </div>
+    <div>
+      <span class='texts'>来文文号：</span>
+      <span class='texts'>{{ itemmodel['SerialNumber'] }}</span>
+    </div>
+    <div>
+      <span class='texts'>来文单位：</span>
+      <span class='texts'>{{ itemmodel['Department'] }}</span>
+    </div>
+    <!-- <div>
+      <span class='texts' style="vertical-align: top;">来文单位：</span>
+      <span class='texts' style="width: 70%;display: inline-block;">{{ itemmodel['Department'] }}</span>
+    </div> -->
+  </div>
+  <div>
+    <div *ngFor="let item of adcviceArr; let i = index">
       <!-- 头部视图是否显示要看该头部下有没有意见，没有就不显示了 -->
-      <div *ngIf="item.length > 0">
-        <p>{{keyArr[i]}}</p>
-        <ion-item *ngFor="let subitem of item">
-          <p style="width: 100%">{{subitem['StaffName']}} {{subitem['StaffDuty']}}: ({{subitem['TimeStr']}})</p>
-          <p style="width: 100%">
-            {{subitem['Content']}}
-          </p>
-        </ion-item>
+      <div *ngIf="item.length > 0" class="kp">
+        <div class="bt" [ngStyle]="{'color': btys(keyArr[i])}">
+          <span>{{keyArr[i]}}</span>
+        </div>
+        <div *ngFor="let subitem of item; let n = index" class="reny">
+          <div>
+            <span class='texts' style="vertical-align: top;">部门：</span>
+            <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['DeptName'] }}</span>
+          </div>
+          <div>
+            <span class='texts' style="vertical-align: top;">拟办意见：</span>
+            <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Content'] }}</span>
+          </div>
+          <div>
+            <span class='texts'>{{ subitem['StaffName'] }} ({{ subitem['StaffDuty'] }})：{{subitem['TimeStr']}}</span>
+          </div>
+          <span class='fgx' *ngIf="fgx(item,n)"></span>
+        </div>
       </div>
-    </ion-item>
-  </ion-list>
+    </div>
+  </div>
 </ion-content>

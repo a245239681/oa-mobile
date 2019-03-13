@@ -1,22 +1,19 @@
-import { Injectable } from "@angular/core";
-import { ToastController, LoadingController } from "@ionic/angular"
-import { FormGroup } from "../../node_modules/@angular/forms";
-
-
+import { Injectable } from '@angular/core';
+import { ToastController, LoadingController } from '@ionic/angular';
+import { FormGroup } from '../../node_modules/@angular/forms';
 
 @Injectable()
 export class CommonHelper {
-
   toast: HTMLIonToastElement;
 
   loading: HTMLIonLoadingElement;
   /**
    *
    */
-  constructor(public toastController: ToastController, private loadingCtrl: LoadingController) {
-  }
-
-
+  constructor(
+    public toastController: ToastController,
+    private loadingCtrl: LoadingController
+  ) {}
 
   /**
    * 显示toast
@@ -25,7 +22,11 @@ export class CommonHelper {
    * @param position 显示位置，接受值 "top", "middle", "bottom"
    * @param showCloseButton 是否显示关闭按钮
    */
-  public async presentToast(message: string = '操作完成', duration: number = 2000, showCloseButton: boolean = false) {
+  public async presentToast(
+    message: string = '操作完成',
+    duration: number = 2000,
+    showCloseButton: boolean = false
+  ) {
     this.toast && this.toast.dismiss();
     this.toast = await this.toastController.create({
       message: message,
@@ -47,7 +48,7 @@ export class CommonHelper {
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
-      translucent: true,
+      translucent: true
     });
     this.loading.present();
   }
@@ -63,8 +64,11 @@ export class CommonHelper {
    * @param RegisterForm
    * @param formErrors
    */
-  onInputValueChanged(RegisterForm: FormGroup, formErrors: any, validationMessages: any) {
-
+  onInputValueChanged(
+    RegisterForm: FormGroup,
+    formErrors: any,
+    validationMessages: any
+  ) {
     if (!RegisterForm) {
       return;
     }

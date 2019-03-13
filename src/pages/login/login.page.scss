@@ -1,17 +1,16 @@
 .bg {
-    height: 100%;
-    padding-top: 49%;
+    height: 100vh;
+    // padding-top: 49%;
     background-repeat: no-repeat;
     background-size: 100% 37%;
     background-position: top;
-    -moz-background-size: 100% 37%;
+    // -moz-background-size: 100% 37%;
     overflow: scroll;
     background-color: #F9F8F8;
     background-image: url(../../assets/image/bg4.png);
 }
 
 .login-form {
-    margin: 0 20px 0 20px;
     padding: 63px 30px 50px 30px;
     background-color: white;
     -moz-border-radius: 5px;
@@ -20,6 +19,12 @@
     -webkit-box-shadow: 1px 3px 2px #DADEEC;
     -moz-box-shadow: 1px 3px 2px #DADEEC;
     box-shadow: 1px 3px 2px #DADEEC;
+    position: absolute;
+    left: 5vw;
+    right: 5vw;
+    top: calc(50vh - 45vw);
+    // height: 90vw;
+    // margin-top: -45vw;
 }
 
 .line {

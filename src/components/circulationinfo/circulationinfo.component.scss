@@ -1,6 +1,13 @@
-div{
+div {
     clear: both;
 }
-.padleft{
-    padding-left: 2rem;
+
+// .padleft {
+//     padding-left: 2rem;
+// }
+
+ion-content {
+    position: absolute;
+    left: 20vw;
+    width: 80vw;
 }

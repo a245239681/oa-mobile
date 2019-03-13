@@ -2,19 +2,24 @@
   <ion-toolbar color="primary">
     <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'>
     </ion-icon>
-    <ion-title>公文列表</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content style="--background: #EFEFEF;">
-  <div class="sykys">
-    <input type="text" placeholder="请输入标题" class="input">
-    <ion-icon name="search" class="syktb"></ion-icon>
-  </div>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
+  <div class="sykys">
+    <input type="text" placeholder="请输入标题" class="input">
+    <ion-icon name="search" class="syktb"></ion-icon>
+  </div>
+  <ion-card *ngIf="listdataArr.length===0&&!loading">
+    <ion-card-content>
+      没有数据
+    </ion-card-content>
+  </ion-card>
   <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
     <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
       <ion-note color="danger" class="kpbt" *ngIf="type == 1 && item['color'] == '#B8303B'">{{item.Title}}</ion-note>
@@ -39,7 +44,6 @@
         </div>
       </div>
     </ion-card-content>
-    <span class="kpysj">...</span>
   </ion-card>
   <!-- <ion-list>
     <ion-item *ngFor="let item of listdataArr,let i = index" (click)="pushIntodetail(item)">
