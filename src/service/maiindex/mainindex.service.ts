@@ -143,6 +143,9 @@ export class MainindexService {
     return this.httpclient.get(ApiUrlManagement.getDeptTreeCY + '?id=' + id);
   }
 
+  commitSimulateEnd(id: string, processType: string, coorType: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.commitSimulateEnd + '?id=' + id + '&processType=' + processType + '&coorType=' + coorType);
+  }
 }
 
 //保存意见的参数模型
