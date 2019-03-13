@@ -225,6 +225,34 @@ export class NextSelectComponent implements OnInit {
   }
 
   /**
+   * 勾选事件
+   * @param item 该行数据
+   * @param checked 是否选中
+   */
+  checkboxClick(item: any, checked: boolean) {
+    if (checked) {
+      if (item['id'] === 'root') {
+        return;
+      }
+      if (item['attributes']['NodeType'] === 'Dept') {
+        this.selectList.deptId.push(item['id']);
+      } else {
+        this.selectList.staffId.push(item['id']);
+      }
+    } else {
+      if (item['id'] === 'root') {
+        return;
+      }
+      if (item['attributes']['NodeType'] === 'Dept') {
+        this.selectList.deptId = this.selectList.deptId.filter(data => data !== item['id']);
+      } else {
+        this.selectList.staffId = this.selectList.staffId.filter(data => data !== item['id']);
+      }
+    }
+    this.selected.emit({ items: this.selectList });
+  }
+
+  /**
    * 获取一级部门
    * @param fun 回调
    */
