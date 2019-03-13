@@ -4,9 +4,7 @@
       <ion-label>
         {{item['ActionName']}}
       </ion-label>
-
     </ion-item>
-
     <ion-list class="padleft" *ngFor="let subitem of item['children']">
       <div>活动名称: {{subitem['ActionName']}}</div>
       <div>开始日期 - 结束日期: {{subitem['Date']}}</div>

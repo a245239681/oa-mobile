@@ -60,7 +60,6 @@ export class HandleinfoComponent implements OnInit {
    * 标题颜色
    */
   btys(i: any) {
-    console.log(i);
     if (i === '拟办部门意见') {
       return '#4877FB';
     } else if (i === '局领导批示') {
@@ -69,6 +68,19 @@ export class HandleinfoComponent implements OnInit {
       return '#67C554';
     } else {
       return '#4877FB';
+    }
+  }
+
+  /** 块分割线颜色 */
+  kfgx(i: any) {
+    if (i === '拟办部门意见') {
+      return '1px solid #4877FB';
+    } else if (i === '局领导批示') {
+      return '1px solid #F87A85';
+    } else if (i === '主办意见') {
+      return '1px solid #67C554';
+    } else {
+      return '1px solid #4877FB';
     }
   }
   /**
