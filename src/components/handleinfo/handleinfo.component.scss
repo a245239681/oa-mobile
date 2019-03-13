@@ -1,5 +1,31 @@
 ion-content {
   position: absolute;
-  left: 22vw;
-  width: 78vw;
+  left: 20vw;
+  width: 80vw;
+}
+
+.kp {
+  width: 100%;
+  border-bottom: 1px solid #999;
+  padding: 1rem 0 2px 3vw
+}
+
+.bt {
+  color: #D1202E;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.texts {
+  font-size: 0.8rem;
+  color: #666666;
+}
+
+.fgx {
+  display: block;
+  width: 90%;
+  margin: 7px 0;
+  color: #666666;
+  border-bottom: 1px solid rgb(204, 204, 204);
 }
