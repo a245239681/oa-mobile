@@ -18,7 +18,7 @@ export class DocumentdetailPage implements OnInit {
   title: string = '办理信息';
 
   /**
-   * 1 办理信息 2 流转信息 3 附件列表 4 办文签
+   * 1 办理信息 2 流转信息 3 办文签  4 附件列表
    */
   type: number = 1;
 
@@ -28,7 +28,7 @@ export class DocumentdetailPage implements OnInit {
     private nav: NavController
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      console.log(params['item']);
+      console.log(params);
       this.itemmodel = JSON.parse(params['item']);
     });
   }
@@ -46,10 +46,13 @@ export class DocumentdetailPage implements OnInit {
         this.title = '流转信息';
         break;
       case '3':
-        this.title = '附件列表';
+        this.title = '办文签';
+        break;
+      case '4':
+        this.title = '附件管理';
         break;
       default:
-        this.title = '办文签';
+        this.title = '相关公文';
     }
   }
 
