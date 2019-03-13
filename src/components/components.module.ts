@@ -8,6 +8,7 @@ import { AttachmentlistComponent } from './attachmentlist/attachmentlist.compone
 import { CirculationinfoComponent } from './circulationinfo/circulationinfo.component';
 import { SignComponent } from './sign/sign.component';
 import { DepartmentSelectComponent } from './department-select/department-select.component';
+import { NextSelectComponent } from './next-select/next-select.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { DepartmentSelectComponent } from './department-select/department-select
         CirculationinfoComponent,
         SignComponent,
         DepartmentSelectComponent,
+        NextSelectComponent,
     ],
     imports: [
         IonicModule,
@@ -31,6 +33,7 @@ import { DepartmentSelectComponent } from './department-select/department-select
         CirculationinfoComponent,
         SignComponent,
         DepartmentSelectComponent,
+        NextSelectComponent,
     ]
 })
 export class ComponentsModule { }

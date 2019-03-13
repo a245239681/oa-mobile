@@ -13,14 +13,16 @@
     <ion-segment-button mode="md" value="2" *ngIf="true">
       <ion-label>协办</ion-label>
     </ion-segment-button>
-    <ion-segment-button mode="md" value="3" *ngIf="false">
+    <ion-segment-button mode="md" value="3" *ngIf="true">
       <ion-label>传阅</ion-label>
     </ion-segment-button>
-    <ion-segment-button mode="md" value="4" *ngIf="false">
+    <ion-segment-button mode="md" value="4" *ngIf="true">
       <ion-label>下一步</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <department-select [isSingleSlect]="true" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
   <department-select [isSingleSlect]="false" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
+  <next-select *ngIf="type == 3" state="1"></next-select>
+  <next-select *ngIf="type == 4" state="0"></next-select>
 </ion-content>
