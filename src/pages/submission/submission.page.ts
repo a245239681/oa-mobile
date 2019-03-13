@@ -1,5 +1,6 @@
+import { UserInfo } from 'src/infrastructure/user-info';
 import { saveadviceModel } from './../../service/maiindex/mainindex.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -29,9 +30,21 @@ export class SubmissionPage implements OnInit {
   CurAttitude: string;
 
   /**
+   * 提交按钮标题
+   */
+  handinButtonTitle: string;
+
+  /**
+   * 是否展示提交并分发
+   */
+  IsShowHandinAndGiveButton: boolean = false;
+
+  /**
    * 常用语数组
    */
   oftenuseArr: any[] = [];
+
+  alertVC:HTMLIonAlertElement;
 
   formErrors = {                        // 错误信息
     advice: ''
@@ -51,12 +64,21 @@ export class SubmissionPage implements OnInit {
     private toast: CommonHelper,
     private nav: NavController,
     private route: Router,
-    private mainservice: MainindexService
+    private mainservice: MainindexService,
+    private userinfo: UserInfo,
+    public alertController: AlertController
 
   ) {
+
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
       this.itemmodel = JSON.parse(params['item']);
+      if (this.userinfo.GetUserDegree() == 'true') {
+        this.handinButtonTitle = '提交并返回代理人';
+        this.IsShowHandinAndGiveButton = true;
+      } else {
+        this.handinButtonTitle = '提交';
+      }
       this.getattitudeType();
     });
     this.creatForm();
@@ -163,33 +185,121 @@ export class SubmissionPage implements OnInit {
         skipValid: false
       }
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
-        if (res['State'] == 1) {
-          console.log(res);
-          //调用提交的接口
-          this.mainservice.getToastType(this.itemmodel['Id'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
-            console.log(res);
+        // if (res['State'] == 1) {
+        //是领导的话调另一个接口
+        if (this.IsShowHandinAndGiveButton) {
+
+          this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe((res) => {
             if (res['State'] == 1) {
-              //增加一个模态框的type的字段
-              this.itemmodel['commitType'] = res['Type'];
-              this.route.navigate(['person-select'],{
+              this.itemmodel['commitType'] = '20';
+              this.route.navigate(['person-select'], {
                 queryParams: {
                   'item': JSON.stringify(this.itemmodel),
                 },
               });
             }
-          },err => {
-            console.log(err);
+          }, err => {
+            this.toast.presentToast('请求失败');
           });
-          
-        }else {
-          this.toast.presentToast(res['Message']);
+
+        }
+
+        //不是领导
+        else {
+          //如果是协办的话点提交的接口就OK
+          if (this.itemmodel['CoorType'] == 1) {
+            console.log('协办')
+           this.handinxieban();
+          }
+
+          else {
+            //调用提交的接口
+            this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+              console.log(res);
+              if (res['State'] == 1) {
+
+                if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
+                  this.handinxieban();
+                  return;
+                }
+                else if (res['Type'] == 400){
+
+                  //弹出要结束的模态框 跳到下一步  展示结束步骤
+                  console.log('选结束');
+                  this.presentEndAlert();
+                }
+                 else
+                {
+                //增加一个模态框的type的字段
+                this.itemmodel['commitType'] = res['Type'];
+                this.route.navigate(['person-select'], {
+                  queryParams: {
+                    'item': JSON.stringify(this.itemmodel),
+                  },
+                });
+                }
+
+              }
+            }, err => {
+              console.log(err);
+            });
+          }
         }
       }, err => {
         this.toast.presentToast('请求失败');
       });
-    } else {
+    }
+
+    else {
       this.toast.presentToast('缺少参数');
     }
+  }
+
+  /**
+   * 进协办接口处理
+   */
+  handinxieban() {
+    this.mainservice.xiebanhandin(this.itemmodel['Id'], this.itemmodel['CoorType']).subscribe((res) => {
+      if (res['State'] == 1) {
+        this.toast.presentToast('协办提交成功');
+        //返回列表
+        console.log(res);
+        this.route.navigate(['documentlist']);
+      }
+    }, err => {
+      this.toast.presentToast('协办提交失败');
+    });
+  } 
+
+  /**
+   * 
+   * @param index 弹出结束提示
+   */
+  async presentEndAlert() {
+      this.alertVC = await this.alertController.create({
+        header: '提示',
+        message: '该提交将会将您的最后一条意见作为部门意见，点击【确定】进行提交，点击【取消】取消提交。',
+        buttons:[
+          {
+            text:'确定',
+            cssClass: 'secondary',
+            handler: () => {
+
+            }
+          },
+          {
+            text:'取消',
+            role: 'cancle',
+            cssClass: 'secondary',
+            handler: () => {
+
+            }
+          }
+        ]
+      });
+
+      this.alertVC.present();
+
   }
 
   /**

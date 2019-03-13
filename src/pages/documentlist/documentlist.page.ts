@@ -16,9 +16,11 @@ export class DocumentlistPage implements OnInit {
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
   //列表数据
   listdataArr: any[] = [];
-  
+
+  searchStr: string = '';
+
   object = {
-    'key':'11111'
+    'key': '11111'
   };
   //当前页
   currentPage: number = 1;
@@ -29,7 +31,7 @@ export class DocumentlistPage implements OnInit {
   //1 收文 2 发文 3 传阅件
   type: number = 1;
 
-  constructor(private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper, private activeRoute: ActivatedRoute, private route :Router ) {
+  constructor(private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper, private activeRoute: ActivatedRoute, private route: Router) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params['type']);
       this.type = params['type'];
@@ -46,7 +48,7 @@ export class DocumentlistPage implements OnInit {
     this.currentPage = 1;
     this.listdataArr = [];
     this.ionInfiniteScroll.disabled = false;
-    this.mainindexservice.getneedtodolist(this.currentPage, this.type).subscribe((res) => {
+    this.mainindexservice.getneedtodolist(this.currentPage, this.type, this.searchStr).subscribe((res) => {
       this.ionRefresh.complete();
       if (res['State'] == '1') {
         console.log(res);
@@ -81,6 +83,15 @@ export class DocumentlistPage implements OnInit {
     });
   }
 
+  /**
+   * 
+   * @param event 
+   */
+  seachclick(text: string) {
+    console.log(text);
+    this.getdata();
+  }
+
 
 /**
  * 下拉刷新
@@ -95,7 +106,7 @@ export class DocumentlistPage implements OnInit {
    */
   loadMoreData(event) {
     console.log('上拉加载');
-    this.mainindexservice.getneedtodolist(this.currentPage, this.type).subscribe((res) => {
+    this.mainindexservice.getneedtodolist(this.currentPage, this.type, this.searchStr).subscribe((res) => {
       this.ionInfiniteScroll.complete();
       if (res['State'] == '1') {
         var tempArr: any[] = res['Data']['PageOfResult'];
@@ -123,7 +134,7 @@ export class DocumentlistPage implements OnInit {
             return item;
           });
         }
-        
+
       } else {
         this.toast.presentToast('已无数据');
       }
@@ -146,11 +157,19 @@ export class DocumentlistPage implements OnInit {
    * 进入详情
    */
   pushIntodetail(item: any) {
-    this.route.navigate(['documentdetail'],{
-      queryParams: {
-        'item': JSON.stringify(item)
-      },
+    //点击签收
+    this.mainindexservice.signclick(item['Id'], item['ProcessType'], item['CoorType']).subscribe((res) => {
+      console.log('签收内容');
+      console.log(res);
+      this.route.navigate(['documentdetail'], {
+        queryParams: {
+          'item': JSON.stringify(item)
+        },
+      });
+    }, err => {
+      this.toast.presentToast('请求失败');
     });
+
   }
 
 

@@ -1,6 +1,9 @@
-import { MainindexService } from './../../service/maiindex/mainindex.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { MainindexService, lasthandinStepModel, PendingReaderModel } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { last } from 'rxjs/operators';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-person-select',
@@ -9,6 +12,41 @@ import { NavController } from '@ionic/angular';
 })
 export class PersonSelectPage implements OnInit {
 
+  /**
+   * 传过来的模型
+   */
+  itemmodel: any;
+
+  /**
+   * 控制显示隐藏某个tab
+   */
+  TabTitltArr:any[] = [
+    {
+      'title': '主办',
+      'show':true,
+      'value': 1
+    },
+    {
+      'title': '协办',
+      'show':true,
+      'value': 2
+    },
+    {
+      'title': '传阅',
+      'show':true,
+      'value': 3
+    },
+    {
+      'title': '下一步',
+      'show':true,
+      'value': 4
+    },
+  ];
+
+  
+
+  handleModel: lasthandinStepModel;
+
   type = 1;
 
   isDepartmentSelect = true;
@@ -16,21 +54,27 @@ export class PersonSelectPage implements OnInit {
   isSingleSelect = true;
 
   //记录主办的数组
-  hostArr:any[] = [];
+  hostArr: any[] = [];
 
   //记录协办数组
   coorperationArr: any[] = [];
 
   //记录传阅的数组
-  readerArr:any[] = [];
+  readerArr: any[] = [];
 
   //记录下一步的数组
-  nextArr:any[] =[];
+  nextArr: any[] = [];
 
   constructor(
     private nav: NavController,
-    private mainservice: MainindexService
-  ) { }
+    private mainservice: MainindexService,
+    private activeRoute: ActivatedRoute
+  ) {
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      this.itemmodel = JSON.parse(params['item']);
+      console.log(this.itemmodel);
+    });
+  }
 
   ngOnInit() {
 
@@ -61,16 +105,33 @@ export class PersonSelectPage implements OnInit {
     console.log('host主办');
     if (this.type == 1) {
       this.hostArr = items;
-    }else if (this.type == 2) {
+      console.log(this.hostArr);
+    } else if (this.type == 2) {
+      console.log(items);
       this.coorperationArr = items;
-    }else if (this.type == 3) {
-      this.readerArr = items;
-    }else {
-      this.nextArr = items;
+      this.coorperationArr = this.coorperationArr.map((item) => {
+        return item['id'];
+      });
+      console.log(this.coorperationArr);
+    } else if (this.type == 3) {
+      this.readerArr = [];
+      if (items['deptId'].length > 0) {
+        for (var i = 0; i < items['deptId'].length; i++) {
+          var departmentModel = <PendingReaderModel>{
+            staffId: '',
+            deptId: items['deptId'][i]
+          }
+          this.readerArr.push(departmentModel);
+        }
+      }
+      console.log(this.readerArr);
+    } else {
+      this.nextArr = items['staffId'];
+      console.log(this.nextArr);
     }
-    console.log(this.hostArr);
 
-    console.log(this.coorperationArr);
+
+
   }
 
   /**
@@ -85,8 +146,36 @@ export class PersonSelectPage implements OnInit {
    */
   handin() {
     console.log('提交'),
-    this.mainservice.lasthandinStep(null).subscribe((res) => {
+    this.handleModel = {
+      id: this.itemmodel['Id'],
+      //主办id 单选
+      primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0]['id'] : '',
 
+      cooperaters: this.coorperationArr,
+
+      /**
+       * 下一步
+       */
+      leaders: this.nextArr,
+
+      /**
+       * 传阅
+       */
+      readers: this.readerArr,
+
+      //模态框
+      commitType: this.itemmodel['commitType'],
+
+      CoorType: this.itemmodel['CoorType'],
+
+      ProcessType: this.itemmodel['ProcessType'],
+
+    };
+
+    console.log(this.handleModel);
+    this.mainservice.lasthandinStep(this.handleModel).subscribe((res) => {
+      console.log('提交之后');
+      console.log(res);
     });
   }
 

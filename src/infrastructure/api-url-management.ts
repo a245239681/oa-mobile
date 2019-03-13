@@ -98,6 +98,21 @@ export const ApiUrlManagement = {
    */
   getDeptTreeCY: 'api/recieve/GetDeptTree_CY',
 
+  /**
+   * 签收
+   */
+  Sign: 'api/recieve/Sign',
+
+  /**
+   * 意见页面的提交并返回代理人 --是领导的话
+   */
+  handinandbackman: 'api/recieve/ValidCommitLeaderCoordintion',
+
+  /**
+   * 协办提交
+   */
+  xiebanhandin: 'api/recieve/Commit_BMCL'
+
 }
 
 

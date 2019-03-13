@@ -12,10 +12,14 @@
     <div class="login-form">
       <ion-button color="secondary" value="保存" [disabled]="!adviceForm.valid"
         (click)="handleAdvice(0,adviceForm.value)">保存</ion-button>
-      <ion-button ion-button color="danger" value="提交" [disabled]="!adviceForm.valid"
-        (click)="handleAdvice(1,adviceForm.value)">提交</ion-button>
+      <ion-button ion-button color="danger" value="提交" (click)="handleAdvice(1,adviceForm.value)">{{handinButtonTitle}}
+      </ion-button>
+      <ion-button *ngIf="IsShowHandinAndGiveButton" ion-button color="danger" value="提交并分发文件">
+        提交并分发文件
+      </ion-button>
 
-      <ion-input style="width:100%; height: 100px;" type="text" placeholder="请输入您的意见" [(ngModel)]="CurAttitude" formControlName="advice">
+      <ion-input style="width:100%; height: 100px;" type="text" placeholder="请输入您的意见" [(ngModel)]="CurAttitude"
+        formControlName="advice">
       </ion-input>
       <div class="line" *ngIf="formErrors.advice"></div>
       <app-verification *ngIf="formErrors.advice" [text]="formErrors.advice"></app-verification>
@@ -25,8 +29,8 @@
     常用语列表
   </ion-label>
   <ion-list>
-    <ion-item *ngFor="let item of oftenuseArr,let i = index" (click)="gettheoftenuse(i)" >
+    <ion-item *ngFor="let item of oftenuseArr,let i = index" (click)="gettheoftenuse(i)">
       {{item['Text']}}
-      </ion-item>
-    </ion-list>
+    </ion-item>
+  </ion-list>
 </ion-content>
