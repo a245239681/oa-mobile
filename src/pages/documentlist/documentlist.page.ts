@@ -18,7 +18,7 @@ import { getDateDiff } from 'src/infrastructure/regular-expression';
 export class DocumentlistPage implements OnInit {
   @ViewChild(IonRefresher) ionRefresh: IonRefresher;
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
-  //列表数据
+  // 列表数据
   listdataArr: any[] = [];
 
   searchStr: string = '';
@@ -26,13 +26,13 @@ export class DocumentlistPage implements OnInit {
   object = {
     key: '11111'
   };
-  //当前页
+  // 当前页
   currentPage: number = 1;
 
-  //是否可以继续上拉
+  // 是否可以继续上拉
   nohasmore: boolean = true;
 
-  //1 收文 2 发文 3 传阅件
+  // 1 收文 2 发文 3 传阅件
   type: number = 1;
   title = '公文列表';
 
@@ -69,7 +69,7 @@ export class DocumentlistPage implements OnInit {
         res => {
           this.loading = false;
           this.ionRefresh.complete();
-          if (res['State'] == '1') {
+          if (res['State'] === 1) {
             console.log(res);
             this.listdataArr = res['Data']['PageOfResult'];
             if (this.listdataArr.length < 10) {
@@ -79,7 +79,7 @@ export class DocumentlistPage implements OnInit {
               this.currentPage += 1;
             }
 
-            if (this.type == 1) {
+            if (this.type === 1) {
               this.listdataArr = this.listdataArr.map(item => {
                 var dates = getDateDiff(
                   item['FinishDate'],
@@ -90,7 +90,7 @@ export class DocumentlistPage implements OnInit {
                   item['Emergency'] == '紧急' ||
                   dates <= 3
                 ) {
-                  item['color'] = '#B8303B';
+                  item['color'] = '#D1202E';
                 } else if (dates > 3 && dates <= 7) {
                   item['color'] = '#F99D31';
                 } else {
@@ -162,7 +162,7 @@ export class DocumentlistPage implements OnInit {
                   item['Emergency'] == '紧急' ||
                   dates <= 3
                 ) {
-                  item['color'] = '#B8303B';
+                  item['color'] = '#D1202E';
                 } else if (dates > 3 && dates <= 7) {
                   item['color'] = '#F99D31';
                 } else {
@@ -194,7 +194,7 @@ export class DocumentlistPage implements OnInit {
    * 进入详情
    */
   pushIntodetail(item: any) {
-    //点击签收
+    // 点击签收
     this.mainindexservice
       .signclick(item['Id'], item['ProcessType'], item['CoorType'])
       .subscribe(

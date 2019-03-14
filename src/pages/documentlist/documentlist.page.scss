@@ -62,14 +62,11 @@ input::-webkit-input-placeholder {
 
 .label {
   display: inline-block;
-  min-width: 30%;
+  min-width: 45%;
+  margin-right: 5%;
   font-size: 0.6rem !important;
   padding-top: 8px;
   font-size: 14px;
-}
-
-.label:first-child {
-  margin-right: 2rem;
 }
 
 .kpbt {
