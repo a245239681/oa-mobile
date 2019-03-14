@@ -1,5 +1,10 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-icon
+      style="float:left;width:50px;height:30px"
+      name="ios-arrow-back"
+      (click)="canGoBack()"
+    ></ion-icon>
     <ion-title>个人信息</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,7 +16,7 @@
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">头像</span>
           <span class="flexRightContent flex1W100 text-right">
-            <img src="../../assets/image/bg.jpg" alt="" />
+            <img src="../../assets/head.png" alt="" />
           </span>
         </p>
       </div>
@@ -33,17 +38,20 @@
       </div>
     </div>
     <div class="flexBox">
-      <div class="flexLeftContent detailInfo flex1W100">
-        <p class="flex1W100 flexBox">
-          <span class="flexLeftContent">生日</span>
-          <span class="flexRightContent flex1W100 text-right">
-            2019/12/12
-          </span>
-        </p>
-      </div>
-      <div class="flexRightContent iconRight">
-        <i class="iconfont">&#xe955;</i>
-      </div>
+      <ion-item style="--padding-start:0;--padding-end:0;width: 100%">
+        <div class="flexLeftContent detailInfo flex1W100">
+          <p class="flex1W100 flexBox">
+            <span class="flexLeftContent">生日</span>
+            <span class="flexRightContent flex1W100 text-right">
+              2019/12/12
+            </span>
+            <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
+          </p>
+        </div>
+        <div class="flexRightContent iconRight">
+          <i class="iconfont">&#xe955;</i>
+        </div></ion-item
+      >
     </div>
     <div class="flexBox" [routerLink]="['/change-phonenumber']">
       <div class="flexLeftContent detailInfo flex1W100">

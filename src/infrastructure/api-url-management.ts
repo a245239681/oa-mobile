@@ -76,7 +76,7 @@ export const ApiUrlManagement = {
   /**
    * 获取拟办部门及其人员
    */
-  getreader: 'GetDeptTree_CY',
+  getreader: 'api/recieve/GetDeptTree_CY',
 
   /**
    * 点击提交返回给一个弹框的类型
@@ -99,10 +99,27 @@ export const ApiUrlManagement = {
   getDeptTreeCY: 'api/recieve/GetDeptTree_CY',
 
   /**
-   * 获取已勾选
+   * 签收
+   */
+  Sign: 'api/recieve/Sign',
+
+  /**
+   * 意见页面的提交并返回代理人 --是领导的话
+   */
+  handinandbackman: 'api/recieve/ValidCommitLeaderCoordintion',
+
+  /**
+   * 协办提交
+   */
+  xiebanhandin: 'api/recieve/Commit_BMCL',
+
+  /** 获取已勾选
    */
   commitSimulateEnd: 'api/recieve/CommitSimulateEnd',
-};
+
+}
+   
+
 
 
 

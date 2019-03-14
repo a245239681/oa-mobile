@@ -7,13 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SignComponent implements OnInit {
   @Input() itemmodel: any;
-
-  constructor() {}
+  constructor() {
+    console.log('构造函数');
+  }
 
   ngOnInit() {
-    this.alert();
-  }
-  alert() {
-    console.log(this.itemmodel);
+    console.log('进入init方法');
   }
 }

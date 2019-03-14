@@ -62,8 +62,12 @@ export class LoginPage {
       if (res['State'] == '1') {
         var userinfo = res['Data'];
         console.log(userinfo);
+        /**
+         * 存token 存名字 存是否是领导
+         */
         this.userinfo.SetToken(userinfo['OaApiToken']);
         this.userinfo.SetUserName(userinfo['Name']);
+        this.userinfo.SetUserDegree(userinfo['IsLeader']);
         this.nav.navigateRoot("/tabs/tabs");
       } else {
         this.toast.presentToast('登录失败');

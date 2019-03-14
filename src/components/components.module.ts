@@ -9,6 +9,7 @@ import { CirculationinfoComponent } from './circulationinfo/circulationinfo.comp
 import { SignComponent } from './sign/sign.component';
 import { DepartmentSelectComponent } from './department-select/department-select.component';
 import { NextSelectComponent } from './next-select/next-select.component';
+import { ReadercomponentComponent } from './readercomponent/readercomponent.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { NextSelectComponent } from './next-select/next-select.component';
         SignComponent,
         DepartmentSelectComponent,
         NextSelectComponent,
+        ReadercomponentComponent
     ],
     imports: [
         IonicModule,
@@ -34,6 +36,7 @@ import { NextSelectComponent } from './next-select/next-select.component';
         SignComponent,
         DepartmentSelectComponent,
         NextSelectComponent,
+        ReadercomponentComponent
     ]
 })
 export class ComponentsModule { }
