@@ -4,14 +4,12 @@ import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-havedonework',
   templateUrl: './havedonework.page.html',
-  styleUrls: ['./havedonework.page.scss'],
+  styleUrls: ['./havedonework.page.scss']
 })
 export class HavedoneworkPage implements OnInit {
-
   @ViewChild(IonRefresher) ionRefresh: IonRefresher;
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
   //列表数据
@@ -25,14 +23,16 @@ export class HavedoneworkPage implements OnInit {
 
   //是否可以继续上拉
   nohasmore: boolean = true;
-  constructor(private nav: NavController,
+  constructor(
+    private nav: NavController,
     private route: Router,
     private mainindexservice: MainindexService,
     private toast: CommonHelper,
-    public activeRoute: ActivatedRoute) { }
+    public activeRoute: ActivatedRoute
+  ) {}
 
   /**
-   * 
+   *
    * @param event 点击Segment
    */
   segmentChanged(event: any) {
@@ -50,71 +50,73 @@ export class HavedoneworkPage implements OnInit {
     this.currentPage = 1;
     this.listdataArr = [];
     this.ionInfiniteScroll.disabled = false;
-    this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe((res) => {
-      this.ionRefresh.complete();
-      if (res['State'] == '1') {
-        console.log(res);
-        this.listdataArr = res['Data']['PageOfResult'];
-        if (this.listdataArr.length < 10) {
-          this.nohasmore = true;
+    this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
+      res => {
+        this.ionRefresh.complete();
+        if (res['State'] == '1') {
+          console.log(res);
+          this.listdataArr = res['Data']['PageOfResult'];
+          if (this.listdataArr.length < 10) {
+            this.nohasmore = true;
+          } else {
+            this.nohasmore = false;
+            this.currentPage += 1;
+          }
         } else {
-          this.nohasmore = false;
-          this.currentPage += 1;
+          this.toast.presentToast('已无数据');
         }
-
-      } else {
-        this.toast.presentToast('已无数据');
+        console.log(this.nohasmore);
+      },
+      err => {
+        this.ionRefresh.complete();
+        this.toast.presentToast('请求失败');
       }
-      console.log(this.nohasmore);
-    }, err => {
-      this.ionRefresh.complete();
-      this.toast.presentToast('请求失败');
-    });
+    );
   }
 
-
-/**
- * 下拉刷新
- * @param event 
- */  doRefresh(event) {
+  /**
+   * 下拉刷新
+   * @param event
+   */ doRefresh(event) {
     this.getdata();
   }
 
   /**
    * 上拉加载
-   * @param infiniteScroll 
+   * @param infiniteScroll
    */
   loadMoreData(event) {
     console.log('上拉加载');
-    this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe((res) => {
-      this.ionInfiniteScroll.complete();
-      if (res['State'] == '1') {
-        var tempArr: any[] = res['Data']['PageOfResult'];
-        tempArr.forEach((item) => {
-          this.listdataArr.push(item);
-        });
+    this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
+      res => {
+        this.ionInfiniteScroll.complete();
+        if (res['State'] == '1') {
+          var tempArr: any[] = res['Data']['PageOfResult'];
+          tempArr.forEach(item => {
+            this.listdataArr.push(item);
+          });
 
-        if (tempArr.length < 10) {
-          this.nohasmore = true;
+          if (tempArr.length < 10) {
+            this.nohasmore = true;
+          } else {
+            this.nohasmore = false;
+            this.currentPage++;
+          }
         } else {
-          this.nohasmore = false;
-          this.currentPage++;
+          this.toast.presentToast('已无数据');
         }
-
-      } else {
-        this.toast.presentToast('已无数据');
+        console.log(this.nohasmore);
+      },
+      err => {
+        this.ionInfiniteScroll.complete();
+        this.toast.presentToast('请求失败');
       }
-      console.log(this.nohasmore);
-    }, err => {
-      this.ionInfiniteScroll.complete();
-      this.toast.presentToast('请求失败');
-    });
-
+    );
   }
 
   /**
-  * 返回
-  */
+   * 返回
+   */
   canGoBack() {
     this.nav.back();
   }
@@ -125,9 +127,8 @@ export class HavedoneworkPage implements OnInit {
   pushIntodetail(item: any) {
     this.route.navigate(['documentdetail'], {
       queryParams: {
-        'item': JSON.stringify(item)
-      },
+        item: JSON.stringify(item)
+      }
     });
   }
-
 }

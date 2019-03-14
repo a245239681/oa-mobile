@@ -1,7 +1,5 @@
-
-//API Url统一管理数组
+// API Url统一管理数组
 export const ApiUrlManagement = {
-
   /**
    * 登录接口
    */
@@ -41,7 +39,6 @@ export const ApiUrlManagement = {
    * 获取意见
    */
   getAttitudeList: 'api/recieve/GetAttitudeList',
-
 
   /**
    * 附件列表
@@ -121,11 +118,4 @@ export const ApiUrlManagement = {
    * 主办下一步提交---获取----结束
    */
   GetActionTree: 'api/recieve/GetActionTree'
-
-}
-   
-
-
-
-
-
+};
