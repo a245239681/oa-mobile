@@ -37,7 +37,7 @@ export class SubmissionPage implements OnInit {
   /**
    * 是否展示提交并分发
    */
-  IsShowHandinAndGiveButton: boolean = false;
+  IsShowHandinAndGiveButton = false;
 
   /**
    * 常用语数组
@@ -73,7 +73,7 @@ export class SubmissionPage implements OnInit {
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
       this.itemmodel = JSON.parse(params['item']);
-      if (this.userinfo.GetUserDegree() == 'true') {
+      if (this.userinfo.GetUserDegree() === 'true') {
         this.handinButtonTitle = '提交并返回代理人';
         this.IsShowHandinAndGiveButton = true;
       } else {
@@ -89,9 +89,9 @@ export class SubmissionPage implements OnInit {
       advice: ['', [Validators.required]],
     });
     this.adviceForm.valueChanges.subscribe((data) => {
-      this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
+     // this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
     });
-    this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
+   // this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
   }
 
   /**
