@@ -6,6 +6,9 @@
     <ion-buttons style="margin-right: 1rem;font-size: 0.9rem;" *ngIf="type == 1" slot="end" (click)="pushtoadvice()">
       意见
     </ion-buttons>
+    <ion-buttons style="margin-right: 1rem;font-size: 0.9rem;" *ngIf="type == 3" slot="end">
+      添加
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -22,10 +25,10 @@
     <ion-segment-button value="2">
       <ion-label>流转信息</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="3">
+    <ion-segment-button value="4">
       <ion-label>办文签</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="4">
+    <ion-segment-button value="3">
       <ion-label>附件管理</ion-label>
     </ion-segment-button>
     <!-- <ion-segment-button value="5">

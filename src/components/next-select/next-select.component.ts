@@ -11,7 +11,7 @@ export class NextSelectComponent implements OnInit {
 
   constructor(
     private mainindexservice: MainindexService,
-    private toast: CommonHelper,
+    private commonHelper: CommonHelper,
   ) { }
 
   /**
@@ -22,7 +22,7 @@ export class NextSelectComponent implements OnInit {
   /**
    * 勾选回调
    */
-  @Output() selected = new EventEmitter<{ items: any }>();
+  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean }>();
 
   departmentTree: any[];
 
@@ -30,8 +30,16 @@ export class NextSelectComponent implements OnInit {
 
   buttonList: any[];
 
+  selectedList = {
+    staffId: [],
+    deptId: [],
+  };
+
   parentNode = null; // 父节点
   node = null; // 节点
+
+  leaderChecked = false;
+  nbChecked = false;
 
   ngOnInit() {
     switch (this.state) {
@@ -70,6 +78,7 @@ export class NextSelectComponent implements OnInit {
    * @param item 该目录
    */
   indexClick(item: any) {
+    if (item.id === this.buttonList[this.buttonList.length - 1]) { return; }
     if (item.id === 'root') {
       this.showList = this.departmentTree;
     } else {
@@ -133,12 +142,150 @@ export class NextSelectComponent implements OnInit {
    * @param checked 是否选中
    */
   checkboxClick(item: any, checked: boolean) {
+    if (this.state === '0') {
+      if (checked) {
+        if (item.id === '局领导') {
+          if (this.nbChecked) {
+            checked = false;
+            item.checked = false;
+            console.log(this.departmentTree);
+            this.commonHelper.presentToast('不能同时选择局领导批示和拟办人');
+            return false;
+          }
+          this.leaderChecked = true;
+        } else if (item.parent_id === '局领导') {
+          if (this.nbChecked) {
+            checked = false;
+            item.checked = false;
+            this.commonHelper.presentToast('不能同时选择局领导批示和拟办人');
+            return false;
+          }
+          this.leaderChecked = true;
+        } else if (item.id === '拟办') {
+          if (this.leaderChecked) {
+            checked = false;
+            item.checked = false;
+            this.commonHelper.presentToast('不能同时选择局领导批示和拟办人');
+            return false;
+          }
+          this.nbChecked = true;
+        } else {
+          if (this.leaderChecked) {
+            checked = false;
+            item.checked = false;
+            this.commonHelper.presentToast('不能同时选择局领导批示和拟办人');
+            return false;
+          }
+          this.nbChecked = true;
+        }
+      } else {
+        if (item.id === '局领导') {
+          this.leaderChecked = false;
+        } else if (item.parent_id === '局领导') {
+          this.leaderChecked = false;
+          const leader = this.searchData(this.departmentTree, '局领导');
+          this.leaderCheck(leader.children);
+        } else if (item.id === '拟办') {
+          this.nbChecked = false;
+        } else {
+          this.nbChecked = false;
+          const nb = this.searchData(this.departmentTree, '拟办');
+          this.nbCheck(nb);
+        }
+      }
+    }
     this.personAllSelect(item, checked);
     this.childrenAllSelect(item, checked);
-    if (checked) {
+    switch (item.id) {
+      case '局领导':
+        if (item.children.length === 0) {
+          this.getLeader((list) => {
+            item.children = list;
+            this.enterParent(item.children, item.id, item.checked);
+            this.returnChecked();
+          });
+        } else { this.returnChecked(); }
+        break;
+      case '拟办':
+        if (item.children.length === 0) {
+          this.getDept((list) => {
+            item.children = list;
+            this.enterParent(item.children, item.id, item.checked);
+            this.returnChecked();
+          });
+        } else { this.returnChecked(); }
+        break;
+      case '1':
+        if (item.children.length === 0) {
+          this.getPerson(item.id, (list) => {
+            item.children = list;
+            this.enterParent(item.children, item.id, item.checked);
+            this.returnChecked();
+          });
+        } else { this.returnChecked(); }
+        break;
+      default:
+        this.returnChecked();
+        break;
+    }
+  }
 
-    } else {
+  /**
+   * 返回已选列表
+   */
+  returnChecked() {
+    this.selectedList = {
+      staffId: [],
+      deptId: [],
+    };
+    this.addChecked(this.departmentTree);
+    this.selected.emit({ items: this.selectedList, leaderChecked: this.leaderChecked, nbChecked: this.nbChecked });
+  }
 
+  /**
+   * 添加已选列表
+   * @param node 节点
+   */
+  addChecked(node: any[]) {
+    for (let i = 0; i < node.length; i++) {
+      if (node[i].children.length !== 0) {
+        this.addChecked(node[i].children);
+      } else {
+        if (node[i].checked) {
+          if (node[i].attributes.NodeType === 'Dept') {
+            this.selectedList.deptId.push(node[i].id);
+          } else {
+            this.selectedList.staffId.push(node[i].id);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * 局领导勾选检查
+   * @param leaderChildren 局领导列表
+   */
+  leaderCheck(leaderChildren: any[]) {
+    for (let i = 0; i < leaderChildren.length; i++) {
+      if (leaderChildren[i].checked) {
+        this.leaderChecked = true;
+        return;
+      }
+    }
+  }
+
+  /**
+   * 拟办勾选检查
+   * @param node 节点
+   */
+  nbCheck(node: any) {
+    for (let i = 0; i < node.children.length; i++) {
+      if (node.children[i].checked) {
+        this.nbChecked = true;
+        return;
+      }
+      this.nbCheck(node.children[i]);
     }
   }
 
@@ -197,10 +344,10 @@ export class NextSelectComponent implements OnInit {
       if (res['State'] === 1) {
         fun(res.Data);
       } else {
-        this.toast.presentToast('已无数据');
+        this.commonHelper.presentToast('已无数据');
       }
     }, () => {
-      this.toast.presentToast('请求失败');
+      this.commonHelper.presentToast('请求失败');
     });
   }
 
@@ -213,10 +360,10 @@ export class NextSelectComponent implements OnInit {
       if (res['State'] === 1) {
         fun(res.Data.children);
       } else {
-        this.toast.presentToast('已无数据');
+        this.commonHelper.presentToast('已无数据');
       }
     }, () => {
-      this.toast.presentToast('请求失败');
+      this.commonHelper.presentToast('请求失败');
     });
   }
 
@@ -230,10 +377,10 @@ export class NextSelectComponent implements OnInit {
       if (res['State'] === 1) {
         fun(res.Data);
       } else {
-        this.toast.presentToast('已无数据');
+        this.commonHelper.presentToast('已无数据');
       }
     }, () => {
-      this.toast.presentToast('请求失败');
+      this.commonHelper.presentToast('请求失败');
     });
   }
 
@@ -293,8 +440,6 @@ export class NextSelectComponent implements OnInit {
         if (obj.children.length !== 0) {
           this.parentNode = obj; // 4.递归前记录当前节点，作为父节点
           this.getNode(obj.children, nodeId); // 递归往下找
-        } else {
-          break; // 跳出递归返回上层递归
         }
       }
     }
@@ -302,7 +447,6 @@ export class NextSelectComponent implements OnInit {
     if (!this.parentNode) {
       this.parentNode = 'root';
     }
-
     // 返回节点内容
     return this.node;
   }
