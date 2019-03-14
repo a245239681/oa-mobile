@@ -1,5 +1,7 @@
-<ion-list>
-  <ion-item *ngFor="let item of attachmentlistArr" (click)="previewerAttchment(item)">
-    <ion-label>{{item['Name']}}</ion-label>
-  </ion-item>
-</ion-list>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of attachmentlistArr" (click)="previewerAttchment(item)">
+      <ion-label>{{item['Name']}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

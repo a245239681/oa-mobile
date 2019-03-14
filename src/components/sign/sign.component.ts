@@ -9,8 +9,12 @@ export class SignComponent implements OnInit {
 
   @Input() itemmodel: any;
 
-  constructor() { }
+  constructor() { 
+    console.log('构造函数');
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log('进入init方法')
+   }
 
 }

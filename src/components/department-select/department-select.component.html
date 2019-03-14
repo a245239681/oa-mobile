@@ -1,15 +1,17 @@
 <ion-list mode="md" *ngIf="!isSingleSlect">
-    <ion-item *ngFor="let item of listdataArr,let i = index">
-      <ion-checkbox (ionChange)="mutiSelect(item,$event.detail.checked)"></ion-checkbox>
-      <ion-label>{{item['text']}} </ion-label>
-    </ion-item>
+  <ion-item *ngFor="let item of listdataArr,let i = index">
+    <ion-checkbox [(checked)]="listdataArr[i].checked" [(ngModel)]="listdataArr[i].checked"
+      (ionChange)="mutiSelect(item,$event.detail.checked)"></ion-checkbox>
+    <ion-label>{{item['text']}} </ion-label>
+  </ion-item>
 </ion-list>
 
 <ion-list mode="md" *ngIf="isSingleSlect">
   <ion-radio-group>
-  <ion-item *ngFor="let item of listdataArr,let i = index">
-    <ion-label>{{item['text']}} </ion-label>
-    <ion-radio (ionSelect)="singleSelect(item)"></ion-radio>
-  </ion-item>
+    <ion-item *ngFor="let item of listdataArr,let i = index">
+      <ion-label>{{item['text']}} </ion-label>
+      <ion-radio [(checked)]="listdataArr[i].checked" [(ngModel)]="listdataArr[i].checked"
+        (ionSelect)="singleSelect(item)"></ion-radio>
+    </ion-item>
   </ion-radio-group>
 </ion-list>

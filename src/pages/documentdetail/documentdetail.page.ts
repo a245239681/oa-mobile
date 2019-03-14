@@ -6,10 +6,9 @@ import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-documentdetail',
   templateUrl: './documentdetail.page.html',
-  styleUrls: ['./documentdetail.page.scss'],
+  styleUrls: ['./documentdetail.page.scss']
 })
 export class DocumentdetailPage implements OnInit {
-
   /**
    * 列表传进来的item
    */
@@ -19,20 +18,22 @@ export class DocumentdetailPage implements OnInit {
   title: string = '办理信息';
 
   /**
-   * 1 办理信息 2 流转信息 3 附件列表 4 办文签
+   * 1 办理信息 2 流转信息 3 办文签  4 附件列表
    */
   type: number = 1;
 
-  constructor(private activeRoute: ActivatedRoute, private route: Router,private nav:NavController) {
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private route: Router,
+    private nav: NavController
+  ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      console.log(params['item']);
+      console.log(params);
       this.itemmodel = JSON.parse(params['item']);
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   segmentChanged(event: any) {
     console.log('Segment changed', event.target.value);
@@ -45,19 +46,22 @@ export class DocumentdetailPage implements OnInit {
         this.title = '流转信息';
         break;
       case '3':
-        this.title = '附件列表';
+        this.title = '办文签';
+        break;
+      case '4':
+        this.title = '附件管理';
         break;
       default:
-        this.title = '办文签'
+        this.title = '相关公文';
     }
   }
 
   pushtoadvice() {
     console.log('意见');
-    this.route.navigate(['submission'],{
+    this.route.navigate(['submission'], {
       queryParams: {
-        'item': JSON.stringify(this.itemmodel),
-      },
+        item: JSON.stringify(this.itemmodel)
+      }
     });
   }
 

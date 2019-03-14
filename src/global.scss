@@ -11,5 +11,9 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 .ion-color-primary {
-  --ion-color-base: #4877FB  !important;
+  --ion-color-base: #4877FB !important;
+}
+
+.title-ios.hydrated{
+  font-weight: 400
 }
