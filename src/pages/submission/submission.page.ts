@@ -196,11 +196,23 @@ export class SubmissionPage implements OnInit {
             if (res['State'] === 1) {
               // 增加一个模态框的type的字段
               this.itemmodel['commitType'] = res['Type'];
-              this.route.navigate(['person-select'], {
-                queryParams: {
-                  'item': JSON.stringify(this.itemmodel),
-                },
-              });
+              this.mainservice.commitSimulateEnd(
+                this.itemmodel.Id,
+                this.itemmodel.ProcessType,
+                this.itemmodel.CoorType).subscribe((data: any) => {
+                  if (data['State'] === 1) {
+                    this.route.navigate(['person-select'], {
+                      queryParams: {
+                        'item': JSON.stringify(this.itemmodel),
+                        'hasSelected': JSON.stringify(data.Data),
+                      },
+                    });
+                  } else {
+                    this.toast.presentToast('已无数据');
+                  }
+                }, () => {
+                  this.toast.presentToast('请求失败');
+                });
             }
           }, err => {
             console.log(err);

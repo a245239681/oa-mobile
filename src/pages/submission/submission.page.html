@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-icon style="float:left;width:50px;height:30px"  name="ios-arrow-back" (click)='canGoBack()'>
+    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'>
     </ion-icon>
     <ion-title>提交意见</ion-title>
-    <ion-buttons style=" padding-right: 16px" slot="end">保存</ion-buttons>
+    <ion-buttons style=" padding-right: 16px" slot="end" (click)="handleAdvice(0,adviceForm.value)">保存</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
           <ion-col size="12" size-lg>
             <ion-button color="success"
               class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-              value="提交">提交</ion-button>
+              (click)="handleAdvice(1,adviceForm.value)" value="提交">提交</ion-button>
           </ion-col>
           <!-- <ion-col size="12" size-lg>
             <ion-button color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated" value="移交" (click)="handleAdvice(0,adviceForm.value)">移交</ion-button>
@@ -37,12 +37,12 @@
           <ion-col size="6" size-lg>
             <ion-button color="secondary"
               class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-              value="移交">移交</ion-button>
+              (click)="handleAdvice(0,adviceForm.value)" value="移交">移交</ion-button>
           </ion-col>
           <ion-col size="6" size-lg>
             <ion-button color="warning"
               class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-              value="退回">退回</ion-button>
+              (click)="handleAdvice(0,adviceForm.value)" value="退回">退回</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -59,7 +59,9 @@
         <ion-title class="padding"> 常用语列表</ion-title>
       </ion-col>
       <ion-col size="4" size-lg>
-        <ion-button color="primary" size="small" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated">编辑</ion-button>
+        <ion-button color="primary" size="small"
+          class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated">
+          编辑</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
