@@ -18,6 +18,8 @@ const routes: Routes = [
   { path: 'change-phonenumber', loadChildren: '../pages/change-phonenumber/change-phonenumber.module#ChangePhonenumberPageModule' },
   { path: 'phrasing', loadChildren: '../pages/phrasing/phrasing.module#PhrasingPageModule' },
   { path: 'qr-code', loadChildren: '../pages/qr-code/qr-code.module#QrCodePageModule' },
+  { path: 'add-edit-phrasing', loadChildren: '../pages/add-edit-phrasing/add-edit-phrasing.module#AddEditPhrasingPageModule' },
+
 
 
 

@@ -134,8 +134,10 @@ export class PersonSelectPage implements OnInit {
 
   }
 
-  nextSelected(items: any) {
+  nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean) {
     console.log(items);
+    console.log(leaderChecked);
+    console.log(nbChecked);
   }
 
   /**

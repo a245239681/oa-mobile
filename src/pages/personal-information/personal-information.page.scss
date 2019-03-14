@@ -80,3 +80,9 @@
 // .action-sheet-button.sc-ion-action-sheet-ios:hover {
 //   color: var(--color, var(--ion-color-primary, #3880ff));
 // }
+:host(.item-inner) {
+  padding: 0 !important;
+}
+:host {
+  --inner-padding-end:0!important;
+}
