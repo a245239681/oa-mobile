@@ -57,7 +57,7 @@ export class DocumentdetailPage implements OnInit {
   }
 
   pushtoadvice() {
-    console.log('意见');
+   // console.log('意见');
     this.route.navigate(['submission'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)
