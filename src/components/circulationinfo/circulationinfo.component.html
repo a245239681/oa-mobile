@@ -13,12 +13,11 @@
       <div>状态: {{subitem['State']}}</div>
       <div>意见:{{subitem['Attitude']}}</div>
     </ion-list> -->
-  <div style='padding-top: 0.5rem'>
     <div *ngFor="let item of parenteArr; let i = index">
       <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(item)" [ngStyle]="{'color': forecolors[item.ActionName],'background-color': backcolors[item.ActionName]}">
           <ion-icon mode='md' [name]="item.hidden===false?'arrow-dropup':'arrow-dropdown'" class="bttb"></ion-icon>
-          <span>{{item['ActionName']}}</span><sup *ngIf="item.children.length">（ {{item.children.length}} ）</sup>
+          <span>{{item['ActionName']}}</span><small *ngIf="item.children.length">（ {{item.children.length}} ）</small>
         </div>
         <div *ngIf="!item.hidden">
           <div *ngFor="let subitem of item['children']; let n = index">
@@ -34,7 +33,7 @@
           </div>
           <span class='fgx' *ngIf="item.children.length !== 0" [ngStyle]="{'border-bottom-color': forecolors[item['ActionName']]}"></span>
         </div>
-        <p class="texts" *ngIf="item.children.length === 0"> &nbsp; 没有记录</p>
+        <p class="texts" style="margin-top:0.5em" *ngIf="item.children.length === 0"> &nbsp; 没有记录</p>
       </div>
       <!-- <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(i)" [ngStyle]="{'color': btys(item['ActionName']),'background-color': btbjs(item['ActionName'])}">
@@ -71,5 +70,4 @@
       </div>
       <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom': kfgx(item['ActionName'])}"></span> -->
     </div>
-  </div>
 </ion-content>

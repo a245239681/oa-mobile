@@ -57,19 +57,14 @@ export class MainIndexPage implements OnInit {
   pushDocumentList(index: number) {
 
     if (index == 3) {
-      this.nav.navigateForward('havedonework',{
-
-        queryParams: {
-              'type': ++index
-            }
-      });
+      this.nav.navigateForward(['havedonework']);
       // this.route.navigate(['havedonework'], {
       //   queryParams: {
       //     'type': ++index
       //   }
       // });
     } else {
-      this.nav.navigateForward('documentlist',{
+      this.nav.navigateForward(['documentlist'],{
         queryParams: {
               'type': ++index
             }

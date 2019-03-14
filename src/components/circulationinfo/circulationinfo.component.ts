@@ -85,7 +85,7 @@ export class CirculationinfoComponent implements OnInit {
     协办部门: '#DDF6FB',
     传阅结果: '#FDF3E6',
     流转情况: '#E1FAE4',
-    领导批示: '#f141431c'
+    领导批示: 'rgb(253,234,234)'
   }
   // /**
   //  * 标题颜色
