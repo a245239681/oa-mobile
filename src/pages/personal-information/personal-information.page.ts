@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-personal-information',
@@ -7,7 +7,10 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./personal-information.page.scss']
 })
 export class PersonalInformationPage implements OnInit {
-  constructor(public actionSheetController: ActionSheetController) {}
+  constructor(
+    public actionSheetController: ActionSheetController,
+    private nav: NavController
+  ) {}
 
   ngOnInit() {}
   async headPortraitSheet() {
@@ -77,5 +80,9 @@ export class PersonalInformationPage implements OnInit {
       default:
         break;
     }
+  }
+  /** 返回 */
+  canGoBack() {
+    this.nav.back();
   }
 }
