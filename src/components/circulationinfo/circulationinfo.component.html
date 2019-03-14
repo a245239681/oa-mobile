@@ -40,32 +40,35 @@
           <ion-icon mode='md' name="arrow-dropdown" class="bttb"></ion-icon>
           <span>{{item['ActionName']}}</span>
         </div>
-        <div *ngFor="let subitem of item['children']; let n = index">
-          <div class="reny">
-            <div style='font-weight: 600'>
-              <span class='texts' style="vertical-align: top;">活动名称：</span>
-              <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{subitem['ActionName']}}</span>
-            </div>
-            <div>
-              <span class='texts'>签收日期：</span>
-              <span class='texts'>{{ subitem['SignDate'] }}</span>
-            </div>
-            <div>
-              <span class='texts'>开始日期 - 结束日期：</span>
+        <div [ngStyle]="{'height': showHeight[i],'overflow': hiddenList[i]}">
+          <div *ngFor="let subitem of item['children']; let n = index">
+            <div class="reny">
+              <div style='font-weight: 600'>
+                <span class='texts' style="vertical-align: top;">活动名称：</span>
+                <span class='texts'
+                  style="width: 70%;display: inline-block;vertical-align: top;">{{subitem['ActionName']}}</span>
+              </div>
               <div>
-                <span class='texts'>{{ subitem['Date'] }}</span>
+                <span class='texts'>签收日期：</span>
+                <span class='texts'>{{ subitem['SignDate'] }}</span>
+              </div>
+              <div>
+                <span class='texts'>开始日期 - 结束日期：</span>
+                <div>
+                  <span class='texts'>{{ subitem['Date'] }}</span>
+                </div>
+              </div>
+              <div>
+                <span class='texts'>经办用户： {{ subitem['ActUsr'] }} &nbsp; &nbsp; &nbsp; 状态： {{ subitem['State'] }}</span>
+              </div>
+              <div>
+                <span class='texts' style="vertical-align: top;">意见：</span>
+                <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Attitude']
+                }}</span>
               </div>
             </div>
-            <div>
-              <span class='texts'>经办用户： {{ subitem['ActUsr'] }} &nbsp; &nbsp; &nbsp; 状态： {{ subitem['State'] }}</span>
-            </div>
-            <div>
-              <span class='texts' style="vertical-align: top;">意见：</span>
-              <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Attitude']
-                }}</span>
-            </div>
+            <span class='fgx' *ngIf="fgx(item['children'],n)"></span>
           </div>
-          <span class='fgx' *ngIf="fgx(item['children'],n)"></span>
         </div>
       </div>
       <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom': kfgx(item['ActionName'])}"></span> -->

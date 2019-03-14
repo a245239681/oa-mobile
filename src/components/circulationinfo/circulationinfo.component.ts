@@ -10,8 +10,6 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CirculationinfoComponent implements OnInit {
   @Input() itemmodel: any;
 
-  parenteArr: any[] = [];
-
   constructor(
     private mainservice: MainindexService,
     private toast: CommonHelper
@@ -20,6 +18,8 @@ export class CirculationinfoComponent implements OnInit {
   ngOnInit() {
     this.getdata();
   }
+
+  parenteArr = [];
 
   /**
    * 获取数据
