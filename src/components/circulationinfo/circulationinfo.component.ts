@@ -8,14 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./circulationinfo.component.scss']
 })
 export class CirculationinfoComponent implements OnInit {
-  @Input() itemmodel: any;
-
-  parenteArr: any[] = [];
 
   constructor(
     private mainservice: MainindexService,
     private toast: CommonHelper
-  ) {}
+  ) { }
+  @Input() itemmodel: any;
+
+  parenteArr: any[] = [];
+
+  showHeight = [];
+
+  hiddenList = [];
 
   ngOnInit() {
     this.getdata();
@@ -30,6 +34,10 @@ export class CirculationinfoComponent implements OnInit {
         console.log(res);
         if (res['State'] == 1) {
           this.parenteArr = res['Data'];
+          for (let i = 0; i < this.parenteArr.length; i++) {
+            this.showHeight.push('0px');
+            this.hiddenList.push('hidden');
+          }
         } else {
           this.toast.presentToast('暂无数据');
         }
@@ -45,6 +53,17 @@ export class CirculationinfoComponent implements OnInit {
    */
   getsubtitle(itemid: number) {
     console.log(itemid);
+    if (this.showHeight[itemid] === '0px') {
+      this.showHeight[itemid] = 'auto';
+    } else if (this.showHeight[itemid] === 'auto') {
+      this.showHeight[itemid] = '0px';
+    }
+
+    if (this.hiddenList[itemid] === 'hidden') {
+      this.hiddenList[itemid] = 'visible';
+    } else if (this.hiddenList[itemid] === 'visible') {
+      this.hiddenList[itemid] = 'hidden';
+    }
     var item = this.parenteArr[itemid];
     //如果有数据了就不请求了
     if (item['children'].length > 0) {
