@@ -21,6 +21,8 @@ export class DocumentdetailPage implements OnInit {
    */
   type: number = 1;
 
+  
+
   constructor(
     private activeRoute: ActivatedRoute,
     private route: Router,
@@ -57,6 +59,7 @@ export class DocumentdetailPage implements OnInit {
 
   pushtoadvice() {
    // console.log('意见');
+   this.itemmodel['IsShowNextStep'] = true;
     this.route.navigate(['submission'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)

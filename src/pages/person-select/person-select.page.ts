@@ -70,6 +70,9 @@ export class PersonSelectPage implements OnInit {
   //下一步是否选了到拟办
   IsSelectNiBan: boolean = false;
 
+  //是否显示下一步
+  IsShowNextStep:boolean = true;
+
   constructor(
     private nav: NavController,
     private mainservice: MainindexService,
@@ -80,7 +83,12 @@ export class PersonSelectPage implements OnInit {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
       this.itemmodel = JSON.parse(params['item']);
+      this.IsShowNextStep = this.itemmodel['IsShowNextStep'];
+      console.log(this.itemmodel);
       this.hasSelected = JSON.parse(params['hasSelected']);
+      console.log('已选数据');
+      console.log(this.hasSelected);
+      this.toast.dismissLoading();
     });
   }
 

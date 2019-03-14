@@ -343,13 +343,16 @@ export class NextSelectComponent implements OnInit {
     this.mainindexservice.getDeptTreeUntilMainDept().subscribe((res) => {
       if (res['State'] === 1) {
         const data = res.Data;
-        for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
-          for (let j = 0; j < data.length; j++) {
-            if (data[j].id === this.hasSelected.Leaders[i]) {
-              data[j].checked = true;
+        if (this.hasSelected.Leaders) {
+          for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
+            for (let j = 0; j < data.length; j++) {
+              if (data[j].id === this.hasSelected.Leaders[i]) {
+                data[j].checked = true;
+              }
             }
           }
         }
+        
         fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
@@ -367,13 +370,16 @@ export class NextSelectComponent implements OnInit {
     this.mainindexservice.getLeaderTree().subscribe((res) => {
       if (res['State'] === 1) {
         const data = res.Data.children;
-        for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
-          for (let j = 0; j < data.length; j++) {
-            if (data[j].id === this.hasSelected.Leaders[i]) {
-              data[j].checked = true;
+        if (this.hasSelected.Leaders) {
+          for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
+            for (let j = 0; j < data.length; j++) {
+              if (data[j].id === this.hasSelected.Leaders[i]) {
+                data[j].checked = true;
+              }
             }
           }
         }
+        
         fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
@@ -389,22 +395,27 @@ export class NextSelectComponent implements OnInit {
    * @param id 部门id
    */
   getPerson(id: string, fun: (list: any) => void) {
+
     this.mainindexservice.getDeptTreeCY(id).subscribe((res) => {
       if (res['State'] === 1) {
         const data = res.Data;
         if (this.state === '0') {
-          for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
-            for (let j = 0; j < data.length; j++) {
-              if (data[j].id === this.hasSelected.Leaders[i]) {
-                data[j].checked = true;
+          if (this.hasSelected.Leaders) {
+            for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
+              for (let j = 0; j < data.length; j++) {
+                if (data[j].id === this.hasSelected.Leaders[i]) {
+                  data[j].checked = true;
+                }
               }
             }
           }
         } else {
-          for (let i = 0; i < this.hasSelected.Readers.length; i++) {
-            for (let j = 0; j < data.length; j++) {
-              if (data[j].id === this.hasSelected.Readers[i].deptId || data[j].id === this.hasSelected.Readers[i].staffId) {
-                data[j].checked = true;
+          if (this.hasSelected.Readers) {
+            for (let i = 0; i < this.hasSelected.Readers.length; i++) {
+              for (let j = 0; j < data.length; j++) {
+                if (data[j].id === this.hasSelected.Readers[i].deptId || data[j].id === this.hasSelected.Readers[i].staffId) {
+                  data[j].checked = true;
+                }
               }
             }
           }
