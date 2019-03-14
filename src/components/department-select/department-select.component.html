@@ -10,7 +10,7 @@
   <ion-radio-group>
     <ion-item *ngFor="let item of listdataArr,let i = index">
       <ion-label>{{item['text']}} </ion-label>
-      <ion-radio (ionSelect)="singleSelect(item)"></ion-radio>
+      <ion-radio [(checked)]="listdataArr[i].checked" (ionSelect)="singleSelect(item)"></ion-radio>
     </ion-item>
   </ion-radio-group>
 </ion-list>

@@ -6,9 +6,6 @@
     <ion-buttons style="margin-right: 1rem;font-size: 0.9rem;" *ngIf="type == 1" slot="end" (click)="pushtoadvice()">
       拟办意见
     </ion-buttons>
-    <ion-buttons style="margin-right: 1rem;font-size: 0.9rem;" *ngIf="type == 3" slot="end">
-      添加
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +13,7 @@
   <app-handleinfo [itemmodel]="itemmodel" *ngIf="type == 1"></app-handleinfo>
   <app-circulationinfo [itemmodel]="itemmodel" *ngIf="type == 2"></app-circulationinfo>
   <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == 3"></app-attachmentlist>
-  <app-sign [itemmodel]="itemmodel" *ngIf="type == 4"></app-sign>
+  <app-sign [itemmodel]="itemmodel" *ngIf="type == 4 || type == 5"></app-sign>
 
   <ion-segment (ionChange)="segmentChanged($event)">
     <ion-segment-button value="1" checked>
@@ -25,8 +22,11 @@
     <ion-segment-button value="2">
       <ion-label>流转信息</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="4">
+    <ion-segment-button *ngIf="itemmodel['documenttype'] == 1" value="4">
       <ion-label>办文签</ion-label>
+    </ion-segment-button>
+    <ion-segment-button *ngIf="itemmodel['documenttype'] == 2" value="5">
+      <ion-label>发文签</ion-label>
     </ion-segment-button>
     <ion-segment-button value="3">
       <ion-label>附件管理</ion-label>

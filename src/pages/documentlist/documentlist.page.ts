@@ -35,6 +35,7 @@ export class DocumentlistPage implements OnInit {
 
   // 1 收文 2 发文 3 传阅件
   type: number = 1;
+
   title = '公文列表';
 
   loading = false;
@@ -196,13 +197,15 @@ export class DocumentlistPage implements OnInit {
    * 进入详情
    */
   pushIntodetail(item: any) {
+    /** 把操作序号添加到json */
+    item['documenttype'] = this.type;
     // 点击签收
     this.mainindexservice
       .signclick(item['Id'], item['ProcessType'], item['CoorType'])
       .subscribe(
         res => {
           console.log('签收内容');
-          console.log(res);
+          console.log(item);
           this.route.navigate(['documentdetail'], {
             queryParams: {
               item: JSON.stringify(item)

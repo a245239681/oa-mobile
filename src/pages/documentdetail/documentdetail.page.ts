@@ -13,7 +13,7 @@ export class DocumentdetailPage implements OnInit {
    */
   itemmodel: any;
 
-  //标题切换
+  // 标题切换
   title: string = '办理信息';
 
   /**
@@ -22,6 +22,8 @@ export class DocumentdetailPage implements OnInit {
   type: number = 1;
 
   
+  // 收发文类型 1 收文 2 发文 3 传阅
+  documenttype: number;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -52,6 +54,9 @@ export class DocumentdetailPage implements OnInit {
       case '4':
         this.title = '办文签';
         break;
+      case '5':
+        this.title = '发文签';
+        break;
       default:
         this.title = '相关公文';
     }
@@ -60,6 +65,7 @@ export class DocumentdetailPage implements OnInit {
   pushtoadvice() {
    // console.log('意见');
    this.itemmodel['IsShowNextStep'] = true;
+    // console.log('意见');
     this.route.navigate(['submission'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)
