@@ -124,11 +124,27 @@ export class MainindexService {
   }
 
   /**
-   * 最后一步的接口
+   * 选人后提交的接口
    */
   lasthandinStep(lasthandinmodel: lasthandinStepModel): Observable<any> {
     return this.httpclient.post(ApiUrlManagement.lasthandin, lasthandinmodel);
   }
+
+  /**
+   * 结束一条文的接口
+   */
+  endActionStep(Id:string,CommitType:string,NextActionId:string,ProcessType:string): Observable<any> {
+    return this.httpclient.post(ApiUrlManagement.lasthandin, {
+      'Id':Id,
+      'CommitType': CommitType,
+      'NextActionId': NextActionId,
+      'ProcessType': ProcessType
+    });
+  }
+  
+  /**
+   * 
+   */
 
   /**
    * 获取局领导数据
@@ -168,6 +184,13 @@ export class MainindexService {
 
   commitSimulateEnd(id: string, processType: string, coorType: string): Observable<any> {
     return this.httpclient.get(ApiUrlManagement.commitSimulateEnd + '?id=' + id + '&processType=' + processType + '&coorType=' + coorType);
+  }
+
+  /**
+   * 主办下一步提交 --获取--结束
+   */
+  getendAction(Id:string,processType:string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.GetActionTree + '?id=' + Id + '&processType=' + processType);
   }
 }
 

@@ -117,6 +117,11 @@ export const ApiUrlManagement = {
    */
   commitSimulateEnd: 'api/recieve/CommitSimulateEnd',
 
+  /**
+   * 主办下一步提交---获取----结束
+   */
+  GetActionTree: 'api/recieve/GetActionTree'
+
 }
    
 

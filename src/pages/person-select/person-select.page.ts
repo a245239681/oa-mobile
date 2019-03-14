@@ -67,14 +67,17 @@ export class PersonSelectPage implements OnInit {
   //记录下一步的数组
   nextArr: any[] = [];
 
+  hasSelected: any; // 自动勾选已选列表
+
   constructor(
     private nav: NavController,
     private mainservice: MainindexService,
     private activeRoute: ActivatedRoute
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
+      console.log(params);
       this.itemmodel = JSON.parse(params['item']);
-      console.log(this.itemmodel);
+      this.hasSelected = JSON.parse(params['hasSelected']);
     });
   }
 

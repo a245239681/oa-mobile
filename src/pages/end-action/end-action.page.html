@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>结束</ion-title>
+    <ion-buttons style="margin-right: 1rem;font-size: 0.9rem;" slot="end" (click)="handinclick()">
+        提交
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <!-- <ion-radio-group> -->
+    <ion-item *ngFor="let item of radioArr,let i = index" (click)="singleSelect(i)">
+      <ion-label>结束 </ion-label>
+      <ion-radio [(checked)]="radioArr[i].checked"></ion-radio>
+    </ion-item>
+    <!-- </ion-radio-group> -->
+  </ion-list>
+</ion-content>

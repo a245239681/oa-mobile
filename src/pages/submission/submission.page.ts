@@ -37,7 +37,7 @@ export class SubmissionPage implements OnInit {
   /**
    * 是否展示提交并分发
    */
-  IsShowHandinAndGiveButton: boolean = false;
+  IsShowHandinAndGiveButton = false;
 
   /**
    * 常用语数组
@@ -73,7 +73,7 @@ export class SubmissionPage implements OnInit {
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
       this.itemmodel = JSON.parse(params['item']);
-      if (this.userinfo.GetUserDegree() == 'true') {
+      if (this.userinfo.GetUserDegree() === 'true') {
         this.handinButtonTitle = '提交并返回代理人';
         this.IsShowHandinAndGiveButton = true;
       } else {
@@ -89,9 +89,9 @@ export class SubmissionPage implements OnInit {
       advice: ['', [Validators.required]],
     });
     this.adviceForm.valueChanges.subscribe((data) => {
-      this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
+      // this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
     });
-    this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
+    // this.toast.onInputValueChanged(this.adviceForm, this.formErrors, this.validationMessages);
   }
 
   /**
@@ -187,15 +187,11 @@ export class SubmissionPage implements OnInit {
         skipValid: false
       };
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
-        if (res['State'] === 1) {
-          console.log(res);
-          // 调用提交的接口
-          // tslint:disable-next-line:max-line-length
-          this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
-            console.log(res);
-            if (res['State'] === 1) {
-              // 增加一个模态框的type的字段
-              this.itemmodel['commitType'] = res['Type'];
+
+        if (this.IsShowHandinAndGiveButton) {
+          this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe((res) => {
+            if (res['State'] == 1) {
+              this.itemmodel['commitType'] = '20';
               this.route.navigate(['person-select'], {
                 queryParams: {
                   'item': JSON.stringify(this.itemmodel),
@@ -203,14 +199,83 @@ export class SubmissionPage implements OnInit {
               });
             }
           }, err => {
-            console.log(err);
+            this.toast.presentToast('请求失败');
           });
-
-        } else {
-          this.toast.presentToast(res['Message']);
         }
+        // if (res['State'] === 1) {
+        //   console.log(res);
+        // 调用提交的接口
+        // tslint:disable-next-line:max-line-length
+        // this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+        //   console.log(res);
+        //   if (res['State'] === 1) {
+        //     // 增加一个模态框的type的字段
+        //     this.itemmodel['commitType'] = res['Type'];
+        //     this.mainservice.commitSimulateEnd(
+        //       this.itemmodel.Id,
+        //       this.itemmodel.ProcessType,
+        //       this.itemmodel.CoorType).subscribe((data: any) => {
+        //         if (data['State'] === 1) {
+        //           this.route.navigate(['person-select'], {
+        //             queryParams: {
+        //               'item': JSON.stringify(this.itemmodel),
+        //               'hasSelected': JSON.stringify(data.Data),
+        //             },
+        //           });
+        //         } else {
+        //           this.toast.presentToast('已无数据');
+        //         }
+        //       }, () => {
+        //         this.toast.presentToast('请求失败');
+        //       });
+        //   }
+        // }, err => {
+        //   console.log(err);
+        // });
+
+        // }
+
+        //不是领导
+        else {
+          //如果是协办的话点提交的接口就OK
+          if (this.itemmodel['CoorType'] == 1) {
+            console.log('协办')
+            this.handinxieban();
+          } 
+          else {
+            //调用提交的接口
+            this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+              console.log(res);
+              if (res['State'] == 1) {
+                //协办
+                if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
+                  this.handinxieban();
+                  return;
+                }
+                //结束
+                else if (res['Type'] == 400) {
+                  //弹出要结束的模态框 跳到下一步  展示结束步骤
+                  console.log('选结束');
+                  this.presentEndAlert();
+                }
+                //正常流程提交
+                else {
+                  //增加一个模态框的type的字段
+                  this.itemmodel['commitType'] = res['Type'];
+                  this.route.navigate(['person-select'], {
+                    queryParams: {
+                      'item': JSON.stringify(this.itemmodel),
+                    },
+                  });
+                }
+              }
+            }, err => {
+              this.toast.presentToast(res['Message']);
+            });
+          }
+        } 
       }, err => {
-        this.toast.presentToast('请求失败');
+        this.toast.presentToast('保存意见失败失败');
       });
     } else {
       this.toast.presentToast('缺少参数');
@@ -246,7 +311,13 @@ export class SubmissionPage implements OnInit {
           text: '确定',
           cssClass: 'secondary',
           handler: () => {
+            this.itemmodel['commitType'] = 400;
 
+            this.route.navigate(['end-action'], {
+              queryParams: {
+                'item': JSON.stringify(this.itemmodel)
+              }
+            })
           }
         },
         {
@@ -259,9 +330,19 @@ export class SubmissionPage implements OnInit {
         }
       ]
     });
-
     this.alertVC.present();
+  }
 
+  /**
+   * 提交并分发文件 跳到下一步
+   */
+  handinandgiveFile() {
+    this.itemmodel['commitType'] = '300';
+    this.route.navigate(['person-select'], {
+      queryParams: {
+        'item': JSON.stringify(this.itemmodel),
+      }
+    })
   }
 
   /**

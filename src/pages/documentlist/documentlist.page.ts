@@ -1,8 +1,9 @@
+import { loginModel } from './../../service/login/login.service';
 import { CommonHelper } from './../../infrastructure/commonHelper';
 import { MainindexService } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, IonRefresher, IonInfiniteScroll, NavParams } from '@ionic/angular';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
 import { getDateDiff } from 'src/infrastructure/regular-expression';
 
 
@@ -34,9 +35,11 @@ export class DocumentlistPage implements OnInit {
 
   loading = false;
 
-  constructor(private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper, private activeRoute: ActivatedRoute, private route: Router) {
+  constructor( private nav: NavController, private mainindexservice: MainindexService, private toast: CommonHelper, private activeRoute: ActivatedRoute, private route: Router) {
+    
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params['type']);
+      console.log(params['second']);
       this.type = +params['type'];
       this.title = this.type === 1 ? '收文待办' : this.type === 2 ? '发文待办' : '传阅件';
     });

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { forRegExpValidator, RegularExpression } from 'src/infrastructure/regular-expression';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 
 
 
@@ -39,7 +39,8 @@ export class LoginPage {
     private toast: CommonHelper,
     private fb: FormBuilder,
     private mainindexService: MainindexService,
-    public nav: NavController
+    public nav: NavController,
+    private modalController:ModalController
     ) 
     {
 
@@ -69,6 +70,7 @@ export class LoginPage {
         this.userinfo.SetUserName(userinfo['Name']);
         this.userinfo.SetUserDegree(userinfo['IsLeader']);
         this.nav.navigateRoot("/tabs/tabs");
+
       } else {
         this.toast.presentToast('登录失败');
       }
