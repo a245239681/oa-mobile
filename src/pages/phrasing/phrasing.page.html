@@ -1,12 +1,24 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'></ion-icon>
-      <ion-title>常用语设置</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-icon
+      style="float:left;width:50px;height:30px"
+      name="ios-arrow-back"
+      (click)="canGoBack()"
+    ></ion-icon>
+    <ion-title>常用语设置</ion-title>
+    <ion-buttons
+      style="margin-right: 1rem;font-size: 0.9rem;"
+      slot="end"
+      [routerLink]="['/add-edit-phrasing']"
+      [queryParams]="{ title: '添加' }"
+    >
+      添加
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content class="phrasing">
-  <div class="addBtn">
+  <!-- <div class="addBtn">
     <ion-button
       [routerLink]="['/add-edit-phrasing']"
       [queryParams]="{ title: '添加' }"
@@ -14,7 +26,7 @@
       size="small"
       >添加常用语</ion-button
     >
-  </div>
+  </div> -->
   <ion-list class="phrasingList">
     <div class="flexBox">
       <div class="flexLeftContent flex1W100 flexBox">

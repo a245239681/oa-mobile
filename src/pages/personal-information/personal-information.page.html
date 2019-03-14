@@ -38,16 +38,15 @@
       </div>
     </div>
     <div class="flexBox">
-      <ion-item style="--padding-start:0;--padding-end:0;width: 100%">
-        <div class="flexLeftContent detailInfo flex1W100">
-          <p class="flex1W100 flexBox">
-            <span class="flexLeftContent">生日</span>
-            <span class="flexRightContent flex1W100 text-right">
-              2019/12/12
-            </span>
-            <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
-          </p>
-        </div>
+      <ion-item
+        style="--padding-start:0;--padding-end:0;width: 100%;--inner-padding-end: -9px"
+      >
+        <ion-label>生日</ion-label>
+        <ion-datetime
+          display-format=" YYYY/MM/DD"
+          cancelText="取消"
+          doneText="确定"
+        ></ion-datetime>
         <div class="flexRightContent iconRight">
           <i class="iconfont">&#xe955;</i>
         </div></ion-item
