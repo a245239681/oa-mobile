@@ -177,7 +177,6 @@ export class SubmissionPage implements OnInit {
    */
   handleInfo(content: string) {
     if (this.attitudeType) {
-      // tslint:disable-next-line:prefer-const
       const savemodel = <saveadviceModel>{
         attitudeType: this.attitudeType,
         content: content,
@@ -188,60 +187,26 @@ export class SubmissionPage implements OnInit {
       };
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
 
+        //身份是领导的情况
         if (this.IsShowHandinAndGiveButton) {
           this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe((res) => {
             if (res['State'] == 1) {
               this.itemmodel['commitType'] = '20';
-              this.route.navigate(['person-select'], {
-                queryParams: {
-                  'item': JSON.stringify(this.itemmodel),
-                },
-              });
+              this.pushNextStep();
             }
           }, err => {
             this.toast.presentToast('请求失败');
           });
         }
-        // if (res['State'] === 1) {
-        //   console.log(res);
-        // 调用提交的接口
-        // tslint:disable-next-line:max-line-length
-        // this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
-        //   console.log(res);
-        //   if (res['State'] === 1) {
-        //     // 增加一个模态框的type的字段
-        //     this.itemmodel['commitType'] = res['Type'];
-        //     this.mainservice.commitSimulateEnd(
-        //       this.itemmodel.Id,
-        //       this.itemmodel.ProcessType,
-        //       this.itemmodel.CoorType).subscribe((data: any) => {
-        //         if (data['State'] === 1) {
-        //           this.route.navigate(['person-select'], {
-        //             queryParams: {
-        //               'item': JSON.stringify(this.itemmodel),
-        //               'hasSelected': JSON.stringify(data.Data),
-        //             },
-        //           });
-        //         } else {
-        //           this.toast.presentToast('已无数据');
-        //         }
-        //       }, () => {
-        //         this.toast.presentToast('请求失败');
-        //       });
-        //   }
-        // }, err => {
-        //   console.log(err);
-        // });
 
-        // }
 
-        //不是领导
+        //不是领导的情况
         else {
           //如果是协办的话点提交的接口就OK
           if (this.itemmodel['CoorType'] == 1) {
             console.log('协办')
             this.handinxieban();
-          } 
+          }
           else {
             //调用提交的接口
             this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
@@ -262,18 +227,14 @@ export class SubmissionPage implements OnInit {
                 else {
                   //增加一个模态框的type的字段
                   this.itemmodel['commitType'] = res['Type'];
-                  this.route.navigate(['person-select'], {
-                    queryParams: {
-                      'item': JSON.stringify(this.itemmodel),
-                    },
-                  });
+                  this.pushNextStep();
                 }
               }
             }, err => {
               this.toast.presentToast(res['Message']);
             });
           }
-        } 
+        }
       }, err => {
         this.toast.presentToast('保存意见失败失败');
       });
@@ -312,12 +273,7 @@ export class SubmissionPage implements OnInit {
           cssClass: 'secondary',
           handler: () => {
             this.itemmodel['commitType'] = 400;
-
-            this.route.navigate(['end-action'], {
-              queryParams: {
-                'item': JSON.stringify(this.itemmodel)
-              }
-            })
+            this.pushNextStep();
           }
         },
         {
@@ -338,12 +294,32 @@ export class SubmissionPage implements OnInit {
    */
   handinandgiveFile() {
     this.itemmodel['commitType'] = '300';
-    this.route.navigate(['person-select'], {
-      queryParams: {
-        'item': JSON.stringify(this.itemmodel),
-      }
-    })
+    this.pushNextStep();
   }
+
+  /**
+   * 跳到下一步时把上一个人选好的人的数据传下去--正常跳转进入下一步选人
+   */
+  pushNextStep() {
+    this.mainservice.commitSimulateEnd(
+      this.itemmodel.Id,
+      this.itemmodel.ProcessType,
+      this.itemmodel.CoorType).subscribe((data: any) => {
+        if (data['State'] === 1) {
+          this.route.navigate(['person-select'], {
+            queryParams: {
+              'item': JSON.stringify(this.itemmodel),
+              'hasSelected': JSON.stringify(data.Data),
+            },
+          });
+        } else {
+          this.toast.presentToast('已无数据');
+        }
+      }, () => {
+        this.toast.presentToast('请求失败');
+      });
+  }
+
 
   /**
    * 点击常用语

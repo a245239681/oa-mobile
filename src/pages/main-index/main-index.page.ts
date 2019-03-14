@@ -57,29 +57,19 @@ export class MainIndexPage implements OnInit {
   pushDocumentList(index: number) {
 
     if (index == 3) {
-      this.nav.navigateForward('havedonework',{
 
+      this.route.navigate(['havedonework'], {
         queryParams: {
-              'type': ++index
-            }
+          'type': ++index
+        }
       });
-      // this.route.navigate(['havedonework'], {
-      //   queryParams: {
-      //     'type': ++index
-      //   }
-      // });
     } else {
-      this.nav.navigateForward('documentlist',{
+      this.route.navigate(['documentlist'], {
         queryParams: {
-              'type': ++index
-            }
+          'type': ++index,
+          'second': '222'
+        }
       });
-      // this.route.navigate(['documentlist'], {
-      //   queryParams: {
-      //     'type': ++index,
-      //     'second': '222'
-      //   }
-      // });
     }
   }
 
