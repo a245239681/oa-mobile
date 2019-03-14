@@ -1,18 +1,15 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-icon style="float:left;width:50px;height:30px"  name="ios-arrow-back" (click)='canGoBack()'>
+    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'>
     </ion-icon>
     <ion-title>提交意见</ion-title>
-    <ion-buttons style=" padding-right: 16px" slot="end">保存</ion-buttons>
+    <ion-buttons style=" padding-right: 16px" slot="end" (click)="handleAdvice(0,adviceForm.value)">保存</ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
   <form [formGroup]="adviceForm">
     <div class="login-form">
-      <!-- <ion-input style="width:100%; height: 100px;" type="text" placeholder="请输入您的意见" [(ngModel)]="CurAttitude" formControlName="advice">
-      </ion-input> -->
       <div style="border: solid 1px #f4f4f4;padding: 5px; border-radius: 3px;">
         <ion-textarea rows="12" cols="20" placeholder="请输入您的意见" [(ngModel)]="CurAttitude" formControlName="advice">
         </ion-textarea>
@@ -22,14 +19,11 @@
           <ion-col size="12" size-lg>
             <ion-button color="success"
               class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-              value="提交">提交</ion-button>
+              (click)="handleAdvice(1,adviceForm.value)" value="提交">{{handinButtonTitle}}</ion-button>
+              <ion-button *ngIf="IsShowHandinAndGiveButton" ion-button color="danger" value="提交并分发文件" (click)="handinandgiveFile()">
+                  提交并分发文件
+                </ion-button>
           </ion-col>
-          <!-- <ion-col size="12" size-lg>
-            <ion-button color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated" value="移交" (click)="handleAdvice(0,adviceForm.value)">移交</ion-button>
-          </ion-col>
-          <ion-col size="12" size-lg>
-            <ion-button color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated" value="退回" (click)="handleAdvice(0,adviceForm.value)">退回</ion-button>
-          </ion-col> -->
         </ion-row>
       </ion-grid>
       <ion-grid>
@@ -37,17 +31,15 @@
           <ion-col size="6" size-lg>
             <ion-button color="secondary"
               class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-              value="移交">移交</ion-button>
+              (click)="handleAdvice(0,adviceForm.value)" value="移交">移交</ion-button>
           </ion-col>
           <ion-col size="6" size-lg>
             <ion-button color="warning"
               class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-              value="退回">退回</ion-button>
+              (click)="handleAdvice(0,adviceForm.value)" value="退回">退回</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <!-- <ion-button color="secondary" value="保存" (click)="handleAdvice(0,adviceForm.value)">保存</ion-button>
-      <ion-button ion-button color="danger" value="提交" (click)="handleAdvice(1,adviceForm.value)">提交</ion-button> -->
       <div class="line" *ngIf="formErrors.advice"></div>
       <app-verification *ngIf="formErrors.advice" [text]="formErrors.advice"></app-verification>
     </div>
@@ -59,19 +51,17 @@
         <ion-title class="padding"> 常用语列表</ion-title>
       </ion-col>
       <ion-col size="4" size-lg>
-        <ion-button color="primary" size="small" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated">编辑</ion-button>
+        <ion-button color="primary" size="small"
+          class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated">
+          编辑</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
 
   <ion-list>
-    <!-- <ion-item *ngFor="let item of oftenuseArr,let i = index" (click)="gettheoftenuse(i)">
+    <ion-item *ngFor="let item of oftenuseArr,let i = index" (click)="gettheoftenuse(i)">
       {{item['Text']}}
-    </ion-item> -->
-    <ion-item>白日依山尽</ion-item>
-    <ion-item>欲穷千里目</ion-item>
-    <ion-item>黄河入水流</ion-item>
-    <ion-item>凄凄惨惨戚戚</ion-item>
+    </ion-item>
   </ion-list>
 </ion-content>

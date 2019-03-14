@@ -8,7 +8,7 @@ import {
   RegularExpression
 } from 'src/infrastructure/regular-expression';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -41,7 +41,8 @@ export class LoginPage {
     private toast: CommonHelper,
     private fb: FormBuilder,
     private mainindexService: MainindexService,
-    public nav: NavController
+    public nav: NavController,
+    private modalController: ModalController
   ) {
     this.creatForm();
   }
@@ -69,29 +70,24 @@ export class LoginPage {
   }
   login(value: any) {
     console.log(value);
-    this.loginservice.login(this.loginForm.value).subscribe(
-      res => {
-        if (res['State'] == '1') {
-          var userinfo = res['Data'];
-          console.log(userinfo);
-          /**
-           * 存token 存名字 存是否是领导
-           */
-          this.userinfo.SetToken(userinfo['OaApiToken']);
-          this.userinfo.SetUserName(userinfo['Name']);
-          this.userinfo.SetUserDegree(userinfo['IsLeader']);
-          this.nav.navigateRoot('/tabs/tabs');
-        } else {
-          this.toast.presentToast('登录失败');
-        }
-      },
-      err => {
-        console.log(err);
+    this.loginservice.login(this.loginForm.value).subscribe(res => {
+      if (res['State'] == '1') {
+        var userinfo = res['Data'];
+        console.log(userinfo);
+        /**
+         * 存token 存名字 存是否是领导
+         */
+        this.userinfo.SetToken(userinfo['OaApiToken']);
+        this.userinfo.SetUserName(userinfo['Name']);
+        this.userinfo.SetUserDegree(userinfo['IsLeader']);
+        this.nav.navigateRoot('/tabs/tabs');
+      } else {
+        this.toast.presentToast('登录失败');
       }
-    );
+    });
   }
 
-  //接口测试
+  // 接口测试
   output() {
     // this.mainindexService.getmainindexdata().subscribe((res) => {
     //   console.log(res);

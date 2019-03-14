@@ -54,6 +54,21 @@
   height: 5.24vh;
   border-radius: 50%;
 }
+.flexBox ion-label {
+  padding-left: 1rem;
+}
+.flexBox ion-datetime {
+  color: #999;
+}
+// .flexBox button {
+//   --inner-padding-end: 0 !important;
+// }
+// .flexBox ion-item .item-inner {
+//   --inner-padding-end: 0 !important;
+// }
+// :host(button) {
+//   --padding-end: 0 !important;
+// }
 
 // .sheetClass {
 //   text-align: center;
@@ -80,9 +95,10 @@
 // .action-sheet-button.sc-ion-action-sheet-ios:hover {
 //   color: var(--color, var(--ion-color-primary, #3880ff));
 // }
-:host(.item-inner) {
-  padding: 0 !important;
-}
-:host {
-  --inner-padding-end:0!important;
-}
+
+// :host(.item-inner) {
+//   padding: 0 !important;
+// }
+// :host {
+//   --inner-padding-end: 0 !important;
+// }

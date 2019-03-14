@@ -48,7 +48,7 @@ export class CommonHelper {
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
-      translucent: true
+      translucent: true,
     });
     this.loading.present();
   }

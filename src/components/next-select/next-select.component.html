@@ -5,7 +5,7 @@
 
 <ion-list mode="md">
   <div *ngFor="let item of showList,let i = index">
-    <ion-checkbox [(ngModel)]="showList[i].checked" (ionChange)="checkboxClick(showList[i],$event.detail.checked)"></ion-checkbox>
+    <ion-checkbox [(checked)]="showList[i].checked" [(ngModel)]="showList[i].checked" (ionChange)="checkboxClick(showList[i],$event.detail.checked)"></ion-checkbox>
     <ion-label (click)="itemClick(showList[i])">{{item['text']}}</ion-label>
   </div>
 </ion-list>

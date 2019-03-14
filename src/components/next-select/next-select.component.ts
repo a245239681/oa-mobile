@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
+import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'next-select',
@@ -14,34 +15,31 @@ export class NextSelectComponent implements OnInit {
     private commonHelper: CommonHelper,
   ) { }
 
-  /**
-   * 状态 0：下一步 1：传阅
-   */
-  @Input() state: string;
+  @Input() state: string; // 状态 0：下一步 1：传阅
 
-  /**
-   * 勾选回调
-   */
-  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean }>();
+  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean }>(); // 勾选回调
 
-  departmentTree: any[];
+  @Input() hasSelected: any; // 已勾选传入
 
-  showList: any[];
+  departmentTree: any[]; // 部门树
 
-  buttonList: any[];
+  showList: any[]; // 显示列表
+
+  buttonList: any[]; // 目录列表
 
   selectedList = {
-    staffId: [],
-    deptId: [],
+    staffId: [], // 人员勾选列表
+    deptId: [], // 部门勾选列表
   };
 
   parentNode = null; // 父节点
   node = null; // 节点
 
-  leaderChecked = false;
-  nbChecked = false;
+  leaderChecked = false; // 局领导勾选
+  nbChecked = false; // 拟办勾选
 
   ngOnInit() {
+    console.log(this.hasSelected);
     switch (this.state) {
       case '0':
         this.buttonList = [{
@@ -331,7 +329,9 @@ export class NextSelectComponent implements OnInit {
   enterParent(enterList: any[], parentId: string, checked: boolean) {
     for (let i = 0; i < enterList.length; i++) {
       enterList[i].parent_id = parentId;
-      enterList[i].checked = checked;
+      if (checked) {
+        enterList[i].checked = checked;
+      }
     }
   }
 
@@ -342,7 +342,15 @@ export class NextSelectComponent implements OnInit {
   getDept(fun: (list: any) => void) {
     this.mainindexservice.getDeptTreeUntilMainDept().subscribe((res) => {
       if (res['State'] === 1) {
-        fun(res.Data);
+        const data = res.Data;
+        for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
+          for (let j = 0; j < data.length; j++) {
+            if (data[j].id === this.hasSelected.Leaders[i]) {
+              data[j].checked = true;
+            }
+          }
+        }
+        fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
       }
@@ -358,7 +366,15 @@ export class NextSelectComponent implements OnInit {
   getLeader(fun: (list: any) => void) {
     this.mainindexservice.getLeaderTree().subscribe((res) => {
       if (res['State'] === 1) {
-        fun(res.Data.children);
+        const data = res.Data.children;
+        for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
+          for (let j = 0; j < data.length; j++) {
+            if (data[j].id === this.hasSelected.Leaders[i]) {
+              data[j].checked = true;
+            }
+          }
+        }
+        fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
       }
@@ -375,7 +391,25 @@ export class NextSelectComponent implements OnInit {
   getPerson(id: string, fun: (list: any) => void) {
     this.mainindexservice.getDeptTreeCY(id).subscribe((res) => {
       if (res['State'] === 1) {
-        fun(res.Data);
+        const data = res.Data;
+        if (this.state === '0') {
+          for (let i = 0; i < this.hasSelected.Leaders.length; i++) {
+            for (let j = 0; j < data.length; j++) {
+              if (data[j].id === this.hasSelected.Leaders[i]) {
+                data[j].checked = true;
+              }
+            }
+          }
+        } else {
+          for (let i = 0; i < this.hasSelected.Readers.length; i++) {
+            for (let j = 0; j < data.length; j++) {
+              if (data[j].id === this.hasSelected.Readers[i].deptId || data[j].id === this.hasSelected.Readers[i].staffId) {
+                data[j].checked = true;
+              }
+            }
+          }
+        }
+        fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
       }

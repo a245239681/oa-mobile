@@ -70,7 +70,8 @@ export class MainIndexPage implements OnInit {
     } else {
       this.route.navigate(['documentlist'], {
         queryParams: {
-          type: ++index
+          type: ++index,
+          second: '222'
         }
       });
     }
