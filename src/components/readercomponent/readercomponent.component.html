@@ -1,0 +1,14 @@
+<ion-list mode="md">
+  <div *ngFor="let item of alldepartmentArr,let i = index">
+    <ion-item (click)="itemClick(item,i)">
+    <ion-checkbox [checked] = "item['checked']" (ionChange)="checkboxClick($event)"></ion-checkbox>
+    <ion-label>{{item['text']}}</ion-label>
+    </ion-item>
+    <ion-list>
+    <ion-item *ngFor="let subitem of item['children'],let j = index" (click)= "subitemclick()">
+      <ion-checkbox [checked] = "subitem['checked']"></ion-checkbox>
+      <ion-label>{{subitem['text']}}</ion-label>
+    </ion-item>
+  </ion-list>
+  </div>
+</ion-list>

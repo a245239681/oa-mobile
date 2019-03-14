@@ -33,13 +33,30 @@ export class UserInfo {
   }
 
   /**
+   * 保存用户的身份 是否是领导
+   * @param key 
+   */
+  SetUserDegree(value: string, key?: string) {
+    localStorage.setItem(key || 'UserDegree', value);
+  }
+
+  /**
+   * 获取用户的身份 是否是领导
+   * @param key 
+   */
+  GetUserDegree(key?: string): string {
+    return localStorage.getItem(key || 'UserDegree');
+  }
+
+
+  /**
    *  获取Token过期时间
    * @param key expires
    * return Date 返回token的过期时间 date类型
    */
   GetExpires(key?: string): Date {
     return new Date( localStorage.getItem(key || 'expires'));
-
+    
   }
 
   /**

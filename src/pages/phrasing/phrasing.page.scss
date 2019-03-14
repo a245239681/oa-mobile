@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.phrasing {
+  --background: var(--ion-background-color, #f3f3f3);
+}
+.addBtn {
+  padding: 0.5rem 1rem;
+}
+.phrasingList > .flexBox {
+  height: 9.45vh;
+  line-height: 9.45vh;
+  border-bottom: solid 0.05rem #999;
+  padding: 0 1rem;
+}
+.phrasingList .flexBox {
+  display: flex;
+}
+.phrasingList .flex1W100 {
+  width: 100%;
+}
+.cent {
+  display: table;
+  height: 100%;
+}
+.cent div {
+  height: 100%;
+  line-height: 1rem;
+  flex-wrap: wrap;
+  display: table-cell;
+  vertical-align: middle;
+}
+.minwidth {
+  //   min-width: 38.57vw;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  display: flex;
+}
+.minwidth div {
+  display: flex;
+  padding-left: 0.5rem;
+  align-items: center;
+}
+.phrasingList .flexBox span {
+  padding-right: 0.5rem;
+}

@@ -15,7 +15,9 @@ export class AttachmentlistComponent implements OnInit {
 
   attachmentlistArr:any[] = [];
 
-  constructor(private mainservice: MainindexService,private toast: CommonHelper,private browser: InAppBrowser) { }
+  constructor(private mainservice: MainindexService,private toast: CommonHelper,private browser: InAppBrowser) { 
+    
+  }
 
   ngOnInit() {
     this.getattchmentlis();

@@ -23,13 +23,14 @@ export class MainindexService {
    * 收文待办列表数据 
    * type 1 收文待办
    */
-  getneedtodolist(page: number, type: number = 1): Observable<any> {
+  getneedtodolist(page: number, type: number = 1, searchStr?: string): Observable<any> {
     //收文待办
     if (type == 1) {
       return this.httpclient.post<any>(ApiUrlManagement.needtododata, {
         'type': '传阅件;批办件',
         'pageNumber': page,
-        'pageSize': 10
+        'pageSize': 10,
+        'query': searchStr
       });
     }
     // 2 发文待办  3传阅件
@@ -37,7 +38,8 @@ export class MainindexService {
       var url = type == 2 ? ApiUrlManagement.getsendsneedtodo : ApiUrlManagement.getReceives_read;
       return this.httpclient.post<any>(url, {
         'pageNumber': page,
-        'pageSize': 10
+        'pageSize': 10,
+        'query': searchStr
       });
     }
   }
@@ -143,6 +145,30 @@ export class MainindexService {
     return this.httpclient.get(ApiUrlManagement.getDeptTreeCY + '?id=' + id);
   }
 
+  /**
+   * 签收
+   */
+  signclick(Id: string, processType: string, coorType: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.Sign + '?relationId=' + Id + '&processType=' + processType + '&coorType=' + coorType);
+  }
+
+  /**
+   * 提交并返回给代理人
+   */
+  handinandbackman(Id: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.handinandbackman + '?id=' + Id);
+  }
+
+  /**
+   * 协办提交
+   */
+  xiebanhandin(Id: string, coorType: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.xiebanhandin + '?relationId=' + Id + '&coordination=' + coorType);
+  }
+
+  commitSimulateEnd(id: string, processType: string, coorType: string): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.commitSimulateEnd + '?id=' + id + '&processType=' + processType + '&coorType=' + coorType);
+  }
 }
 
 //保存意见的参数模型
