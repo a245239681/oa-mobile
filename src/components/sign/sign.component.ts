@@ -3,14 +3,17 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-sign',
   templateUrl: './sign.component.html',
-  styleUrls: ['./sign.component.scss'],
+  styleUrls: ['./sign.component.scss']
 })
 export class SignComponent implements OnInit {
-
   @Input() itemmodel: any;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
-
+  ngOnInit() {
+    this.alert();
+  }
+  alert() {
+    console.log(this.itemmodel);
+  }
 }
