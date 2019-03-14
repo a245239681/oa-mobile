@@ -252,7 +252,7 @@ export class SubmissionPage implements OnInit {
         this.toast.presentToast('协办提交成功');
         // 返回列表
         console.log(res);
-        this.route.navigate(['documentlist']);
+        this.route.navigate(['tabs']);
       }
     }, err => {
       this.toast.presentToast('协办提交失败');
@@ -305,16 +305,17 @@ export class SubmissionPage implements OnInit {
       this.itemmodel.Id,
       this.itemmodel.ProcessType,
       this.itemmodel.CoorType).subscribe((data: any) => {
-        if (data['State'] === 1) {
+        // if (data['State'] === 1) {
           this.route.navigate(['person-select'], {
             queryParams: {
               'item': JSON.stringify(this.itemmodel),
               'hasSelected': JSON.stringify(data.Data),
             },
           });
-        } else {
-          this.toast.presentToast('已无数据');
-        }
+        // } 
+        // else {
+        //   this.toast.presentToast('已无数据');
+        // }
       }, () => {
         this.toast.presentToast('请求失败');
       });
