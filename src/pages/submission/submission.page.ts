@@ -13,7 +13,7 @@ import { MainindexService } from 'src/service/maiindex/mainindex.service';
 })
 export class SubmissionPage implements OnInit {
 
-  //传进来的公文模型
+  // 传进来的公文模型
   itemmodel: any;
 
   adviceForm: FormGroup;
@@ -74,12 +74,13 @@ export class SubmissionPage implements OnInit {
 
   /**
    * 点击提交或者保存进入相应的方法
-   * @param type 
+   // tslint:disable-next-line:no-redundant-jsdoc
+   // @param type
    * @param value 获取到的输入框的值
    */
   handleAdvice(type: number, value: any) {
     console.log(value);
-    if (type == 0) {
+    if (type === 0) {
       console.log('保存');
       this.saveadvice(value['advice']);
     } else {
@@ -99,7 +100,7 @@ export class SubmissionPage implements OnInit {
     this.mainservice.getattitudeType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
       console.log(res);
       this.getoftenuse();
-      if (res['State'] == 1) {
+      if (res['State'] === 1) {
         this.attitudeType = res['Data']['Authority']['CurAttitudeType'];
         this.CurAttitude = res['Data']['Authority']['CurAttitude'];
       }
@@ -109,12 +110,12 @@ export class SubmissionPage implements OnInit {
   }
 
   /**
-   * 
+   *
    * @param content 常用语
    */
   getoftenuse() {
     this.mainservice.getoftenuse().subscribe((res) => {
-      if (res['State'] == 1) {
+      if (res['State'] === 1) {
         console.log(res);
         this.oftenuseArr = res['Data'];
       }
@@ -128,16 +129,16 @@ export class SubmissionPage implements OnInit {
    */
   saveadvice(content: string) {
     if (this.attitudeType) {
-      var savemodel = <saveadviceModel>{
+      const savemodel = <saveadviceModel>{
         attitudeType: this.attitudeType,
         content: content,
         coorType: this.itemmodel['CoorType'],
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
         skipValid: false
-      }
+      };
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
-        if (res['State'] == 1) {
+        if (res['State'] === 1) {
           console.log(res);
           this.toast.presentToast('保存成功');
         }
@@ -154,34 +155,36 @@ export class SubmissionPage implements OnInit {
    */
   handleInfo(content: string) {
     if (this.attitudeType) {
-      var savemodel = <saveadviceModel>{
+      // tslint:disable-next-line:prefer-const
+      const savemodel = <saveadviceModel>{
         attitudeType: this.attitudeType,
         content: content,
         coorType: this.itemmodel['CoorType'],
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
         skipValid: false
-      }
+      };
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
-        if (res['State'] == 1) {
+        if (res['State'] === 1) {
           console.log(res);
-          //调用提交的接口
-          this.mainservice.getToastType(this.itemmodel['Id'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
+          // 调用提交的接口
+          // tslint:disable-next-line:max-line-length
+          this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
             console.log(res);
-            if (res['State'] == 1) {
-              //增加一个模态框的type的字段
+            if (res['State'] === 1) {
+              // 增加一个模态框的type的字段
               this.itemmodel['commitType'] = res['Type'];
-              this.route.navigate(['person-select'],{
+              this.route.navigate(['person-select'], {
                 queryParams: {
                   'item': JSON.stringify(this.itemmodel),
                 },
               });
             }
-          },err => {
+          }, err => {
             console.log(err);
           });
-          
-        }else {
+
+        } else {
           this.toast.presentToast(res['Message']);
         }
       }, err => {
