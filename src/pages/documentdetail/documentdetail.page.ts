@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -46,10 +45,10 @@ export class DocumentdetailPage implements OnInit {
         this.title = '流转信息';
         break;
       case '3':
-        this.title = '办文签';
+        this.title = '附件管理';
         break;
       case '4':
-        this.title = '附件管理';
+        this.title = '办文签';
         break;
       default:
         this.title = '相关公文';
@@ -57,7 +56,7 @@ export class DocumentdetailPage implements OnInit {
   }
 
   pushtoadvice() {
-    console.log('意见');
+   // console.log('意见');
     this.route.navigate(['submission'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)

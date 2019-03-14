@@ -57,6 +57,7 @@ export class MainIndexPage implements OnInit {
   pushDocumentList(index: number) {
 
     if (index == 3) {
+
       this.route.navigate(['havedonework'], {
         queryParams: {
           'type': ++index
@@ -65,7 +66,8 @@ export class MainIndexPage implements OnInit {
     } else {
       this.route.navigate(['documentlist'], {
         queryParams: {
-          'type': ++index
+          'type': ++index,
+          'second': '222'
         }
       });
     }

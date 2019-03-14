@@ -3,8 +3,8 @@
     <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'></ion-icon>
     <ion-title>人员机构</ion-title>
     <ion-buttons slot="end" (click)="handin()">
-        提交
-      </ion-buttons>
+      提交
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -24,10 +24,14 @@
     </ion-segment-button>
   </ion-segment>
 
-  <department-select [isSingleSlect]="true" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
-  <department-select [isSingleSlect]="false" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
-  <next-select *ngIf="type == 3" state="1" (selected)="hostSelected($event.items)"></next-select>
-  <next-select *ngIf="type == 4" state="0" (selected)="hostSelected($event.items)"></next-select>
+  <department-select [isSingleSlect]="true" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"
+    *ngIf="type == 1"></department-select>
+  <department-select [isSingleSlect]="false" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"
+    *ngIf="type == 2"></department-select>
+  <next-select *ngIf="type == 3" state="1" [hasSelected]="hasSelected" (selected)="nextSelected($event.items)">
+  </next-select>
+  <next-select *ngIf="type == 4" state="0" [hasSelected]="hasSelected"
+    (selected)="nextSelected($event.items,$event.leaderChecked,$event.nbChecked)"></next-select>
   <!-- <department-select [isSingleSlect]="true" [hasSelected]="itemmodel" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
   <department-select [isSingleSlect]="false" [hasSelected]="itemmodel" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
   <next-select *ngIf="type == 3" state="1" (selected)="nextSelected($event.items)"></next-select>
