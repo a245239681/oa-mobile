@@ -1,8 +1,13 @@
 <ion-content>
-  <div class='list'>
+  <!-- <div class='list'>
     <span class='bt'>附件列表</span>
-  </div>
-  <div class='list' *ngFor="let item of attachmentlistArr" (click)="previewerAttchment(item)">
-    <span class="texts">{{item['Name']}}</span>
-  </div>
+  </div> -->
+  <!-- <div class='list'>
+    <span class="texts"></span>
+  </div> -->
+  <ion-list>
+    <ion-item *ngFor="let item of attachmentlistArr" (click)="previewerAttchment(item)">
+      <ion-label>{{item['Name']+'.'+item.Extended}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

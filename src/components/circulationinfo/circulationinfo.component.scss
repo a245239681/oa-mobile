@@ -14,17 +14,18 @@ ion-content {
 
 .kp {
     width: 100%;
-    padding: 0 0 2px 0
+    padding: 0 0 0 0;
+    margin-bottom: 1em;
 }
 
 .neir {
-    padding: 0.5rem 0 2px 0
+    padding: 1rem 0 0 0;
 }
 
 .bt {
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    // margin-bottom: 0.5rem;
 }
 
 .bttb {
@@ -41,6 +42,9 @@ ion-content {
 .texts {
     font-size: 0.9rem;
     color: #666666;
+}
+p.texts{
+    margin: 0;
 }
 
 .fgx {
