@@ -14,7 +14,7 @@
         (click)="handleAdvice(0,adviceForm.value)">保存</ion-button>
       <ion-button ion-button color="danger" value="提交" (click)="handleAdvice(1,adviceForm.value)">{{handinButtonTitle}}
       </ion-button>
-      <ion-button *ngIf="IsShowHandinAndGiveButton" ion-button color="danger" value="提交并分发文件">
+      <ion-button *ngIf="IsShowHandinAndGiveButton" ion-button color="danger" value="提交并分发文件" (click)="handinandgiveFile()">
         提交并分发文件
       </ion-button>
 

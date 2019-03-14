@@ -44,7 +44,7 @@ export class SubmissionPage implements OnInit {
    */
   oftenuseArr: any[] = [];
 
-  alertVC:HTMLIonAlertElement;
+  alertVC: HTMLIonAlertElement;
 
   formErrors = {                        // 错误信息
     advice: ''
@@ -209,7 +209,7 @@ export class SubmissionPage implements OnInit {
           //如果是协办的话点提交的接口就OK
           if (this.itemmodel['CoorType'] == 1) {
             console.log('协办')
-           this.handinxieban();
+            this.handinxieban();
           }
 
           else {
@@ -218,25 +218,29 @@ export class SubmissionPage implements OnInit {
               console.log(res);
               if (res['State'] == 1) {
 
+                //协办
                 if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
                   this.handinxieban();
                   return;
                 }
-                else if (res['Type'] == 400){
+
+                //结束
+                else if (res['Type'] == 400) {
 
                   //弹出要结束的模态框 跳到下一步  展示结束步骤
                   console.log('选结束');
                   this.presentEndAlert();
                 }
-                 else
-                {
-                //增加一个模态框的type的字段
-                this.itemmodel['commitType'] = res['Type'];
-                this.route.navigate(['person-select'], {
-                  queryParams: {
-                    'item': JSON.stringify(this.itemmodel),
-                  },
-                });
+
+                //正常流程提交
+                else {
+                  //增加一个模态框的type的字段
+                  this.itemmodel['commitType'] = res['Type'];
+                  this.route.navigate(['person-select'], {
+                    queryParams: {
+                      'item': JSON.stringify(this.itemmodel),
+                    },
+                  });
                 }
 
               }
@@ -269,37 +273,53 @@ export class SubmissionPage implements OnInit {
     }, err => {
       this.toast.presentToast('协办提交失败');
     });
-  } 
+  }
 
   /**
    * 
    * @param index 弹出结束提示
    */
   async presentEndAlert() {
-      this.alertVC = await this.alertController.create({
-        header: '提示',
-        message: '该提交将会将您的最后一条意见作为部门意见，点击【确定】进行提交，点击【取消】取消提交。',
-        buttons:[
-          {
-            text:'确定',
-            cssClass: 'secondary',
-            handler: () => {
+    this.alertVC = await this.alertController.create({
+      header: '提示',
+      message: '该提交将会将您的最后一条意见作为部门意见，点击【确定】进行提交，点击【取消】取消提交。',
+      buttons: [
+        {
+          text: '确定',
+          cssClass: 'secondary',
+          handler: () => {
+            this.itemmodel['commitType'] = 400;
 
-            }
-          },
-          {
-            text:'取消',
-            role: 'cancle',
-            cssClass: 'secondary',
-            handler: () => {
-
-            }
+            this.route.navigate(['end-action'], {
+              queryParams: {
+                'item': JSON.stringify(this.itemmodel)
+              }
+            })
           }
-        ]
-      });
+        },
+        {
+          text: '取消',
+          role: 'cancle',
+          cssClass: 'secondary',
+          handler: () => {
 
-      this.alertVC.present();
+          }
+        }
+      ]
+    });
+    this.alertVC.present();
+  }
 
+  /**
+   * 提交并分发文件 跳到下一步
+   */
+  handinandgiveFile() {
+    this.itemmodel['commitType'] = '300';
+    this.route.navigate(['person-select'],{
+      queryParams:{
+        'item': JSON.stringify(this.itemmodel),
+      }
+    })
   }
 
   /**
