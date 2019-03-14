@@ -16,6 +16,26 @@
   <div style='padding-top: 0.5rem'>
     <div *ngFor="let item of parenteArr; let i = index">
       <div class="kp neir">
+        <div class="bt neirbt" (click)="getsubtitle(item)" [ngStyle]="{'color': forecolors[item.ActionName],'background-color': backcolors[item.ActionName]}">
+          <ion-icon mode='md' [name]="item.hidden===false?'arrow-dropup':'arrow-dropdown'" class="bttb"></ion-icon>
+          <span>{{item['ActionName']}}</span><sup *ngIf="item.children.length">（ {{item.children.length}} ）</sup>
+        </div>
+        <div *ngIf="!item.hidden">
+          <div *ngFor="let subitem of item['children']; let n = index">
+            <div class="reny">
+              <h5 class="texts" style="font-weight:bold">活动名称：{{subitem['ActionName']}}</h5>
+              <p class="texts">签收日期：{{ subitem['SignDate'] }}</p>
+              <p class="texts">开始日期：{{ subitem['Date'].split(' - ')[0] }}</p>
+              <p class="texts">结束日期：{{ subitem['Date'].split(' - ')[1] }}</p>
+              <p class="texts">经办用户：{{ subitem['ActUsr'] }} &nbsp; &nbsp; &nbsp; 状态：{{ subitem['State'] }}</p>
+              <p class="texts">意见：{{ subitem['Attitude'] }}</p>
+            </div>
+            <span class='fgx' *ngIf="n < item['children'].length - 1"></span>
+          </div>
+          <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom-color': forecolors[item['ActionName']]}"></span>
+        </div>
+      </div>
+      <!-- <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(i)" [ngStyle]="{'color': btys(item['ActionName']),'background-color': btbjs(item['ActionName'])}">
           <ion-icon mode='md' name="arrow-dropdown" class="bttb"></ion-icon>
           <span>{{item['ActionName']}}</span>
@@ -48,7 +68,7 @@
           <span class='fgx' *ngIf="fgx(item['children'],n)"></span>
         </div>
       </div>
-      <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom': kfgx(item['ActionName'])}"></span>
+      <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom': kfgx(item['ActionName'])}"></span> -->
     </div>
   </div>
 </ion-content>
