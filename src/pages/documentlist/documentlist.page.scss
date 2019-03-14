@@ -18,9 +18,11 @@
   -moz-appearance: none;
   display: block;
   outline: 0;
-  padding: 7px 10px;
+  padding: 7px 30px 7px 10px;
   text-decoration: none;
   width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
 }
 
 ::-moz-placeholder {
@@ -59,6 +61,8 @@ input::-webkit-input-placeholder {
 }
 
 .label {
+  display: inline-block;
+  min-width: 30%;
   font-size: 0.6rem !important;
   padding-top: 8px;
   font-size: 14px;
