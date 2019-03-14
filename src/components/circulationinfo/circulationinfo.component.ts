@@ -10,16 +10,29 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CirculationinfoComponent implements OnInit {
   @Input() itemmodel: any;
 
+  forecolors = {
+    协办部门: '#4877FB',
+    传阅结果: '#F99D31',
+    流转情况: '#67C554',
+    领导批示: '#D1202E'
+  };
+  backcolors = {
+    协办部门: '#DDF6FB',
+    传阅结果: '#FDF3E6',
+    流转情况: '#E1FAE4',
+    领导批示: 'rgb(253,234,234)'
+  };
+
+  parenteArr = [];
+
   constructor(
     private mainservice: MainindexService,
     private toast: CommonHelper
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getdata();
   }
-
-  parenteArr = [];
 
   /**
    * 获取数据
@@ -28,9 +41,13 @@ export class CirculationinfoComponent implements OnInit {
     this.mainservice.getReciveDetailInfo(this.itemmodel['Id']).subscribe(
       res => {
         console.log(res);
-        if (res['State'] == 1) {
+        if (res['State'] === 1) {
           this.parenteArr = res['Data'];
-          this.parenteArr && this.parenteArr.forEach((v, i) => v.hidden = v.children.length === 0 || i > 0);
+          if (this.parenteArr) {
+            this.parenteArr.forEach(
+              (v, i) => (v.hidden = v.children.length === 0 || i > 0)
+            );
+          }
         } else {
           this.toast.presentToast('暂无数据');
         }
@@ -47,7 +64,7 @@ export class CirculationinfoComponent implements OnInit {
   getsubtitle(item) {
     // console.log(itemid);
     // var item = this.parenteArr[itemid];
-    //如果有数据了就不请求了
+    // 如果有数据了就不请求了
     if (item['children'].length > 0) {
       item.hidden = !item.hidden;
     } else {
@@ -56,7 +73,7 @@ export class CirculationinfoComponent implements OnInit {
         .subscribe(
           res => {
             console.log(res);
-            if (res['State'] == 1) {
+            if (res['State'] === 1) {
               item['children'] = res['Data'];
               item.hidden = item['children'].length === 0;
             } else {
@@ -75,18 +92,6 @@ export class CirculationinfoComponent implements OnInit {
 
   // }
 
-  forecolors = {
-    协办部门: '#4877FB',
-    传阅结果: '#F99D31',
-    流转情况: '#67C554',
-    领导批示: '#D1202E'
-  };
-  backcolors = {
-    协办部门: '#DDF6FB',
-    传阅结果: '#FDF3E6',
-    流转情况: '#E1FAE4',
-    领导批示: 'rgb(253,234,234)'
-  }
   // /**
   //  * 标题颜色
   //  */
