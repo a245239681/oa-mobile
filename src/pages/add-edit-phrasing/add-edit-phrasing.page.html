@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-icon
+      style="float:left;width:50px;height:30px"
+      name="ios-arrow-back"
+      (click)="canGoBack()"
+    ></ion-icon>
+    <ion-title>{{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="phrasing">
+  <div class="phrasingContent">
+    <textarea placeholder="请输入常用语" name="" id="" rows="10"></textarea>
+  </div>
+  <div style="margin-top: 2rem;padding: 0 2rem;">
+    <ion-button expand="block" (click)="submit()">保存</ion-button>
+  </div>
+</ion-content>
