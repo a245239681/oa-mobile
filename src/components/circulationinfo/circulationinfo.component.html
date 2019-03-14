@@ -32,8 +32,9 @@
             </div>
             <span class='fgx' *ngIf="n < item['children'].length - 1"></span>
           </div>
-          <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom-color': forecolors[item['ActionName']]}"></span>
+          <span class='fgx' *ngIf="item.children.length !== 0" [ngStyle]="{'border-bottom-color': forecolors[item['ActionName']]}"></span>
         </div>
+        <p class="texts" *ngIf="item.children.length === 0"> &nbsp; 没有记录</p>
       </div>
       <!-- <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(i)" [ngStyle]="{'color': btys(item['ActionName']),'background-color': btbjs(item['ActionName'])}">
