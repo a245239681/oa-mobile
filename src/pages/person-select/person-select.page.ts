@@ -2,11 +2,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MainindexService, lasthandinStepModel, PendingReaderModel } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { last } from 'rxjs/operators';
-import { TouchSequence } from 'selenium-webdriver';
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { ActivatedRoute, Params } from '@angular/router';
+
+
+
 
 @Component({
   selector: 'app-person-select',
