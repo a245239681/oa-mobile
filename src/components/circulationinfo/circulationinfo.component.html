@@ -1,18 +1,4 @@
 <ion-content>
-  <!-- <ion-list *ngFor="let item of parenteArr, let i = index">
-    <ion-item (click)="getsubtitle(i)">
-      <ion-label>
-        {{item['ActionName']}}
-      </ion-label>
-    </ion-item>
-    <ion-list class="padleft" *ngFor="let subitem of item['children']">
-      <div>活动名称: {{subitem['ActionName']}}</div>
-      <div>开始日期 - 结束日期: {{subitem['Date']}}</div>
-      <div>经办用户: {{subitem['ActUsr']}}</div>
-      <div>签收日期: {{subitem['SignDate']}}</div>
-      <div>状态: {{subitem['State']}}</div>
-      <div>意见:{{subitem['Attitude']}}</div>
-    </ion-list> -->
     <div *ngFor="let item of parenteArr; let i = index">
       <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(item)" [ngStyle]="{'color': forecolors[item.ActionName],'background-color': backcolors[item.ActionName]}">
