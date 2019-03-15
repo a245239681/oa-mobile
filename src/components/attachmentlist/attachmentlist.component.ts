@@ -22,7 +22,7 @@ export class AttachmentlistComponent implements OnInit {
 
   constructor(
     private mainservice: MainindexService,
-    private toast: CommonHelper,
+    private commonHelper: CommonHelper,
     private browser: InAppBrowser,
     private platform: Platform,
     private fileOpener: FileOpener,
@@ -45,11 +45,11 @@ export class AttachmentlistComponent implements OnInit {
           this.attachmentlistArr = res['Data'];
           console.log(this.attachmentlistArr);
         } else {
-          this.toast.presentToast('暂无数据');
+          // this.toast.presentToast('暂无数据');
         }
       },
       err => {
-        this.toast.presentToast('请求失败');
+        this.commonHelper.presentToast('请求失败');
       }
     );
   }
@@ -62,17 +62,20 @@ export class AttachmentlistComponent implements OnInit {
     if (this.platform.is('android')) {
       const uri = encodeURI(item['Url']); // 文件的地址链接
       const fileUrl = this.file.dataDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
+      this.commonHelper.presentLoading();
       this.fileTransfer.download(uri, fileUrl).then(entry => {
         entry.file(data => {
           console.log(data);
           this.fileOpener.open(fileUrl, this.getFileMimeType(item.Extended))
-            .then(() => console.log('File is opened'))
+            .then(() => this.commonHelper.dismissLoading())
             .catch(() => {
-              this.toast.presentToast('文件打开失败，请安装WPS');
+              this.commonHelper.dismissLoading();
+              this.commonHelper.presentToast('文件打开失败，请安装WPS');
             }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
         });
       }, () => {
-        this.toast.presentToast('文件下载失败');
+        this.commonHelper.dismissLoading();
+        this.commonHelper.presentToast('文件下载失败');
       });
 
       return;

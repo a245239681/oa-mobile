@@ -125,5 +125,10 @@ export const ApiUrlManagement = {
   /**
    * 移交验证
    */
-  ValidMove: 'api/recieve/ValidMove'
+  ValidMove: 'api/recieve/ValidMove',
+
+  /**
+   * api/recieve/GetActionTreeSend
+   */
+  GetActionTreeSend: 'api/recieve/GetActionTreeSend'
 };

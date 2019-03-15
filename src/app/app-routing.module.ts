@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'end-action', loadChildren: '../pages/end-action/end-action.module#EndActionPageModule' },
   { path: 'add-edit-phrasing', loadChildren: '../pages/add-edit-phrasing/add-edit-phrasing.module#AddEditPhrasingPageModule' },
   { path: 'handover-person-select', loadChildren: '../pages/handover-person-select/handover-person-select.module#HandoverPersonSelectPageModule' },
-
+  { path: 'send-action-tree', loadChildren: '../pages/send-action-tree/send-action-tree.module#SendActionTreePageModule' },
 
 
 
