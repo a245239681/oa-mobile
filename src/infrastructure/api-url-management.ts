@@ -123,4 +123,10 @@ export const ApiUrlManagement = {
    * api/recieve/GetActionTreeSend
    */
   GetActionTreeSend: 'api/recieve/GetActionTreeSend',
+
+  /**
+   * 保密审查意见
+   */
+  secretInfoAdvice: 'api/recieve/SaveSend',
+
 };

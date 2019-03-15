@@ -93,6 +93,7 @@ export class PersonSelectPage implements OnInit {
   }
 
   ngOnInit() {
+   
   }
 
   segmentChanged(event: any) {

@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'end-action', loadChildren: '../pages/end-action/end-action.module#EndActionPageModule' },
   { path: 'add-edit-phrasing', loadChildren: '../pages/add-edit-phrasing/add-edit-phrasing.module#AddEditPhrasingPageModule' },
   { path: 'send-action-tree', loadChildren: '../pages/send-action-tree/send-action-tree.module#SendActionTreePageModule' },
+  { path: 'secretinfoadvice', loadChildren: '../pages/secretinfoadvice/secretinfoadvice.module#SecretinfoadvicePageModule' },
 
 
 

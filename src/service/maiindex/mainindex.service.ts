@@ -133,9 +133,9 @@ export class MainindexService {
   /**
    * 结束一条文的接口
    */
-  endActionStep(Id:string,CommitType:string,NextActionId:string,ProcessType:string): Observable<any> {
+  endActionStep(Id: string, CommitType: string, NextActionId: string, ProcessType: string): Observable<any> {
     return this.httpclient.post(ApiUrlManagement.lasthandin, {
-      'Id':Id,
+      'Id': Id,
       'CommitType': CommitType,
       'NextActionId': NextActionId,
       'ProcessType': ProcessType
@@ -145,15 +145,15 @@ export class MainindexService {
   /**
    * 610commit拟办给多人
    */
-  commit_610(Id:string,CommitType:string,ProcessType:string,coorType:string,) {
+  commit_610(Id: string, CommitType: string, ProcessType: string, coorType: string, ) {
     return this.httpclient.post(ApiUrlManagement.lasthandin, {
-      'Id':Id,
+      'Id': Id,
       'CommitType': CommitType,
       'coorType': coorType,
       'ProcessType': ProcessType
     });
   }
-  
+
   /**
    * 
    */
@@ -201,16 +201,44 @@ export class MainindexService {
   /**
    * 主办下一步提交 --获取--结束
    */
-  getendAction(Id:string,processType:string): Observable<any> {
+  getendAction(Id: string, processType: string): Observable<any> {
     return this.httpclient.get(ApiUrlManagement.GetActionTree + '?id=' + Id + '&processType=' + processType);
   }
 
   /**
    * 发文--获取提交的人员
    */
-  GetActionTreeSend(Id:string,processType:string) {
+  GetActionTreeSend(Id: string, processType: string) {
     return this.httpclient.get(ApiUrlManagement.GetActionTreeSend + '?id=' + Id + '&processType=' + processType);
   }
+
+  /**
+   * 发文
+   */
+  LastSendActionStep(lastSebdActionStepModel: LastSendActionStepModel) {
+    return this.httpclient.post(ApiUrlManagement.lasthandin, lastSebdActionStepModel)
+  }
+
+  /**
+  * 保密审查意见接口
+  */
+  SecretInfoAdvice(Id: string,secrecyOpinion: string) {
+    return this.httpclient.post(ApiUrlManagement.secretInfoAdvice,{
+      SecrecyOpinion: secrecyOpinion,
+      Id: Id
+    });
+  }
+
+  /**
+   * 公开信息接口
+   */
+  OpenInfoAdvice(Id: string,inspectionOpinion: string) {
+    return this.httpclient.post(ApiUrlManagement.secretInfoAdvice,{
+      InspectionOpinion: inspectionOpinion,
+      Id: Id
+    });
+  }
+
 }
 
 //保存意见的参数模型
@@ -253,4 +281,19 @@ export interface PendingReaderModel {
 
   //如果选择的是整个部门的话就是部门id有值 staffId没有值
   deptId: string,
+}
+
+//发文提交参数
+
+export interface LastSendActionStepModel {
+  id: string,
+  NextActionId: string,
+
+  NextUserId: string,
+
+  commitType: number,
+
+  CoorType: number,
+
+  ProcessType: number,
 }
