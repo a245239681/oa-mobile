@@ -3,15 +3,16 @@
     {{item.text}}<ion-icon name="arrow-forward"></ion-icon>
   </ion-button> -->
 
+  <div style="margin-top: 16px;"></div>
+
   <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:departmentTree,root:true}}"></ng-container>
 
   <ng-template #treeTpl let-context>
     <ion-list mode="md">
       <div *ngFor="let item of context.items" [ngClass]="context.root?'root':''">
+        <ion-icon  style="float: left;" mode='md' [name]="item.hidden===false?'arrow-dropdown':'arrow-dropright'" *ngIf="getColor(item) != '#f87a85'"></ion-icon>
         <ion-checkbox [(checked)]="item.checked" [(ngModel)]="item.checked" (ionChange)="checkboxClick(item,$event.detail.checked)"></ion-checkbox>
-        <ion-label (click)="itemClick(item)">{{item.text}}</ion-label>
-        <ion-icon name="arrow-dropdown"></ion-icon>
-
+        <ion-label style="padding-left: 16px;" (click)="itemClick(item)" [ngStyle]="{'color': getColor(item)}">{{item.text}}</ion-label>
         <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:item.children,root:false}}"></ng-container>
       </div>
     </ion-list>
