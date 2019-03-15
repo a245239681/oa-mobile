@@ -49,7 +49,7 @@ export class HandoverPersonSelectPage implements OnInit {
         this.itemmodel.CoorType
       )
       .subscribe(res => {
-        if (res.State === 1 && res.Data === 'BMCL') {
+        if (res.State === 1) {
           this.commitType = '60';
         }
       });
