@@ -352,7 +352,7 @@ export class NextSelectComponent implements OnInit {
             }
           }
         }
-        
+
         fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
@@ -379,7 +379,7 @@ export class NextSelectComponent implements OnInit {
             }
           }
         }
-        
+
         fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
@@ -429,6 +429,20 @@ export class NextSelectComponent implements OnInit {
     });
   }
 
+  /**
+   * 获取颜色
+   * @param item 行数据
+   */
+  getColor(item: any) {
+    if (item.attributes) {
+      if (item.attributes.NodeType === 'Dept') {
+        return '#f99d31';
+      } else {
+        return '#f87a85';
+      }
+    }
+    return '#4877fb';
+  }
 
   /**
    * 目录跳转
