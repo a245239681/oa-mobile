@@ -168,9 +168,9 @@ export class SubmissionPage implements OnInit {
       console.log(res);
       this.getoftenuse();
       if (res['State'] === 1) {
-        this.attitudeType = res['Data']['Authority']['CurAttitudeType'];
-        this.CurAttitude = res['Data']['Authority']['CurAttitude'];
-        this.sendStepName = res['Data']['Authority']['Name'];
+        this.attitudeType = res['Data']['Authority']['CurAttitudeType']; // 保存意见用到的type
+        this.CurAttitude = res['Data']['Authority']['CurAttitude']; // 框里的意见
+        this.sendStepName = res['Data']['Authority']['Name']; // 发文步骤名称
       }
     }, err => {
       this.toast.presentToast('请求失败');
@@ -277,7 +277,7 @@ export class SubmissionPage implements OnInit {
               this.handinxieban();
             }
             else {
-              //调用提交的接口
+              //调用提交的接口-----validnext
               this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
                 console.log(res);
                 if (res['State'] == 1) {
@@ -295,6 +295,7 @@ export class SubmissionPage implements OnInit {
                   else if (res['Type'] == 300) {
                     this.handinandgiveFile();
                   }
+                  //拟办回到办公室
                   else if (res['Type'] == 610) {
                     //610直接commit
                     console.log('看数据');
