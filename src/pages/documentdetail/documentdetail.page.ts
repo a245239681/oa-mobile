@@ -77,6 +77,7 @@ export class DocumentdetailPage implements OnInit {
    * 返回
    */
   canGoBack() {
-    this.nav.back();
+    history.back();
+    return false;
   }
 }

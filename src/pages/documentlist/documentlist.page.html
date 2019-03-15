@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'>
-    </ion-icon>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
