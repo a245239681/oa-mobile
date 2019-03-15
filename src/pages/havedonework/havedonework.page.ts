@@ -16,13 +16,13 @@ export class HavedoneworkPage implements OnInit {
   listdataArr: any[] = [];
 
   // 当前页
-  currentPage: number = 1;
+  currentPage = 1;
 
   // 收文已办 发文已办
-  type: number = 1;
+  type = 1;
 
   // 是否可以继续上拉
-  nohasmore: boolean = true;
+  nohasmore = true;
   constructor(
     private nav: NavController,
     private route: Router,
@@ -35,84 +35,83 @@ export class HavedoneworkPage implements OnInit {
    *
    * @param event 点击Segment
    */
-  segmentChanged(event: any) {
-    console.log('Segment changed', event.target.value);
-    this.type = event.target.value;
-    this.getdata();
-  }
+  // segmentChanged(event: any) {
+  //   console.log('Segment changed', event.target.value);
+  //   this.type = event.target.value;
+  //   this.getdata();
+  // }
   ngOnInit() {
-    this.getdata();
+  //   this.getdata();
   }
   /**
    * 获取列表数据
    */
-  getdata() {
-    this.currentPage = 1;
-    this.listdataArr = [];
-    this.ionInfiniteScroll.disabled = false;
-    this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
-      res => {
-        this.ionRefresh.complete();
-        if (res['State'] === 1) {
-          console.log(res);
-          this.listdataArr = res['Data']['PageOfResult'];
-          if (this.listdataArr.length < 10) {
-            this.nohasmore = true;
-          } else {
-            this.nohasmore = false;
-            this.currentPage += 1;
-          }
-        } else {
-          this.toast.presentToast('已无数据');
-        }
-        console.log(this.nohasmore);
-      },
-      err => {
-        this.ionRefresh.complete();
-        this.toast.presentToast('请求失败');
-      }
-    );
-  }
+  // getdata() {
+  //   this.currentPage = 1;
+  //   this.listdataArr = [];
+  //   this.ionInfiniteScroll.disabled = false;
+  //   this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
+  //     res => {
+  //       this.ionRefresh.complete();
+  //       if (res['State'] === 1) {
+  //         console.log(res);
+  //         this.listdataArr = res['Data']['PageOfResult'];
+  //         if (this.listdataArr.length < 10) {
+  //           this.nohasmore = true;
+  //         } else {
+  //           this.nohasmore = false;
+  //           this.currentPage += 1;
+  //         }
+  //       } else {
+  //         this.toast.presentToast('已无数据');
+  //       }
+  //       console.log(this.nohasmore);
+  //     },
+  //     err => {
+  //       this.ionRefresh.complete();
+  //       this.toast.presentToast('请求失败');
+  //     }
+  //   );
+  // }
 
   /**
    * 下拉刷新
-   * @param event
-   */ doRefresh(event) {
-    this.getdata();
-  }
+   */
+  // doRefresh(event) {
+  //   this.getdata();
+  // }
 
   /**
    * 上拉加载
-   * @param infiniteScroll
    */
-  loadMoreData(event) {
-    console.log('上拉加载');
-    this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
-      res => {
-        this.ionInfiniteScroll.complete();
-        if (res['State'] === 1) {
-          const tempArr: any[] = res['Data']['PageOfResult'];
-          tempArr.forEach(item => {
-            this.listdataArr.push(item);
-          });
+  // loadMoreData(event) {
+  //   console.log('上拉加载');
+  //   this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
+  //     res => {
+  //       this.ionInfiniteScroll.complete();
+  //       if (res['State'] === 1) {
+  //         const tempArr: any[] = res['Data']['PageOfResult'];
+  //         tempArr.forEach(item => {
+  //           this.listdataArr.push(item);
+  //         });
 
-          if (tempArr.length < 10) {
-            this.nohasmore = true;
-          } else {
-            this.nohasmore = false;
-            this.currentPage++;
-          }
-        } else {
-          this.toast.presentToast('已无数据');
-        }
-        console.log(this.nohasmore);
-      },
-      err => {
-        this.ionInfiniteScroll.complete();
-        this.toast.presentToast('请求失败');
-      }
-    );
-  }
+  //         if (tempArr.length < 10) {
+  //           this.nohasmore = true;
+  //         } else {
+  //           this.nohasmore = false;
+  //           this.currentPage++;
+  //         }
+  //       } else {
+  //         this.toast.presentToast('已无数据');
+  //       }
+  //       console.log(this.nohasmore);
+  //     },
+  //     err => {
+  //       this.ionInfiniteScroll.complete();
+  //       this.toast.presentToast('请求失败');
+  //     }
+  //   );
+  // }
 
   /**
    * 返回
@@ -124,10 +123,21 @@ export class HavedoneworkPage implements OnInit {
   /**
    * 进入详情
    */
-  pushIntodetail(item: any) {
-    this.route.navigate(['documentdetail'], {
+  // pushIntodetail(item: any) {
+  //   this.route.navigate(['documentdetail'], {
+  //     queryParams: {
+  //       item: JSON.stringify(item)
+  //     }
+  //   });
+  // }
+
+  /**
+   * 进入公文列表 1 收文已办 2 发文已办
+   */
+  pushDocumentList(index: number) {
+    this.nav.navigateForward(['documentlist'], {
       queryParams: {
-        item: JSON.stringify(item)
+        type: ++index
       }
     });
   }
