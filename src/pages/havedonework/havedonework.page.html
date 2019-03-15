@@ -19,12 +19,6 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <!-- <ion-list mode="md">
-    <ion-item *ngFor="let item of listdataArr,let i = index" (click)="pushIntodetail(item)">
-      <ion-label>{{item['Title']}}
-      </ion-label>
-    </ion-item>
-  </ion-list> -->
 
   <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
     <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
