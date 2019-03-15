@@ -136,8 +136,7 @@ export const ApiUrlManagement = {
    * 保密审查意见
    */
   secretInfoAdvice: 'api/recieve/SaveSend',
-  GetActionTreeSend: 'api/recieve/GetActionTreeSend',
-
+  
   /**
    * 退回树
    */
