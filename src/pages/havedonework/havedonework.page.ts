@@ -53,7 +53,7 @@ export class HavedoneworkPage implements OnInit {
     this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
       res => {
         this.ionRefresh.complete();
-        if (res['State'] === '1') {
+        if (res['State'] === 1) {
           console.log(res);
           this.listdataArr = res['Data']['PageOfResult'];
           if (this.listdataArr.length < 10) {
@@ -90,7 +90,7 @@ export class HavedoneworkPage implements OnInit {
     this.mainindexservice.getBrowserFile(this.currentPage, this.type).subscribe(
       res => {
         this.ionInfiniteScroll.complete();
-        if (res['State'] === '1') {
+        if (res['State'] === 1) {
           const tempArr: any[] = res['Data']['PageOfResult'];
           tempArr.forEach(item => {
             this.listdataArr.push(item);
