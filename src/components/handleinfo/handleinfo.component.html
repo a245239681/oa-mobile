@@ -24,8 +24,8 @@
   <div>
     <div *ngFor="let item of adcviceArr; let i = index">
       <!-- 头部视图是否显示要看该头部下有没有意见，没有就不显示了 -->
-      <div *ngIf="item.length > 0" class="kp neir" [ngStyle]="{'border-bottom': kfgx(keyArr[i])}">
-        <div class="bt neirbt" [ngStyle]="{'color': btys(keyArr[i])}">
+      <div *ngIf="item.length > 0" class="kp neir" [ngStyle]="{'border-bottom': borderbottom[i]}">
+        <div class="bt neirbt" [ngStyle]="{'color': forecolors[i]}">
           <span>{{keyArr[i]}}</span>
         </div>
         <div *ngFor="let subitem of item; let n = index" class="reny">

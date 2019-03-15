@@ -57,7 +57,7 @@ input::-webkit-input-placeholder {
 
 .kpnr {
   width: 100%;
-  padding: 5px 0 5px 1rem;
+  padding: 5px 5px 5px 1rem;
 }
 
 .label {
@@ -67,6 +67,10 @@ input::-webkit-input-placeholder {
   font-size: 0.6rem !important;
   padding-top: 8px;
   font-size: 14px;
+}
+
+.label-nopa{
+  margin-right: 0;
 }
 
 .kpbt {

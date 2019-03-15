@@ -2,7 +2,7 @@
     <div *ngFor="let item of parenteArr; let i = index">
       <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(item)" [ngStyle]="{'color': forecolors[item.ActionName],'background-color': backcolors[item.ActionName]}">
-          <ion-icon mode='md' [name]="item.hidden===false?'arrow-dropup':'arrow-dropdown'" class="bttb"></ion-icon>
+          <ion-icon mode='md' [name]="item.hidden===false?'arrow-dropdown':'arrow-dropright'" class="bttb"></ion-icon>
           <span>{{item['ActionName']}}</span><small *ngIf="item.children.length">（ {{item.children.length}} ）</small>
         </div>
         <div *ngIf="!item.hidden">
