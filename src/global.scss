@@ -11,9 +11,28 @@
 @import '~@ionic/angular/css/flex-utils.css';
 
 .ion-color-primary {
-  --ion-color-base: #4877FB !important;
+  --ion-color-base: #4877fb !important;
 }
 
-.title-ios.hydrated{
-  font-weight: 400
+.title-ios.hydrated {
+  font-weight: 400;
+}
+ion-picker-column .picker-opts {
+  margin: 0 auto;
+}
+.action-sheet-button-inner {
+  justify-content: center !important;
+}
+.action-sheet-button {
+  text-align: center;
+}
+.picker-toolbar-button {
+  width: 50%;
+  button {
+    width: 100%;
+    text-align: left;
+  }
+}
+.picker-toolbar-button:last-child button {
+  text-align: right !important;
 }

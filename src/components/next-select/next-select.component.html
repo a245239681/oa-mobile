@@ -1,11 +1,19 @@
-<ion-button *ngFor="let item of buttonList,let i = index" style="white-space:nowrap" size="small" color="primary"
-  (click)="indexClick(buttonList[i])">
-  {{item.text}}<ion-icon name="arrow-forward"></ion-icon>
-</ion-button>
+<ion-content>
+  <!-- <ion-button *ngFor="let item of buttonList,let i = index" style="white-space:nowrap" size="small" color="primary" (click)="indexClick(item)">
+    {{item.text}}<ion-icon name="arrow-forward"></ion-icon>
+  </ion-button> -->
 
-<ion-list mode="md">
-  <div *ngFor="let item of showList,let i = index">
-    <ion-checkbox [(checked)]="showList[i].checked" [(ngModel)]="showList[i].checked" (ionChange)="checkboxClick(showList[i],$event.detail.checked)"></ion-checkbox>
-    <ion-label (click)="itemClick(showList[i])">{{item['text']}}</ion-label>
-  </div>
-</ion-list>
+  <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:departmentTree,root:true}}"></ng-container>
+
+  <ng-template #treeTpl let-context>
+    <ion-list mode="md">
+      <div *ngFor="let item of context.items" [ngClass]="context.root?'root':''">
+        <ion-checkbox [(checked)]="item.checked" [(ngModel)]="item.checked" (ionChange)="checkboxClick(item,$event.detail.checked)"></ion-checkbox>
+        <ion-label (click)="itemClick(item)">{{item.text}}</ion-label>
+        <ion-icon name="arrow-dropdown"></ion-icon>
+
+        <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:item.children,root:false}}"></ng-container>
+      </div>
+    </ion-list>
+  </ng-template>
+</ion-content>

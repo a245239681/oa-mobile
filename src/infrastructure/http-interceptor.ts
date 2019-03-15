@@ -115,7 +115,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.deductRequestCount();
           if (event.url.indexOf(ApiUrlManagement.login) <= -1) {
             const apiReustl = event.body as ApiResult<{}>;
-            if (apiReustl.State === 0) {
+            if (apiReustl.State === 0 && apiReustl.Message) {
               this.commonhelper.presentToast(apiReustl.Message);
             }
           }
