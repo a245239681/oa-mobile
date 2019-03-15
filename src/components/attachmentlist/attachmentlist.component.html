@@ -1,10 +1,7 @@
 <ion-content>
-  <!-- <div class='list'>
+  <div class='list' style='text-align: center'>
     <span class='bt'>附件列表</span>
-  </div> -->
-  <!-- <div class='list'>
-    <span class="texts"></span>
-  </div> -->
+  </div>
   <ion-list *ngIf="attachmentlistArr.length">
     <ion-item *ngFor="let item of attachmentlistArr" (click)="previewerAttchment(item)">
       <ion-label>{{item['Name']+'.'+item.Extended}}</ion-label>
