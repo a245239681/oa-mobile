@@ -45,8 +45,13 @@ ion-label {
   border-top: 1vw solid;
   display: inline-block;
   margin: -2vw 2vw 0 0;
+  width: 2em;
+  white-space: nowrap;
 }
 
 ion-note {
   font-size: 3vw;
+  position: absolute;
+  top: 4.5vw;
+  right: 16vw;
 }

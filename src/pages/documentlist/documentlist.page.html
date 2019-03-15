@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'>
-    </ion-icon>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -22,38 +23,16 @@
   </ion-card>
   <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
     <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
-      <!-- 收文 -->
-      <div *ngIf="type == 1">
+      <!-- 收文待办 发文待办 已办发文 -->
+      <div *ngIf="title == '收文待办'|| title == '发文待办' || title == '已办发文'">
         <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '#D1202E'">{{item.Title}}</ion-note>
         <ion-note color="warning" class="kpbt" *ngIf="item['color'] == '#F99D31'">{{item.Title}}</ion-note>
         <ion-note color="primary" class="kpbt" *ngIf="item['color'] == '#2D3479'">{{item.Title}}</ion-note>
+        <ion-note color="primary" class="kpbt" *ngIf="title == '发文待办' || title == '已办发文'">{{item.Title}}</ion-note>
         <div style="max-width: 330px">
           <div>
             <ion-label class="label">
-              紧急程度：{{item.Emergency}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              经办人：{{item.Staff}}
-            </ion-label>
-          </div>
-          <div>
-            <ion-label class="label">
-              当前活动：{{item.ItemStatus}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              公文文号：{{item.SerialNumber}}
-            </ion-label>
-          </div>
-        </div>
-      </div>
-
-      <!-- 发文 -->
-      <div *ngIf="type === 2">
-        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-        <div style="max-width: 330px">
-          <div>
-            <ion-label class="label">
-              拟&#12288;稿：{{item.StaffName}}
+              拟稿部门：{{item.DeptName}}
             </ion-label>
             <ion-label class="label label-nopa">
               经办人：{{item.Staff}}
@@ -71,9 +50,9 @@
       </div>
 
       <!-- 传阅 -->
-      <div *ngIf="type === 3">
+      <div *ngIf="title == '传阅件'">
         <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-        <div style="max-width: 285px">
+        <div style="max-width: 330px">
           <div>
             <ion-label class="label">
               收件日期：{{item.CreateDate}}
@@ -90,6 +69,28 @@
         </div>
       </div>
 
+      <!-- 已办收文 -->
+      <div *ngIf="title == '已办收文'">
+        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
+        <div style="max-width: 330px">
+          <div>
+            <ion-label class="label">
+              公文文号：{{item.SerialNumber}}
+            </ion-label>
+            <ion-label class="label  label-nopa">
+              处理类型：{{item.DealType}}
+            </ion-label>
+          </div>
+          <div>
+            <ion-label class="label">
+              来文单位：{{item.Department}}
+            </ion-label>
+            <ion-label class="label label-nopa">
+              收件日期：{{item.CreateDate}}
+            </ion-label>
+          </div>
+        </div>
+      </div>
     </ion-card-content>
   </ion-card>
 

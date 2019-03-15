@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)="canGoBack()"></ion-icon>
+    <ion-title>退回</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:tree,root:true}}"></ng-container>
+
+  <ng-template #treeTpl let-context>
+    <ion-list mode="md">
+      <ion-radio-group>
+        <div *ngFor="let item of context.items" [ngClass]="context.root?'root':''">
+          <ion-icon style="float: left;" mode='md' [name]="item.hidden===false?'arrow-dropdown':'arrow-dropright'">
+          </ion-icon>
+          <ion-radio mode="md" checked="item.checked" (ionChange)="ionSelect(item,$event.detail.checked)"></ion-radio>
+          <ion-label style="padding-left: 16px;">
+            {{item.Label}}</ion-label>
+          <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:item.Children,root:false}}"></ng-container>
+        </div>
+      </ion-radio-group>
+    </ion-list>
+  </ng-template>
+
+</ion-content>

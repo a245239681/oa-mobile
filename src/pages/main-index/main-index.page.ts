@@ -36,14 +36,14 @@ export class MainIndexPage implements OnInit {
   getdata() {
     this.mainindexservice.getmainindexdata().subscribe(
       res => {
-        if (res['State'] == '1') {
-          var dataArr: any[] = res['Data'];
+        if (res['State'] === 1) {
+          const dataArr: any[] = res['Data'];
           this.countArr = [];
-          for (var i = 0; i < dataArr.length; i++) {
+          for (let i = 0; i < dataArr.length; i++) {
             this.countArr[i] = dataArr[i]['Count'];
           }
           if (this.countArr.length < 4) {
-            for (var j = 0; j < 4 - this.countArr.length; j++) {
+            for (let j = 0; j < 4 - this.countArr.length; j++) {
               this.countArr.push(-1);
             }
           }
@@ -61,7 +61,8 @@ export class MainIndexPage implements OnInit {
    * 进入公文列表 1 收文 2 发文 3 传阅件
    */
   pushDocumentList(index: number) {
-    if (index == 3) {
+    if (index === 3) {
+      // 进入已办页面
       this.nav.navigateForward(['havedonework']);
       // this.route.navigate(['havedonework'], {
       //   queryParams: {
@@ -69,10 +70,10 @@ export class MainIndexPage implements OnInit {
       //   }
       // });
     } else {
-      this.nav.navigateForward(['documentlist'],{
+      // 进入公文列表 1 收文 2 发文 3 传阅件
+      this.nav.navigateForward(['documentlist'], {
         queryParams: {
-          type: ++index,
-          second: '222'
+          type: ++index
         }
       });
     }

@@ -13,7 +13,8 @@ import { MainindexService } from 'src/service/maiindex/mainindex.service';
   styleUrls: ['./submission.page.scss']
 })
 export class SubmissionPage implements OnInit {
-  // 传进来的公文模型
+
+  // 传进来的公文模型----收发文类型可通过itemmodel['documenttype'] 拿到 1 收文 2 发文
   itemmodel: any;
 
   adviceForm: FormGroup;
@@ -38,6 +39,8 @@ export class SubmissionPage implements OnInit {
    */
   IsShowHandinAndGiveButton = false;
 
+  //发文步骤名称
+  sendStepName: string;
   /**
    * 常用语数组
    */
@@ -71,8 +74,18 @@ export class SubmissionPage implements OnInit {
       console.log(JSON.parse(params['item']));
       this.itemmodel = JSON.parse(params['item']);
       if (this.userinfo.GetUserDegree() === 'true') {
-        this.handinButtonTitle = '提交并返回代理人';
-        this.IsShowHandinAndGiveButton = true;
+        //收文
+        if (this.itemmodel['documenttype'] == 1) {
+          this.handinButtonTitle = '提交并返回代理人';
+          //是否展示提交并分发文件
+          this.IsShowHandinAndGiveButton = true;
+        } 
+        //发文
+        else {
+          this.handinButtonTitle = '签发';
+          this.IsShowHandinAndGiveButton = false;
+        }
+
       } else {
         this.handinButtonTitle = '提交';
       }
@@ -136,7 +149,11 @@ export class SubmissionPage implements OnInit {
   }
   /** 退回 */
   sendBack() {
-    console.log('退回');
+    this.route.navigate(['return-back'], {
+      queryParams: {
+        item: JSON.stringify(this.itemmodel)
+      }
+    });
   }
   ngOnInit() {}
 
@@ -147,25 +164,17 @@ export class SubmissionPage implements OnInit {
     // if (this.itemmodel['IsPrimaryDept'] == true) {
     //   this.itemmodel['CoorType'] = 1;
     // }
-    this.mainservice
-      .getattitudeType(
-        this.itemmodel['Id'],
-        this.itemmodel['ProcessType'],
-        this.itemmodel['CoorType']
-      )
-      .subscribe(
-        res => {
-          console.log(res);
-          this.getoftenuse();
-          if (res['State'] === 1) {
-            this.attitudeType = res['Data']['Authority']['CurAttitudeType'];
-            this.CurAttitude = res['Data']['Authority']['CurAttitude'];
-          }
-        },
-        err => {
-          this.toast.presentToast('请求失败');
-        }
-      );
+    this.mainservice.getattitudeType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+      console.log(res);
+      this.getoftenuse();
+      if (res['State'] === 1) {
+        this.attitudeType = res['Data']['Authority']['CurAttitudeType'];
+        this.CurAttitude = res['Data']['Authority']['CurAttitude'];
+        this.sendStepName = res['Data']['Authority']['Name'];
+      }
+    }, err => {
+      this.toast.presentToast('请求失败');
+    });
   }
 
   /**
@@ -190,6 +199,13 @@ export class SubmissionPage implements OnInit {
    * 保存意见
    */
   saveadvice(content: string) {
+
+    //发文流程 如果是处于二校之后的步骤就直接提示到PC端处理---特殊情况
+    if (this.sendStepName == '二校') {
+      this.toast.presentToast('请到PC端进行校验');
+      return;
+    }
+
     if (this.attitudeType) {
       const savemodel = <saveadviceModel>{
         attitudeType: this.attitudeType,
@@ -219,6 +235,13 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
+
+    //发文流程 如果是处于二校之后的步骤就直接提示到PC端处理
+    if (this.sendStepName == '二校') {
+      this.toast.presentToast('请到PC端进行校验');
+      return;
+    }
+
     //提交用到
     if (this.attitudeType) {
       const savemodel = <saveadviceModel>{
@@ -297,11 +320,38 @@ export class SubmissionPage implements OnInit {
             }
           }
 
-        } 
+        }
 
         //发文流程
         else if (this.itemmodel['documenttype'] == 2) {
-          this.toast.presentToast('发文暂不处理');
+          // this.toast.presentToast('发文暂不处理');
+          this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+            console.log(res);
+            if (res['State'] == 1) {
+              this.itemmodel['commitType'] = res['Type'];
+
+              if (this.userinfo.GetUserDegree() === 'true') {
+                this.toast.presentToast('领导签发');
+                return;
+              }
+
+              //如果步骤名称是保密信息意见
+              if (this.sendStepName == '保密信息意见' || this.sendStepName == '公开信息意见') {
+                this.route.navigate(['secretinfoadvice'], {
+                  queryParams: {
+                    item: JSON.stringify(this.itemmodel),
+                    title: this.sendStepName
+                  }
+                })
+                return;
+              }
+              this.route.navigate(['send-action-tree'], {
+                queryParams: {
+                  item: JSON.stringify(this.itemmodel),
+                }
+              })
+            }
+          });
         }
 
       }, err => {

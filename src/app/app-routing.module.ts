@@ -22,6 +22,9 @@ const routes: Routes = [
   { path: 'add-edit-phrasing', loadChildren: '../pages/add-edit-phrasing/add-edit-phrasing.module#AddEditPhrasingPageModule' },
   { path: 'handover-person-select', loadChildren: '../pages/handover-person-select/handover-person-select.module#HandoverPersonSelectPageModule' },
   { path: 'send-action-tree', loadChildren: '../pages/send-action-tree/send-action-tree.module#SendActionTreePageModule' },
+  { path: 'secretinfoadvice', loadChildren: '../pages/secretinfoadvice/secretinfoadvice.module#SecretinfoadvicePageModule' },
+  { path: 'return-back', loadChildren: '../pages/return-back/return-back.module#ReturnBackPageModule' },
+
 
 
 
