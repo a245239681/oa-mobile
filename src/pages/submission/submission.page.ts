@@ -67,9 +67,7 @@ export class SubmissionPage implements OnInit {
     private mainservice: MainindexService,
     private userinfo: UserInfo,
     public alertController: AlertController
-
   ) {
-
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
       this.itemmodel = JSON.parse(params['item']);
@@ -119,6 +117,9 @@ export class SubmissionPage implements OnInit {
    * 获取保存意见需要的attitudeType
    */
   getattitudeType() {
+    // if (this.itemmodel['IsPrimaryDept'] == true) {
+    //   this.itemmodel['CoorType'] = 1;
+    // }
     this.mainservice.getattitudeType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
       console.log(res);
       this.getoftenuse();
@@ -192,6 +193,8 @@ export class SubmissionPage implements OnInit {
           this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe((res) => {
             if (res['State'] == 1) {
               this.itemmodel['commitType'] = '20';
+              //是否在人员机构展示 下一步
+              this.itemmodel['IsShowNextStep'] = false;
               this.pushNextStep();
             }
           }, err => {
@@ -215,13 +218,28 @@ export class SubmissionPage implements OnInit {
                 //协办
                 if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
                   this.handinxieban();
-                  return;
                 }
                 //结束
                 else if (res['Type'] == 400) {
                   //弹出要结束的模态框 跳到下一步  展示结束步骤
                   console.log('选结束');
                   this.presentEndAlert();
+                }
+                //分件
+                else if (res['Type'] == 300) {
+                  this.handinandgiveFile();
+                }
+                else if (res['Type'] == 610) {
+                  //610直接commit
+                  console.log('看数据');
+                  this.itemmodel['commitType'] = 610;
+                  console.log(this.itemmodel);
+                  console.log( this.itemmodel['commitType']);
+                  this.mainservice.commit_610(this.itemmodel['Id'],this.itemmodel['commitType'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
+                    if (res['State'] == 1) {
+                      this.route.navigate(['tabs']);
+                    }
+                  });
                 }
                 //正常流程提交
                 else {
@@ -252,7 +270,7 @@ export class SubmissionPage implements OnInit {
         this.toast.presentToast('协办提交成功');
         // 返回列表
         console.log(res);
-        this.route.navigate(['documentlist']);
+        this.route.navigate(['tabs']);
       }
     }, err => {
       this.toast.presentToast('协办提交失败');
@@ -273,7 +291,11 @@ export class SubmissionPage implements OnInit {
           cssClass: 'secondary',
           handler: () => {
             this.itemmodel['commitType'] = 400;
-            this.pushNextStep();
+            this.route.navigate(['end-action'],{
+              queryParams: {
+                'item': JSON.stringify(this.itemmodel)
+              }
+            });
           }
         },
         {
@@ -290,10 +312,18 @@ export class SubmissionPage implements OnInit {
   }
 
   /**
+   * 610直接commit
+   */
+  
+
+  /**
    * 提交并分发文件 跳到下一步
    */
   handinandgiveFile() {
     this.itemmodel['commitType'] = '300';
+    if (this.itemmodel['commitType'] == 300) {
+      this.itemmodel['IsShowNextStep'] = false;
+    }
     this.pushNextStep();
   }
 
@@ -305,16 +335,22 @@ export class SubmissionPage implements OnInit {
       this.itemmodel.Id,
       this.itemmodel.ProcessType,
       this.itemmodel.CoorType).subscribe((data: any) => {
-        if (data['State'] === 1) {
+        // if (data['State'] === 1) {
+          var tempArr = data.Data;
+
+          if (!tempArr) {
+            tempArr = [];
+          }
           this.route.navigate(['person-select'], {
             queryParams: {
               'item': JSON.stringify(this.itemmodel),
-              'hasSelected': JSON.stringify(data.Data),
+              'hasSelected': JSON.stringify(tempArr),
             },
           });
-        } else {
-          this.toast.presentToast('已无数据');
-        }
+        // } 
+        // else {
+        //   this.toast.presentToast('已无数据');
+        // }
       }, () => {
         this.toast.presentToast('请求失败');
       });

@@ -56,7 +56,6 @@ export class DepartmentSelectComponent implements OnInit {
   }
 
   singleSelect(item: any) {
-    console.log(this.hasSelected);
     this.selected.emit({ items: [item] });
   }
 

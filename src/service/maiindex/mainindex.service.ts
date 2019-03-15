@@ -141,6 +141,18 @@ export class MainindexService {
       'ProcessType': ProcessType
     });
   }
+
+  /**
+   * 610commit拟办给多人
+   */
+  commit_610(Id:string,CommitType:string,ProcessType:string,coorType:string,) {
+    return this.httpclient.post(ApiUrlManagement.lasthandin, {
+      'Id':Id,
+      'CommitType': CommitType,
+      'coorType': coorType,
+      'ProcessType': ProcessType
+    });
+  }
   
   /**
    * 

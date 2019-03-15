@@ -1,5 +1,5 @@
 import { CommonHelper } from 'src/infrastructure/commonHelper';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MainindexService, lasthandinStepModel } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { TouchSequence } from 'selenium-webdriver';
@@ -23,7 +23,8 @@ export class EndActionPage implements OnInit {
 
   constructor(private mainservice: MainindexService,
     private activatedRoute: ActivatedRoute,
-    private toast: CommonHelper
+    private toast: CommonHelper,
+    private router: Router
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
@@ -63,6 +64,7 @@ export class EndActionPage implements OnInit {
         console.log(res);
         if (res['State'] == 1) {
           this.toast.presentToast('操作完成');
+          this.router.navigate(['tabs']);
         }
       });
     } else {

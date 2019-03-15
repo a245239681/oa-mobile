@@ -1,54 +1,62 @@
 <ion-content>
-  <!-- <ion-list *ngFor="let item of parenteArr, let i = index">
-    <ion-item (click)="getsubtitle(i)">
-      <ion-label>
-        {{item['ActionName']}}
-      </ion-label>
-    </ion-item>
-    <ion-list class="padleft" *ngFor="let subitem of item['children']">
-      <div>活动名称: {{subitem['ActionName']}}</div>
-      <div>开始日期 - 结束日期: {{subitem['Date']}}</div>
-      <div>经办用户: {{subitem['ActUsr']}}</div>
-      <div>签收日期: {{subitem['SignDate']}}</div>
-      <div>状态: {{subitem['State']}}</div>
-      <div>意见:{{subitem['Attitude']}}</div>
-    </ion-list> -->
-  <div style='padding-top: 0.5rem'>
     <div *ngFor="let item of parenteArr; let i = index">
       <div class="kp neir">
+        <div class="bt neirbt" (click)="getsubtitle(item)" [ngStyle]="{'color': forecolors[item.ActionName],'background-color': backcolors[item.ActionName]}">
+          <ion-icon mode='md' [name]="item.hidden===false?'arrow-dropup':'arrow-dropdown'" class="bttb"></ion-icon>
+          <span>{{item['ActionName']}}</span><small *ngIf="item.children.length">（ {{item.children.length}} ）</small>
+        </div>
+        <div *ngIf="!item.hidden">
+          <div *ngFor="let subitem of item['children']; let n = index">
+            <div class="reny">
+              <h5 class="texts" style="font-weight:bold">活动名称：{{subitem['ActionName']}}</h5>
+              <p class="texts">签收日期：{{ subitem['SignDate'] }}</p>
+              <p class="texts">开始日期：{{ subitem['Date'].split(' - ')[0] }}</p>
+              <p class="texts">结束日期：{{ subitem['Date'].split(' - ')[1] }}</p>
+              <p class="texts">经办用户：{{ subitem['ActUsr'] }} &nbsp; &nbsp; &nbsp; 状态：{{ subitem['State'] }}</p>
+              <p class="texts">意见：{{ subitem['Attitude'] }}</p>
+            </div>
+            <span class='fgx' *ngIf="n < item['children'].length - 1"></span>
+          </div>
+          <span class='fgx' *ngIf="item.children.length !== 0" [ngStyle]="{'border-bottom-color': forecolors[item['ActionName']]}"></span>
+        </div>
+        <p class="texts" style="margin-top:0.5em" *ngIf="item.children.length === 0"> &nbsp; 没有记录</p>
+      </div>
+      <!-- <div class="kp neir">
         <div class="bt neirbt" (click)="getsubtitle(i)" [ngStyle]="{'color': btys(item['ActionName']),'background-color': btbjs(item['ActionName'])}">
           <ion-icon mode='md' name="arrow-dropdown" class="bttb"></ion-icon>
           <span>{{item['ActionName']}}</span>
         </div>
-        <div *ngFor="let subitem of item['children']; let n = index">
-          <div class="reny">
-            <div style='font-weight: 600'>
-              <span class='texts' style="vertical-align: top;">活动名称：</span>
-              <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{subitem['ActionName']}}</span>
-            </div>
-            <div>
-              <span class='texts'>签收日期：</span>
-              <span class='texts'>{{ subitem['SignDate'] }}</span>
-            </div>
-            <div>
-              <span class='texts'>开始日期 - 结束日期：</span>
+        <div [ngStyle]="{'height': showHeight[i],'overflow': hiddenList[i]}">
+          <div *ngFor="let subitem of item['children']; let n = index">
+            <div class="reny">
+              <div style='font-weight: 600'>
+                <span class='texts' style="vertical-align: top;">活动名称：</span>
+                <span class='texts'
+                  style="width: 70%;display: inline-block;vertical-align: top;">{{subitem['ActionName']}}</span>
+              </div>
               <div>
-                <span class='texts'>{{ subitem['Date'] }}</span>
+                <span class='texts'>签收日期：</span>
+                <span class='texts'>{{ subitem['SignDate'] }}</span>
+              </div>
+              <div>
+                <span class='texts'>开始日期 - 结束日期：</span>
+                <div>
+                  <span class='texts'>{{ subitem['Date'] }}</span>
+                </div>
+              </div>
+              <div>
+                <span class='texts'>经办用户： {{ subitem['ActUsr'] }} &nbsp; &nbsp; &nbsp; 状态： {{ subitem['State'] }}</span>
+              </div>
+              <div>
+                <span class='texts' style="vertical-align: top;">意见：</span>
+                <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Attitude']
+                }}</span>
               </div>
             </div>
-            <div>
-              <span class='texts'>经办用户： {{ subitem['ActUsr'] }} &nbsp; &nbsp; &nbsp; 状态： {{ subitem['State'] }}</span>
-            </div>
-            <div>
-              <span class='texts' style="vertical-align: top;">意见：</span>
-              <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Attitude']
-                }}</span>
-            </div>
+            <span class='fgx' *ngIf="fgx(item['children'],n)"></span>
           </div>
-          <span class='fgx' *ngIf="fgx(item['children'],n)"></span>
         </div>
       </div>
-      <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom': kfgx(item['ActionName'])}"></span>
+      <span class='fgx' *ngIf="item['children'].length !== 0" [ngStyle]="{'border-bottom': kfgx(item['ActionName'])}"></span> -->
     </div>
-  </div>
 </ion-content>
