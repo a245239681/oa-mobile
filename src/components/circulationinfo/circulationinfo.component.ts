@@ -14,13 +14,15 @@ export class CirculationinfoComponent implements OnInit {
     协办部门: '#4877FB',
     传阅结果: '#F99D31',
     流转情况: '#67C554',
-    领导批示: '#D1202E'
+    领导批示: '#D1202E',
+    会签意见: '#f87a85'
   };
   backcolors = {
     协办部门: '#DDF6FB',
     传阅结果: '#FDF3E6',
     流转情况: '#E1FAE4',
-    领导批示: 'rgb(253,234,234)'
+    领导批示: 'rgb(253,234,234)',
+    会签意见: '#ffeff0'
   };
 
   parenteArr = [];

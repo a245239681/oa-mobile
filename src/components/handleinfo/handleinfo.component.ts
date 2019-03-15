@@ -10,13 +10,41 @@ import { Component, OnInit, Input } from '@angular/core';
 export class HandleinfoComponent implements OnInit {
   @Input() itemmodel: any;
 
-  //意见数组
+  // 意见数组
   adcviceArr: any[] = [];
 
   bodyData: any;
 
-  //保存key的数组
+  // 保存key的数组
   keyArr: string[] = [];
+
+  /** 内容块标题的字体颜色 */
+  forecolors = {
+    0: '#4877FB',
+    1: '#f87a85',
+    2: '#67C554',
+    3: '#D1202E',
+    4: '#F99D31',
+    5: '#4877FB',
+    6: '#f87a85',
+    7: '#67C554',
+    8: '#D1202E',
+    9: '#F99D31'
+  };
+
+  /** 内容块的分割线颜色 */
+  borderbottom = {
+    0: '1px solid #4877FB',
+    1: '1px solid #f87a85',
+    2: '1px solid #67C554',
+    3: '1px solid #D1202E',
+    4: '1px solid #F99D31',
+    5: '1px solid #4877FB',
+    6: '1px solid #f87a85',
+    7: '1px solid #67C554',
+    8: '1px solid #D1202E',
+    9: '1px solid #F99D31'
+  };
 
   constructor(private service: MainindexService, public toast: CommonHelper) {}
 
@@ -37,14 +65,17 @@ export class HandleinfoComponent implements OnInit {
       )
       .subscribe(
         res => {
-          if (res['State'] == 1) {
+          if (res['State'] === 1) {
             this.bodyData = res['Data']['BodyData'];
             this.adcviceArr = [];
             this.keyArr = [];
-            for (var key in this.bodyData) {
+            // tslint:disable-next-line:forin
+            for (const key in this.bodyData) {
               console.log(key);
               this.keyArr.push(key);
               this.adcviceArr.push(this.bodyData[key]);
+              console.log(this.adcviceArr);
+              console.dir(this.adcviceArr);
             }
           } else {
             this.toast.presentToast('暂无数据');
@@ -55,34 +86,36 @@ export class HandleinfoComponent implements OnInit {
         }
       );
   }
-
+  expression(i) {
+    console.log(i);
+  }
   /**
    * 标题颜色
    */
-  btys(i: any) {
-    if (i === '拟办部门意见') {
-      return '#4877FB';
-    } else if (i === '局领导批示') {
-      return '#F87A85';
-    } else if (i === '主办意见') {
-      return '#67C554';
-    } else {
-      return '#4877FB';
-    }
-  }
+  // btys(i: any) {
+  //   if (i === '拟办部门意见') {
+  //     return '#4877FB';
+  //   } else if (i === '局领导批示') {
+  //     return '#F87A85';
+  //   } else if (i === '主办意见') {
+  //     return '#67C554';
+  //   } else {
+  //     return '#4877FB';
+  //   }
+  // }
 
-  /** 块分割线颜色 */
-  kfgx(i: any) {
-    if (i === '拟办部门意见') {
-      return '1px solid #4877FB';
-    } else if (i === '局领导批示') {
-      return '1px solid #F87A85';
-    } else if (i === '主办意见') {
-      return '1px solid #67C554';
-    } else {
-      return '1px solid #4877FB';
-    }
-  }
+  // /** 块分割线颜色 */
+  // kfgx(i: any) {
+  //   if (i === '拟办部门意见') {
+  //     return '1px solid #4877FB';
+  //   } else if (i === '局领导批示') {
+  //     return '1px solid #F87A85';
+  //   } else if (i === '主办意见') {
+  //     return '1px solid #67C554';
+  //   } else {
+  //     return '1px solid #4877FB';
+  //   }
+  // }
   /**
    * 分割线
    */
