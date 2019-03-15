@@ -23,13 +23,12 @@ export class HandleinfoComponent implements OnInit {
     0: '#4877FB',
     1: '#f87a85',
     2: '#67C554',
-    3: '#D1202E',
-    4: '#F99D31',
-    5: '#4877FB',
-    6: '#f87a85',
-    7: '#67C554',
-    8: '#D1202E',
-    9: '#F99D31'
+    3: '#F99D31',
+    4: '#4877FB',
+    5: '#f87a85',
+    6: '#67C554',
+    7: '#D1202E',
+    8: '#F99D31'
   };
 
   /** 内容块的分割线颜色 */
@@ -37,13 +36,12 @@ export class HandleinfoComponent implements OnInit {
     0: '1px solid #4877FB',
     1: '1px solid #f87a85',
     2: '1px solid #67C554',
-    3: '1px solid #D1202E',
-    4: '1px solid #F99D31',
-    5: '1px solid #4877FB',
-    6: '1px solid #f87a85',
-    7: '1px solid #67C554',
-    8: '1px solid #D1202E',
-    9: '1px solid #F99D31'
+    3: '1px solid #F99D31',
+    4: '1px solid #4877FB',
+    5: '1px solid #f87a85',
+    6: '1px solid #67C554',
+    7: '1px solid #D1202E',
+    8: '1px solid #F99D31'
   };
 
   constructor(private service: MainindexService, public toast: CommonHelper) {}
