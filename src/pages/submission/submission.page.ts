@@ -149,7 +149,11 @@ export class SubmissionPage implements OnInit {
   }
   /** 退回 */
   sendBack() {
-    console.log('退回');
+    this.route.navigate(['return-back'], {
+      queryParams: {
+        item: JSON.stringify(this.itemmodel)
+      }
+    });
   }
   ngOnInit() {}
 
