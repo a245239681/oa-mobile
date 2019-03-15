@@ -45,7 +45,7 @@ export class AttachmentlistComponent implements OnInit {
           this.attachmentlistArr = res['Data'];
           console.log(this.attachmentlistArr);
         } else {
-          this.toast.presentToast('暂无数据');
+          // this.toast.presentToast('暂无数据');
         }
       },
       err => {
