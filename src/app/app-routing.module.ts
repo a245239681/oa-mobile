@@ -20,6 +20,8 @@ const routes: Routes = [
   { path: 'qr-code', loadChildren: '../pages/qr-code/qr-code.module#QrCodePageModule' },
   { path: 'end-action', loadChildren: '../pages/end-action/end-action.module#EndActionPageModule' },
   { path: 'add-edit-phrasing', loadChildren: '../pages/add-edit-phrasing/add-edit-phrasing.module#AddEditPhrasingPageModule' },
+  { path: 'handover-person-select', loadChildren: '../pages/handover-person-select/handover-person-select.module#HandoverPersonSelectPageModule' },
+
 
 
 
