@@ -1,0 +1,30 @@
+ion-content {
+  position: absolute;
+  left: 20vw;
+  width: 80vw;
+}
+
+ion-list.list-md {
+  padding-top: 0;
+  padding-bottom: 0;
+  >div {
+    padding: 8px 0 8px 20px;
+    margin-left: 2vw;
+    border-bottom: 1px solid silver;
+    &.root {
+      padding-left: 0
+    }
+  }
+}
+
+ion-checkbox {
+  vertical-align: middle;
+}
+
+ion-label {
+  line-height: 100%;
+}
+
+ion-icon {
+  float: right;
+}
