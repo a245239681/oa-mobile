@@ -1,18 +1,11 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon
-      style="float:left;width:50px;height:30px"
-      name="ios-arrow-back"
-      (click)="canGoBack()"
-    ></ion-icon>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block"></ion-back-button>
+    </ion-buttons>
     <ion-title>常用语设置</ion-title>
-    <ion-buttons
-      style="margin-right: 1rem;font-size: 0.9rem;"
-      slot="end"
-      [routerLink]="['/add-edit-phrasing']"
-      [queryParams]="{ title: '添加' }"
-    >
-      添加
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/add-edit-phrasing']" [queryParams]="{ title: '添加' }">添加</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -41,14 +34,11 @@
       </div>
       <div class="flexRightContent minwidth flexBox">
         <div>
-          <ion-button
-            size="small"
-            [routerLink]="['/add-edit-phrasing']"
-            [queryParams]="{ title: '编辑' }"
-            >编辑</ion-button
-          >
+          <ion-button size="small" [routerLink]="['/add-edit-phrasing']" [queryParams]="{ title: '编辑' }">编辑</ion-button>
         </div>
-        <div><ion-button size="small" (click)="delete()">删除</ion-button></div>
+        <div>
+          <ion-button size="small" (click)="delete()">删除</ion-button>
+        </div>
       </div>
     </div>
     <div class="flexBox">
@@ -63,8 +53,12 @@
         </div>
       </div>
       <div class="flexRightContent minwidth flexBox">
-        <div><ion-button size="small">编辑</ion-button></div>
-        <div><ion-button size="small">删除</ion-button></div>
+        <div>
+          <ion-button size="small">编辑</ion-button>
+        </div>
+        <div>
+          <ion-button size="small">删除</ion-button>
+        </div>
       </div>
     </div>
     <div class="flexBox">
@@ -79,8 +73,12 @@
         </div>
       </div>
       <div class="flexRightContent minwidth flexBox">
-        <div><ion-button size="small">编辑</ion-button></div>
-        <div><ion-button size="small">删除</ion-button></div>
+        <div>
+          <ion-button size="small">编辑</ion-button>
+        </div>
+        <div>
+          <ion-button size="small">删除</ion-button>
+        </div>
       </div>
     </div>
     <div class="flexBox">
@@ -95,8 +93,12 @@
         </div>
       </div>
       <div class="flexRightContent minwidth flexBox">
-        <div><ion-button size="small">编辑</ion-button></div>
-        <div><ion-button size="small">删除</ion-button></div>
+        <div>
+          <ion-button size="small">编辑</ion-button>
+        </div>
+        <div>
+          <ion-button size="small">删除</ion-button>
+        </div>
       </div>
     </div>
     <div class="flexBox">
@@ -111,8 +113,12 @@
         </div>
       </div>
       <div class="flexRightContent minwidth flexBox">
-        <div><ion-button size="small">编辑</ion-button></div>
-        <div><ion-button size="small">删除</ion-button></div>
+        <div>
+          <ion-button size="small">编辑</ion-button>
+        </div>
+        <div>
+          <ion-button size="small">删除</ion-button>
+        </div>
       </div>
     </div>
   </ion-list>

@@ -1,12 +1,16 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon style="float:left;width:50px;height:30px" name="ios-arrow-back" (click)='canGoBack()'></ion-icon>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block"></ion-back-button>
+    </ion-buttons>
     <ion-title>人员机构</ion-title>
-    <ion-buttons slot="end" (click)="handin()">
-      提交
+    <ion-buttons slot="end">
+      <ion-button (click)="handin()">提交</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 
 <ion-content>
   <ion-segment mode="md" (ionChange)="segmentChanged($event)">
@@ -24,14 +28,11 @@
     </ion-segment-button>
   </ion-segment>
 
-  <department-select [isSingleSlect]="'1'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"
-    *ngIf="type == 1"></department-select>
-  <department-select [isSingleSlect]="'2'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"
-    *ngIf="type == 2"></department-select>
+  <department-select [isSingleSlect]="'1'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
+  <department-select [isSingleSlect]="'2'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
   <next-select *ngIf="type == 3" state="1" [hasSelected]="hasSelected" (selected)="nextSelected($event.items)">
   </next-select>
-  <next-select [hidden]="type != 4" state="0" [hasSelected]="hasSelected"
-    (selected)="nextSelected($event.items,$event.leaderChecked,$event.nbChecked)"></next-select>
+  <next-select [hidden]="type != 4" state="0" [hasSelected]="hasSelected" (selected)="nextSelected($event.items,$event.leaderChecked,$event.nbChecked)"></next-select>
   <!-- <department-select [isSingleSlect]="true" [hasSelected]="itemmodel" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
   <department-select [isSingleSlect]="false" [hasSelected]="itemmodel" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
   <next-select *ngIf="type == 3" state="1" (selected)="nextSelected($event.items)"></next-select>

@@ -1,10 +1,8 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon
-      style="float:left;width:50px;height:30px"
-      name="ios-arrow-back"
-      (click)="canGoBack()"
-    ></ion-icon>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block"></ion-back-button>
+    </ion-buttons>
     <ion-title>个人信息</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -38,19 +36,13 @@
       </div>
     </div>
     <div class="flexBox">
-      <ion-item
-        style="--padding-start:0;--padding-end:0;width: 100%;--inner-padding-end: -9px"
-      >
+      <ion-item style="--padding-start:0;--padding-end:0;width: 100%;--inner-padding-end: -9px">
         <ion-label>生日</ion-label>
-        <ion-datetime
-          display-format=" YYYY/MM/DD"
-          cancelText="取消"
-          doneText="确定"
-        ></ion-datetime>
+        <ion-datetime display-format=" YYYY/MM/DD" cancelText="取消" doneText="确定"></ion-datetime>
         <div class="flexRightContent iconRight">
           <i class="iconfont">&#xe955;</i>
-        </div></ion-item
-      >
+        </div>
+      </ion-item>
     </div>
     <div class="flexBox" [routerLink]="['/change-phonenumber']">
       <div class="flexLeftContent detailInfo flex1W100">

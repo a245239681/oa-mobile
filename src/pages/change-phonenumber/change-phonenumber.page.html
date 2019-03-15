@@ -1,10 +1,8 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon
-      style="float:left;width:50px;height:30px"
-      name="ios-arrow-back"
-      (click)="canGoBack()"
-    ></ion-icon>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block"></ion-back-button>
+    </ion-buttons>
     <ion-title>修改手机号码</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,10 +10,7 @@
 <ion-content class="phoneNumber">
   <div class="flexBox changeFrom">
     <span class="flexLeftContent">+86</span>
-    <ion-input
-      class="flexRightContent"
-      placeholder="请输入手机号码"
-    ></ion-input>
+    <ion-input class="flexRightContent" placeholder="请输入手机号码"></ion-input>
   </div>
   <div style="margin-top: 2rem;padding: 0 2rem;">
     <ion-button expand="block">保存</ion-button>
