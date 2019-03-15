@@ -204,6 +204,13 @@ export class MainindexService {
   getendAction(Id:string,processType:string): Observable<any> {
     return this.httpclient.get(ApiUrlManagement.GetActionTree + '?id=' + Id + '&processType=' + processType);
   }
+
+  /**
+   * 发文--获取提交的人员
+   */
+  GetActionTreeSend(Id:string,processType:string) {
+    return this.httpclient.get(ApiUrlManagement.GetActionTreeSend + '?id=' + Id + '&processType=' + processType);
+  }
 }
 
 //保存意见的参数模型

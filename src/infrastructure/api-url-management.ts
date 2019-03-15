@@ -117,5 +117,10 @@ export const ApiUrlManagement = {
   /**
    * 主办下一步提交---获取----结束
    */
-  GetActionTree: 'api/recieve/GetActionTree'
+  GetActionTree: 'api/recieve/GetActionTree',
+
+  /**
+   * api/recieve/GetActionTreeSend
+   */
+  GetActionTreeSend: 'api/recieve/GetActionTreeSend',
 };
