@@ -114,7 +114,7 @@ export class SubmissionPage implements OnInit {
   }
 
   /**
-   * 获取保存意见需要的attitudeType
+   * 获取保存意见需要的attitudeType open接口
    */
   getattitudeType() {
     // if (this.itemmodel['IsPrimaryDept'] == true) {
@@ -177,6 +177,7 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
+    //提交用到
     if (this.attitudeType) {
       const savemodel = <saveadviceModel>{
         attitudeType: this.attitudeType,
@@ -186,73 +187,81 @@ export class SubmissionPage implements OnInit {
         relationId: this.itemmodel['Id'],
         skipValid: false
       };
+
       this.mainservice.saveadvice(savemodel).subscribe((res) => {
-
-        //身份是领导的情况
-        if (this.IsShowHandinAndGiveButton) {
-          this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe((res) => {
-            if (res['State'] == 1) {
-              this.itemmodel['commitType'] = '20';
-              //是否在人员机构展示 下一步
-              this.itemmodel['IsShowNextStep'] = false;
-              this.pushNextStep();
-            }
-          }, err => {
-            this.toast.presentToast('请求失败');
-          });
-        }
-
-
-        //不是领导的情况
-        else {
-          //如果是协办的话点提交的接口就OK
-          if (this.itemmodel['CoorType'] == 1) {
-            console.log('协办')
-            this.handinxieban();
-          }
-          else {
-            //调用提交的接口
-            this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
-              console.log(res);
+        //收文流程
+        if (this.itemmodel['documenttype'] == 1) {
+          //身份是领导的情况
+          if (this.IsShowHandinAndGiveButton) {
+            this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe((res) => {
               if (res['State'] == 1) {
-                //协办
-                if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
-                  this.handinxieban();
-                }
-                //结束
-                else if (res['Type'] == 400) {
-                  //弹出要结束的模态框 跳到下一步  展示结束步骤
-                  console.log('选结束');
-                  this.presentEndAlert();
-                }
-                //分件
-                else if (res['Type'] == 300) {
-                  this.handinandgiveFile();
-                }
-                else if (res['Type'] == 610) {
-                  //610直接commit
-                  console.log('看数据');
-                  this.itemmodel['commitType'] = 610;
-                  console.log(this.itemmodel);
-                  console.log( this.itemmodel['commitType']);
-                  this.mainservice.commit_610(this.itemmodel['Id'],this.itemmodel['commitType'],this.itemmodel['ProcessType'],this.itemmodel['CoorType']).subscribe((res) => {
-                    if (res['State'] == 1) {
-                      this.route.navigate(['tabs']);
-                    }
-                  });
-                }
-                //正常流程提交
-                else {
-                  //增加一个模态框的type的字段
-                  this.itemmodel['commitType'] = res['Type'];
-                  this.pushNextStep();
-                }
+                this.itemmodel['commitType'] = '20';
+                //是否在人员机构展示 下一步
+                this.itemmodel['IsShowNextStep'] = false;
+                this.pushNextStep();
               }
             }, err => {
-              this.toast.presentToast(res['Message']);
+              this.toast.presentToast('请求失败');
             });
           }
+          //不是领导的情况
+          else {
+            //如果是协办的话点提交的接口就OK
+            if (this.itemmodel['CoorType'] == 1) {
+              console.log('协办')
+              this.handinxieban();
+            }
+            else {
+              //调用提交的接口
+              this.mainservice.getToastType(this.itemmodel['Id'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+                console.log(res);
+                if (res['State'] == 1) {
+                  //协办
+                  if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
+                    this.handinxieban();
+                  }
+                  //结束
+                  else if (res['Type'] == 400) {
+                    //弹出要结束的模态框 跳到下一步  展示结束步骤
+                    console.log('选结束');
+                    this.presentEndAlert();
+                  }
+                  //分件
+                  else if (res['Type'] == 300) {
+                    this.handinandgiveFile();
+                  }
+                  else if (res['Type'] == 610) {
+                    //610直接commit
+                    console.log('看数据');
+                    this.itemmodel['commitType'] = 610;
+                    console.log(this.itemmodel);
+                    console.log(this.itemmodel['commitType']);
+                    this.mainservice.commit_610(this.itemmodel['Id'], this.itemmodel['commitType'], this.itemmodel['ProcessType'], this.itemmodel['CoorType']).subscribe((res) => {
+                      if (res['State'] == 1) {
+                        this.route.navigate(['tabs']);
+                      }
+                    });
+                  }
+                  //正常流程提交
+                  else {
+                    //增加一个模态框的type的字段
+                    this.itemmodel['commitType'] = res['Type'];
+                    this.pushNextStep();
+                  }
+                }
+              }, err => {
+                this.toast.presentToast(res['Message']);
+              });
+            }
+          }
+
+        } 
+
+        //发文流程
+        else if (this.itemmodel['documenttype'] == 2) {
+          this.toast.presentToast('发文暂不处理');
         }
+
       }, err => {
         this.toast.presentToast('保存意见失败失败');
       });
@@ -291,7 +300,7 @@ export class SubmissionPage implements OnInit {
           cssClass: 'secondary',
           handler: () => {
             this.itemmodel['commitType'] = 400;
-            this.route.navigate(['end-action'],{
+            this.route.navigate(['end-action'], {
               queryParams: {
                 'item': JSON.stringify(this.itemmodel)
               }
@@ -314,7 +323,7 @@ export class SubmissionPage implements OnInit {
   /**
    * 610直接commit
    */
-  
+
 
   /**
    * 提交并分发文件 跳到下一步
@@ -336,17 +345,17 @@ export class SubmissionPage implements OnInit {
       this.itemmodel.ProcessType,
       this.itemmodel.CoorType).subscribe((data: any) => {
         // if (data['State'] === 1) {
-          var tempArr = data.Data;
+        var tempArr = data.Data;
 
-          if (!tempArr) {
-            tempArr = [];
-          }
-          this.route.navigate(['person-select'], {
-            queryParams: {
-              'item': JSON.stringify(this.itemmodel),
-              'hasSelected': JSON.stringify(tempArr),
-            },
-          });
+        if (!tempArr) {
+          tempArr = [];
+        }
+        this.route.navigate(['person-select'], {
+          queryParams: {
+            'item': JSON.stringify(this.itemmodel),
+            'hasSelected': JSON.stringify(tempArr),
+          },
+        });
         // } 
         // else {
         //   this.toast.presentToast('已无数据');

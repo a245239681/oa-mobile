@@ -206,6 +206,7 @@ export class PersonSelectPage implements OnInit {
       this.itemmodel['commitType'] = 600;
     }
 
+    //参数模型
     this.handleModel = {
       id: this.itemmodel['Id'],
       // 主办id 单选
