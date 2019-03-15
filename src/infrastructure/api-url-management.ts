@@ -118,9 +118,22 @@ export const ApiUrlManagement = {
    * 主办下一步提交---获取----结束
    */
   GetActionTree: 'api/recieve/GetActionTree',
+  /**
+   * 移交请求办公室人员
+   */
+  GetFlow_YJ_DeptStaffTree: 'api/recieve/GetFlow_YJ_DeptStaffTree',
+  /**
+   * 移交验证
+   */
+  ValidMove: 'api/recieve/ValidMove',
 
   /**
    * api/recieve/GetActionTreeSend
    */
   GetActionTreeSend: 'api/recieve/GetActionTreeSend',
+
+  /**
+   * 保密审查意见
+   */
+  secretInfoAdvice: 'api/recieve/SaveSend',
 };
