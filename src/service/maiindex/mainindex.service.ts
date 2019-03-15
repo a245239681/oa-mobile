@@ -344,6 +344,15 @@ export class MainindexService {
     });
   }
 
+
+  /**
+   * 退回
+   * @param Id id
+   * @param processType type
+   */
+  getBackActionTree(Id: string, processType: string) {
+    return this.httpclient.get(ApiUrlManagement.getBackActionTree + '?id=' + Id + '&processType=' + processType);
+  }
 }
 
 // 保存意见的参数模型

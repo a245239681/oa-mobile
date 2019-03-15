@@ -28,9 +28,11 @@
     </ion-segment-button>
   </ion-segment>
 
-  <department-select [isSingleSlect]="'1'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
-  <department-select [isSingleSlect]="'2'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)" *ngIf="type == 2"></department-select>
-  <next-select *ngIf="type == 3" state="1" [hasSelected]="hasSelected" (selected)="nextSelected($event.items)">
+  <department-select [isSingleSlect]="'1'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"
+    [hidden]="type != 1"></department-select>
+  <department-select [isSingleSlect]="'2'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"
+    [hidden]="type != 2"></department-select>
+  <next-select [hidden]="type != 3" state="1" [hasSelected]="hasSelected" (selected)="nextSelected($event.items)">
   </next-select>
   <next-select [hidden]="type != 4" state="0" [hasSelected]="hasSelected" (selected)="nextSelected($event.items,$event.leaderChecked,$event.nbChecked)"></next-select>
   <!-- <department-select [isSingleSlect]="true" [hasSelected]="itemmodel" (selected)="hostSelected($event.items)" *ngIf="type == 1"></department-select>
