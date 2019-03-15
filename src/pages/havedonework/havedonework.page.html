@@ -5,74 +5,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-segment mode="md" (ionChange)="segmentChanged($event)">
-    <ion-segment-button mode="md" value="1" checked>
-      <ion-label>收文已办</ion-label>
-    </ion-segment-button>
-    <ion-segment-button mode="md" value="2">
-      <ion-label>发文已办</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <div style="height: 10px"></div>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
-    </ion-refresher-content>
-  </ion-refresher>
-
-  <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
-    <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
-      <!-- 收文 -->
-      <div *ngIf="type == 1">
-        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-        <div style="max-width: 330px">
-          <div>
-            <ion-label class="label">
-              紧急程度：{{item.Emergency}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              公文文号：{{item.SerialNumber}}
-            </ion-label>
-          </div>
-          <div>
-            <ion-label class="label">
-              来文单位：{{item.Department}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              处理类型：{{item.DealType}}
-            </ion-label>
-          </div>
-        </div>
-      </div>
-
-      <!-- 发文 -->
-      <div *ngIf="type == 2">
-        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-        <div style="max-width: 330px">
-          <div>
-            <ion-label class="label">
-              拟&#12288;稿：{{item.StaffName}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              公文文号：{{item.SerialNumber}}
-            </ion-label>
-          </div>
-          <div>
-            <ion-label class="label">
-              签发日期：{{item.SignDate}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              主&#12288;送：{{item.Department}}
-            </ion-label>
-          </div>
-        </div>
-      </div>
-
-    </ion-card-content>
-  </ion-card>
-
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" [disabled]="nohasmore">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+<ion-content class="bjys">
+  <div class="neir">
+    <p class="an yan">
+      收文已办
+    </p>
+    <p class="an zan">
+      发文已办
+    </p>
+  </div>
 </ion-content>
