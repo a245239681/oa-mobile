@@ -29,7 +29,7 @@ export class MainindexService {
     type: number = 1,
     searchStr?: string
   ): Observable<any> {
-    //收文待办
+    // 收文待办
     if (type == 1) {
       return this.httpclient.post<any>(ApiUrlManagement.needtododata, {
         type: '传阅件;批办件',
@@ -170,24 +170,34 @@ export class MainindexService {
   /**
    * 结束一条文的接口
    */
-  endActionStep(Id: string, CommitType: string, NextActionId: string, ProcessType: string): Observable<any> {
+  endActionStep(
+    Id: string,
+    CommitType: string,
+    NextActionId: string,
+    ProcessType: string
+  ): Observable<any> {
     return this.httpclient.post(ApiUrlManagement.lasthandin, {
-      'Id': Id,
-      'CommitType': CommitType,
-      'NextActionId': NextActionId,
-      'ProcessType': ProcessType
+      Id: Id,
+      CommitType: CommitType,
+      NextActionId: NextActionId,
+      ProcessType: ProcessType
     });
   }
 
   /**
    * 610commit拟办给多人
    */
-  commit_610(Id: string, CommitType: string, ProcessType: string, coorType: string, ) {
+  commit_610(
+    Id: string,
+    CommitType: string,
+    ProcessType: string,
+    coorType: string
+  ) {
     return this.httpclient.post(ApiUrlManagement.lasthandin, {
-      'Id': Id,
-      'CommitType': CommitType,
-      'coorType': coorType,
-      'ProcessType': ProcessType
+      Id: Id,
+      CommitType: CommitType,
+      coorType: coorType,
+      ProcessType: ProcessType
     });
   }
 
@@ -307,28 +317,43 @@ export class MainindexService {
    * 主办下一步提交 --获取--结束
    */
   getendAction(Id: string, processType: string): Observable<any> {
-    return this.httpclient.get(ApiUrlManagement.GetActionTree + '?id=' + Id + '&processType=' + processType);
+    return this.httpclient.get(
+      ApiUrlManagement.GetActionTree +
+        '?id=' +
+        Id +
+        '&processType=' +
+        processType
+    );
   }
 
   /**
    * 发文--获取提交的人员
    */
   GetActionTreeSend(Id: string, processType: string) {
-    return this.httpclient.get(ApiUrlManagement.GetActionTreeSend + '?id=' + Id + '&processType=' + processType);
+    return this.httpclient.get(
+      ApiUrlManagement.GetActionTreeSend +
+        '?id=' +
+        Id +
+        '&processType=' +
+        processType
+    );
   }
 
   /**
    * 发文
    */
   LastSendActionStep(lastSebdActionStepModel: LastSendActionStepModel) {
-    return this.httpclient.post(ApiUrlManagement.lasthandin, lastSebdActionStepModel)
+    return this.httpclient.post(
+      ApiUrlManagement.lasthandin,
+      lastSebdActionStepModel
+    );
   }
 
   /**
-  * 保密审查意见接口
-  */
-  SecretInfoAdvice(Id: string,secrecyOpinion: string) {
-    return this.httpclient.post(ApiUrlManagement.secretInfoAdvice,{
+   * 保密审查意见接口
+   */
+  SecretInfoAdvice(Id: string, secrecyOpinion: string) {
+    return this.httpclient.post(ApiUrlManagement.secretInfoAdvice, {
       SecrecyOpinion: secrecyOpinion,
       Id: Id
     });
@@ -337,13 +362,12 @@ export class MainindexService {
   /**
    * 公开信息接口
    */
-  OpenInfoAdvice(Id: string,inspectionOpinion: string) {
-    return this.httpclient.post(ApiUrlManagement.secretInfoAdvice,{
+  OpenInfoAdvice(Id: string, inspectionOpinion: string) {
+    return this.httpclient.post(ApiUrlManagement.secretInfoAdvice, {
       InspectionOpinion: inspectionOpinion,
       Id: Id
     });
   }
-
 
   /**
    * 退回
@@ -351,7 +375,22 @@ export class MainindexService {
    * @param processType type
    */
   getBackActionTree(Id: string, processType: string) {
-    return this.httpclient.get(ApiUrlManagement.getBackActionTree + '?id=' + Id + '&processType=' + processType);
+    return this.httpclient.get(
+      ApiUrlManagement.getBackActionTree +
+        '?id=' +
+        Id +
+        '&processType=' +
+        processType
+    );
+  }
+
+  /** 根据Id返回发文笺详情 */
+  GetSendModelById(Id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetSendModelById, {
+      params: {
+        Id: Id
+      }
+    });
   }
 }
 
@@ -396,17 +435,17 @@ export interface PendingReaderModel {
   deptId: string;
 }
 
-//发文提交参数
+// 发文提交参数
 
 export interface LastSendActionStepModel {
-  id: string,
-  NextActionId: string,
+  id: string;
+  NextActionId: string;
 
-  NextUserId: string,
+  NextUserId: string;
 
-  commitType: number,
+  commitType: number;
 
-  CoorType: number,
+  CoorType: number;
 
-  ProcessType: number,
+  ProcessType: number;
 }

@@ -45,78 +45,83 @@
     <!-- 发文 -->
     <div *ngIf="itemmodel.documenttype == 2">
       <div>
-        <span class='texts'>密级：{{ itemmodel.Secret }}</span>
-      </div>
-      <div>
-        <span class='texts'>紧急程度：{{ itemmodel.FinishDate}}</span>
+        <span class='texts' style='margin-right: 8%;'>密级：{{ myData.Secret }}</span>
+        <span class='texts' style="min-width: 56%;display: inline-block;">紧急程度：{{
+          myData.Emergency
+          }}</span>
       </div>
       <div>
         <span class='texts'>正文模板：</span>
-        <span class='texts'>{{ itemmodel.TemplateTypeId }}</span>
+        <!-- <span class='texts'>{{ myData. }}</span> -->
       </div>
       <div>
         <span class='texts'>发文类型：</span>
-        <!-- <span class='texts'>{{ itemmodel. }}</span> -->
+        <span class='texts'>{{ myData.Type }}</span>
       </div>
       <div>
         <span class='texts'>公文文号：</span>
-        <span class='texts'>{{ itemmodel.SerialNumber }}</span>
+        <span class='texts'>{{ myData.SerialNumber }}</span>
       </div>
       <div>
         <span class='texts'>份数：</span>
-        <span class='texts'>{{ itemmodel.PrintCount }}</span>
+        <span class='texts'>{{ myData.PrintCount }}</span>
       </div>
       <div>
         <span class='texts'>文件标题：</span>
-        <span class='texts'>{{ itemmodel.Title }}</span>
+        <span class='texts'>{{ myData.Title }}</span>
       </div>
       <div>
         <span class='texts'>主送：</span>
-        <span class='texts'>{{ itemmodel.Department }}</span>
+        <span class='texts'>{{ myData.Department }}</span>
       </div>
       <div>
         <span class='texts'>抄送：</span>
-        <span class='texts'>{{ itemmodel.CopyDepartment }}</span>
+        <span class='texts'>{{ myData.CopyDepartment }}</span>
       </div>
       <div>
         <span class='texts'>政府信息公开类型：</span>
-        <span class='texts'>{{ itemmodel.PublicType }}</span>
+        <span class='texts'>{{ myData.PublicType }}</span>
       </div>
       <div>
         <span class='texts'>保密审查：</span>
-        <span class='texts'>{{ itemmodel.SecretCheck }}</span>
+        <span class='texts' *ngIf="myData.SecretCheck">
+          <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+        </span>
+        <span class='texts' *ngIf="!myData.SecretCheck">
+          <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+        </span>
       </div>
       <div>
         <span class='texts'>依申请公开的理由：</span>
-        <!-- <span class='texts'>{{ itemmodel. }}</span> -->
+        <!-- <span class='texts'>{{ myData. }}</span> -->
       </div>
       <div>
         <span class='texts'>主题词：</span>
-        <span class='texts'>{{ itemmodel.KeyWords }}</span>
+        <span class='texts'>{{ myData.KeyWords }}</span>
       </div>
       <div>
         <span class='texts'>信息公开检查意见：</span>
-        <span class='texts'>{{ itemmodel.InspectionOpinion }}</span>
+        <span class='texts'>{{ myData.InspectionOpinion }}</span>
       </div>
       <div>
         <span class='texts'>保密审查意见：</span>
-        <span class='texts'>{{ itemmodel.SecrecyOpinion }}</span>
+        <span class='texts'>{{ myData.SecrecyOpinion }}</span>
       </div>
       <div>
         <span class='texts'>拟稿备注：</span>
-        <span class='texts'>{{ itemmodel.Remark }}</span>
+        <span class='texts'>{{ myData.Remark }}</span>
       </div>
       <div>
         <span class='texts'>拟稿部门：</span>
-        <span class='texts'>{{ itemmodel.DeptName }}</span>
+        <span class='texts'>{{ myData.DeptName }}</span>
       </div>
       <div>
         <span class='texts'>拟稿人：</span>
-        <span class='texts'>{{ itemmodel.StaffName }}</span>
+        <span class='texts'>{{ myData.StaffName }}</span>
       </div>
       <div>
         <span class='texts'>签发时间：</span>
-        <span class='texts'>{{ itemmodel.SignDate }}</span>
+        <span class='texts'>{{ myData.SignDate }}</span>
       </div>
     </div>
   </div>

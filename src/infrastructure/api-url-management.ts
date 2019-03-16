@@ -136,10 +136,12 @@ export const ApiUrlManagement = {
    * 保密审查意见
    */
   secretInfoAdvice: 'api/recieve/SaveSend',
-  GetActionTreeSend: 'api/recieve/GetActionTreeSend',
 
   /**
    * 退回树
    */
   getBackActionTree: 'api/recieve/GetBackActionTree',
+
+  /** 获取办发文信息 */
+  GetSendModelById: 'api/recieve/GetSendModelById'
 };

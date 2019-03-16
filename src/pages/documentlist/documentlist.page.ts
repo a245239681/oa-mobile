@@ -242,6 +242,9 @@ export class DocumentlistPage implements OnInit {
   pushIntodetail(item: any) {
     /** 把操作序号添加到json */
     item['documenttype'] = this.type;
+    /** 把操作列表添加到json */
+    item['Operationlist'] = this.title;
+
     // 点击签收
     this.mainindexservice
       .signclick(item['Id'], item['ProcessType'], item['CoorType'])

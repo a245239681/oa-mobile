@@ -14,14 +14,13 @@ export class DocumentdetailPage implements OnInit {
   itemmodel: any;
 
   // 标题切换
-  title: string = '办理信息';
+  title = '办理信息';
 
   /**
    * 1 办理信息 2 流转信息 3 办文签  4 附件列表
    */
-  type: number = 1;
+  type = '1';
 
-  
   // 收发文类型 1 收文 2 发文 3 传阅
   documenttype: number;
 
@@ -34,9 +33,25 @@ export class DocumentdetailPage implements OnInit {
       console.log(params);
       this.itemmodel = JSON.parse(params['item']);
     });
+    /** 拟办意见的显示隐藏 */
   }
 
   ngOnInit() {}
+
+  nbyj() {
+    if (this.type === '1') {
+      if (
+        this.itemmodel['Operationlist'] !== '已办收文' &&
+        this.itemmodel['Operationlist'] !== '已办发文'
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 
   segmentChanged(event: any) {
     console.log('Segment changed', event.target.value);
@@ -63,9 +78,7 @@ export class DocumentdetailPage implements OnInit {
   }
 
   pushtoadvice() {
-   // console.log('意见');
-   this.itemmodel['IsShowNextStep'] = true;
-    // console.log('意见');
+    this.itemmodel['IsShowNextStep'] = true;
     this.route.navigate(['submission'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)
