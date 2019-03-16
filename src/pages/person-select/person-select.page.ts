@@ -1,48 +1,50 @@
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MainindexService, lasthandinStepModel, PendingReaderModel } from './../../service/maiindex/mainindex.service';
+import {
+  MainindexService,
+  lasthandinStepModel,
+  PendingReaderModel
+} from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-person-select',
   templateUrl: './person-select.page.html',
-  styleUrls: ['./person-select.page.scss'],
+  styleUrls: ['./person-select.page.scss']
 })
 export class PersonSelectPage implements OnInit {
-
   /**
    * 传过来的模型
    */
   itemmodel: any;
-
+  /** 是否是传阅件 */
+  DealType = true;
   /**
    * 控制显示隐藏某个tab
    */
   TabTitltArr: any[] = [
     {
-      'title': '主办',
-      'show': true,
-      'value': 1
+      title: '主办',
+      show: true,
+      value: 1
     },
     {
-      'title': '协办',
-      'show': true,
-      'value': 2
+      title: '协办',
+      show: true,
+      value: 2
     },
     {
-      'title': '传阅',
-      'show': true,
-      'value': 3
+      title: '传阅',
+      show: true,
+      value: 3
     },
     {
-      'title': '下一步',
-      'show': true,
-      'value': 4
-    },
+      title: '下一步',
+      show: true,
+      value: 4
+    }
   ];
-
-
 
   handleModel: lasthandinStepModel;
 
@@ -93,7 +95,9 @@ export class PersonSelectPage implements OnInit {
   }
 
   ngOnInit() {
-   
+    if (this.itemmodel.DealType === '传阅件') {
+      this.DealType = false;
+    }
   }
 
   segmentChanged(event: any) {
@@ -124,18 +128,14 @@ export class PersonSelectPage implements OnInit {
       console.log(this.hostArr);
     } else if (this.type == 2) {
       this.coorperationArr = items;
-      this.coorperationArr = this.coorperationArr.map((item) => {
+      this.coorperationArr = this.coorperationArr.map(item => {
         return item['id'];
       });
       console.log(this.coorperationArr);
     }
-
-
-
   }
 
   nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean) {
-
     // 如果是传阅
     if (this.type == 3) {
       // 组装传阅数组
@@ -166,14 +166,14 @@ export class PersonSelectPage implements OnInit {
       this.nextArr = items['staffId'];
       if (items['deptId'].length > 0) {
         for (let i = 0; i < items['deptId'].length; i++) {
-          this.mainservice.getDeptTreeCY(items['deptId'][i]).subscribe((res) => {
+          this.mainservice.getDeptTreeCY(items['deptId'][i]).subscribe(res => {
             console.log('下一步组装数据');
             if (res['State'] == 1) {
               let tempArr = <any[]>res['Data'];
-              tempArr = tempArr.map((item) => {
+              tempArr = tempArr.map(item => {
                 return item['id'];
               });
-              tempArr.forEach((id) => {
+              tempArr.forEach(id => {
                 this.nextArr.push(id);
               });
             }
@@ -191,8 +191,8 @@ export class PersonSelectPage implements OnInit {
   }
 
   /**
-  * 返回
-  */
+   * 返回
+   */
   canGoBack() {
     this.nav.back();
   }
@@ -229,22 +229,22 @@ export class PersonSelectPage implements OnInit {
 
       CoorType: this.itemmodel['CoorType'],
 
-      ProcessType: this.itemmodel['ProcessType'],
-
+      ProcessType: this.itemmodel['ProcessType']
     };
 
     console.log(this.handleModel);
-    this.mainservice.lasthandinStep(this.handleModel).subscribe((res) => {
-      if (res['State'] == 1) {
-        this.toast.presentToast('提交成功');
-        this.route.navigate(['tabs']);
-      } else {
-        this.toast.presentLoading(res['Message']);
+    this.mainservice.lasthandinStep(this.handleModel).subscribe(
+      res => {
+        if (res['State'] == 1) {
+          this.toast.presentToast('提交成功');
+          this.route.navigate(['tabs']);
+        } else {
+          this.toast.presentLoading(res['Message']);
+        }
+      },
+      err => {
+        this.toast.presentLoading('请求失败');
       }
-    }, err => {
-      this.toast.presentLoading('请求失败');
-    });
+    );
   }
-
-
 }
