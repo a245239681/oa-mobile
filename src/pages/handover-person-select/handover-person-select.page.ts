@@ -72,8 +72,8 @@ export class HandoverPersonSelectPage implements OnInit {
 
       ProcessType: this.itemmodel['ProcessType']
     };
-    const cmdata = JSON.stringify(params);
-    this.mainservice.MoveCommit(cmdata).subscribe(res => {
+    // const cmdata = JSON.stringify(params);
+    this.mainservice.MoveCommit(params).subscribe(res => {
       console.log(res);
     });
   }
