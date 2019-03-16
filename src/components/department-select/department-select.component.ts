@@ -43,11 +43,14 @@ export class DepartmentSelectComponent implements OnInit {
                 this.listdataArr[i].checked = true;
               }
             } else if (this.isSingleSlect === '2') {
-              this.hasSelected.Cooperaters.forEach((element: string) => {
-                if (this.listdataArr[i].id === element) {
-                  this.listdataArr[i].checked = true;
-                }
-              });
+              if (this.hasSelected.Cooperaters) {
+                this.hasSelected.Cooperaters.forEach((element: string) => {
+                  if (this.listdataArr[i].id === element) {
+                    this.listdataArr[i].checked = true;
+
+                  }
+                });
+              }
             }
             this.selectedList.push(this.listdataArr[i]);
           }
