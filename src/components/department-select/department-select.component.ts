@@ -8,6 +8,7 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
   styleUrls: ['./department-select.component.scss']
 })
 export class DepartmentSelectComponent implements OnInit {
+  // 1:主办 2：协办 3：移交
   @Input() isSingleSlect: string;
 
   @Input() hasSelected: any;
@@ -24,7 +25,7 @@ export class DepartmentSelectComponent implements OnInit {
   constructor(
     private mainindexservice: MainindexService,
     private toast: CommonHelper
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.isSingleSlect === '3') {
@@ -36,19 +37,19 @@ export class DepartmentSelectComponent implements OnInit {
         if (res['State'] === 1) {
           this.listdataArr = res['Data'];
           for (let i = 0; i < this.listdataArr.length; i++) {
-            if (this.isSingleSlect) {
+            if (this.isSingleSlect === '1') {
               if (this.listdataArr[i].id === this.hasSelected.PrimaryDeptId) {
                 this.listdataArr[i].checked = true;
-                this.selectedList.push(this.listdataArr[i]);
               }
-            } else {
+            } else if (this.isSingleSlect === '2') {
               this.hasSelected.Cooperaters.forEach((element: string) => {
                 if (this.listdataArr[i].id === element) {
                   this.listdataArr[i].checked = true;
-                  this.selectedList.push(this.listdataArr[i]);
+
                 }
               });
             }
+            this.selectedList.push(this.listdataArr[i]);
           }
           this.selected.emit({ items: this.selectedList });
           // console.log('==========', this.listdataArr);
