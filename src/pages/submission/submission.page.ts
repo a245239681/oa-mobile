@@ -119,8 +119,8 @@ export class SubmissionPage implements OnInit {
     }
   }
   /** 移交 */
-  handOver() {
-    console.log('移交');
+  handOver(value) {
+    this.saveadvice(value['advice']);
     if (this.itemmodel.IsPrimaryDept || this.itemmodel.CoorType === 1) {
       this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
         (data: any) => {
@@ -150,7 +150,8 @@ export class SubmissionPage implements OnInit {
     }
   }
   /** 退回 */
-  sendBack() {
+  sendBack(value) {
+    this.saveadvice(value['advice']);
     this.route.navigate(['return-back'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)

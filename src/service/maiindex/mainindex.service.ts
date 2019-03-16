@@ -362,7 +362,7 @@ export class MainindexService {
   }
 
   /**
-   * 退回
+   * 获取退回树
    * @param Id id
    * @param processType type
    */
@@ -373,6 +373,18 @@ export class MainindexService {
         Id +
         '&processType=' +
         processType
+    );
+  }
+  /** 退回验证 */
+  ValidBack(Id: string, processType: string, coorType: string) {
+    return this.httpclient.get(
+      ApiUrlManagement.ValidBack +
+        '?id=' +
+        Id +
+        '&processType=' +
+        processType +
+        '&coorType' +
+        coorType
     );
   }
 }
@@ -434,16 +446,17 @@ export interface LastSendActionStepModel {
 }
 
 export interface MoveCommitModel {
-  id: string;
+  id?: string;
   //主办id 单选
-  nextUserId: string;
-  primaryDeptId: string;
-  cooperaters: any;
-  readers: any;
+  NextActionId?: string;
+  nextUserId?: string;
+  primaryDeptId?: string;
+  cooperaters?: any;
+  readers?: any;
   //模态框
-  commitType: any;
+  commitType?: any;
 
-  CoorType: string;
+  CoorType?: string;
 
-  ProcessType: string;
+  ProcessType?: string;
 }
