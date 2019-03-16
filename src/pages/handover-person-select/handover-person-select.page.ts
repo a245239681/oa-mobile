@@ -38,7 +38,9 @@ export class HandoverPersonSelectPage implements OnInit {
   }
   hostSelected(items: any) {
     console.log(items);
-    this.selectPerson = items;
+    this.selectPerson = items.map(res => {
+      return res['Id'];
+    });
     console.log(this.itemmodel);
   }
   ngOnInit() {
@@ -59,9 +61,10 @@ export class HandoverPersonSelectPage implements OnInit {
     const params = {
       id: this.itemmodel['Id'],
       //主办id 单选
-      nextUserId:
-        this.selectPerson.length > 0 ? this.selectPerson[0]['Id'] : '',
-
+      nextUserId: this.selectPerson.length > 0 ? this.selectPerson.join() : '',
+      primaryDeptId: '',
+      cooperaters: [],
+      readers: [],
       //模态框
       commitType: this.commitType,
 
