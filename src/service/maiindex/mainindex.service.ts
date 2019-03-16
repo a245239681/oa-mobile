@@ -38,7 +38,7 @@ export class MainindexService {
         query: searchStr
       });
     } else {
-       // 2 发文待办  3传阅件
+      // 2 发文待办  3传阅件
       const url =
         type == 2
           ? ApiUrlManagement.getsendsneedtodo
@@ -54,14 +54,15 @@ export class MainindexService {
   /**
    * 获取已办 1-收文  2-发文
    */
-  getBrowserFile(page: number, type: number) {
+  getBrowserFile(page: number, type: number, searchStr?: string) {
     const url =
       type == 1
         ? ApiUrlManagement.GetBrowsers_Receive
         : ApiUrlManagement.GetBrowsers_Send;
     return this.httpclient.post<any>(url, {
       pageNumber: page,
-      pageSize: 10
+      pageSize: 10,
+      query: searchStr
     });
   }
 
