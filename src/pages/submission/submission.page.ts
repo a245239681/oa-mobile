@@ -1,11 +1,12 @@
 import { UserInfo } from 'src/infrastructure/user-info';
 import { saveadviceModel } from './../../service/maiindex/mainindex.service';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, ModalController } from '@ionic/angular';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
+import { SignaturepadPage } from '../signaturepad/signaturepad.page';
 
 @Component({
   selector: 'app-submission',
@@ -48,6 +49,12 @@ export class SubmissionPage implements OnInit {
 
   alertVC: HTMLIonAlertElement;
 
+  modal: any;
+
+  base64: string;
+
+  showSign = false;
+
   formErrors = {
     // 错误信息
     advice: ''
@@ -68,7 +75,8 @@ export class SubmissionPage implements OnInit {
     private route: Router,
     private mainservice: MainindexService,
     private userinfo: UserInfo,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public modalController: ModalController,
   ) {
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
@@ -79,11 +87,12 @@ export class SubmissionPage implements OnInit {
           this.handinButtonTitle = '提交并返回代理人';
           //是否展示提交并分发文件
           this.IsShowHandinAndGiveButton = true;
-        } 
+        }
         //发文
         else {
           this.handinButtonTitle = '签发';
           this.IsShowHandinAndGiveButton = false;
+          this.showSign = true;
         }
 
       } else {
@@ -155,7 +164,7 @@ export class SubmissionPage implements OnInit {
       }
     });
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -410,7 +419,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
@@ -459,6 +468,20 @@ export class SubmissionPage implements OnInit {
       }, () => {
         this.toast.presentToast('请求失败');
       });
+  }
+
+  async goSign() {
+    this.presentModal();
+  }
+
+  async presentModal() {
+    this.modal = await this.modalController.create({
+      component: SignaturepadPage,
+    });
+    await this.modal.present();
+    const obj = await this.modal.onDidDismiss();
+    console.log(obj);
+    this.base64 = obj.data.res;
   }
 
   /**
