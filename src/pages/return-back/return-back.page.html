@@ -6,10 +6,13 @@
       (click)="canGoBack()"
     ></ion-icon>
     <ion-title>退回</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="commit()">提交</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ng-container
     *ngTemplateOutlet="
       treeTpl;
@@ -35,14 +38,15 @@
           <ion-radio
             mode="md"
             checked="item.checked"
-            (ionChange)="ionSelect(item, $event.detail.checked)"
-            (ionSelect)="singleSelect(item)"
+            (ionSelect)="singleSelect(item, context.data)"
           ></ion-radio>
-          <ion-label style="padding-left: 16px;"> {{ item.Label }}</ion-label>
+          <ion-label> {{ item.Label }}</ion-label>
           <ng-container
             *ngTemplateOutlet="
               treeTpl;
-              context: { $implicit: { items: item.Children, root: false } }
+              context: {
+                $implicit: { items: item.Children, root: false, data: item.Id }
+              }
             "
           ></ng-container>
         </div>

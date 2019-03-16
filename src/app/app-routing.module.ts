@@ -25,12 +25,6 @@ const routes: Routes = [
   { path: 'secretinfoadvice', loadChildren: '../pages/secretinfoadvice/secretinfoadvice.module#SecretinfoadvicePageModule' },
   { path: 'return-back', loadChildren: '../pages/return-back/return-back.module#ReturnBackPageModule' },
 
-
-
-
-
-
-
 ];
 
 @NgModule({

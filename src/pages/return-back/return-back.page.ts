@@ -12,7 +12,9 @@ import { MainindexService } from 'src/service/maiindex/mainindex.service';
 export class ReturnBackPage implements OnInit {
   itemmodel: any;
   tree: any[];
-
+  selectPerson: string;
+  commitType: string;
+  NextActionId: string;
   constructor(
     private mainservice: MainindexService,
     private nav: NavController,
@@ -25,15 +27,37 @@ export class ReturnBackPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ValidBack();
     this.getData();
   }
-  singleSelect(item: any) {
+  singleSelect(item: any, data: string) {
     console.log(item);
+    this.selectPerson = item['Id'];
+    this.NextActionId = data;
     // this.selected.emit({ items: [item] });
   }
   ionSelect(item, e) {
     console.log(item);
     console.log(e);
+  }
+  ValidBack() {
+    this.mainservice
+      .ValidBack(
+        this.itemmodel['Id'],
+        this.itemmodel['ProcessType'],
+        this.itemmodel['coorType']
+      )
+      .subscribe(
+        res => {
+          console.log(res);
+          if ((<any>res).State === 1) {
+            this.commitType = '40';
+          }
+        },
+        () => {
+          this.commonHelper.presentToast('请求失败');
+        }
+      );
   }
   getData() {
     this.mainservice
@@ -51,6 +75,26 @@ export class ReturnBackPage implements OnInit {
           this.commonHelper.presentToast('请求失败');
         }
       );
+  }
+  commit() {
+    const params = {
+      id: this.itemmodel['Id'],
+      //主办id 单选
+      NextActionId: this.NextActionId,
+      nextUserId: this.selectPerson.length > 0 ? this.selectPerson : '',
+      primaryDeptId: '',
+      cooperaters: [],
+      readers: [],
+      //模态框
+      commitType: this.commitType,
+
+      CoorType: this.itemmodel['CoorType'],
+
+      ProcessType: this.itemmodel['ProcessType']
+    };
+    this.mainservice.MoveCommit(params).subscribe(res => {
+      console.log(res);
+    });
   }
 
   canGoBack() {
