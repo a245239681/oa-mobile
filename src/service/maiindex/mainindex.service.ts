@@ -37,10 +37,9 @@ export class MainindexService {
         pageSize: 10,
         query: searchStr
       });
-    }
-    // 2 发文待办  3传阅件
-    else {
-      var url =
+    } else {
+       // 2 发文待办  3传阅件
+      const url =
         type == 2
           ? ApiUrlManagement.getsendsneedtodo
           : ApiUrlManagement.getReceives_read;
@@ -56,7 +55,7 @@ export class MainindexService {
    * 获取已办 1-收文  2-发文
    */
   getBrowserFile(page: number, type: number) {
-    var url =
+    const url =
       type == 1
         ? ApiUrlManagement.GetBrowsers_Receive
         : ApiUrlManagement.GetBrowsers_Send;
@@ -301,16 +300,8 @@ export class MainindexService {
     );
   }
 
-  MoveCommit(cmdata: string): Observable<any> {
-    return this.httpclient.post(
-      ApiUrlManagement.lasthandin,
-      {},
-      {
-        params: {
-          cmdata: cmdata
-        }
-      }
-    );
+  MoveCommit(MoveCommit: MoveCommitModel): Observable<any> {
+    return this.httpclient.post(ApiUrlManagement.lasthandin, MoveCommit);
   }
 
   /**
@@ -448,4 +439,19 @@ export interface LastSendActionStepModel {
   CoorType: number;
 
   ProcessType: number;
+}
+
+export interface MoveCommitModel {
+  id: string;
+  // 主办id 单选
+  nextUserId: string;
+  primaryDeptId: string;
+  cooperaters: any;
+  readers: any;
+  // 模态框
+  commitType: any;
+
+  CoorType: string;
+
+  ProcessType: string;
 }

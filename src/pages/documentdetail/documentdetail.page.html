@@ -4,7 +4,7 @@
       <ion-back-button style="display:block" text=''></ion-back-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
-    <ion-buttons *ngIf="nbyj()" slot="end">
+    <ion-buttons [hidden]="!nbyj()" slot="end">
       <ion-button (click)="pushtoadvice()">拟办意见</ion-button>
     </ion-buttons>
   </ion-toolbar>

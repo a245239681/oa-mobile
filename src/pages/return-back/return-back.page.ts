@@ -7,10 +7,9 @@ import { MainindexService } from 'src/service/maiindex/mainindex.service';
 @Component({
   selector: 'app-return-back',
   templateUrl: './return-back.page.html',
-  styleUrls: ['./return-back.page.scss'],
+  styleUrls: ['./return-back.page.scss']
 })
 export class ReturnBackPage implements OnInit {
-
   itemmodel: any;
   tree: any[];
 
@@ -18,7 +17,7 @@ export class ReturnBackPage implements OnInit {
     private mainservice: MainindexService,
     private nav: NavController,
     private activeRouter: ActivatedRoute,
-    private commonHelper: CommonHelper,
+    private commonHelper: CommonHelper
   ) {
     this.activeRouter.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
@@ -28,18 +27,30 @@ export class ReturnBackPage implements OnInit {
   ngOnInit() {
     this.getData();
   }
-
+  singleSelect(item: any) {
+    console.log(item);
+    // this.selected.emit({ items: [item] });
+  }
+  ionSelect(item, e) {
+    console.log(item);
+    console.log(e);
+  }
   getData() {
-    this.mainservice.getBackActionTree(this.itemmodel['Id'], this.itemmodel['ProcessType']).subscribe((res) => {
-      console.log(res);
-      if (res['State'] === 1) {
-        this.tree = res['Data']['BackAllTree'];
-      } else {
-        this.commonHelper.presentToast('已无数据');
-      }
-    }, () => {
-      this.commonHelper.presentToast('请求失败');
-    });
+    this.mainservice
+      .getBackActionTree(this.itemmodel['Id'], this.itemmodel['ProcessType'])
+      .subscribe(
+        res => {
+          console.log(res);
+          if (res['State'] === 1) {
+            this.tree = res['Data']['BackAllTree'];
+          } else {
+            this.commonHelper.presentToast('已无数据');
+          }
+        },
+        () => {
+          this.commonHelper.presentToast('请求失败');
+        }
+      );
   }
 
   canGoBack() {

@@ -8,6 +8,7 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
   styleUrls: ['./department-select.component.scss']
 })
 export class DepartmentSelectComponent implements OnInit {
+  // 1:主办 2：协办 3：移交
   @Input() isSingleSlect: string;
 
   @Input() hasSelected: any;
@@ -16,11 +17,12 @@ export class DepartmentSelectComponent implements OnInit {
 
   // 列表数据
   listdataArr: any[] = [];
-
   // 移交列表数组
   handoverListdataArr: any[] = [];
-  selectedList = [];
 
+  selectedList = [];
+  /** 移交选中的数组 */
+  selectList = [];
   constructor(
     private mainindexservice: MainindexService,
     private toast: CommonHelper
@@ -36,19 +38,21 @@ export class DepartmentSelectComponent implements OnInit {
         if (res['State'] === 1) {
           this.listdataArr = res['Data'];
           for (let i = 0; i < this.listdataArr.length; i++) {
-            if (this.isSingleSlect) {
+            if (this.isSingleSlect === '1') {
               if (this.listdataArr[i].id === this.hasSelected.PrimaryDeptId) {
                 this.listdataArr[i].checked = true;
-                this.selectedList.push(this.listdataArr[i]);
               }
-            } else {
-              this.hasSelected.Cooperaters.forEach((element: string) => {
-                if (this.listdataArr[i].id === element) {
-                  this.listdataArr[i].checked = true;
-                  this.selectedList.push(this.listdataArr[i]);
-                }
-              });
+            } else if (this.isSingleSlect === '2') {
+              if (this.hasSelected.Cooperaters) {
+                this.hasSelected.Cooperaters.forEach((element: string) => {
+                  if (this.listdataArr[i].id === element) {
+                    this.listdataArr[i].checked = true;
+
+                  }
+                });
+              }
             }
+            this.selectedList.push(this.listdataArr[i]);
           }
           this.selected.emit({ items: this.selectedList });
           // console.log('==========', this.listdataArr);
@@ -68,13 +72,30 @@ export class DepartmentSelectComponent implements OnInit {
   }
 
   mutiSelect(item: any, checked: boolean) {
-    // console.log('==========', this.listdataArr);
-    if (checked) {
-      this.selectedList.push(item);
+    console.log(item);
+    console.log(checked);
+    if (this.isSingleSlect === '3') {
+      // console.log('==========', this.listdataArr);
+      if (checked) {
+        this.selectList.push(item);
+      } else {
+        // 去掉没选中的如果之前选过的
+        this.selectList = this.selectList.filter(data => data.id !== item.id);
+      }
+      this.selected.emit({ items: this.selectList });
+      console.log(this.selected);
     } else {
-      // 去掉没选中的如果之前选过的
-      this.selectedList = this.selectedList.filter(data => data.id !== item.id);
+      if (checked) {
+        this.selectedList.push(item);
+      } else {
+        // 去掉没选中的如果之前选过的
+        this.selectedList = this.selectedList.filter(
+          data => data.id !== item.id
+        );
+      }
+      this.selected.emit({ items: this.selectedList });
+      console.log(this.selected);
     }
-    this.selected.emit({ items: this.selectedList });
+    // console.log('==========', this.listdataArr);
   }
 }
