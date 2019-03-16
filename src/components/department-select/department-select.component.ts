@@ -17,15 +17,16 @@ export class DepartmentSelectComponent implements OnInit {
 
   // 列表数据
   listdataArr: any[] = [];
-
   // 移交列表数组
   handoverListdataArr: any[] = [];
-  selectedList = [];
 
+  selectedList = [];
+  /** 移交选中的数组 */
+  selectList = [];
   constructor(
     private mainindexservice: MainindexService,
     private toast: CommonHelper
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.isSingleSlect === '3') {
@@ -71,13 +72,30 @@ export class DepartmentSelectComponent implements OnInit {
   }
 
   mutiSelect(item: any, checked: boolean) {
-    // console.log('==========', this.listdataArr);
-    if (checked) {
-      this.selectedList.push(item);
+    console.log(item);
+    console.log(checked);
+    if (this.isSingleSlect === '3') {
+      // console.log('==========', this.listdataArr);
+      if (checked) {
+        this.selectList.push(item);
+      } else {
+        //去掉没选中的如果之前选过的
+        this.selectList = this.selectList.filter(data => data.id !== item.id);
+      }
+      this.selected.emit({ items: this.selectList });
+      console.log(this.selected);
     } else {
-      //去掉没选中的如果之前选过的
-      this.selectedList = this.selectedList.filter(data => data.id !== item.id);
+      if (checked) {
+        this.selectedList.push(item);
+      } else {
+        //去掉没选中的如果之前选过的
+        this.selectedList = this.selectedList.filter(
+          data => data.id !== item.id
+        );
+      }
+      this.selected.emit({ items: this.selectedList });
+      console.log(this.selected);
     }
-    this.selected.emit({ items: this.selectedList });
+    // console.log('==========', this.listdataArr);
   }
 }

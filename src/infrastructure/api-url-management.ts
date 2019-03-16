@@ -141,4 +141,9 @@ export const ApiUrlManagement = {
    * 退回树
    */
   getBackActionTree: 'api/recieve/GetBackActionTree',
+
+  /**
+   * 退回验证
+   * */
+  ValidBack: 'api/recieve/ValidBack',
 };

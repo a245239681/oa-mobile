@@ -13,11 +13,11 @@
 
 
 <ion-content>
-  <ion-segment mode="md" (ionChange)="segmentChanged($event)">
-    <ion-segment-button mode="md" value="1" *ngIf="true" checked>
+  <ion-segment mode="md" (ionChange)="segmentChanged($event)" >
+    <ion-segment-button mode="md" value="1" *ngIf="true && DealType" checked>
       <ion-label>主办</ion-label>
     </ion-segment-button>
-    <ion-segment-button mode="md" value="2" *ngIf="true">
+    <ion-segment-button mode="md" value="2" *ngIf="true && DealType">
       <ion-label>协办</ion-label>
     </ion-segment-button>
     <ion-segment-button mode="md" value="3" *ngIf="true">
