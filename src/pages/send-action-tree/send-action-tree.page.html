@@ -13,17 +13,14 @@
 <ion-content padding>
   <div *ngIf="floor == 2">
     <ion-label *ngIf="dataArr.length > 0">
-      <div *ngFor="let item of dataArr; let i = index">
+      <div *ngFor="let item of dataArr,let i = index">
         <ion-label>
-          {{ item['Label'] }}
+          {{item['Label']}}
         </ion-label>
         <ion-list>
-          <ion-item
-            *ngFor="let subitem of item['Children']"
-            (click)="singleselect(subitem, i)"
-          >
+          <ion-item *ngFor="let subitem of item['Children']" (click)="singleselect(subitem,i)">
             <ion-label>
-              {{ subitem['Label'] }}
+              {{subitem['Label']}}
             </ion-label>
             <ion-radio [(checked)]="selectItem == subitem"></ion-radio>
           </ion-item>
@@ -31,25 +28,21 @@
       </div>
     </ion-label>
   </div>
-
   <div *ngIf="floor == 3">
     <ion-label *ngIf="dataArr.length > 0">
-      <div *ngFor="let item of dataArr; let i = index">
+      <div *ngFor="let item of dataArr,let i = index">
         <ion-label>
-          {{ item['Label'] }}
+          {{item['Label']}}
         </ion-label>
         <ion-list>
           <div *ngFor="let subitem of item['Children']">
             <ion-label>
-              {{ subitem['Label'] }}
+              {{subitem['Label']}}
             </ion-label>
             <ion-list>
-              <ion-item
-                *ngFor="let subitem2 of subitem['Children']; let j = index"
-                (click)="singleselect(subitem2, j)"
-              >
+              <ion-item *ngFor="let subitem2 of subitem['Children'],let j = index" (click)="singleselect(subitem2,j)">
                 <ion-label>
-                  {{ subitem2['Label'] }}
+                  {{subitem2['Label']}}
                 </ion-label>
                 <ion-radio [(checked)]="selectItem == subitem2"></ion-radio>
               </ion-item>

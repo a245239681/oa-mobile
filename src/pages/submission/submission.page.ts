@@ -541,4 +541,8 @@ export class SubmissionPage implements OnInit {
   canGoBack() {
     this.nav.back();
   }
+
+
+  /** 会签 */
+  
 }
