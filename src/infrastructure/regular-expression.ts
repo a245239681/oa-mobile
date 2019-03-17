@@ -44,14 +44,15 @@ export function equalValidetor(group: FormGroup): any {
 /**
  * 比较日期天数
  * @param startDate 开始日期
- * @param endDate  借宿日期
+ * @param endDate  结束日期
  * 返回负数说明日期已过 正数说明还有几天到期
  */
-export function getDateDiff(startDate:string,endDate:string) : number {
-    var startTime = new Date(Date.parse(startDate.replace(/-/g,   "/"))).getTime();     
-    var endTime = new Date(Date.parse(endDate.replace(/-/g,   "/"))).getTime();     
-    var dates = (startTime - endTime)/(1000*60*60*24);     
-    return  dates;    
+export function getDateDiff(startDate: string, endDate: string): number {
+  if (!startDate || !endDate) { return; }
+  var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
+  var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
+  var dates = (startTime - endTime) / (1000 * 60 * 60 * 24);
+  return dates;
 }
 
 /**
@@ -163,9 +164,66 @@ export function timeTrans(date: number, format: string = 'yyyy-MM-dd HH:mm:ss', 
       dataValue = m + s;
       break;
     default:
-      throw new Error("没有找到对应的时间"); 
+      throw new Error("没有找到对应的时间");
   }
   return dataValue;
 }
 
+/**
+* 获取文件后缀名
+* @param fileName 文件名
+*/
+export function getFileType(fileName: string): string {
+  return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase();
+}
 
+/**
+* 获取文件类型
+* @param fileType 文件后缀名
+*/
+export function getFileMimeType(fileType: string): string {
+  let mimeType = '';
+
+  switch (fileType) {
+    case 'txt':
+      mimeType = 'text/plain';
+      break;
+    case 'docx':
+      mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      break;
+    case 'doc':
+      mimeType = 'application/msword';
+      break;
+    case 'pptx':
+      mimeType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+      break;
+    case 'ppt':
+      mimeType = 'application/vnd.ms-powerpoint';
+      break;
+    case 'xlsx':
+      mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      break;
+    case 'xls':
+      mimeType = 'application/vnd.ms-excel';
+      break;
+    case 'zip':
+      mimeType = 'application/x-zip-compressed';
+      break;
+    case 'rar':
+      mimeType = 'application/octet-stream';
+      break;
+    case 'pdf':
+      mimeType = 'application/pdf';
+      break;
+    case 'jpg':
+      mimeType = 'image/jpeg';
+      break;
+    case 'png':
+      mimeType = 'image/png';
+      break;
+    default:
+      mimeType = 'application/' + fileType;
+      break;
+  }
+  return mimeType;
+}
