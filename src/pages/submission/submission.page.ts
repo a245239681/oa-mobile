@@ -1,6 +1,10 @@
 import { UserInfo } from 'src/infrastructure/user-info';
 import { saveadviceModel } from './../../service/maiindex/mainindex.service';
-import { NavController, AlertController, ModalController } from '@ionic/angular';
+import {
+  NavController,
+  AlertController,
+  ModalController
+} from '@ionic/angular';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -74,7 +78,7 @@ export class SubmissionPage implements OnInit {
     private mainservice: MainindexService,
     private userinfo: UserInfo,
     public alertController: AlertController,
-    public modalController: ModalController,
+    public modalController: ModalController
   ) {
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
@@ -130,32 +134,68 @@ export class SubmissionPage implements OnInit {
   /** 移交 */
   handOver(value) {
     this.saveadvice(value['advice']);
-    if (this.itemmodel.IsPrimaryDept || this.itemmodel.CoorType === 1) {
-      this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
-        (data: any) => {
-          // if (data['State'] === 1) {
-          let tempArr = data.Data;
+    if (this.itemmodel.processType === 2) {
+      if (this.itemmodel.IsPrimaryDept || this.itemmodel.CoorType === 1) {
+        this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
+          (data: any) => {
+            // if (data['State'] === 1) {
+            let tempArr = data.Data;
 
-          if (!tempArr) {
-            tempArr = [];
-          }
-          this.route.navigate(['handover-person-select'], {
-            queryParams: {
-              item: JSON.stringify(this.itemmodel),
-              hasSelected: JSON.stringify(tempArr)
+            if (!tempArr) {
+              tempArr = [];
             }
-          });
-          // }
-          // else {
-          //   this.toast.presentToast('已无数据');
-          // }
-        },
-        () => {
-          this.toast.presentToast('请求失败');
-        }
-      );
+            this.route.navigate(['handover-person-select'], {
+              queryParams: {
+                item: JSON.stringify(this.itemmodel),
+                hasSelected: JSON.stringify(tempArr)
+              }
+            });
+            // }
+            // else {
+            //   this.toast.presentToast('已无数据');
+            // }
+          },
+          () => {
+            this.toast.presentToast('请求失败');
+          }
+        );
+      } else {
+        this.toast.presentToast('当前环节无法移交');
+      }
     } else {
-      this.toast.presentToast('当前环节无法移交');
+      let commitType: string;
+      this.mainservice
+        .ValidMove(
+          this.itemmodel['Id'],
+          this.itemmodel.ProcessType,
+          this.itemmodel.CoorType
+        )
+        .subscribe(res => {
+          if (res.State === 1) {
+            commitType = '60';
+            this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
+              (data: any) => {
+                // if (data['State'] === 1) {
+                let tempArr = data.Data;
+
+                if (!tempArr) {
+                  tempArr = [];
+                }
+                this.route.navigate(['handover-person-select'], {
+                  queryParams: {
+                    item: JSON.stringify(this.itemmodel),
+                    hasSelected: JSON.stringify(tempArr)
+                  }
+                });
+              },
+              () => {
+                this.toast.presentToast('请求失败');
+              }
+            );
+          } else {
+            this.toast.presentToast(res['Message']);
+          }
+        });
     }
   }
   /** 退回 */
@@ -167,7 +207,7 @@ export class SubmissionPage implements OnInit {
       }
     });
   }
-  ngOnInit() { }
+  ngOnInit() {}
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -459,7 +499,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => { }
+          handler: () => {}
         }
       ]
     });
@@ -522,7 +562,7 @@ export class SubmissionPage implements OnInit {
 
   async presentModal() {
     this.modal = await this.modalController.create({
-      component: SignaturepadPage,
+      component: SignaturepadPage
     });
     await this.modal.present();
     const obj = await this.modal.onDidDismiss();
@@ -544,7 +584,5 @@ export class SubmissionPage implements OnInit {
     this.nav.back();
   }
 
-
   /** 会签 */
-  
 }

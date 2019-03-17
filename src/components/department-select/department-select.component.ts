@@ -8,7 +8,7 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
   styleUrls: ['./department-select.component.scss']
 })
 export class DepartmentSelectComponent implements OnInit {
-  // 1:主办 2：协办 3：移交
+  // 1:主办 2：协办 3：收文移交 4: 发文移交
   @Input() isSingleSlect: string;
 
   @Input() hasSelected: any;
@@ -29,7 +29,7 @@ export class DepartmentSelectComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.isSingleSlect === '3') {
+    if (this.isSingleSlect === '3' || this.isSingleSlect === '4') {
       this.handoverListdataArr = this.hasSelected;
     }
 
@@ -47,7 +47,6 @@ export class DepartmentSelectComponent implements OnInit {
                 this.hasSelected.Cooperaters.forEach((element: string) => {
                   if (this.listdataArr[i].id === element) {
                     this.listdataArr[i].checked = true;
-
                   }
                 });
               }
@@ -74,7 +73,7 @@ export class DepartmentSelectComponent implements OnInit {
   mutiSelect(item: any, checked: boolean) {
     console.log(item);
     console.log(checked);
-    if (this.isSingleSlect === '3') {
+    if (this.isSingleSlect === '3' || this.isSingleSlect === '4') {
       // console.log('==========', this.listdataArr);
       if (checked) {
         this.selectList.push(item);

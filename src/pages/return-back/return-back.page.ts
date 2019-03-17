@@ -80,13 +80,13 @@ export class ReturnBackPage implements OnInit {
   commit() {
     const params = {
       id: this.itemmodel['Id'],
-      //主办id 单选
+      // 主办id 单选
       NextActionId: this.NextActionId,
       nextUserId: this.selectPerson.length > 0 ? this.selectPerson : '',
       primaryDeptId: '',
       cooperaters: [],
       readers: [],
-      //模态框
+      // 模态框
       commitType: this.commitType,
 
       CoorType: this.itemmodel['CoorType'],
@@ -98,7 +98,7 @@ export class ReturnBackPage implements OnInit {
         this.toast.presentToast('退回成功');
         this.route.navigate(['tabs']);
       } else {
-        this.toast.presentLoading(res['Message']);
+        this.toast.presentToast(res['Message']);
       }
     });
   }

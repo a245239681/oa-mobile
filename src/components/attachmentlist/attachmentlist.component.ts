@@ -6,6 +6,7 @@ import { Platform } from '@ionic/angular';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { getFileMimeType } from 'src/infrastructure/regular-expression';
 
 @Component({
   selector: 'app-attachmentlist',
@@ -66,7 +67,7 @@ export class AttachmentlistComponent implements OnInit {
       this.fileTransfer.download(uri, fileUrl).then(entry => {
         entry.file(data => {
           console.log(data);
-          this.fileOpener.open(fileUrl, this.getFileMimeType(item.Extended))
+          this.fileOpener.open(fileUrl, getFileMimeType(item.Extended))
             .then(() => this.commonHelper.dismissLoading())
             .catch(() => {
               this.commonHelper.dismissLoading();
@@ -82,64 +83,5 @@ export class AttachmentlistComponent implements OnInit {
     }
     const browser = this.browser.create(item['Url']);
     browser.show();
-  }
-
-  /**
-   * 获取文件后缀名
-   * @param fileName 文件名
-   */
-  getFileType(fileName: string): string {
-    return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toLowerCase();
-  }
-
-  /**
-   * 获取文件类型
-   * @param fileType 文件后缀名
-   */
-  getFileMimeType(fileType: string): string {
-    let mimeType = '';
-
-    switch (fileType) {
-      case 'txt':
-        mimeType = 'text/plain';
-        break;
-      case 'docx':
-        mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-        break;
-      case 'doc':
-        mimeType = 'application/msword';
-        break;
-      case 'pptx':
-        mimeType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-        break;
-      case 'ppt':
-        mimeType = 'application/vnd.ms-powerpoint';
-        break;
-      case 'xlsx':
-        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-        break;
-      case 'xls':
-        mimeType = 'application/vnd.ms-excel';
-        break;
-      case 'zip':
-        mimeType = 'application/x-zip-compressed';
-        break;
-      case 'rar':
-        mimeType = 'application/octet-stream';
-        break;
-      case 'pdf':
-        mimeType = 'application/pdf';
-        break;
-      case 'jpg':
-        mimeType = 'image/jpeg';
-        break;
-      case 'png':
-        mimeType = 'image/png';
-        break;
-      default:
-        mimeType = 'application/' + fileType;
-        break;
-    }
-    return mimeType;
   }
 }
