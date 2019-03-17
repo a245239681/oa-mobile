@@ -59,9 +59,9 @@ export class AttachmentlistComponent implements OnInit {
    * @param item
    */
   previewerAttchment(item: any) {
-    if (this.platform.is('android')) {
+    if (this.platform.is('android') || this.platform.is('ios')) {
       const uri = encodeURI(item['Url']); // 文件的地址链接
-      const fileUrl = this.file.dataDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
+      const fileUrl = this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
       this.commonHelper.presentLoading();
       this.fileTransfer.download(uri, fileUrl).then(entry => {
         entry.file(data => {
@@ -97,7 +97,7 @@ export class AttachmentlistComponent implements OnInit {
    * @param fileType 文件后缀名
    */
   getFileMimeType(fileType: string): string {
-    let mimeType: string = '';
+    let mimeType = '';
 
     switch (fileType) {
       case 'txt':

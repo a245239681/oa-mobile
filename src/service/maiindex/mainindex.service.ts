@@ -407,6 +407,7 @@ export interface saveadviceModel {
   attitudeType: string;
   content: string;
   skipValid: boolean;
+  HandSign: string;
 }
 
 // 人员机构提交时的参数模型

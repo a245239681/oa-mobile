@@ -273,7 +273,8 @@ export class SubmissionPage implements OnInit {
         coorType: this.itemmodel['CoorType'],
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
-        skipValid: false
+        skipValid: false,
+        HandSign: this.base64,
       };
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
@@ -309,7 +310,8 @@ export class SubmissionPage implements OnInit {
         coorType: this.itemmodel['CoorType'],
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
-        skipValid: false
+        skipValid: false,
+        HandSign: this.base64,
       };
 
       this.mainservice.saveadvice(savemodel).subscribe(
