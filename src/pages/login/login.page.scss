@@ -60,12 +60,24 @@
     bottom: 0;
 }
 
+.wsrk {
+    position: relative;
+}
+
 .srk {
+    width: 100%;
     border-radius: 25px;
     border: 1px solid #afafaf;
-    padding-left: 10px !important;
+    padding-left: 42px !important;
     margin-bottom: 10px;
     height: 37px;
+}
+
+// outline: none;
+input:focus {
+    border-color: #4978fc;
+    border-radius: 25px;
+    outline: none;
 }
 
 .srk:first-child {
@@ -87,6 +99,9 @@
 }
 
 .tb {
+    position: absolute;
+    top: 6px;
+    left: 12px;
     color: rgb(35, 93, 252);
     font-size: 23px;
     margin-right: 5px;

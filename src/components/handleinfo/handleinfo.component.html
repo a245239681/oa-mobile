@@ -3,23 +3,39 @@
     <div class="bt">
       <span>{{itemmodel['Title']}}</span>
     </div>
-    <div>
-      <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ itemmodel['Emergency'] }}</span>
-      <span class='texts' style="width: 58%;display: inline-block;vertical-align: top;">完成时限：{{ itemmodel['FinishDate']
-        }}</span>
+    <!-- 收文 -->
+    <div *ngIf="itemmodel.documenttype == 1">
+      <div>
+        <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ itemmodel['Emergency'] }}</span>
+        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{
+          itemmodel['FinishDate']
+          }}</span>
+      </div>
+      <div>
+        <span class='texts'>来文文号：</span>
+        <span class='texts'>{{ itemmodel['SerialNumber'] }}</span>
+      </div>
+      <div>
+        <span class='texts'>来文单位：</span>
+        <span class='texts'>{{ itemmodel['Department'] }}</span>
+      </div>
     </div>
-    <div>
-      <span class='texts'>公文文号：</span>
-      <span class='texts'>{{ itemmodel['SerialNumber'] }}</span>
+    <!-- 发文 -->
+    <div *ngIf="itemmodel.documenttype == 2">
+      <div>
+        <span class='texts'>主&#12288;送：</span>
+        <span class='texts'>{{ itemmodel['Department'] }}</span>
+      </div>
+      <div>
+        <span class='texts'>公文文号：</span>
+        <span class='texts'>{{ itemmodel['SerialNumber'] }}</span>
+      </div>
+      <div>
+        <span class='texts'>签&nbsp;发&nbsp;人：</span>
+        <span class='texts'>{{ itemmodel['AttituderName'] }}</span>
+      </div>
     </div>
-    <div>
-      <span class='texts'>来文单位：</span>
-      <span class='texts'>{{ itemmodel['Department'] }}</span>
-    </div>
-    <!-- <div>
-      <span class='texts' style="vertical-align: top;">来文单位：</span>
-      <span class='texts' style="width: 70%;display: inline-block;">{{ itemmodel['Department'] }}</span>
-    </div> -->
+
   </div>
   <div>
     <div *ngFor="let item of adcviceArr; let i = index">
@@ -38,7 +54,7 @@
             <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Content'] }}</span>
           </div>
           <div>
-            <span class='texts'>{{ subitem['StaffName'] }} ({{ subitem['StaffDuty'] }})：{{subitem['TimeStr']}}</span>
+            <span class='texts'>{{ subitem['StaffName'] }} ({{ subitem['StaffDuty'] }})：{{ subitem['TimeStr'] }}</span>
           </div>
           <span class='fgx' *ngIf="fgx(item,n)"></span>
         </div>

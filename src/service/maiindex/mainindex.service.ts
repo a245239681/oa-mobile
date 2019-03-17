@@ -29,7 +29,7 @@ export class MainindexService {
     type: number = 1,
     searchStr?: string
   ): Observable<any> {
-    //收文待办
+    // 收文待办
     if (type == 1) {
       return this.httpclient.post<any>(ApiUrlManagement.needtododata, {
         type: '传阅件;批办件',
@@ -37,10 +37,9 @@ export class MainindexService {
         pageSize: 10,
         query: searchStr
       });
-    }
-    // 2 发文待办  3传阅件
-    else {
-      var url =
+    } else {
+      // 2 发文待办  3传阅件
+      const url =
         type == 2
           ? ApiUrlManagement.getsendsneedtodo
           : ApiUrlManagement.getReceives_read;
@@ -55,14 +54,15 @@ export class MainindexService {
   /**
    * 获取已办 1-收文  2-发文
    */
-  getBrowserFile(page: number, type: number) {
-    var url =
+  getBrowserFile(page: number, type: number, searchStr?: string) {
+    const url =
       type == 1
         ? ApiUrlManagement.GetBrowsers_Receive
         : ApiUrlManagement.GetBrowsers_Send;
     return this.httpclient.post<any>(url, {
       pageNumber: page,
-      pageSize: 10
+      pageSize: 10,
+      query: searchStr
     });
   }
 
@@ -375,6 +375,16 @@ export class MainindexService {
         processType
     );
   }
+
+  /** 根据Id返回发文笺详情 */
+  GetSendModelById(Id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetSendModelById, {
+      params: {
+        Id: Id
+      }
+    });
+  }
+
   /** 退回验证 */
   ValidBack(Id: string, processType: string, coorType: string) {
     return this.httpclient.get(
@@ -430,7 +440,7 @@ export interface PendingReaderModel {
   deptId: string;
 }
 
-//发文提交参数
+// 发文提交参数
 
 export interface LastSendActionStepModel {
   id: string;
@@ -447,13 +457,13 @@ export interface LastSendActionStepModel {
 
 export interface MoveCommitModel {
   id?: string;
-  //主办id 单选
+  // 主办id 单选
   NextActionId?: string;
   nextUserId?: string;
   primaryDeptId?: string;
   cooperaters?: any;
   readers?: any;
-  //模态框
+  // 模态框
   commitType?: any;
 
   CoorType?: string;

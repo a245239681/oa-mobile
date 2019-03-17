@@ -3,19 +3,25 @@
     <div>
       <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)" class="login-form">
         <div>
-          <ion-input class="srk" type="text" placeholder="请输入用户名" formControlName="username">
-            <!-- <ion-icon class="icon" name="person"></ion-icon> -->
+          <div class='wsrk'>
             <i class="iconfont tb">&#xe610;</i>
+            <input type="text" class="srk" placeholder="请输入用户名" formControlName="username">
+          </div>
+          <div class='wsrk'>
+            <i class="iconfont tb"> &#xe61b;</i>
+            <input type="password" class="srk" placeholder="请输入密码" formControlName="PassWord">
+          </div>
+          <!-- <ion-input class="srk" type="text" placeholder="请输入用户名" formControlName="username">
+              <i class="iconfont tb">&#xe610;</i>
           </ion-input>
           <div class="line"></div>
           <ion-input class="srk" type="password" placeholder="请输入密码" formControlName="PassWord">
-            <!-- <ion-icon class="icon" name="lock"></ion-icon> -->
             <i class="iconfont tb"> &#xe61b;</i>
-          </ion-input>
+          </ion-input> -->
           <div class="line" *ngIf="formErrors.username || formErrors.PassWord"></div>
           <app-verification *ngIf="formErrors.username" [text]="formErrors.username"></app-verification>
           <app-verification *ngIf="formErrors.PassWord" [text]="formErrors.PassWord"></app-verification>
-          <div class='wjma'><span class="wjma-zt">忘记密码</span></div>
+          <!-- <div class='wjma'><span class="wjma-zt">忘记密码</span></div> -->
         </div>
         <br />
         <ion-button expand="block" color="primary" style="--border-radius: 25px !important;" type="submit" value="登录"

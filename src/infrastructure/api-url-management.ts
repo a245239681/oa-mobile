@@ -142,6 +142,8 @@ export const ApiUrlManagement = {
    */
   getBackActionTree: 'api/recieve/GetBackActionTree',
 
+  /** 获取办发文信息 */
+  GetSendModelById: 'api/recieve/GetSendModelById',
   /**
    * 退回验证
    * */

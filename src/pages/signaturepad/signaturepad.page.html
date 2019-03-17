@@ -1,0 +1,18 @@
+<ion-content padding>
+  <div style="border:2px solid black;">
+    <signature-pad [options]="signaturePadOptions" id="signatureCanvas"></signature-pad>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        <ion-button ion-button full color="danger" (click)="drawCancel()">取消</ion-button>
+      </ion-col>
+      <ion-col col-4>
+        <ion-button ion-button full color="light" (click)="drawClear()">清除</ion-button>
+      </ion-col>
+      <ion-col col-4>
+        <ion-button ion-button full color="secondary" (click)="drawComplete()">完成</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

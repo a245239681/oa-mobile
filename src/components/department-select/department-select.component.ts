@@ -79,7 +79,7 @@ export class DepartmentSelectComponent implements OnInit {
       if (checked) {
         this.selectList.push(item);
       } else {
-        //去掉没选中的如果之前选过的
+        // 去掉没选中的如果之前选过的
         this.selectList = this.selectList.filter(data => data.id !== item.id);
       }
       this.selected.emit({ items: this.selectList });
@@ -88,7 +88,7 @@ export class DepartmentSelectComponent implements OnInit {
       if (checked) {
         this.selectedList.push(item);
       } else {
-        //去掉没选中的如果之前选过的
+        // 去掉没选中的如果之前选过的
         this.selectedList = this.selectedList.filter(
           data => data.id !== item.id
         );

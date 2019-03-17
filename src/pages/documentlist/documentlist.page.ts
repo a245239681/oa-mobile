@@ -32,6 +32,9 @@ export class DocumentlistPage implements OnInit {
   /** 1 收文 2 发文 3 传阅件 4 已办收文 5 已办发文 */
   type = 1;
 
+  /** 1  已办收文 2  已办发文 */
+  stype = 1;
+
   title = '公文列表';
 
   loading = false;
@@ -129,12 +132,12 @@ export class DocumentlistPage implements OnInit {
         );
     } else {
       if (this.type === 4) {
-        this.type = 1;
+        this.stype = 1;
       } else {
-        this.type = 2;
+        this.stype = 2;
       }
       this.mainindexservice
-        .getBrowserFile(this.currentPage, this.type)
+        .getBrowserFile(this.currentPage, this.stype, this.searchStr)
         .subscribe(
           res => {
             this.ionRefresh.complete();
@@ -170,7 +173,9 @@ export class DocumentlistPage implements OnInit {
 
   /**
    * 下拉刷新
-   */ doRefresh(event) {
+   */
+
+  doRefresh(event) {
     this.getdata();
   }
 
@@ -179,54 +184,88 @@ export class DocumentlistPage implements OnInit {
    */
   loadMoreData(event) {
     console.log('上拉加载');
-    this.mainindexservice
-      .getneedtodolist(this.currentPage, this.type, this.searchStr)
-      .subscribe(
-        res => {
-          this.ionInfiniteScroll.complete();
-          if (res['State'] === 1) {
-            const tempArr: any[] = res['Data']['PageOfResult'];
-            tempArr.forEach(item => {
-              this.listdataArr.push(item);
-            });
-
-            if (tempArr.length < 10) {
-              this.nohasmore = true;
-            } else {
-              this.nohasmore = false;
-              this.currentPage++;
-            }
-
-            if (this.type === 1) {
-              this.listdataArr = this.listdataArr.map(item => {
-                const dates = getDateDiff(
-                  item['FinishDate'],
-                  new Date().toDateString()
-                );
-                if (
-                  item['Emergency'] === '特急' ||
-                  item['Emergency'] === '紧急' ||
-                  dates <= 3
-                ) {
-                  item['color'] = '#D1202E';
-                } else if (dates > 3 && dates <= 7) {
-                  item['color'] = '#F99D31';
-                } else {
-                  item['color'] = '#2D3479';
-                }
-                return item;
+    /** 判断进来的是已办还是待办  4已办*/
+    if (this.type === 4 || 5) {
+      this.mainindexservice
+        .getBrowserFile(this.currentPage, this.stype, this.searchStr)
+        .subscribe(
+          res => {
+            this.ionRefresh.complete();
+            this.ionInfiniteScroll.complete();
+            if (res['State'] === 1) {
+              console.log(res);
+              const tempArr: any[] = res['Data']['PageOfResult'];
+              tempArr.forEach(item => {
+                this.listdataArr.push(item);
               });
+
+              if (tempArr.length < 10) {
+                this.nohasmore = true;
+              } else {
+                this.nohasmore = false;
+                this.currentPage++;
+              }
+            } else {
+              this.toast.presentToast('已无数据');
             }
-          } else {
-            this.toast.presentToast('已无数据');
+            console.log(this.nohasmore);
+          },
+          err => {
+            this.ionRefresh.complete();
+            this.ionInfiniteScroll.complete();
+            this.toast.presentToast('请求失败');
           }
-          console.log(this.nohasmore);
-        },
-        err => {
-          this.ionInfiniteScroll.complete();
-          this.toast.presentToast('请求失败');
-        }
-      );
+        );
+    } else {
+      this.mainindexservice
+        .getneedtodolist(this.currentPage, this.type, this.searchStr)
+        .subscribe(
+          res => {
+            this.ionInfiniteScroll.complete();
+            if (res['State'] === 1) {
+              const tempArr: any[] = res['Data']['PageOfResult'];
+              tempArr.forEach(item => {
+                this.listdataArr.push(item);
+              });
+
+              if (tempArr.length < 10) {
+                this.nohasmore = true;
+              } else {
+                this.nohasmore = false;
+                this.currentPage++;
+              }
+
+              if (this.type === 1) {
+                this.listdataArr = this.listdataArr.map(item => {
+                  const dates = getDateDiff(
+                    item['FinishDate'],
+                    new Date().toDateString()
+                  );
+                  if (
+                    item['Emergency'] === '特急' ||
+                    item['Emergency'] === '紧急' ||
+                    dates <= 3
+                  ) {
+                    item['color'] = '#D1202E';
+                  } else if (dates > 3 && dates <= 7) {
+                    item['color'] = '#F99D31';
+                  } else {
+                    item['color'] = '#2D3479';
+                  }
+                  return item;
+                });
+              }
+            } else {
+              this.toast.presentToast('已无数据');
+            }
+            console.log(this.nohasmore);
+          },
+          err => {
+            this.ionInfiniteScroll.complete();
+            this.toast.presentToast('请求失败');
+          }
+        );
+    }
   }
 
   /**
@@ -242,6 +281,9 @@ export class DocumentlistPage implements OnInit {
   pushIntodetail(item: any) {
     /** 把操作序号添加到json */
     item['documenttype'] = this.type;
+    /** 把操作列表添加到json */
+    item['Operationlist'] = this.title;
+
     // 点击签收
     this.mainindexservice
       .signclick(item['Id'], item['ProcessType'], item['CoorType'])

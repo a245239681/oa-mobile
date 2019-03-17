@@ -1,20 +1,20 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" mode='ios'>
     <ion-buttons slot="start">
-      <ion-back-button style="display:block"></ion-back-button>
+      <ion-back-button style="display:block" text=''></ion-back-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
-    <ion-buttons [hidden]="type!=1" slot="end">
+    <ion-buttons [hidden]="!nbyj()" slot="end">
       <ion-button (click)="pushtoadvice()">拟办意见</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content style="padding:0">
-  <app-handleinfo [itemmodel]="itemmodel" *ngIf="type == 1"></app-handleinfo>
-  <app-circulationinfo [itemmodel]="itemmodel" *ngIf="type == 2"></app-circulationinfo>
-  <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == 3"></app-attachmentlist>
-  <app-sign [itemmodel]="itemmodel" *ngIf="type == 4 || type == 5"></app-sign>
+  <app-handleinfo [itemmodel]="itemmodel" *ngIf="type == '1'"></app-handleinfo>
+  <app-circulationinfo [itemmodel]="itemmodel" *ngIf="type == '2'"></app-circulationinfo>
+  <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == '3'"></app-attachmentlist>
+  <app-sign [itemmodel]="itemmodel" *ngIf="type == '4' || type == '5'"></app-sign>
 
   <ion-segment (ionChange)="segmentChanged($event)">
     <ion-segment-button value="1" checked>
