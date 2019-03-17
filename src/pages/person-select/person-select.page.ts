@@ -251,11 +251,11 @@ export class PersonSelectPage implements OnInit {
             this.toast.presentToast('提交成功');
             this.route.navigate(['tabs']);
           } else {
-            this.toast.presentLoading(res['Message']);
+            this.toast.presentToast(res['Message']);
           }
         },
         err => {
-          this.toast.presentLoading('请求失败');
+          this.toast.presentToast('请求失败');
         }
       );
     }

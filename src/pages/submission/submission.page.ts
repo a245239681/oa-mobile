@@ -236,11 +236,29 @@ export class SubmissionPage implements OnInit {
   /** 退回 */
   sendBack(value) {
     this.saveadvice(value['advice']);
-    this.route.navigate(['return-back'], {
-      queryParams: {
-        item: JSON.stringify(this.itemmodel)
-      }
-    });
+    this.mainservice
+      .ValidBack(
+        this.itemmodel['Id'],
+        this.itemmodel['ProcessType'],
+        this.itemmodel['CoorType']
+      )
+      .subscribe(
+        res => {
+          console.log(res);
+          if ((<any>res).State === 1) {
+            this.route.navigate(['return-back'], {
+              queryParams: {
+                item: JSON.stringify(this.itemmodel)
+              }
+            });
+          }else{
+            this.toast.presentToast(res['Data']);
+          }
+        },
+        () => {
+          this.toast.presentToast('请求失败');
+        }
+      );
   }
   /**呈其他局领导 */
   ownerHandOver(value) {
