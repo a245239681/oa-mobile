@@ -43,7 +43,7 @@
       </div>
     </div>
     <!-- 发文 -->
-    <div *ngIf="itemmodel.documenttype == 2">
+    <div *ngIf="itemmodel.documenttype == 2 && myData">
       <div>
         <span class='texts' style='margin-right: 8%;'>密级：{{ myData.Secret }}</span>
         <span class='texts' style="min-width: 56%;display: inline-block;">紧急程度：{{
@@ -93,7 +93,15 @@
       </div>
       <div>
         <span class='texts'>依申请公开的理由：</span>
-        <!-- <span class='texts'>{{ myData. }}</span> -->
+        <div *ngFor="let item of this.myData.TypeStr">
+          <span class='texts' *ngIf="item.checkbox">
+            <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+          </span>
+          <span class='texts' *ngIf="!item.checkbox">
+            <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+          </span>
+          <span class='texts'>{{ item.text }}</span>
+        </div>
       </div>
       <div>
         <span class='texts'>主题词：</span>

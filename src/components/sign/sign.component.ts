@@ -36,6 +36,7 @@ export class SignComponent implements OnInit {
         if (r['State'] === 1) {
           this.myData = r['Data'];
           this.templateType = r['templateType'];
+          this.myData.TypeStr = JSON.parse(this.myData.TypeStr);
           console.log(this.myData);
         } else {
           this.toast.presentToast('暂无数据');
