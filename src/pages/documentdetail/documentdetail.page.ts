@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { CommonHelper } from 'src/infrastructure/commonHelper';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { getFileMimeType } from 'src/infrastructure/regular-expression';
 
 @Component({
   selector: 'app-documentdetail',
@@ -24,10 +30,18 @@ export class DocumentdetailPage implements OnInit {
   // 收发文类型 1 收文 2 发文 3 传阅
   documenttype: number;
 
+  fileTransfer: FileTransferObject = this.transfer.create();
+
   constructor(
     private activeRoute: ActivatedRoute,
     private route: Router,
-    private nav: NavController
+    private nav: NavController,
+    private browser: InAppBrowser,
+    private platform: Platform,
+    private fileOpener: FileOpener,
+    private file: File,
+    private transfer: FileTransfer,
+    private commonHelper: CommonHelper,
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
@@ -36,7 +50,7 @@ export class DocumentdetailPage implements OnInit {
     /** 拟办意见的显示隐藏 */
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   nbyj() {
     if (this.type === '1') {
@@ -72,9 +86,47 @@ export class DocumentdetailPage implements OnInit {
       case '5':
         this.title = '发文签';
         break;
+      case '6':
+        this.title = '正文';
+        this.openDocument();
+        break;
       default:
         this.title = '相关公文';
     }
+  }
+
+  openDocument() {
+
+  }
+
+  /**
+  * 点击跳到浏览器浏览附件
+  * @param item
+  */
+  previewerAttchment(item: any) {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      const uri = encodeURI(item['Url']); // 文件的地址链接
+      const fileUrl = this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
+      this.commonHelper.presentLoading();
+      this.fileTransfer.download(uri, fileUrl).then(entry => {
+        entry.file(data => {
+          console.log(data);
+          this.fileOpener.open(fileUrl, getFileMimeType(item.Extended))
+            .then(() => this.commonHelper.dismissLoading())
+            .catch(() => {
+              this.commonHelper.dismissLoading();
+              this.commonHelper.presentToast('文件打开失败，请安装WPS');
+            }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
+        });
+      }, () => {
+        this.commonHelper.dismissLoading();
+        this.commonHelper.presentToast('文件下载失败');
+      });
+
+      return;
+    }
+    const browser = this.browser.create(item['Url']);
+    browser.show();
   }
 
   pushtoadvice() {

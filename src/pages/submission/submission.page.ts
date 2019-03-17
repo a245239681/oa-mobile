@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { SignaturepadPage } from '../signaturepad/signaturepad.page';
+import { CountersignComponent } from 'src/components/countersign/countersign.component';
 
 @Component({
   selector: 'app-submission',
@@ -45,7 +46,7 @@ export class SubmissionPage implements OnInit {
    */
   IsShowHandinAndGiveButton = false;
 
-  //发文步骤名称
+  // 发文步骤名称
   sendStepName: string;
   /**
    * 常用语数组
@@ -87,13 +88,13 @@ export class SubmissionPage implements OnInit {
       this.itemmodel = JSON.parse(params['item']);
 
       if (this.userinfo.GetUserDegree() === 'true') {
-        //收文
+        // 收文
         if (this.itemmodel['documenttype'] == 1) {
           this.handinButtonTitle = '提交并返回代理人';
-          //是否展示提交并分发文件
+          // 是否展示提交并分发文件
           this.IsShowHandinAndGiveButton = true;
         }
-        //发文
+        // 发文
         else {
           this.handinButtonTitle = '签发';
           this.IsShowHandinAndGiveButton = false;
@@ -320,7 +321,7 @@ export class SubmissionPage implements OnInit {
    * 保存意见
    */
   saveadvice(content: string) {
-    //发文流程 如果是处于二校之后的步骤就直接提示到PC端处理---特殊情况
+    // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理---特殊情况
     if (this.sendStepName == '二校') {
       this.toast.presentToast('请到PC端进行校验');
       return;
@@ -356,13 +357,13 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
-    //发文流程 如果是处于二校之后的步骤就直接提示到PC端处理
+    // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理
     if (this.sendStepName == '二校') {
       this.toast.presentToast('请到PC端进行校验');
       return;
     }
 
-    //提交用到
+    // 提交用到
     if (this.attitudeType) {
       const savemodel = <saveadviceModel>{
         attitudeType: this.attitudeType,
@@ -376,15 +377,15 @@ export class SubmissionPage implements OnInit {
 
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
-          //收文流程
+          // 收文流程
           if (this.itemmodel['documenttype'] == 1) {
-            //身份是领导的情况
+            // 身份是领导的情况
             if (this.IsShowHandinAndGiveButton) {
               this.mainservice.handinandbackman(this.itemmodel['Id']).subscribe(
                 res => {
                   if (res['State'] == 1) {
                     this.itemmodel['commitType'] = '20';
-                    //是否在人员机构展示 下一步
+                    // 是否在人员机构展示 下一步
                     this.itemmodel['IsShowNextStep'] = false;
                     this.pushNextStep();
                   }
@@ -394,14 +395,14 @@ export class SubmissionPage implements OnInit {
                 }
               );
             }
-            //不是领导的情况
+            // 不是领导的情况
             else {
-              //如果是协办的话点提交的接口就OK
+              // 如果是协办的话点提交的接口就OK
               if (this.itemmodel['CoorType'] == 1) {
                 console.log('协办');
                 this.handinxieban();
               } else {
-                //调用提交的接口-----validnext
+                // 调用提交的接口-----validnext
                 this.mainservice
                   .getToastType(
                     this.itemmodel['Id'],
@@ -412,23 +413,23 @@ export class SubmissionPage implements OnInit {
                     res => {
                       console.log(res);
                       if (res['State'] == 1) {
-                        //协办
+                        // 协办
                         if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
                           this.handinxieban();
                         }
-                        //结束
+                        // 结束
                         else if (res['Type'] == 400) {
-                          //弹出要结束的模态框 跳到下一步  展示结束步骤
+                          // 弹出要结束的模态框 跳到下一步  展示结束步骤
                           console.log('选结束');
                           this.presentEndAlert();
                         }
-                        //分件
+                        // 分件
                         else if (res['Type'] == 300) {
                           this.handinandgiveFile();
                         }
-                        //拟办回到办公室
+                        // 拟办回到办公室
                         else if (res['Type'] == 610) {
-                          //610直接commit
+                          // 610直接commit
                           console.log('看数据');
                           this.itemmodel['commitType'] = 610;
                           console.log(this.itemmodel);
@@ -446,9 +447,9 @@ export class SubmissionPage implements OnInit {
                               }
                             });
                         }
-                        //正常流程提交
+                        // 正常流程提交
                         else {
-                          //增加一个模态框的type的字段
+                          // 增加一个模态框的type的字段
                           this.itemmodel['commitType'] = res['Type'];
                           this.pushNextStep();
                         }
@@ -462,7 +463,7 @@ export class SubmissionPage implements OnInit {
             }
           }
 
-          //发文流程
+          // 发文流程
           else if (this.itemmodel['documenttype'] == 2) {
             // this.toast.presentToast('发文暂不处理');
             this.mainservice
@@ -481,7 +482,7 @@ export class SubmissionPage implements OnInit {
                     return;
                   }
 
-                  //如果步骤名称是保密信息意见
+                  // 如果步骤名称是保密信息意见
                   if (
                     this.sendStepName == '保密信息意见' ||
                     this.sendStepName == '公开信息意见'
@@ -644,5 +645,16 @@ export class SubmissionPage implements OnInit {
     this.nav.back();
   }
 
-  /** 会签 */
+  /** 开启会签模态框 */
+  async countersignModal() {
+    // componentProps 传值 d:数据
+    const modal = await this.modalController.create({
+      component: CountersignComponent,
+      componentProps: { data: this.itemmodel }
+    });
+    await modal.present();
+    // 接收模态框传回的值
+    const data = await modal.onDidDismiss();
+    console.log(data);
+  }
 }
