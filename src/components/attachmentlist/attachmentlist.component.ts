@@ -79,6 +79,27 @@ export class AttachmentlistComponent implements OnInit {
       });
 
       return;
+    } else if (this.platform.is('ios')){
+        const uri = encodeURI(item['Url']); // 文件的地址链接
+        const fileUrl = this.file.dataDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
+        this.commonHelper.presentLoading();
+        this.fileTransfer.download(uri, fileUrl).then(entry => {
+          entry.file(data => {
+            console.log(data);
+            this.fileOpener.open(fileUrl, this.getFileMimeType(item.Extended))
+              .then(() => this.commonHelper.dismissLoading())
+              .catch(() => {
+                this.commonHelper.dismissLoading();
+                this.commonHelper.presentToast('文件打开失败，请安装WPS');
+              }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
+          });
+        }, () => {
+          this.commonHelper.dismissLoading();
+          this.commonHelper.presentToast('文件下载失败');
+        });
+
+        return;
+      
     }
     const browser = this.browser.create(item['Url']);
     browser.show();
@@ -97,7 +118,7 @@ export class AttachmentlistComponent implements OnInit {
    * @param fileType 文件后缀名
    */
   getFileMimeType(fileType: string): string {
-    let mimeType: string = '';
+    let mimeType = '';
 
     switch (fileType) {
       case 'txt':
