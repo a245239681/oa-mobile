@@ -1,10 +1,8 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon
-      style="float:left;width:50px;height:30px"
-      name="ios-arrow-back"
-      (click)="canGoBack()"
-    ></ion-icon>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button text="返回"></ion-back-button>
+    </ion-buttons>
     <ion-title>退回</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="commit()">提交</ion-button>

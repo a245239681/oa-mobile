@@ -210,6 +210,14 @@ export class PersonSelectPage implements OnInit {
     if (this.nextArr.length > 0 && this.readerArr.length > 0) {
       this.toast.presentToast('传阅和下一步不能同时提交');
     } else {
+      if (this.DealType === false) {
+        this.hostArr = [];
+        if (this.readerArr.length > 0) {
+          this.itemmodel['commitType'] = 200;
+        } else {
+          this.itemmodel['commitType'] = 600;
+        }
+      }
       //参数模型
       this.handleModel = {
         id: this.itemmodel['Id'],

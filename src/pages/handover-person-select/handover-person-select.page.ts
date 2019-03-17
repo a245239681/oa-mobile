@@ -74,13 +74,16 @@ export class HandoverPersonSelectPage implements OnInit {
     };
     // const cmdata = JSON.stringify(params);
     this.mainservice.MoveCommit(params).subscribe(res => {
-      console.log(res);
+      if (res['State'] === 1) {
+        this.toast.presentToast('移交成功');
+        this.route.navigate(['tabs']);
+      } else {
+        this.toast.presentLoading(res['Message']);
+      }
     });
   }
   /**
    * 返回
    */
-  canGoBack() {
-    this.nav.back();
-  }
+
 }

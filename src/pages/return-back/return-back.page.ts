@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 
@@ -19,7 +19,8 @@ export class ReturnBackPage implements OnInit {
     private mainservice: MainindexService,
     private nav: NavController,
     private activeRouter: ActivatedRoute,
-    private commonHelper: CommonHelper
+    private toast: CommonHelper,
+    private route: Router
   ) {
     this.activeRouter.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
@@ -55,7 +56,7 @@ export class ReturnBackPage implements OnInit {
           }
         },
         () => {
-          this.commonHelper.presentToast('请求失败');
+          this.toast.presentToast('请求失败');
         }
       );
   }
@@ -68,11 +69,11 @@ export class ReturnBackPage implements OnInit {
           if (res['State'] === 1) {
             this.tree = res['Data']['BackAllTree'];
           } else {
-            this.commonHelper.presentToast('已无数据');
+            this.toast.presentToast('已无数据');
           }
         },
         () => {
-          this.commonHelper.presentToast('请求失败');
+          this.toast.presentToast('请求失败');
         }
       );
   }
@@ -93,11 +94,12 @@ export class ReturnBackPage implements OnInit {
       ProcessType: this.itemmodel['ProcessType']
     };
     this.mainservice.MoveCommit(params).subscribe(res => {
-      console.log(res);
+      if (res['State'] === 1) {
+        this.toast.presentToast('退回成功');
+        this.route.navigate(['tabs']);
+      } else {
+        this.toast.presentLoading(res['Message']);
+      }
     });
-  }
-
-  canGoBack() {
-    this.nav.back();
   }
 }
