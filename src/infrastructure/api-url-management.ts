@@ -148,4 +148,7 @@ export const ApiUrlManagement = {
    * 退回验证
    * */
   ValidBack: 'api/recieve/ValidBack',
+
+  /** 会签提交 */
+  commit: 'api/recieve/commit'
 };

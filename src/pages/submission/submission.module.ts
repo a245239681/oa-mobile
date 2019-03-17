@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { SubmissionPage } from './submission.page';
 import { ComponentsModule } from 'src/components/components.module';
 import { SignaturepadPageModule } from '../signaturepad/signaturepad.module';
+import { CountersignModule } from 'src/components/countersign/countersign.module';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     SignaturepadPageModule,
+    CountersignModule,
     RouterModule.forChild(routes)
   ],
   declarations: [SubmissionPage]

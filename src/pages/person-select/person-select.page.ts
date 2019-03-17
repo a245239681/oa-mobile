@@ -127,6 +127,7 @@ export class PersonSelectPage implements OnInit {
       this.hostArr = items;
       console.log(this.hostArr);
     } else if (this.type == 2) {
+      debugger
       this.coorperationArr = items;
       this.coorperationArr = this.coorperationArr.map(item => {
         return item['id'];

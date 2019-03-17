@@ -397,6 +397,16 @@ export class MainindexService {
         coorType
     );
   }
+
+  /** 会签提交 */
+  commit(commit: CommitModel) {
+    return this.httpclient.post(ApiUrlManagement.commit, commit);
+  }
+  // ChangePassword(
+  //   ChangePassword: ChangePasswordModel
+  // ): Observable<ApiResult<{}>> {
+  //   return this.http.post(ApiUrlManagement.ChangePassword, ChangePassword);
+  // }
 }
 
 // 保存意见的参数模型
@@ -469,4 +479,25 @@ export interface MoveCommitModel {
   CoorType?: string;
 
   ProcessType?: string;
+}
+
+/** 会签提交 */
+export interface CommitModel {
+  /** 业务Id */
+  id?: string;
+  nextActionId?: any;
+  isSendMsg?: any;
+  isSnedSms?: any;
+  nextUserId?: any;
+  primaryDeptId?: any;
+  leaders?: any;
+  /** 勾选id数组 */
+  cooperaters?: any;
+  readers?: any;
+  commitType?: any;
+  /** 操作业务的获取 */
+  coorType?: string;
+  count?: any;
+  /** 操作业务的获取 */
+  processType?: string;
 }

@@ -10,19 +10,33 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { API_URL } from 'src/infrastructure/host-address';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { CachingInterceptor, AuthInterceptor } from 'src/infrastructure/http-interceptor';
-import { RequestCache, RequestCacheWithMap } from 'src/infrastructure/request-cache';
+import {
+  CachingInterceptor,
+  AuthInterceptor
+} from 'src/infrastructure/http-interceptor';
+import {
+  RequestCache,
+  RequestCacheWithMap
+} from 'src/infrastructure/request-cache';
 import { UserInfo } from 'src/infrastructure/user-info';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from 'src/components/components.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, FormsModule, ReactiveFormsModule, IonicModule, AppRoutingModule,ComponentsModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonicModule,
+    AppRoutingModule,
+    ComponentsModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -40,7 +54,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
         multi: true
-      },
+      }
     ],
     { provide: RequestCache, useClass: RequestCacheWithMap },
 
@@ -48,4 +62,4 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
