@@ -135,32 +135,68 @@ export class SubmissionPage implements OnInit {
   /** 移交 */
   handOver(value) {
     this.saveadvice(value['advice']);
-    if (this.itemmodel.IsPrimaryDept || this.itemmodel.CoorType === 1) {
-      this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
-        (data: any) => {
-          // if (data['State'] === 1) {
-          let tempArr = data.Data;
+    if (this.itemmodel.processType === 2) {
+      if (this.itemmodel.IsPrimaryDept || this.itemmodel.CoorType === 1) {
+        this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
+          (data: any) => {
+            // if (data['State'] === 1) {
+            let tempArr = data.Data;
 
-          if (!tempArr) {
-            tempArr = [];
-          }
-          this.route.navigate(['handover-person-select'], {
-            queryParams: {
-              item: JSON.stringify(this.itemmodel),
-              hasSelected: JSON.stringify(tempArr)
+            if (!tempArr) {
+              tempArr = [];
             }
-          });
-          // }
-          // else {
-          //   this.toast.presentToast('已无数据');
-          // }
-        },
-        () => {
-          this.toast.presentToast('请求失败');
-        }
-      );
+            this.route.navigate(['handover-person-select'], {
+              queryParams: {
+                item: JSON.stringify(this.itemmodel),
+                hasSelected: JSON.stringify(tempArr)
+              }
+            });
+            // }
+            // else {
+            //   this.toast.presentToast('已无数据');
+            // }
+          },
+          () => {
+            this.toast.presentToast('请求失败');
+          }
+        );
+      } else {
+        this.toast.presentToast('当前环节无法移交');
+      }
     } else {
-      this.toast.presentToast('当前环节无法移交');
+      let commitType: string;
+      this.mainservice
+        .ValidMove(
+          this.itemmodel['Id'],
+          this.itemmodel.ProcessType,
+          this.itemmodel.CoorType
+        )
+        .subscribe(res => {
+          if (res.State === 1) {
+            commitType = '60';
+            this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
+              (data: any) => {
+                // if (data['State'] === 1) {
+                let tempArr = data.Data;
+
+                if (!tempArr) {
+                  tempArr = [];
+                }
+                this.route.navigate(['handover-person-select'], {
+                  queryParams: {
+                    item: JSON.stringify(this.itemmodel),
+                    hasSelected: JSON.stringify(tempArr)
+                  }
+                });
+              },
+              () => {
+                this.toast.presentToast('请求失败');
+              }
+            );
+          } else {
+            this.toast.presentToast(res['Message']);
+          }
+        });
     }
   }
   /** 退回 */
@@ -238,7 +274,8 @@ export class SubmissionPage implements OnInit {
         coorType: this.itemmodel['CoorType'],
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
-        skipValid: false
+        skipValid: false,
+        HandSign: this.base64,
       };
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
@@ -274,7 +311,8 @@ export class SubmissionPage implements OnInit {
         coorType: this.itemmodel['CoorType'],
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
-        skipValid: false
+        skipValid: false,
+        HandSign: this.base64,
       };
 
       this.mainservice.saveadvice(savemodel).subscribe(

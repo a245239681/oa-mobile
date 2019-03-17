@@ -18,6 +18,7 @@ export class HandoverPersonSelectPage implements OnInit {
   // 选中人员
   selectPerson: any;
   commitType: string;
+  isshow: boolean;
   constructor(
     private nav: NavController,
     private mainservice: MainindexService,
@@ -44,6 +45,11 @@ export class HandoverPersonSelectPage implements OnInit {
     console.log(this.itemmodel);
   }
   ngOnInit() {
+    if (this.itemmodel.ProcessType === 2) {
+      this.isshow = true;
+    } else if (this.itemmodel.ProcessType === 1) {
+      this.isshow = false;
+    }
     this.mainservice
       .ValidMove(
         this.itemmodel['Id'],
@@ -60,12 +66,12 @@ export class HandoverPersonSelectPage implements OnInit {
   handin() {
     const params = {
       id: this.itemmodel['Id'],
-      //主办id 单选
+      // 主办id 单选
       nextUserId: this.selectPerson.length > 0 ? this.selectPerson.join() : '',
       primaryDeptId: '',
       cooperaters: [],
       readers: [],
-      //模态框
+      // 模态框
       commitType: this.commitType,
 
       CoorType: this.itemmodel['CoorType'],
@@ -74,13 +80,15 @@ export class HandoverPersonSelectPage implements OnInit {
     };
     // const cmdata = JSON.stringify(params);
     this.mainservice.MoveCommit(params).subscribe(res => {
-      console.log(res);
+      if (res['State'] === 1) {
+        this.toast.presentToast('移交成功');
+        this.route.navigate(['tabs']);
+      } else {
+        this.toast.presentToast(res['Message']);
+      }
     });
   }
   /**
    * 返回
    */
-  canGoBack() {
-    this.nav.back();
-  }
 }

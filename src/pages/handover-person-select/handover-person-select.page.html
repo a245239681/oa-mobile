@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary" mode='ios'>
     <ion-buttons slot="start">
-      <ion-back-button style="display:block" text=''></ion-back-button>
+      <ion-back-button text='返回'></ion-back-button>
     </ion-buttons>
     <ion-title>移交</ion-title>
     <ion-buttons slot="end">
@@ -11,5 +11,6 @@
 </ion-header>
 
 <ion-content>
-  <department-select [isSingleSlect]="'3'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"></department-select>
+  <department-select *ngIf="isshow" [isSingleSlect]="'3'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"></department-select>
+  <department-select *ngIf="!isshow" [isSingleSlect]="'4'" [hasSelected]="hasSelected" (selected)="hostSelected($event.items)"></department-select>
 </ion-content>

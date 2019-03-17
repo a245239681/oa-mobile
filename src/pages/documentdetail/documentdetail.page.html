@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary" mode='ios'>
     <ion-buttons slot="start">
-      <ion-back-button style="display:block" text=''></ion-back-button>
+      <ion-back-button text='返回'></ion-back-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
     <ion-buttons [hidden]="!nbyj()" slot="end">
@@ -15,6 +15,9 @@
   <app-circulationinfo [itemmodel]="itemmodel" *ngIf="type == '2'"></app-circulationinfo>
   <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == '3'"></app-attachmentlist>
   <app-sign [itemmodel]="itemmodel" *ngIf="type == '4' || type == '5'"></app-sign>
+  <div class="parent" *ngIf="type == '6'" >
+    <ion-button class="center">再次打开正文</ion-button>
+  </div>
 
   <ion-segment (ionChange)="segmentChanged($event)">
     <ion-segment-button value="1" checked>
@@ -28,6 +31,9 @@
     </ion-segment-button>
     <ion-segment-button *ngIf="itemmodel['documenttype'] == 2" value="5">
       <ion-label>发文笺</ion-label>
+    </ion-segment-button>
+    <ion-segment-button *ngIf="itemmodel['documenttype'] == 2" value="6">
+      <ion-label>正文</ion-label>
     </ion-segment-button>
     <ion-segment-button value="3">
       <ion-label>附件管理</ion-label>
