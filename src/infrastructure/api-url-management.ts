@@ -148,4 +148,9 @@ export const ApiUrlManagement = {
    * 退回验证
    * */
   ValidBack: 'api/recieve/ValidBack',
+
+  /**
+   * 正文
+   */
+  fileViewSends: 'api/attachment/FileViewSend',
 };

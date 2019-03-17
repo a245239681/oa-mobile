@@ -17,12 +17,13 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from 'src/components/components.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, FormsModule, ReactiveFormsModule, IonicModule, AppRoutingModule,ComponentsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), HttpClientModule, FormsModule, ReactiveFormsModule, IonicModule, AppRoutingModule, ComponentsModule],
   providers: [
     StatusBar,
     SplashScreen,
@@ -32,7 +33,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     InAppBrowser,
     {
       provide: API_URL,
-      useValue: 'http://192.168.50.230:6688/'
+      useValue: environment.url,
     },
     [
       { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
