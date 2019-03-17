@@ -38,6 +38,16 @@ export class NextSelectComponent implements OnInit {
   leaderChecked = false; // 局领导勾选
   nbChecked = false; // 拟办勾选
 
+  treeData = [
+    { "id": 1, "name": "features" },
+    { "id": 2, "name": "Add", "parentID": 1 },
+    { "id": 3, "name": "Remove", "parentID": 1 },
+    { "id": 9, "name": "Update", "parentID": 1 },
+    { "id": 11, "name": "UpdateDel", "parentID": 9 },
+    { "id": 27, "name": "Add", "parentID": 2 },
+    { "id": 28, "name": "master" }
+  ];
+
   ngOnInit() {
     console.log(this.hasSelected);
     switch (this.state) {
@@ -128,7 +138,8 @@ export class NextSelectComponent implements OnInit {
             this.showList = item.children;
           });
         } else {
-          this.showList = item.children;
+          item.collapse = !item.collapse;
+          // this.showList = item.children;
         }
         break;
     }

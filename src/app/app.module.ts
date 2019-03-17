@@ -17,7 +17,7 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from 'src/components/components.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-
+import { IonTreeViewModule } from 'ionic-tree-view';
 
 @NgModule({
   declarations: [AppComponent],
