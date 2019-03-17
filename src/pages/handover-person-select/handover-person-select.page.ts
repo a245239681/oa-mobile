@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
+import { UserInfo } from 'src/infrastructure/user-info';
 
 @Component({
   selector: 'app-handover-person-select',
@@ -24,7 +25,8 @@ export class HandoverPersonSelectPage implements OnInit {
     private mainservice: MainindexService,
     private activeRoute: ActivatedRoute,
     private toast: CommonHelper,
-    private route: Router
+    private route: Router,
+    private userinfo: UserInfo
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       // console.log(params);
@@ -45,9 +47,12 @@ export class HandoverPersonSelectPage implements OnInit {
     console.log(this.itemmodel);
   }
   ngOnInit() {
-    if (this.itemmodel.ProcessType === 2 || this.itemmodel.IsOwner) {
+    if (
+      this.itemmodel.ProcessType === 2 ||
+      this.userinfo.GetUserDegree() === 'true'
+    ) {
       this.isshow = true;
-    } else if (this.itemmodel.ProcessType === 1 && !this.itemmodel.IsOwner) {
+    } else if (this.itemmodel.ProcessType === 1 && this.userinfo.GetUserDegree() !== 'true') {
       this.isshow = false;
     }
     this.mainservice
@@ -78,7 +83,7 @@ export class HandoverPersonSelectPage implements OnInit {
 
       ProcessType: this.itemmodel['ProcessType']
     };
-    if (this.itemmodel.ProcessType === 1 && this.itemmodel.IsOwner) {
+    if (this.itemmodel.ProcessType === 1 && this.userinfo.GetUserDegree() === 'true') {
       params['nextUserId'] = '';
       params['nextActionId'] = 0;
       params['commitType'] = '50';

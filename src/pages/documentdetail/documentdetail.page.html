@@ -16,7 +16,7 @@
   <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == '3'"></app-attachmentlist>
   <app-sign [itemmodel]="itemmodel" *ngIf="type == '4' || type == '5'"></app-sign>
   <div class="parent" *ngIf="type == '6'" >
-    <ion-button class="center">再次打开正文</ion-button>
+    <ion-button (click)="openDocument()" class="center">再次打开正文</ion-button>
   </div>
 
   <ion-segment (ionChange)="segmentChanged($event)">

@@ -157,5 +157,9 @@ export const ApiUrlManagement = {
   commit: 'api/recieve/commit',
 
   /** 修改密码 */
-  UpdateStaffInfo: 'api/recieve/UpdateStaffInfo'
+  UpdateStaffInfo: 'api/recieve/UpdateStaffInfo',
+  /**
+   * 正文
+   */
+  fileViewSends: 'api/attachment/FileViewSend',
 };

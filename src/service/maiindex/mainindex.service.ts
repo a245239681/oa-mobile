@@ -403,7 +403,7 @@ export class MainindexService {
         Id +
         '&processType=' +
         processType +
-        '&coorType' +
+        '&coorType=' +
         coorType
     );
   }

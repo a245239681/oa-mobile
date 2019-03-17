@@ -105,7 +105,10 @@ export class SubmissionPage implements OnInit {
       }
       this.getattitudeType();
     });
-    if (this.itemmodel.ProcessType === 1 && this.itemmodel.IsOwner) {
+    if (
+      this.itemmodel.ProcessType === 1 &&
+      this.userinfo.GetUserDegree() === 'true'
+    ) {
       this.IsOwner = true;
     } else {
       this.IsOwner = false;
@@ -146,7 +149,7 @@ export class SubmissionPage implements OnInit {
       if (
         this.itemmodel.IsPrimaryDept ||
         this.itemmodel.CoorType === 1 ||
-        this.itemmodel.IsOwner
+        this.userinfo.GetUserDegree() === 'true'
       ) {
         this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
           (data: any) => {
@@ -171,7 +174,7 @@ export class SubmissionPage implements OnInit {
             this.toast.presentToast('请求失败');
           }
         );
-        // } else if (this.itemmodel.IsOwner) {
+        // } else if (this.userinfo.GetUserDegree() === 'true') {
         //   this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
         //     (data: any) => {
         //       // if (data['State'] === 1) {
@@ -233,11 +236,29 @@ export class SubmissionPage implements OnInit {
   /** 退回 */
   sendBack(value) {
     this.saveadvice(value['advice']);
-    this.route.navigate(['return-back'], {
-      queryParams: {
-        item: JSON.stringify(this.itemmodel)
-      }
-    });
+    this.mainservice
+      .ValidBack(
+        this.itemmodel['Id'],
+        this.itemmodel['ProcessType'],
+        this.itemmodel['CoorType']
+      )
+      .subscribe(
+        res => {
+          console.log(res);
+          if ((<any>res).State === 1) {
+            this.route.navigate(['return-back'], {
+              queryParams: {
+                item: JSON.stringify(this.itemmodel)
+              }
+            });
+          }else{
+            this.toast.presentToast(res['Data']);
+          }
+        },
+        () => {
+          this.toast.presentToast('请求失败');
+        }
+      );
   }
   /**呈其他局领导 */
   ownerHandOver(value) {
