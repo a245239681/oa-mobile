@@ -207,44 +207,48 @@ export class PersonSelectPage implements OnInit {
       this.itemmodel['commitType'] = 600;
     }
 
-    //参数模型
-    this.handleModel = {
-      id: this.itemmodel['Id'],
-      // 主办id 单选
-      primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0]['id'] : '',
+    if (this.nextArr.length > 0 && this.readerArr.length > 0) {
+      this.toast.presentToast('传阅和下一步不能同时提交');
+    } else {
+      //参数模型
+      this.handleModel = {
+        id: this.itemmodel['Id'],
+        // 主办id 单选
+        primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0]['id'] : '',
 
-      cooperaters: this.coorperationArr,
-      /**
-       * 下一步
-       */
-      leaders: this.nextArr,
+        cooperaters: this.coorperationArr,
+        /**
+         * 下一步
+         */
+        leaders: this.nextArr,
 
-      /**
-       * 传阅
-       */
-      readers: this.readerArr,
+        /**
+         * 传阅
+         */
+        readers: this.readerArr,
 
-      // 模态框
-      commitType: this.itemmodel['commitType'],
+        // 模态框
+        commitType: this.itemmodel['commitType'],
 
-      CoorType: this.itemmodel['CoorType'],
+        CoorType: this.itemmodel['CoorType'],
 
-      ProcessType: this.itemmodel['ProcessType']
-    };
+        ProcessType: this.itemmodel['ProcessType']
+      };
 
-    console.log(this.handleModel);
-    this.mainservice.lasthandinStep(this.handleModel).subscribe(
-      res => {
-        if (res['State'] == 1) {
-          this.toast.presentToast('提交成功');
-          this.route.navigate(['tabs']);
-        } else {
-          this.toast.presentLoading(res['Message']);
+      console.log(this.handleModel);
+      this.mainservice.lasthandinStep(this.handleModel).subscribe(
+        res => {
+          if (res['State'] == 1) {
+            this.toast.presentToast('提交成功');
+            this.route.navigate(['tabs']);
+          } else {
+            this.toast.presentLoading(res['Message']);
+          }
+        },
+        err => {
+          this.toast.presentLoading('请求失败');
         }
-      },
-      err => {
-        this.toast.presentLoading('请求失败');
-      }
-    );
+      );
+    }
   }
 }
