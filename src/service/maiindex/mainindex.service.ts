@@ -111,11 +111,7 @@ export class MainindexService {
    */
   Send_ActDetailTree(sendId: string, subid: string = ''): Observable<any> {
     return this.httpclient.get(
-      ApiUrlManagement.Send_ActDetailTree +
-        '?sendId=' +
-        sendId +
-        '&ID=' +
-        subid
+      ApiUrlManagement.Send_ActDetailTree + '?sendId=' + sendId + '&ID=' + subid
     );
   }
 
@@ -427,6 +423,11 @@ export class MainindexService {
   // ): Observable<ApiResult<{}>> {
   //   return this.http.post(ApiUrlManagement.ChangePassword, ChangePassword);
   // }
+
+  /** 修改密码 */
+  UpdateStaffInfo(UpdateStaffInfo: UpdateStaffInfoModel) {
+    return this.httpclient.post(ApiUrlManagement.UpdateStaffInfo, UpdateStaffInfo);
+  }
 }
 
 // 保存意见的参数模型
@@ -521,4 +522,19 @@ export interface CommitModel {
   count?: any;
   /** 操作业务的获取 */
   processType?: string;
+}
+
+/** 修改密码 */
+export interface UpdateStaffInfoModel {
+  id?: string;
+  /** 电话号码 */
+  phone?: string;
+  /** 手机号码 */
+  mobile?: string;
+  /** 性别 */
+  sex?: any;
+  /** 新密码 */
+  newPassword?: string;
+  /** 生日 */
+  birthday?: any;
 }
