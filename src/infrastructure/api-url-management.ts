@@ -154,5 +154,10 @@ export const ApiUrlManagement = {
   /** 发文的流转信息 */
   Send_ActDetailTree: 'api/recieve/Send_ActDetailTree',
   /** 会签提交 */
-  commit: 'api/recieve/commit'
+  commit: 'api/recieve/commit',
+
+  /**
+   * 正文
+   */
+  fileViewSends: 'api/attachment/FileViewSend',
 };
