@@ -51,6 +51,12 @@
               (click)="sendBack(adviceForm.value)" value="退回">退回</ion-button>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-col size="6" size-lg>
+            <ion-button color="primary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+               value="会签">会签</ion-button>
+          </ion-col>
+        </ion-row>
       </ion-grid>
       <div class="line" *ngIf="formErrors.advice"></div>
       <app-verification *ngIf="formErrors.advice" [text]="formErrors.advice"></app-verification>

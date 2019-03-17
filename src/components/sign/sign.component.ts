@@ -11,6 +11,7 @@ export class SignComponent implements OnInit {
   @Input() itemmodel: any;
   myData: any;
   title: string;
+  templateType: string;
   constructor(
     public mainindexService: MainindexService,
     private toast: CommonHelper
@@ -34,6 +35,7 @@ export class SignComponent implements OnInit {
       r => {
         if (r['State'] === 1) {
           this.myData = r['Data'];
+          this.templateType = r['templateType'];
           console.log(this.myData);
         } else {
           this.toast.presentToast('暂无数据');

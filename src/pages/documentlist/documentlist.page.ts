@@ -185,7 +185,7 @@ export class DocumentlistPage implements OnInit {
   loadMoreData(event) {
     console.log('上拉加载');
     /** 判断进来的是已办还是待办  4已办*/
-    if (this.type === 4 || 5) {
+    if (this.type === 4 || this.type === 5) {
       this.mainindexservice
         .getBrowserFile(this.currentPage, this.stype, this.searchStr)
         .subscribe(
