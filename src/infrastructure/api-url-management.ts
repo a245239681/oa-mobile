@@ -148,4 +148,9 @@ export const ApiUrlManagement = {
    * 退回验证
    * */
   ValidBack: 'api/recieve/ValidBack',
+
+  /** 验证局领导承办 */
+  ValidLeader2Leader: 'api/recieve/ValidLeader2Leader',
+  /** 发文的流转信息 */
+  Send_ActDetailTree: 'api/recieve/Send_ActDetailTree'
 };

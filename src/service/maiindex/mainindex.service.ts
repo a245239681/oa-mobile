@@ -104,6 +104,20 @@ export class MainindexService {
         subid
     );
   }
+  /**
+   * 获取发文流转信息
+   * @param receiveId 必填 第一次获取的时候只传receiveid
+   * @param subid  之后点击子类时才用到
+   */
+  Send_ActDetailTree(sendId: string, subid: string = ''): Observable<any> {
+    return this.httpclient.get(
+      ApiUrlManagement.Send_ActDetailTree +
+        '?sendId=' +
+        sendId +
+        '&ID=' +
+        subid
+    );
+  }
 
   /**
    * 保存意见
@@ -397,6 +411,12 @@ export class MainindexService {
         coorType
     );
   }
+  /** 验证局领导承办 */
+  ValidLeader2Leader(Id: string) {
+    return this.httpclient.get(
+      ApiUrlManagement.ValidLeader2Leader + '?id=' + Id
+    );
+  }
 }
 
 // 保存意见的参数模型
@@ -466,7 +486,7 @@ export interface MoveCommitModel {
   readers?: any;
   // 模态框
   commitType?: any;
-
+  leaders?: string[];
   CoorType?: string;
 
   ProcessType?: string;

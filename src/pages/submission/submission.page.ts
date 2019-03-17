@@ -20,6 +20,8 @@ import { SignaturepadPage } from '../signaturepad/signaturepad.page';
 export class SubmissionPage implements OnInit {
   // 传进来的公文模型----收发文类型可通过itemmodel['documenttype'] 拿到 1 收文 2 发文
   itemmodel: any;
+  /** 是否是发文领导 */
+  IsOwner = false;
 
   adviceForm: FormGroup;
 
@@ -102,6 +104,11 @@ export class SubmissionPage implements OnInit {
       }
       this.getattitudeType();
     });
+    if (this.itemmodel.ProcessType === 1 && this.itemmodel.IsOwner) {
+      this.IsOwner = true;
+    } else {
+      this.IsOwner = false;
+    }
     this.creatForm();
   }
 
@@ -131,11 +138,15 @@ export class SubmissionPage implements OnInit {
       this.handleInfo(value['advice']);
     }
   }
-  /** 移交 */
+  /** 一般移交 */
   handOver(value) {
     this.saveadvice(value['advice']);
-    if (this.itemmodel.processType === 2) {
-      if (this.itemmodel.IsPrimaryDept || this.itemmodel.CoorType === 1) {
+    if (this.itemmodel.ProcessType === 2) {
+      if (
+        this.itemmodel.IsPrimaryDept ||
+        this.itemmodel.CoorType === 1 ||
+        this.itemmodel.IsOwner
+      ) {
         this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
           (data: any) => {
             // if (data['State'] === 1) {
@@ -159,11 +170,31 @@ export class SubmissionPage implements OnInit {
             this.toast.presentToast('请求失败');
           }
         );
+        // } else if (this.itemmodel.IsOwner) {
+        //   this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
+        //     (data: any) => {
+        //       // if (data['State'] === 1) {
+        //       let tempArr = data.Data;
+
+        //       if (!tempArr) {
+        //         tempArr = [];
+        //       }
+        //       this.route.navigate(['handover-person-select'], {
+        //         queryParams: {
+        //           item: JSON.stringify(this.itemmodel),
+        //           hasSelected: JSON.stringify(tempArr)
+        //         }
+        //       });
+        //     },
+        //     () => {
+        //       this.toast.presentToast('请求失败');
+        //     }
+        //   );
       } else {
         this.toast.presentToast('当前环节无法移交');
       }
-    } else {
-      let commitType: string;
+    } else if (this.itemmodel.ProcessType === 1) {
+      // let commitType: string;
       this.mainservice
         .ValidMove(
           this.itemmodel['Id'],
@@ -172,7 +203,7 @@ export class SubmissionPage implements OnInit {
         )
         .subscribe(res => {
           if (res.State === 1) {
-            commitType = '60';
+            // commitType = '60';
             this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
               (data: any) => {
                 // if (data['State'] === 1) {
@@ -204,6 +235,35 @@ export class SubmissionPage implements OnInit {
     this.route.navigate(['return-back'], {
       queryParams: {
         item: JSON.stringify(this.itemmodel)
+      }
+    });
+  }
+  /**呈其他局领导 */
+  ownerHandOver(value) {
+    this.saveadvice(value['advice']);
+    this.mainservice.ValidLeader2Leader(this.itemmodel['Id']).subscribe(res => {
+      if (res === 'ok') {
+        this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
+          (data: any) => {
+            // if (data['State'] === 1) {
+            let tempArr = data.Data;
+
+            if (!tempArr) {
+              tempArr = [];
+            }
+            this.route.navigate(['handover-person-select'], {
+              queryParams: {
+                item: JSON.stringify(this.itemmodel),
+                hasSelected: JSON.stringify(tempArr)
+              }
+            });
+          },
+          () => {
+            this.toast.presentToast('请求失败');
+          }
+        );
+      } else {
+        this.toast.presentToast(res['Message']);
       }
     });
   }
@@ -274,13 +334,13 @@ export class SubmissionPage implements OnInit {
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
         skipValid: false,
-        HandSign: this.base64,
+        HandSign: this.base64
       };
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
           if (res['State'] === 1) {
             console.log(res);
-            this.toast.presentToast('保存成功');
+            this.toast.presentToast('保存意见成功');
           }
         },
         err => {
@@ -311,7 +371,7 @@ export class SubmissionPage implements OnInit {
         processType: this.itemmodel['ProcessType'],
         relationId: this.itemmodel['Id'],
         skipValid: false,
-        HandSign: this.base64,
+        HandSign: this.base64
       };
 
       this.mainservice.saveadvice(savemodel).subscribe(
