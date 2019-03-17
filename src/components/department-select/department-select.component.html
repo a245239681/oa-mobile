@@ -2,17 +2,6 @@
   class=""
   [ngClass]="{ treeContent: isSingleSlect !== '3' && isSingleSlect !== '4' }"
 >
-  <ion-list mode="md" *ngIf="isSingleSlect === '2'">
-    <ion-item *ngFor="let item of listdataArr; let i = index">
-      <ion-checkbox
-        [(checked)]="listdataArr[i].checked"
-        [(ngModel)]="listdataArr[i].checked"
-        (ionChange)="mutiSelect(item, $event.detail.checked)"
-      ></ion-checkbox>
-      <ion-label>{{ item['text'] }} </ion-label>
-    </ion-item>
-  </ion-list>
-
   <ion-list mode="md" *ngIf="isSingleSlect === '1'">
     <ion-radio-group>
       <ion-item *ngFor="let item of listdataArr; let i = index">
@@ -24,6 +13,17 @@
       </ion-item>
     </ion-radio-group>
   </ion-list>
+  <ion-list mode="md" *ngIf="isSingleSlect === '2'">
+    <ion-item *ngFor="let item of listdataArr; let i = index">
+      <ion-checkbox
+        [(checked)]="listdataArr[i].checked"
+        [(ngModel)]="listdataArr[i].checked"
+        (ionChange)="mutiSelect(item, $event.detail.checked)"
+      ></ion-checkbox>
+      <ion-label>{{ item['text'] }} </ion-label>
+    </ion-item>
+  </ion-list>
+
   <ion-list mode="md" *ngIf="isSingleSlect === '3'">
     <ion-item *ngFor="let item of handoverListdataArr; let i = index">
       <ion-checkbox

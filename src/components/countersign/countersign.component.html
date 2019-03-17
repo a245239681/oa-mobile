@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block" (click)="closemodal()" text='返回'></ion-back-button>
+    </ion-buttons>
+    <ion-title>会签</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="commit()">提交</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list mode="md">
+    <ion-item *ngFor="let item of listdataArr; let i = index">
+      <ion-checkbox [(checked)]="listdataArr[i].checked" [(ngModel)]="listdataArr[i].checked" (ionChange)="mutiSelect(item, $event.detail.checked)"></ion-checkbox>
+      <ion-label>{{ item['text'] }} </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

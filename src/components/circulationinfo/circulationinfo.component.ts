@@ -40,24 +40,45 @@ export class CirculationinfoComponent implements OnInit {
    * 获取数据
    */
   getdata() {
-    this.mainservice.getReciveDetailInfo(this.itemmodel['Id']).subscribe(
-      res => {
-        console.log(res);
-        if (res['State'] === 1) {
-          this.parenteArr = res['Data'];
-          if (this.parenteArr) {
-            this.parenteArr.forEach(
-              (v, i) => (v.hidden = v.children.length === 0 || i > 0)
-            );
+    if (this.itemmodel.ProcessType === 2) {
+      this.mainservice.getReciveDetailInfo(this.itemmodel['Id']).subscribe(
+        res => {
+          console.log(res);
+          if (res['State'] === 1) {
+            this.parenteArr = res['Data'];
+            if (this.parenteArr) {
+              this.parenteArr.forEach(
+                (v, i) => (v.hidden = v.children.length === 0 || i > 0)
+              );
+            }
+          } else {
+            this.toast.presentToast('暂无数据');
           }
-        } else {
-          this.toast.presentToast('暂无数据');
+        },
+        err => {
+          this.toast.presentToast('请求失败');
         }
-      },
-      err => {
-        this.toast.presentToast('请求失败');
-      }
-    );
+      );
+    } else if (this.itemmodel.ProcessType === 1) {
+      this.mainservice.Send_ActDetailTree(this.itemmodel['Id']).subscribe(
+        res => {
+          console.log(res);
+          if (res['State'] === 1) {
+            this.parenteArr = res['Data'];
+            if (this.parenteArr) {
+              this.parenteArr.forEach(
+                (v, i) => (v.hidden = v.children.length === 0 || i > 0)
+              );
+            }
+          } else {
+            this.toast.presentToast('暂无数据');
+          }
+        },
+        err => {
+          this.toast.presentToast('请求失败');
+        }
+      );
+    }
   }
 
   /**
@@ -70,25 +91,47 @@ export class CirculationinfoComponent implements OnInit {
     if (item['children'].length > 0) {
       item.hidden = !item.hidden;
     } else {
-      this.mainservice
-        .getReciveDetailInfo(this.itemmodel['Id'], item['ID'])
-        .subscribe(
-          res => {
-            console.log(res);
-            if (res['State'] === 1) {
-              item['children'] = res['Data'];
-              item.hidden = item['children'].length === 0;
-              if (res.Data.length === 0) {
+      if (this.itemmodel.ProcessType === 2) {
+        this.mainservice
+          .getReciveDetailInfo(this.itemmodel['Id'], item['ID'])
+          .subscribe(
+            res => {
+              console.log(res);
+              if (res['State'] === 1) {
+                item['children'] = res['Data'];
+                item.hidden = item['children'].length === 0;
+                if (res.Data.length === 0) {
+                  this.toast.presentToast('暂无数据');
+                }
+              } else {
                 this.toast.presentToast('暂无数据');
               }
-            } else {
-              this.toast.presentToast('暂无数据');
+            },
+            err => {
+              this.toast.presentToast('请求失败');
             }
-          },
-          err => {
-            this.toast.presentToast('请求失败');
-          }
-        );
+          );
+      } else if (this.itemmodel.ProcessType === 1) {
+        this.mainservice
+          .Send_ActDetailTree(this.itemmodel['Id'], item['ID'])
+          .subscribe(
+            res => {
+              console.log(res);
+              if (res['State'] === 1) {
+                item['children'] = res['Data'];
+                item.hidden = item['children'].length === 0;
+                if (res.Data.length === 0) {
+                  this.toast.presentToast('暂无数据');
+                }
+              } else {
+                this.toast.presentToast('暂无数据');
+              }
+            },
+            err => {
+              this.toast.presentToast('请求失败');
+            }
+          );
+      }
     }
   }
 

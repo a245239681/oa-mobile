@@ -104,6 +104,20 @@ export class MainindexService {
         subid
     );
   }
+  /**
+   * 获取发文流转信息
+   * @param receiveId 必填 第一次获取的时候只传receiveid
+   * @param subid  之后点击子类时才用到
+   */
+  Send_ActDetailTree(sendId: string, subid: string = ''): Observable<any> {
+    return this.httpclient.get(
+      ApiUrlManagement.Send_ActDetailTree +
+        '?sendId=' +
+        sendId +
+        '&ID=' +
+        subid
+    );
+  }
 
   /**
    * 保存意见
@@ -397,6 +411,22 @@ export class MainindexService {
         coorType
     );
   }
+  /** 验证局领导承办 */
+  ValidLeader2Leader(Id: string) {
+    return this.httpclient.get(
+      ApiUrlManagement.ValidLeader2Leader + '?id=' + Id
+    );
+  }
+
+  /** 会签提交 */
+  commit(commit: CommitModel) {
+    return this.httpclient.post(ApiUrlManagement.commit, commit);
+  }
+  // ChangePassword(
+  //   ChangePassword: ChangePasswordModel
+  // ): Observable<ApiResult<{}>> {
+  //   return this.http.post(ApiUrlManagement.ChangePassword, ChangePassword);
+  // }
 }
 
 // 保存意见的参数模型
@@ -466,8 +496,29 @@ export interface MoveCommitModel {
   readers?: any;
   // 模态框
   commitType?: any;
-
+  leaders?: string[];
   CoorType?: string;
 
   ProcessType?: string;
+}
+
+/** 会签提交 */
+export interface CommitModel {
+  /** 业务Id */
+  id?: string;
+  nextActionId?: any;
+  isSendMsg?: any;
+  isSnedSms?: any;
+  nextUserId?: any;
+  primaryDeptId?: any;
+  leaders?: any;
+  /** 勾选id数组 */
+  cooperaters?: any;
+  readers?: any;
+  commitType?: any;
+  /** 操作业务的获取 */
+  coorType?: string;
+  count?: any;
+  /** 操作业务的获取 */
+  processType?: string;
 }

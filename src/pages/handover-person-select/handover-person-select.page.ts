@@ -45,9 +45,9 @@ export class HandoverPersonSelectPage implements OnInit {
     console.log(this.itemmodel);
   }
   ngOnInit() {
-    if (this.itemmodel.ProcessType === 2) {
+    if (this.itemmodel.ProcessType === 2 || this.itemmodel.IsOwner) {
       this.isshow = true;
-    } else if (this.itemmodel.ProcessType === 1) {
+    } else if (this.itemmodel.ProcessType === 1 && !this.itemmodel.IsOwner) {
       this.isshow = false;
     }
     this.mainservice
@@ -78,6 +78,12 @@ export class HandoverPersonSelectPage implements OnInit {
 
       ProcessType: this.itemmodel['ProcessType']
     };
+    if (this.itemmodel.ProcessType === 1 && this.itemmodel.IsOwner) {
+      params['nextUserId'] = '';
+      params['nextActionId'] = 0;
+      params['commitType'] = '50';
+      params['leaders'] = this.selectPerson.length > 0 ? this.selectPerson : [];
+    }
     // const cmdata = JSON.stringify(params);
     this.mainservice.MoveCommit(params).subscribe(res => {
       if (res['State'] === 1) {
