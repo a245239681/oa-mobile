@@ -17,29 +17,44 @@
 .title-ios.hydrated {
   font-weight: 400;
 }
+
 ion-picker-column .picker-opts {
   margin: 0 auto;
 }
+
 .action-sheet-button-inner {
   justify-content: center !important;
 }
+
 .action-sheet-button {
   text-align: center;
 }
+
 .picker-toolbar-button {
   width: 50%;
+
   button {
     width: 100%;
     text-align: left;
   }
 }
+
 .picker-toolbar-button:last-child button {
   text-align: right !important;
 }
 
-.toastClass{
+.toastClass {
   text-align: center;
 }
-.header-md:after{
+
+.toast {
+  text-align: center;
+  --height: 8vh;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1.2rem;
+}
+
+.header-md:after {
   display: none;
 }

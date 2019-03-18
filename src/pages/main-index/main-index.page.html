@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div class="block" [ngStyle]="{'background-color':item.bgcolor,'background-image':'url(/assets/'+(i+1)+'.png)','color':item.forecolor}"
     *ngFor="let item of titleArr, let i = index" (click)="pushDocumentList(i)">
     <ion-label [ngStyle]="{'borderTopColor':item.forecolor}">{{item.text}}</ion-label>
