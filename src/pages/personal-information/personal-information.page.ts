@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, NavController } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActionSheetController,
+  NavController,
+  ModalController
+} from '@ionic/angular';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { UserInfo } from 'src/infrastructure/user-info';
+import { ChangePhonenumbersComponent } from './change-phonenumbers/change-phonenumbers.component';
 
 @Component({
   selector: 'app-personal-information',
@@ -13,13 +17,12 @@ import { UserInfo } from 'src/infrastructure/user-info';
 export class PersonalInformationPage implements OnInit {
   myData: any;
   constructor(
-    private router: Router,
-    private activeRoute: ActivatedRoute,
     public actionSheetController: ActionSheetController,
     private nav: NavController,
     private mainindexservice: MainindexService,
     private toast: CommonHelper,
-    private userinfo: UserInfo
+    private userinfo: UserInfo,
+    public modalController: ModalController
   ) {
     // this.activeRoute.queryParams.subscribe(params => {
     //   console.log(params);
@@ -149,13 +152,18 @@ export class PersonalInformationPage implements OnInit {
     );
   }
 
-  /** 修改手机号，办公电话号码 */
-  toPhone(e: string) {
-    this.router.navigate(['change-phonenumber'], {
-      queryParams: {
-        title: e,
-        item: JSON.stringify(this.myData)
-      }
+  /** 开启修改手机号，办公电话号码 */
+  async countersignModal(d: any) {
+    this.myData.title = d;
+    console.log(this.myData);
+    // componentProps 传值 d:数据
+    const modal = await this.modalController.create({
+      component: ChangePhonenumbersComponent,
+      componentProps: { data: this.myData }
     });
+    await modal.present();
+    // 接收模态框传回的值
+    const data = await modal.onDidDismiss();
+    console.log(data);
   }
 }

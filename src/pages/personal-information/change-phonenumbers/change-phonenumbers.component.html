@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button style="display:block" (click)="closemodal()" text='返回'></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ data.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="phoneNumber">
+  <div class="flexBox changeFrom" *ngIf="data.title == '手机号码'">
+    <span class="flexLeftContent">+86</span>
+    <ion-input class="flexRightContent" placeholder="请输入手机号码" [(ngModel)]="data.Mobile"></ion-input>
+  </div>
+  <div class="flexBox changeFrom" *ngIf="data.title == '办公电话'">
+    <ion-input class="flexRightContent" placeholder="请输入办公电话" [(ngModel)]="data.Phone" style="padding-left: 20px !important"></ion-input>
+  </div>
+  <div style="margin-top: 2rem;padding: 0 2rem;">
+    <ion-button expand="block" (click)="submit()">保存</ion-button>
+  </div>
+</ion-content>

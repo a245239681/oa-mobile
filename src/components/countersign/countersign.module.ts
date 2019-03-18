@@ -11,7 +11,6 @@ import { CountersignComponent } from './countersign.component';
     FormsModule,
     IonicModule,
     ComponentsModule,
-    FormsModule,
     ReactiveFormsModule
   ],
   declarations: [CountersignComponent],

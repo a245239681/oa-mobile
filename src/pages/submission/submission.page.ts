@@ -289,7 +289,7 @@ export class SubmissionPage implements OnInit {
       }
     });
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -343,8 +343,10 @@ export class SubmissionPage implements OnInit {
    */
   saveadvice(content: string) {
     // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理---特殊情况
-    if (this.sendStepName == '二校') {
-      this.toast.presentToast('请到PC端进行校验');
+    if (this.sendStepName == '二校' ||
+      this.sendStepName == '文印' ||
+      this.sendStepName == '盖章') {
+      this.toast.presentToast('请到PC端进行处理');
       return;
     }
 
@@ -379,10 +381,13 @@ export class SubmissionPage implements OnInit {
    */
   handleInfo(content: string) {
     // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理
-    if (this.sendStepName == '二校') {
-      this.toast.presentToast('请到PC端进行校验');
+    if (this.sendStepName == '二校' ||
+      this.sendStepName == '文印' ||
+      this.sendStepName == '盖章') {
+      this.toast.presentToast('请到PC端进行处理');
       return;
     }
+
 
     // 提交用到
     if (this.attitudeType) {
@@ -526,7 +531,7 @@ export class SubmissionPage implements OnInit {
           }
         },
         err => {
-          this.toast.presentToast('保存意见失败失败');
+          this.toast.presentToast('保存意见失败');
         }
       );
     } else {
@@ -581,7 +586,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
