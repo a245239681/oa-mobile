@@ -5,13 +5,13 @@
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
-</ion-header>
-
-<ion-content style="--background: #EFEFEF;">
   <div class="sykys">
     <input type="text" [(ngModel)]="searchStr" placeholder="请输入标题" class="input">
     <ion-icon name="search" (click)="seachclick(searchStr)" class="syktb"></ion-icon>
   </div>
+</ion-header>
+
+<ion-content style="--background: #EFEFEF;">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>

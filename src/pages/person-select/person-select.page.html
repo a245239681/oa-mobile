@@ -14,7 +14,10 @@
 
 <ion-content>
   <ion-segment mode="md" (ionChange)="segmentChanged($event)" >
-    <ion-segment-button mode="md" value="1" *ngIf="true && DealType" checked>
+    <ion-segment-button mode="md" value="4" *ngIf="true && IsShowNextStep" checked>
+      <ion-label>下一步</ion-label>
+    </ion-segment-button>
+    <ion-segment-button mode="md" value="1" *ngIf="true && DealType">
       <ion-label>主办</ion-label>
     </ion-segment-button>
     <ion-segment-button mode="md" value="2" *ngIf="true && DealType">
@@ -22,9 +25,6 @@
     </ion-segment-button>
     <ion-segment-button mode="md" value="3" *ngIf="true">
       <ion-label>传阅</ion-label>
-    </ion-segment-button>
-    <ion-segment-button mode="md" value="4" *ngIf="true && IsShowNextStep">
-      <ion-label>下一步</ion-label>
     </ion-segment-button>
   </ion-segment>
 
