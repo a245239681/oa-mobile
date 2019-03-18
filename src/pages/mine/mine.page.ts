@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserInfo } from 'src/infrastructure/user-info';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { CommonHelper } from 'src/infrastructure/commonHelper';
 
 @Component({
   selector: 'app-mine',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./mine.page.scss']
 })
 export class MinePage implements OnInit {
+  alertVC: HTMLIonAlertElement;
   /** 个人信息 */
   personaldetails = {
     /** 性别 */
@@ -22,12 +24,16 @@ export class MinePage implements OnInit {
     /** 所属部门 */
     DeptName: this.userinfo.getDeptName(),
     /** 个人Id */
-    id: this.userinfo.getPersonageId()
+    id: this.userinfo.getPersonageId(),
+    /** 生日 */
+    Birthday: this.userinfo.getBirthday()
   };
   constructor(
     private userinfo: UserInfo,
     private nav: NavController,
-    private route: Router
+    private route: Router,
+    public alertController: AlertController,
+    private toast: CommonHelper
   ) {}
 
   ngOnInit() {
@@ -38,6 +44,7 @@ export class MinePage implements OnInit {
   logout() {
     this.userinfo.removeToken();
     this.nav.navigateRoot('login');
+    this.toast.presentToast('注销成功');
   }
 
   /** 修改密码 */
@@ -48,7 +55,14 @@ export class MinePage implements OnInit {
       }
     });
   }
-
+  /** 跳转到常用语设置 */
+  toPhrasing() {
+    this.route.navigate(['phrasing'], {
+      queryParams: {
+        item: JSON.stringify(this.personaldetails)
+      }
+    });
+  }
   /** 详情 */
   GoDetails() {
     this.route.navigate(['personal-information'], {
@@ -56,5 +70,32 @@ export class MinePage implements OnInit {
         item: JSON.stringify(this.personaldetails)
       }
     });
+  }
+
+  /**
+   *  注销
+   * @param index 弹出提示
+   */
+  async presentEndAlert() {
+    this.alertVC = await this.alertController.create({
+      header: '提示',
+      message: '是否确定注销当前用户登陆？',
+      buttons: [
+        {
+          text: '确定',
+          cssClass: 'secondary',
+          handler: () => {
+            this.logout();
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancle',
+          cssClass: 'secondary',
+          handler: () => {}
+        }
+      ]
+    });
+    this.alertVC.present();
   }
 }

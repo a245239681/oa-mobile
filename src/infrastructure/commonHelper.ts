@@ -25,17 +25,28 @@ export class CommonHelper {
    */
   public async presentToast(
     message: string = '操作完成',
+    color: string = 'dark',
+    cssClass: string = 'toastClass',
+    mode: string = 'ios',
+    position: string = 'top',
     options?: ToastOptions
   ) {
+    // tslint:disable-next-line:no-unused-expression
     this.toast && this.toast.dismiss();
-    this.toast = await this.toastController.create(Object.assign({
-      message: message,
-      duration: 2000,
-      color: 'dark',
-      mode: 'ios',
-      position: 'top',
-      showCloseButton: false
-    }, options));
+    this.toast = await this.toastController.create(
+      Object.assign(
+        {
+          message: message,
+          duration: 2000,
+          color: color,
+          mode: mode,
+          cssClass: cssClass,
+          position: position,
+          showCloseButton: false
+        },
+        options
+      )
+    );
     this.toast.present();
   }
 
@@ -48,7 +59,7 @@ export class CommonHelper {
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
-      translucent: true,
+      translucent: true
     });
     this.loading.present();
   }

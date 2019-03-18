@@ -654,7 +654,9 @@ export class SubmissionPage implements OnInit {
     await this.modal.present();
     const obj = await this.modal.onDidDismiss();
     console.log(obj);
-    this.base64 = obj.data.res;
+    if (obj.data.res) {
+      this.base64 = obj.data.res;
+    }
   }
 
   /**

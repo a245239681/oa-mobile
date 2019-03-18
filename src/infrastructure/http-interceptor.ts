@@ -1,6 +1,13 @@
 import { Observable, of } from 'rxjs';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpHeaders } from "@angular/common/http";
-import { Injectable, Inject } from "@angular/core";
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpResponse,
+  HttpHeaders
+} from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
 import { API_URL } from './host-address';
 import { UserInfo } from './user-info';
 
@@ -9,9 +16,6 @@ import { ApiUrlManagement } from './api-url-management';
 import { ApiResult } from '../interfaces/api-result';
 import { RequestCache } from './request-cache';
 import { CommonHelper } from './commonHelper';
-
-
-
 
 /**
  * 需要缓存数据的接口
@@ -26,9 +30,7 @@ export const cacheUrl = [
   //   url: ApiUrlManagement.Online,
   //   cacheTime: 50 * 1000
   // }
-]
-
-
+];
 
 /**
  * 授权拦截器
@@ -42,15 +44,24 @@ export class AuthInterceptor implements HttpInterceptor {
   /**
    *
    */
-  constructor(@Inject(API_URL) private apiUrl, private userInfo: UserInfo, private commonhelper: CommonHelper) {
-
-  }
+  constructor(
+    @Inject(API_URL) private apiUrl,
+    private userInfo: UserInfo,
+    private commonhelper: CommonHelper
+  ) {}
   /**
    * 序列化请求参数
    * @param obj 请求参数
    */
   param(obj) {
-    let query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+    let query = '',
+      name,
+      value,
+      fullSubName,
+      subName,
+      subValue,
+      innerObj,
+      i;
     for (name in obj) {
       if (obj.hasOwnProperty(name)) {
         value = obj[name];
@@ -74,7 +85,8 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           }
         } else if (value !== undefined && value !== null) {
-          query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+          query +=
+            encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
         }
       }
     }
@@ -97,30 +109,36 @@ export class AuthInterceptor implements HttpInterceptor {
     // }
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const authHeader = 'Bearer ' + this.userInfo.GetToken();
     const authReq = req.clone({
-      headers: req.headers.set('Authorization', authHeader).set('Content-Type', 'application/x-www-form-urlencoded'),
+      headers: req.headers
+        .set('Authorization', authHeader)
+        .set('Content-Type', 'application/x-www-form-urlencoded'),
       url: this.apiUrl + req.url,
       body: this.param(req.body)
     });
-    //避免连续多个loading闪屏
+    // 避免连续多个loading闪屏
     if (this.requestCount <= 0) {
       this.commonhelper.presentLoading();
     }
     this.requestCount++;
     return next.handle(authReq).pipe(
-      tap(event => {
-        if (event instanceof HttpResponse) {
-          this.deductRequestCount();
-          if (event.url.indexOf(ApiUrlManagement.login) <= -1) {
-            const apiReustl = event.body as ApiResult<{}>;
-            if (apiReustl.State === 0 && apiReustl.Message) {
-              this.commonhelper.presentToast(apiReustl.Message);
+      tap(
+        event => {
+          if (event instanceof HttpResponse) {
+            this.deductRequestCount();
+            if (event.url.indexOf(ApiUrlManagement.login) <= -1) {
+              const apiReustl = event.body as ApiResult<{}>;
+              if (apiReustl.State === 0 && apiReustl.Message) {
+                this.commonhelper.presentToast(apiReustl.Message);
+              }
             }
           }
-        }
-      },
+        },
         error => {
           this.deductRequestCount();
           // if (error.status === 401) {
@@ -134,60 +152,60 @@ export class AuthInterceptor implements HttpInterceptor {
           // } else {
           //   this.toastrService.error('服务器出错，请稍后再试！', '错误消息');
           // }
-        })
+        }
+      )
     );
   }
 }
-
-
-
 
 /**
  * 缓存拦截器
  */
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
-
   /**
    *
    */
-  constructor(private cache: RequestCache) {
-  }
+  constructor(private cache: RequestCache) {}
 
-
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.isCachable(req)) { return next.handle(req) }
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (!this.isCachable(req)) {
+      return next.handle(req);
+    }
     const cachedResponse = this.cache.get(req);
     if (req.headers.get('x-refresh')) {
       const results = this.sendRequest(req, next, this.cache);
       return cachedResponse ? results.pipe(startWith(cachedResponse)) : results;
     }
-    return cachedResponse ? of(cachedResponse) : this.sendRequest(req, next, this.cache);
+    return cachedResponse
+      ? of(cachedResponse)
+      : this.sendRequest(req, next, this.cache);
   }
 
-
   isCachable(req: HttpRequest<any>) {
-    const urldata = []
-    cacheUrl.forEach(function (item) {
-      urldata.push({ url: item.url })
-    })
-    //const  urldata = cacheUrl.filter(d => d.url)  
-    return req.method === 'GET' && -1 < urldata.indexOf(req.url) //-1 < req.url.indexOf('api/bdcappdata/GetNewsItem');
+    const urldata = [];
+    cacheUrl.forEach(function(item) {
+      urldata.push({ url: item.url });
+    });
+    // const  urldata = cacheUrl.filter(d => d.url)
+    return req.method === 'GET' && -1 < urldata.indexOf(req.url); // -1 < req.url.indexOf('api/bdcappdata/GetNewsItem');
   }
 
   sendRequest(
     req: HttpRequest<any>,
     next: HttpHandler,
-    cache: RequestCache): Observable<HttpEvent<any>> {
+    cache: RequestCache
+  ): Observable<HttpEvent<any>> {
     const noHeaderReq = req.clone({ headers: new HttpHeaders() });
-    return next.handle(noHeaderReq).pipe(tap(event => {
-      if (event instanceof HttpResponse) {
-        cache.put(req, event);
-      }
-    }))
+    return next.handle(noHeaderReq).pipe(
+      tap(event => {
+        if (event instanceof HttpResponse) {
+          cache.put(req, event);
+        }
+      })
+    );
   }
-
-
 }
-

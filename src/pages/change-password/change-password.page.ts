@@ -38,8 +38,14 @@ export class ChangePasswordPage implements OnInit {
       /** 性别 */
       sex: this.item.Sex,
       /** 生日 */
-      birthday: ''
+      birthday: this.item.Birthday
     };
+    if (!this.myData.sex) {
+      this.myData.sex = '';
+    }
+    if (!this.myData.birthday) {
+      this.myData.birthday = '';
+    }
   }
 
   ngOnInit() {
@@ -67,5 +73,9 @@ export class ChangePasswordPage implements OnInit {
         }
       );
     }
+  }
+  /** 返回 */
+  canGoBack() {
+    this.nav.back();
   }
 }

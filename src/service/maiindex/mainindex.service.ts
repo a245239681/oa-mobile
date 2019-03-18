@@ -34,7 +34,7 @@ export class MainindexService {
       return this.httpclient.post<any>(ApiUrlManagement.needtododata, {
         type: '传阅件;批办件',
         pageNumber: page,
-        pageSize: 10,
+        pageSize: 20,
         query: searchStr
       });
     } else {
@@ -45,7 +45,7 @@ export class MainindexService {
           : ApiUrlManagement.getReceives_read;
       return this.httpclient.post<any>(url, {
         pageNumber: page,
-        pageSize: 10,
+        pageSize: 20,
         query: searchStr
       });
     }
@@ -61,7 +61,7 @@ export class MainindexService {
         : ApiUrlManagement.GetBrowsers_Send;
     return this.httpclient.post<any>(url, {
       pageNumber: page,
-      pageSize: 10,
+      pageSize: 20,
       query: searchStr
     });
   }
@@ -426,7 +426,30 @@ export class MainindexService {
 
   /** 修改密码 */
   UpdateStaffInfo(UpdateStaffInfo: UpdateStaffInfoModel) {
-    return this.httpclient.post(ApiUrlManagement.UpdateStaffInfo, UpdateStaffInfo);
+    return this.httpclient.post(
+      ApiUrlManagement.UpdateStaffInfo,
+      UpdateStaffInfo
+    );
+  }
+  /** 添加编辑常用语 */
+  DailySave(DailySave: DailySaveModel) {
+    return this.httpclient.post(ApiUrlManagement.DailySave, DailySave);
+  }
+  /** 删除常用语 */
+  DailyDelete(id: string) {
+    return this.httpclient.post(
+      ApiUrlManagement.DailyDelete,
+      {},
+      {
+        params: {
+          id: id
+        }
+      }
+    );
+  }
+  /** 请求个人信息详情 */
+  GetStaffInfo(id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetStaffInfo + '?id=' + id);
   }
 }
 
@@ -537,4 +560,10 @@ export interface UpdateStaffInfoModel {
   newPassword?: string;
   /** 生日 */
   birthday?: any;
+}
+export interface DailySaveModel {
+  ID?: string;
+  Staff_ID?: string;
+  Amount: 0;
+  Text?: string;
 }

@@ -1,20 +1,27 @@
-import { Component, OnInit, ViewChild, Output, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Output,
+  AfterViewInit
+} from '@angular/core';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signaturepad',
   templateUrl: './signaturepad.page.html',
-  styleUrls: ['./signaturepad.page.scss'],
+  styleUrls: ['./signaturepad.page.scss']
 })
-export class SignaturepadPage extends ModalController implements OnInit, AfterViewInit {
+export class SignaturepadPage extends ModalController
+  implements OnInit, AfterViewInit {
   @ViewChild(SignaturePad) public signaturePad: SignaturePad;
   @Output() signatureImage: string;
 
   public signaturePadOptions: Object = {
-    'minWidth': 2,
-    'canvasWidth': 340,
-    'canvasHeight': 200,
+    minWidth: 2,
+    canvasWidth: 340,
+    canvasHeight: 200
   };
 
   ngOnInit(): void {
@@ -23,55 +30,36 @@ export class SignaturepadPage extends ModalController implements OnInit, AfterVi
 
   canvasResize() {
     const canvas = document.querySelector('canvas');
-    this
-      .signaturePad
-      .set('minWidth', 2);
+    this.signaturePad.set('minWidth', 2);
     console.log(canvas.offsetWidth);
-    this
-      .signaturePad
-      .set('canvasWidth', 340);
+    this.signaturePad.set('canvasWidth', 340);
 
-    this
-      .signaturePad
-      .set('canvasHeight', 500);
+    this.signaturePad.set('canvasHeight', 500);
   }
-
 
   ngAfterViewInit() {
     console.log('Reset Model Screen');
-    this
-      .signaturePad
-      .clear();
+    this.signaturePad.clear();
     this.canvasResize();
   }
 
-
-
-
   drawCancel() {
-    this.dismiss();
+    this.dismiss({ res: false });
   }
 
   drawComplete() {
+    this.signatureImage = this.signaturePad.toDataURL();
 
-    this.signatureImage = this
-      .signaturePad
-      .toDataURL();
-
-    this.rotateBase64Img(this.signatureImage, 90, (arg0) => {
-      this.dismiss({ 'res': arg0, });
+    this.rotateBase64Img(this.signatureImage, 90, arg0 => {
+      this.dismiss({ res: arg0 });
     });
   }
 
-
   drawClear() {
-    this
-      .signaturePad
-      .clear();
+    this.signaturePad.clear();
   }
 
   rotateBase64Img(src: string, edg: number, callback: (arg0: string) => void) {
-
     const canvas = document.createElement('canvas');
     
     const ctx = canvas.getContext('2d');
@@ -92,8 +80,7 @@ export class SignaturepadPage extends ModalController implements OnInit, AfterVi
     image.crossOrigin = 'anonymous';
     image.src = src;
 
-    image.onload = function () {
-
+    image.onload = function() {
       imgW = image.width;
       imgH = image.height;
       size = imgW > imgH ? imgW : imgH;
@@ -127,12 +114,16 @@ export class SignaturepadPage extends ModalController implements OnInit, AfterVi
           break;
       }
 
-
       ctx.translate(size, size);
-      ctx.rotate(edg * Math.PI / 180);
+      ctx.rotate((edg * Math.PI) / 180);
       ctx.drawImage(image, 0, 0);
 
-      const imgData = ctx.getImageData(cutCoor.sx, cutCoor.sy, cutCoor.ex, cutCoor.ey);
+      const imgData = ctx.getImageData(
+        cutCoor.sx,
+        cutCoor.sy,
+        cutCoor.ex,
+        cutCoor.ey
+      );
       if (quadrant % 2 === 0) {
         canvas.width = imgW;
         canvas.height = imgH;
@@ -144,5 +135,4 @@ export class SignaturepadPage extends ModalController implements OnInit, AfterVi
       callback(canvas.toDataURL());
     };
   }
-
 }

@@ -1,15 +1,15 @@
 <ion-header>
-  <ion-toolbar color="primary" mode='ios'>
+  <ion-toolbar color="primary" mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text='返回'></ion-back-button>
+      <ion-back-button text="返回" (click)="canGoBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>个人信息</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="main">
-  <ion-list class="personList">
-    <div class="flexBox" (click)="detailCheck('头像')">
+  <ion-list class="personList" *ngIf="myData">
+    <!-- <div class="flexBox" (click)="detailCheck('头像')">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">头像</span>
@@ -21,13 +21,13 @@
       <div class="flexRightContent iconRight">
         <i class="iconfont">&#xe955;</i>
       </div>
-    </div>
+    </div> -->
     <div class="flexBox" (click)="detailCheck('性别')">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">性别</span>
           <span class="flexRightContent flex1W100 text-right">
-
+            {{ myData.Sex }}
           </span>
         </p>
       </div>
@@ -38,18 +38,19 @@
     <div class="flexBox">
       <ion-item style="--padding-start:0;--padding-end:0;width: 100%;--inner-padding-end: -9px">
         <ion-label>生日</ion-label>
-        <ion-datetime display-format=" YYYY/MM/DD" cancelText="取消" doneText="确定"></ion-datetime>
+        <ion-datetime display-format=" YYYY/MM/DD" cancelText="取消" doneText="确定" value='{{myData.Birthday}}'
+          (ionChange)="timeDateChange($event)"></ion-datetime>
         <div class="flexRightContent iconRight">
           <i class="iconfont">&#xe955;</i>
         </div>
       </ion-item>
     </div>
-    <div class="flexBox" [routerLink]="['/change-phonenumber']">
+    <div class="flexBox" (click)="toPhone('手机号码')">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">手机号码</span>
           <span class="flexRightContent flex1W100 text-right">
-            {{myData.Mobile}}
+            {{ myData.Mobile }}
           </span>
         </p>
       </div>
@@ -57,12 +58,12 @@
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>
-    <div class="flexBox">
+    <div class="flexBox" (click)="toPhone('办公电话')">
       <div class="flexLeftContent detailInfo flex1W100">
         <p class="flex1W100 flexBox">
           <span class="flexLeftContent">办公电话</span>
           <span class="flexRightContent flex1W100 text-right">
-            {{myData.Phone}}
+            {{ myData.Phone }}
           </span>
         </p>
       </div>

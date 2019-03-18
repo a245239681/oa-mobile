@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController, IonRefresher } from '@ionic/angular';
 
 @Component({
   selector: 'app-main-index',
@@ -10,6 +10,8 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./main-index.page.scss']
 })
 export class MainIndexPage implements OnInit {
+  // 关闭下拉
+  @ViewChild(IonRefresher) ionRefresh: IonRefresher;
   titleArr = [
     { text: '收文待办', bgcolor: '#e7fae3', forecolor: '#67c554' },
     { text: '发文待办', bgcolor: '#fdeff0', forecolor: '#f87a85' },
@@ -31,12 +33,21 @@ export class MainIndexPage implements OnInit {
   }
 
   /**
+   * 下拉刷新
+   */
+
+  doRefresh(event) {
+    this.getdata();
+  }
+
+  /**
    * 获取数据
    */
   getdata() {
     this.mainindexservice.getmainindexdata().subscribe(
       res => {
         if (res['State'] === 1) {
+          this.ionRefresh.complete();
           const dataArr: any[] = res['Data'];
           this.countArr = [];
           for (let i = 0; i < dataArr.length; i++) {
@@ -48,10 +59,12 @@ export class MainIndexPage implements OnInit {
             }
           }
         } else {
+          this.ionRefresh.complete();
           this.toast.presentToast('请求出错');
         }
       },
       err => {
+        this.ionRefresh.complete();
         this.toast.presentToast('请求失败');
       }
     );
