@@ -37,6 +37,9 @@ ion-list {
       max-width: 60vw;
     }
   }
+  &.list-ios{
+    margin: 0;
+  }
 }
 
 ion-checkbox {
