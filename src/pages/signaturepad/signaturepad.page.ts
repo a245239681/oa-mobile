@@ -61,6 +61,7 @@ export class SignaturepadPage extends ModalController
 
   rotateBase64Img(src: string, edg: number, callback: (arg0: string) => void) {
     const canvas = document.createElement('canvas');
+    
     const ctx = canvas.getContext('2d');
 
     let imgW: number; // 图片宽度

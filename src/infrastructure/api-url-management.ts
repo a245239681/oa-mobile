@@ -161,5 +161,12 @@ export const ApiUrlManagement = {
   /**
    * 正文
    */
-  fileViewSends: 'api/attachment/FileViewSend',
+  fileViewSends: 'api/recieve/FileViewSend',
+  /** 删除常用语 */
+  DailyDelete: 'api/recieve/DailyDelete',
+  /** 添加编辑常用语 */
+  DailySave: 'api/recieve/DailySave ',
+
+  /** 请求个人信息详情 */
+  GetStaffInfo: 'api/recieve/GetStaffInfo'
 };

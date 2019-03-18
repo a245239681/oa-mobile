@@ -26,7 +26,7 @@ export class LoginPage {
 
   loginInfo: loginModel = {
     username: '',
-    PassWord: '',
+    PassWord: ''
   };
 
   validationMessages = {
@@ -94,7 +94,7 @@ export class LoginPage {
       return;
     }
     this.loginservice.login(this.loginInfo).subscribe(res => {
-      if (res['State'] == '1') {
+      if (res['State'] === 1) {
         const userinfo = res['Data'];
         console.log(userinfo);
         /**
@@ -110,7 +110,7 @@ export class LoginPage {
         this.userinfo.DeptName(userinfo.DeptName);
         const id = userinfo.ID + '';
         this.userinfo.PersonageId(id, 'id');
-        console.log(userinfo.ID, userinfo.DeptName);
+        this.userinfo.Birthday(userinfo.Birthday);
         this.nav.navigateRoot('/tabs/tabs');
         this.toast.presentToast(
           '欢迎登陆住房局OA管理系统！',

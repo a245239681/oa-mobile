@@ -127,7 +127,7 @@ export class PersonSelectPage implements OnInit {
       this.hostArr = items;
       console.log(this.hostArr);
     } else if (this.type == 2) {
-      debugger
+      
       this.coorperationArr = items;
       this.coorperationArr = this.coorperationArr.map(item => {
         return item['id'];
@@ -181,7 +181,6 @@ export class PersonSelectPage implements OnInit {
           });
         }
       }
-      console.log('haha');
       // 下一步数据在此组装完毕
       console.log(this.nextArr);
     }
