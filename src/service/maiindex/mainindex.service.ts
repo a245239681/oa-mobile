@@ -424,7 +424,7 @@ export class MainindexService {
   //   return this.http.post(ApiUrlManagement.ChangePassword, ChangePassword);
   // }
 
-  /** 修改密码 */
+  /** 修改个人信息 */
   UpdateStaffInfo(UpdateStaffInfo: UpdateStaffInfoModel) {
     return this.httpclient.post(
       ApiUrlManagement.UpdateStaffInfo,
@@ -532,7 +532,7 @@ export interface CommitModel {
   processType?: string;
 }
 
-/** 修改密码 */
+/** 修改个人信息 */
 export interface UpdateStaffInfoModel {
   id?: string;
   /** 电话号码 */
