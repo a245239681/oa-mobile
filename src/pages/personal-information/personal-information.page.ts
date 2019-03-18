@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MainindexService } from 'src/service/maiindex/mainindex.service';
+import { CommonHelper } from 'src/infrastructure/commonHelper';
+import { UserInfo } from 'src/infrastructure/user-info';
 
 @Component({
   selector: 'app-personal-information',
@@ -8,23 +11,39 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./personal-information.page.scss']
 })
 export class PersonalInformationPage implements OnInit {
-  myData = { Mobile: '', Phone: '' };
-  sex: string;
+  myData: any;
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
     public actionSheetController: ActionSheetController,
-    private nav: NavController
+    private nav: NavController,
+    private mainindexservice: MainindexService,
+    private toast: CommonHelper,
+    private userinfo: UserInfo
   ) {
-    this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
-      this.myData = JSON.parse(params['item']);
-    });
-    this.sex = localStorage.getItem('Sex');
+    // this.activeRoute.queryParams.subscribe(params => {
+    //   console.log(params);
+    //   this.myId = JSON.parse(params['item']['id']);
+    // });
+    this.GetStaffInfo(this.userinfo.getPersonageId());
   }
 
-  ngOnInit() {
-    console.log(this.myData);
+  ngOnInit() {}
+
+  /** 请求个人信息详情 */
+  GetStaffInfo(id: string) {
+    this.mainindexservice.GetStaffInfo(id).subscribe(
+      r => {
+        if (r['State']) {
+          this.myData = r['Data'];
+        } else {
+          this.toast.presentToast('个人信息获取失败');
+        }
+      },
+      () => {
+        this.toast.presentToast('请求失败');
+      }
+    );
   }
 
   async headPortraitSheet() {
@@ -64,13 +83,15 @@ export class PersonalInformationPage implements OnInit {
         {
           text: '男',
           handler: () => {
-            this.sex = '男';
+            this.myData.Sex = '男';
+            this.Confirm();
           }
         },
         {
           text: '女',
           handler: () => {
-            this.sex = '女';
+            this.myData.Sex = '女';
+            this.Confirm();
           }
         },
         {
@@ -97,10 +118,38 @@ export class PersonalInformationPage implements OnInit {
         break;
     }
   }
+  // 修改生日
   timeDateChange(e) {
     console.log(e);
     console.log(e['detail']['value']);
+    this.myData.Birthday = e.detail.value;
+    this.Confirm();
   }
+
+  /** 返回 */
+  canGoBack() {
+    this.nav.back();
+  }
+
+  /** 修改信息 */
+  Confirm() {
+    console.log(1);
+    this.mainindexservice.UpdateStaffInfo(this.myData).subscribe(
+      r => {
+        if (r['State'] === 1) {
+          this.toast.presentToast('修改成功');
+          this.userinfo.Birthday(this.myData.Birthday);
+        } else {
+          this.toast.presentToast('修改失败');
+        }
+      },
+      () => {
+        this.toast.presentToast('请求失败');
+      }
+    );
+  }
+
+  /** 修改手机号，办公电话号码 */
   toPhone(e: string) {
     this.router.navigate(['change-phonenumber'], {
       queryParams: {
@@ -108,9 +157,5 @@ export class PersonalInformationPage implements OnInit {
         item: JSON.stringify(this.myData)
       }
     });
-  }
-  /** 返回 */
-  canGoBack() {
-    this.nav.back();
   }
 }

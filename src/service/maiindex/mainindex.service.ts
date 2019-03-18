@@ -447,6 +447,10 @@ export class MainindexService {
       }
     );
   }
+  /** 请求个人信息详情 */
+  GetStaffInfo(id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetStaffInfo + '?id=' + id);
+  }
 }
 
 // 保存意见的参数模型

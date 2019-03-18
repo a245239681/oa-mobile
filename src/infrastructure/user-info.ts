@@ -153,4 +153,17 @@ export class UserInfo {
   getPersonageId(key?: string) {
     return localStorage.getItem(key || 'id');
   }
+
+  /**
+   * 生日
+   * @param value 保存的生日
+   * @param index 对应的键名称
+   */
+  Birthday(value: string, key?: string) {
+    localStorage.setItem(key || 'Birthday', value);
+  }
+
+  getBirthday(key?: string) {
+    return localStorage.getItem(key || 'Birthday');
+  }
 }
