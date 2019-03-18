@@ -26,7 +26,7 @@ export class LoginPage {
 
   loginInfo: loginModel = {
     username: '',
-    PassWord: '',
+    PassWord: ''
   };
 
   validationMessages = {
@@ -120,7 +120,7 @@ export class LoginPage {
       } else {
         this.toast.presentToast(res['Message']);
       }
-    );
+    });
   }
 
   onUsernameChange() {
