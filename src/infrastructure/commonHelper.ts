@@ -37,7 +37,7 @@ export class CommonHelper {
       Object.assign(
         {
           message: message,
-          duration: 200000,
+          duration: 2000,
           color: color,
           mode: mode,
           cssClass: cssClass,
