@@ -162,4 +162,7 @@ export const ApiUrlManagement = {
    * 正文
    */
   fileViewSends: 'api/attachment/FileViewSend',
+
+  /** 请求个人信息详情 */
+  GetStaffInfo: 'api/recieve/GetStaffInfo'
 };

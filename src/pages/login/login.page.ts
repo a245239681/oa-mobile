@@ -70,34 +70,39 @@ export class LoginPage {
   }
   login(value: any) {
     console.log(value);
-    this.loginservice.login(this.loginForm.value).subscribe(res => {
-      if (res['State'] === 1) {
-        const userinfo = res['Data'];
-        console.log(userinfo);
-        /**
-         * 存token 存名字 存是否是领导
-         */
-        this.userinfo.SetToken(userinfo['OaApiToken']);
-        /** 个人信息 */
-        this.userinfo.SetUserName(userinfo.Name);
-        this.userinfo.SetUserDegree(userinfo.IsLeader);
-        this.userinfo.Sex(userinfo.Sex);
-        this.userinfo.Phone(userinfo.Phone);
-        this.userinfo.Mobile(userinfo.Mobile);
-        this.userinfo.DeptName(userinfo.DeptName);
-        const id = userinfo.ID + '';
-        this.userinfo.PersonageId(id, 'id');
-        console.log(userinfo.ID, userinfo.DeptName);
-        this.nav.navigateRoot('/tabs/tabs');
-        this.toast.presentToast(
-          '欢迎登陆住房局OA管理系统！',
-          'success',
-          'toast'
-        );
-      } else {
-        this.toast.presentToast(res['Message']);
+    this.loginservice.login(this.loginForm.value).subscribe(
+      res => {
+        if (res['State'] === 1) {
+          const userinfo = res['Data'];
+          console.log(userinfo);
+          /**
+           * 存token 存名字 存是否是领导
+           */
+          this.userinfo.SetToken(userinfo['OaApiToken']);
+          /** 个人信息 */
+          this.userinfo.SetUserName(userinfo.Name);
+          this.userinfo.SetUserDegree(userinfo.IsLeader);
+          this.userinfo.Sex(userinfo.Sex);
+          this.userinfo.Phone(userinfo.Phone);
+          this.userinfo.Mobile(userinfo.Mobile);
+          this.userinfo.DeptName(userinfo.DeptName);
+          const id = userinfo.ID + '';
+          this.userinfo.PersonageId(id, 'id');
+          this.userinfo.Birthday(userinfo.Birthday);
+          this.nav.navigateRoot('/tabs/tabs');
+          this.toast.presentToast(
+            '欢迎登陆住房局OA管理系统！',
+            'success',
+            'toast'
+          );
+        } else {
+          this.toast.presentToast(res['Message']);
+        }
+      },
+      () => {
+        this.toast.presentToast('登陆失败');
       }
-    });
+    );
   }
 
   // 接口测试

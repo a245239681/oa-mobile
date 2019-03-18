@@ -426,7 +426,15 @@ export class MainindexService {
 
   /** 修改密码 */
   UpdateStaffInfo(UpdateStaffInfo: UpdateStaffInfoModel) {
-    return this.httpclient.post(ApiUrlManagement.UpdateStaffInfo, UpdateStaffInfo);
+    return this.httpclient.post(
+      ApiUrlManagement.UpdateStaffInfo,
+      UpdateStaffInfo
+    );
+  }
+
+  /** 请求个人信息详情 */
+  GetStaffInfo(id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetStaffInfo + '?id=' + id);
   }
 }
 

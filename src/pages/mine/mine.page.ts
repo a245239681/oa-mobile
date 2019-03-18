@@ -24,7 +24,9 @@ export class MinePage implements OnInit {
     /** 所属部门 */
     DeptName: this.userinfo.getDeptName(),
     /** 个人Id */
-    id: this.userinfo.getPersonageId()
+    id: this.userinfo.getPersonageId(),
+    /** 生日 */
+    Birthday: this.userinfo.getBirthday()
   };
   constructor(
     private userinfo: UserInfo,
