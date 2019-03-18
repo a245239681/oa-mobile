@@ -71,7 +71,7 @@ export class LoginPage {
   login(value: any) {
     console.log(value);
     this.loginservice.login(this.loginForm.value).subscribe(res => {
-      if (res['State'] == '1') {
+      if (res['State'] === 1) {
         const userinfo = res['Data'];
         console.log(userinfo);
         /**
@@ -89,8 +89,13 @@ export class LoginPage {
         this.userinfo.PersonageId(id, 'id');
         console.log(userinfo.ID, userinfo.DeptName);
         this.nav.navigateRoot('/tabs/tabs');
+        this.toast.presentToast(
+          '欢迎登陆住房局OA管理系统！',
+          'success',
+          'toast'
+        );
       } else {
-        this.toast.presentToast('登录失败');
+        this.toast.presentToast(res['Message']);
       }
     });
   }

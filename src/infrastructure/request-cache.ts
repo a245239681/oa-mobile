@@ -1,6 +1,6 @@
 import { cacheUrl } from './http-interceptor';
-import { HttpResponse, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpResponse, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { ApiUrlManagement } from './api-url-management';
 
 export interface RequestCacheEntry {
@@ -9,21 +9,18 @@ export interface RequestCacheEntry {
   lastRead: number;
 }
 
-
 export abstract class RequestCache {
   abstract get(req: HttpRequest<any>): HttpResponse<any> | undefined;
-  abstract put(req: HttpRequest<any>, response: HttpResponse<any>): void
+  abstract put(req: HttpRequest<any>, response: HttpResponse<any>): void;
 }
 
 const maxAge = 30000; // maximum cache age (ms)
 
-
 @Injectable()
 export class RequestCacheWithMap implements RequestCache {
-
   cache = new Map<string, RequestCacheEntry>();
 
-  constructor() { }
+  constructor() {}
 
   // getCacheTime(url: string): number {
   //   const Time = cacheUrl.filter(d => d.cacheTime )[0].cacheTime;
@@ -37,14 +34,13 @@ export class RequestCacheWithMap implements RequestCache {
       return undefined;
     }
 
-    const isExpired = cached.lastRead < (Date.now() - maxAge);
+    const isExpired = cached.lastRead < Date.now() - maxAge;
     const expired = isExpired ? 'expired ' : '';
     return isExpired ? undefined : cached.response;
   }
 
   put(req: HttpRequest<any>, response: HttpResponse<any>): void {
     const url = req.urlWithParams;
-
 
     const entry = { url, response, lastRead: Date.now() };
     this.cache.set(url, entry);
@@ -56,7 +52,5 @@ export class RequestCacheWithMap implements RequestCache {
         this.cache.delete(entry.url);
       }
     });
-
-
   }
 }
