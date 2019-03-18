@@ -34,6 +34,7 @@ export class CommonHelper {
       color: 'dark',
       mode: 'ios',
       position: 'middle',
+      cssClass: 'toastClass',
       showCloseButton: showCloseButton
     });
     this.toast.present();
@@ -48,7 +49,7 @@ export class CommonHelper {
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
-      translucent: true,
+      translucent: true
     });
     this.loading.present();
   }
