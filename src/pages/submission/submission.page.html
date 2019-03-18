@@ -34,8 +34,7 @@
       <ion-grid *ngIf="showSign">
         <ion-row>
           <ion-col size="12" size-lg>
-            <ion-button color="warning"
-              class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+            <ion-button color="warning" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
               (click)="goSign()" value="签名">签名</ion-button>
           </ion-col>
         </ion-row>
@@ -43,8 +42,10 @@
       <ion-grid>
         <ion-row>
           <ion-col size="6" size-lg>
-            <ion-button color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+            <ion-button *ngIf="!IsOwner" color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
               (click)="handOver(adviceForm.value)" value="移交">移交</ion-button>
+              <ion-button *ngIf="IsOwner" color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+              (click)="ownerHandOver(adviceForm.value)" value="呈其他局领导">呈其他局领导</ion-button>
           </ion-col>
           <ion-col size="6" size-lg>
             <ion-button color="warning" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
@@ -52,9 +53,8 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="6" size-lg>
-            <ion-button color="primary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-               value="会签">会签</ion-button>
+          <ion-col size="6" size-lg *ngIf="itemmodel.documenttype == 2">
+            <ion-button color="primary" value="会签" (click)="countersignModal()">会签</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

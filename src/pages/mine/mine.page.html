@@ -1,17 +1,17 @@
 <ion-content class="main">
-  <div class="mybg" [routerLink]="['/personal-information']">
+  <div class="mybg" (click)="GoDetails()">
     <div class="personal flexBox">
       <div class="headPortrait">
         <img src="../../assets/head.png" alt="" />
       </div>
       <div class="personText">
-        <p>宁怀庆</p>
-        <p>办公室</p>
+        <p>{{personaldetails.GetUserName}}</p>
+        <p>{{personaldetails.DeptName}}</p>
       </div>
     </div>
   </div>
   <ion-list class="personList">
-    <div class="flexBox" [routerLink]="['/change-password']">
+    <div class="flexBox" (click)="Changepassword()">
       <div class="flexLeftContent flexBox flex1W100">
         <div class="flexLeftContent">
           <i class="iconfont" style="color:#1e9fff">&#xe60f;</i>
@@ -77,7 +77,7 @@
         <div class="flexLeftContent">
           <i class="iconfont" style="color:#1e9fff">&#xe608;</i>
         </div>
-        <div class="flexRightContent functionText flex1W100">
+        <div class="flexRightContent functionText flex1W100" (click)="logout()">
           <p>
             注销登录
           </p>

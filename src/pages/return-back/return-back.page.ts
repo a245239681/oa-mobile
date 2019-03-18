@@ -28,7 +28,7 @@ export class ReturnBackPage implements OnInit {
   }
 
   ngOnInit() {
-    this.ValidBack();
+    // this.ValidBack();
     this.getData();
   }
   singleSelect(item: any, data: string) {
@@ -46,7 +46,7 @@ export class ReturnBackPage implements OnInit {
       .ValidBack(
         this.itemmodel['Id'],
         this.itemmodel['ProcessType'],
-        this.itemmodel['coorType']
+        this.itemmodel['CoorType']
       )
       .subscribe(
         res => {
@@ -87,7 +87,7 @@ export class ReturnBackPage implements OnInit {
       cooperaters: [],
       readers: [],
       // 模态框
-      commitType: this.commitType,
+      commitType: '40',
 
       CoorType: this.itemmodel['CoorType'],
 

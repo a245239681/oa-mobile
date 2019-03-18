@@ -89,4 +89,68 @@ export class UserInfo {
   removeToken() {
     localStorage.removeItem('access_token');
   }
+
+  /**
+   *性别
+   * @param key  对应的键名称
+   */
+  Sex(value: string, key?: string) {
+    localStorage.setItem(key || 'Sex', value);
+  }
+
+  getSex(key?: string): string {
+    return localStorage.getItem(key || 'Sex');
+  }
+
+  /**
+   * 电话号码
+   * @param value 保存的电话号码
+   * @param key 对应的键名称
+   */
+  Phone(value: string, key?: string) {
+    localStorage.setItem(key || 'Phone', value);
+  }
+
+  getPhone(key?: string): string {
+    return localStorage.getItem(key || 'Phone');
+  }
+
+  /**
+   * 手机号码
+   * @param value 保存的手机号码
+   * @param key 对应的键名称
+   */
+  Mobile(value: string, key?: string) {
+    localStorage.setItem(key || 'Mobile', value);
+  }
+
+  getMobile(key?: string): string {
+    return localStorage.getItem(key || 'Mobile');
+  }
+
+  /**
+   * 所属部门
+   * @param value 保存的所属部门
+   * @param key 对应的键名称
+   */
+  DeptName(value: string, key?: string) {
+    localStorage.setItem(key || 'DeptName', value);
+  }
+
+  getDeptName(key?: string): string {
+    return localStorage.getItem(key || 'DeptName');
+  }
+
+  /**
+   * 个人Id
+   * @param value 保存的所属部门
+   * @param index 对应的键名称
+   */
+  PersonageId(value: string, key?: string) {
+    localStorage.setItem(key || 'id', value);
+  }
+
+  getPersonageId(key?: string) {
+    return localStorage.getItem(key || 'id');
+  }
 }

@@ -127,6 +127,7 @@ export class PersonSelectPage implements OnInit {
       this.hostArr = items;
       console.log(this.hostArr);
     } else if (this.type == 2) {
+      debugger
       this.coorperationArr = items;
       this.coorperationArr = this.coorperationArr.map(item => {
         return item['id'];
@@ -250,11 +251,11 @@ export class PersonSelectPage implements OnInit {
             this.toast.presentToast('提交成功');
             this.route.navigate(['tabs']);
           } else {
-            this.toast.presentLoading(res['Message']);
+            this.toast.presentToast(res['Message']);
           }
         },
         err => {
-          this.toast.presentLoading('请求失败');
+          this.toast.presentToast('请求失败');
         }
       );
     }

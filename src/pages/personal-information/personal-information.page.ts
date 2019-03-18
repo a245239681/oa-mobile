@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-personal-information',
@@ -7,12 +8,22 @@ import { ActionSheetController, NavController } from '@ionic/angular';
   styleUrls: ['./personal-information.page.scss']
 })
 export class PersonalInformationPage implements OnInit {
+  myData = { Mobile: '', Phone: '' };
   constructor(
+    private activeRoute: ActivatedRoute,
     public actionSheetController: ActionSheetController,
     private nav: NavController
-  ) {}
+  ) {
+    this.activeRoute.queryParams.subscribe(params => {
+      console.log(params);
+      this.myData = JSON.parse(params['item']);
+    });
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.myData);
+  }
+
   async headPortraitSheet() {
     const actionSheet = await this.actionSheetController.create({
       buttons: [

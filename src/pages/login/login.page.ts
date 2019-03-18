@@ -72,14 +72,22 @@ export class LoginPage {
     console.log(value);
     this.loginservice.login(this.loginForm.value).subscribe(res => {
       if (res['State'] == '1') {
-        var userinfo = res['Data'];
+        const userinfo = res['Data'];
         console.log(userinfo);
         /**
          * 存token 存名字 存是否是领导
          */
         this.userinfo.SetToken(userinfo['OaApiToken']);
-        this.userinfo.SetUserName(userinfo['Name']);
-        this.userinfo.SetUserDegree(userinfo['IsLeader']);
+        /** 个人信息 */
+        this.userinfo.SetUserName(userinfo.Name);
+        this.userinfo.SetUserDegree(userinfo.IsLeader);
+        this.userinfo.Sex(userinfo.Sex);
+        this.userinfo.Phone(userinfo.Phone);
+        this.userinfo.Mobile(userinfo.Mobile);
+        this.userinfo.DeptName(userinfo.DeptName);
+        const id = userinfo.ID + '';
+        this.userinfo.PersonageId(id, 'id');
+        console.log(userinfo.ID, userinfo.DeptName);
         this.nav.navigateRoot('/tabs/tabs');
       } else {
         this.toast.presentToast('登录失败');
