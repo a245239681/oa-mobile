@@ -221,6 +221,9 @@ export function getFileMimeType(fileType: string): string {
     case 'tif':
       mimeType = 'image/tiff';
       break;
+    case 'bmp':
+      mimeType = 'image/bmp';
+      break;
     case 'mp4':
       mimeType = 'video/mp4';
       break;
