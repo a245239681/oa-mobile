@@ -1,6 +1,6 @@
 import { CommonHelper } from './../../infrastructure/commonHelper';
 import { UserInfo } from './../../infrastructure/user-info';
-import { LoginService } from './../../service/login/login.service';
+import { LoginService, loginModel } from './../../service/login/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
@@ -24,6 +24,11 @@ export class LoginPage {
     PassWord: ''
   };
 
+  loginInfo: loginModel = {
+    username: '',
+    PassWord: '',
+  };
+
   validationMessages = {
     // 错误信息模板
     username: {
@@ -34,6 +39,12 @@ export class LoginPage {
       minlength: '密码不能小于3个字符'
     }
   };
+
+  isUserNameEmpty = false;
+
+  isPasswordEmpty = false;
+
+  isPasswordLow = false;
 
   constructor(
     private loginservice: LoginService,
@@ -70,39 +81,67 @@ export class LoginPage {
   }
   login(value: any) {
     console.log(value);
-    this.loginservice.login(this.loginForm.value).subscribe(
-      res => {
-        if (res['State'] === 1) {
-          const userinfo = res['Data'];
-          console.log(userinfo);
-          /**
-           * 存token 存名字 存是否是领导
-           */
-          this.userinfo.SetToken(userinfo['OaApiToken']);
-          /** 个人信息 */
-          this.userinfo.SetUserName(userinfo.Name);
-          this.userinfo.SetUserDegree(userinfo.IsLeader);
-          this.userinfo.Sex(userinfo.Sex);
-          this.userinfo.Phone(userinfo.Phone);
-          this.userinfo.Mobile(userinfo.Mobile);
-          this.userinfo.DeptName(userinfo.DeptName);
-          const id = userinfo.ID + '';
-          this.userinfo.PersonageId(id, 'id');
-          this.userinfo.Birthday(userinfo.Birthday);
-          this.nav.navigateRoot('/tabs/tabs');
-          this.toast.presentToast(
-            '欢迎登陆住房局OA管理系统！',
-            'success',
-            'toast'
-          );
-        } else {
-          this.toast.presentToast(res['Message']);
-        }
-      },
-      () => {
-        this.toast.presentToast('登陆失败');
+    if (this.isPasswordEmpty) {
+      this.toast.presentToast(this.validationMessages.PassWord.required);
+      return;
+    }
+    if (this.isUserNameEmpty) {
+      this.toast.presentToast(this.validationMessages.username.required);
+      return;
+    }
+    if (this.isPasswordLow) {
+      this.toast.presentToast(this.validationMessages.PassWord.minlength);
+      return;
+    }
+    this.loginservice.login(this.loginInfo).subscribe(res => {
+      if (res['State'] === 1) {
+        const userinfo = res['Data'];
+        console.log(userinfo);
+        /**
+         * 存token 存名字 存是否是领导
+         */
+        this.userinfo.SetToken(userinfo['OaApiToken']);
+        /** 个人信息 */
+        this.userinfo.SetUserName(userinfo.Name);
+        this.userinfo.SetUserDegree(userinfo.IsLeader);
+        this.userinfo.Sex(userinfo.Sex);
+        this.userinfo.Phone(userinfo.Phone);
+        this.userinfo.Mobile(userinfo.Mobile);
+        this.userinfo.DeptName(userinfo.DeptName);
+        const id = userinfo.ID + '';
+        this.userinfo.PersonageId(id, 'id');
+        this.userinfo.Birthday(userinfo.Birthday);
+        this.nav.navigateRoot('/tabs/tabs');
+        this.toast.presentToast(
+          '欢迎登陆住房局OA管理系统！',
+          'success',
+          'toast'
+        );
+      } else {
+        this.toast.presentToast(res['Message']);
       }
     );
+  }
+
+  onUsernameChange() {
+    if (this.loginInfo.username === '') {
+      this.isUserNameEmpty = true;
+    } else {
+      this.isUserNameEmpty = false;
+    }
+  }
+
+  onPasswordChange() {
+    if (this.loginInfo.PassWord === '') {
+      this.isPasswordEmpty = true;
+    } else {
+      if (this.loginInfo.PassWord.length < 3) {
+        this.isPasswordLow = true;
+      } else {
+        this.isPasswordLow = false;
+      }
+      this.isPasswordEmpty = false;
+    }
   }
 
   // 接口测试
