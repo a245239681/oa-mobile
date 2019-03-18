@@ -47,6 +47,7 @@ export class NextSelectComponent implements OnInit {
     { "id": 27, "name": "Add", "parentID": 2 },
     { "id": 28, "name": "master" }
   ];
+  colors = { Dept: '#f99d31', Staff: '#f87a85', root: '#4877fb' };
 
   ngOnInit() {
     console.log(this.hasSelected);
@@ -73,6 +74,7 @@ export class NextSelectComponent implements OnInit {
         }];
         this.departmentTree = [{
           id: '1',
+          level: 0,
           text: '南宁市住房保障和房产管理局',
           children: [],
         }];
@@ -134,8 +136,10 @@ export class NextSelectComponent implements OnInit {
         if (item.children.length === 0) {
           this.getPerson(item.id, (list) => {
             item.children = list;
+            item.children.forEach(x => { x.parent = item, x.level = item.level + 1 });
+            item.collapse = true;
             this.enterParent(item.children, item.id, item.checked);
-            this.showList = item.children;
+            // this.showList = item.children;
           });
         } else {
           item.collapse = !item.collapse;
@@ -204,7 +208,7 @@ export class NextSelectComponent implements OnInit {
       }
     }
     this.personAllSelect(item, checked);
-    this.childrenAllSelect(item, checked);
+    // this.childrenAllSelect(item, checked);
     switch (item.id) {
       case '局领导':
         if (item.children.length === 0) {
@@ -234,7 +238,7 @@ export class NextSelectComponent implements OnInit {
         } else { this.returnChecked(); }
         break;
       default:
-        this.returnChecked();
+        // this.returnChecked();
         break;
     }
   }
@@ -311,24 +315,26 @@ export class NextSelectComponent implements OnInit {
     }
   }
 
+  preserveDown = false;
   /**
    * 父级勾选
    * @param node 节点
    * @param checked 勾选
    */
   personAllSelect(node: any, checked: boolean) {
-    if (!node.parent_id) { return; }
-    const parent = this.searchData(this.departmentTree, node.parent_id);
+    if (this.preserveDown) return;
     if (checked) {
-      for (let i = 0; i < parent.children.length; i++) {
-        if (!parent.children[i].checked) { return; }
+      node.children.forEach(x => x.checked = true);
+      if (node.parent && node.parent.children.findIndex(x => !x.checked) === -1) {
+        node.parent.checked = true;
+        this.personAllSelect(node.parent, true);
       }
     } else {
-      if (!parent.checked) { return; }
+      this.preserveDown = true;
+      node.children.forEach(x => x.checked = false);
+      while (node = node.parent) node.checked = false;
+      setTimeout(() => this.preserveDown = false, 0);
     }
-    parent.checked = checked;
-    if (node.attributes) { return; }
-    this.personAllSelect(parent, checked);
   }
 
   /**
@@ -439,6 +445,7 @@ export class NextSelectComponent implements OnInit {
       this.commonHelper.presentToast('请求失败');
     });
   }
+
 
   /**
    * 获取颜色

@@ -9,12 +9,12 @@
   
   <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:departmentTree,root:true}}"></ng-container>
   <ng-template #treeTpl let-context>
-    <ion-list mode="md">
+    <ion-list>
       <div *ngFor="let item of context.items" [ngClass]="context.root?'root':''">
-        <ion-icon  style="float: left;" mode='md' [name]="item.hidden===false?'arrow-dropdown':'arrow-dropright'" *ngIf="getColor(item) != '#f87a85'"></ion-icon>
+        <ion-icon (click)="itemClick(item)" [name]="item.collapse===true?'arrow-dropdown':'arrow-dropright'" [ngClass]="!item.attributes||item.attributes.NodeType=='Dept'?'':'hide'"></ion-icon>
         <ion-checkbox [(checked)]="item.checked" [(ngModel)]="item.checked" (ionChange)="checkboxClick(item,$event.detail.checked)"></ion-checkbox>
-        <ion-label style="padding-left: 16px;" (click)="itemClick(item)" [ngStyle]="{'color': getColor(item)}">{{item.text}}</ion-label>
-        <div *ngIf="item.collapse!==false">
+        <ion-label (click)="itemClick(item)" [ngStyle]="{'color':colors[item.attributes?item.attributes.NodeType:'root']}">{{item.text}}</ion-label>
+        <div style="clear:left" *ngIf="item.collapse!==false">
           <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:item.children,root:false}}"></ng-container>
         </div>
       </div>
