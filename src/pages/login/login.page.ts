@@ -90,7 +90,7 @@ export class LoginPage {
         console.log(userinfo.ID, userinfo.DeptName);
         this.nav.navigateRoot('/tabs/tabs');
       } else {
-        this.toast.presentToast('登录失败');
+        this.toast.presentToast(res['Message']);
       }
     });
   }
