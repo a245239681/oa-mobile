@@ -1,18 +1,29 @@
 <ion-header>
-  <ion-toolbar color="primary" mode='ios'>
+  <ion-toolbar color="primary" mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text='返回'></ion-back-button>
+      <ion-back-button text="返回" (click)="canGoBack()"></ion-back-button>
     </ion-buttons>
-    <ion-title>修改手机号码</ion-title>
+    <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="phoneNumber">
-  <div class="flexBox changeFrom">
+  <div class="flexBox changeFrom" *ngIf="title === '修改手机号码'">
     <span class="flexLeftContent">+86</span>
-    <ion-input class="flexRightContent" placeholder="请输入手机号码"></ion-input>
+    <ion-input
+      class="flexRightContent"
+      placeholder="请输入手机号码"
+      [(ngModel)]="Mobile"
+    ></ion-input>
+  </div>
+  <div class="flexBox changeFrom" *ngIf="title === '修改办公电话'">
+    <ion-input
+      class="flexRightContent"
+      placeholder="请输入办公电话"
+      [(ngModel)]="Phone"
+    ></ion-input>
   </div>
   <div style="margin-top: 2rem;padding: 0 2rem;">
-    <ion-button expand="block">保存</ion-button>
+    <ion-button expand="block" (click)="submit()">保存</ion-button>
   </div>
 </ion-content>

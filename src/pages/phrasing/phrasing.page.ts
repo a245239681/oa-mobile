@@ -4,6 +4,7 @@ import {
   ToastController,
   NavController
 } from '@ionic/angular';
+import { MainindexService } from 'src/service/maiindex/mainindex.service';
 
 @Component({
   selector: 'app-phrasing',
@@ -12,13 +13,31 @@ import {
 })
 export class PhrasingPage implements OnInit {
   public ale: HTMLIonAlertElement;
+
+  /** 常用语数组 */
+  myList: any;
+
   constructor(
     public alertController: AlertController,
     public toastController: ToastController,
-    private nav: NavController
+    private nav: NavController,
+    public mainindexService: MainindexService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.Getoftenuse();
+  }
+
+  /** 请求常用语列表 */
+  Getoftenuse() {
+    this.mainindexService.getoftenuse().subscribe(r => {
+      console.log(r);
+      if (r['State'] === 1) {
+        this.myList = r['Data'];
+      }
+    });
+  }
+
   async presentAlert() {
     this.ale = await this.alertController.create({
       // header: 'Alert',

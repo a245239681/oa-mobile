@@ -112,6 +112,11 @@ export class LoginPage {
         this.userinfo.PersonageId(id, 'id');
         console.log(userinfo.ID, userinfo.DeptName);
         this.nav.navigateRoot('/tabs/tabs');
+        this.toast.presentToast(
+          '欢迎登陆住房局OA管理系统！',
+          'success',
+          'toast'
+        );
       } else {
         this.toast.presentToast(res['Message']);
       }
