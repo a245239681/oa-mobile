@@ -3,7 +3,7 @@ import { UserInfo } from 'src/infrastructure/user-info';
 import { NavController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
-
+import { AppVersion } from '@ionic-native/app-version/ngx';
 @Component({
   selector: 'app-mine',
   templateUrl: './mine.page.html',
@@ -28,16 +28,23 @@ export class MinePage implements OnInit {
     /** 生日 */
     Birthday: this.userinfo.getBirthday()
   };
+  versionCode: any;
   constructor(
     private userinfo: UserInfo,
     private nav: NavController,
     private route: Router,
     public alertController: AlertController,
-    private toast: CommonHelper
+    private toast: CommonHelper,
+    private appVersion: AppVersion
   ) {}
 
   ngOnInit() {
     console.log(this.personaldetails);
+    this.appVersion.getVersionCode().then(value => {
+      this.versionCode = (value + '').indexOf('.') > -1 ? value.toString() : value + '.0';
+    });
+    // this.versionCode = this.versionCode['__zone_symbol__value'];
+    console.log(this.versionCode);
   }
 
   /** 注销 */
