@@ -4,9 +4,9 @@
       <ion-back-button text='返回'></ion-back-button>
     </ion-buttons>
     <ion-title>常用语设置</ion-title>
-    <ion-buttons slot="end">
+    <!-- <ion-buttons slot="end">
       <ion-button [routerLink]="['/add-edit-phrasing']" [queryParams]="{ title: '添加' }">添加</ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -20,28 +20,28 @@
       >添加常用语</ion-button
     >
   </div> -->
-  <ion-list class="phrasingList">
-    <div class="flexBox">
+  <ion-list class="phrasingList" *ngIf="myList">
+    <div class="flexBox" *ngFor="let item of myList;let i = index">
       <div class="flexLeftContent flex1W100 flexBox">
         <div class="flexLeftContent">
-          <span>1.</span>
+          <span>{{i+1}}.</span>
         </div>
         <div class="flexRightContent cent">
           <div>
-            字符串超长好长字符串超长好长字符串超长好长字符串超长好长字符串超长好长
+            {{item.Text}}
           </div>
         </div>
       </div>
-      <div class="flexRightContent minwidth flexBox">
+      <!-- <div class="flexRightContent minwidth flexBox">
         <div>
           <ion-button size="small" [routerLink]="['/add-edit-phrasing']" [queryParams]="{ title: '编辑' }">编辑</ion-button>
         </div>
         <div>
           <ion-button size="small" (click)="delete()">删除</ion-button>
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="flexBox">
+    <!-- <div class="flexBox">
       <div class="flexLeftContent flex1W100 flexBox">
         <div class="flexLeftContent">
           <span>2.</span>
@@ -120,6 +120,6 @@
           <ion-button size="small">删除</ion-button>
         </div>
       </div>
-    </div>
+    </div> -->
   </ion-list>
 </ion-content>
