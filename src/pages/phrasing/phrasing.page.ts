@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {
   AlertController,
   ToastController,
-  NavController
+  NavController,
+  ModalController
 } from '@ionic/angular';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
+import { AddEditPhrasingPage } from '../add-edit-phrasing/add-edit-phrasing.page';
+import { CommonHelper } from 'src/infrastructure/commonHelper';
 
 @Component({
   selector: 'app-phrasing',
@@ -21,7 +24,9 @@ export class PhrasingPage implements OnInit {
     public alertController: AlertController,
     public toastController: ToastController,
     private nav: NavController,
-    public mainindexService: MainindexService
+    public mainindexService: MainindexService,
+    private modalController: ModalController,
+    private toast: CommonHelper
   ) {}
 
   ngOnInit() {
@@ -58,27 +63,30 @@ export class PhrasingPage implements OnInit {
     });
     toast.present();
   }
-  async presentAlertConfirm() {
+  async presentAlertConfirm(id) {
     const alert = await this.alertController.create({
       message: '确定删除此条常用语吗?',
       buttons: [
         {
           text: '取消',
-          // role: 'cancel',
+          role: 'cancel',
           // cssClass: 'secondary',
           handler: blah => {
-            console.log('Confirm Cancel: blah');
+            console.log('取消删除');
           }
         },
         {
           text: '确定',
           handler: () => {
-            this.presentAlert();
-            // setTimeout(function() {
-            //   this.ale.dismiss();
-            // }, 1000);
-            // this.presentToast();
-            console.log('Confirm Okay');
+            this.mainindexService.DailyDelete(id).subscribe(res => {
+              console.log(res);
+              if (res === true) {
+                this.toast.presentToast('删除成功');
+                this.Getoftenuse();
+              } else {
+                this.toast.presentToast(res + '');
+              }
+            });
           }
         }
       ]
@@ -87,13 +95,34 @@ export class PhrasingPage implements OnInit {
     await alert.present();
   }
   /** 删除 */
-  delete() {
-    this.presentAlertConfirm();
+  delete(id) {
+    console.log(id);
+    this.presentAlertConfirm(id);
   }
   /**
    * 返回
    */
   canGoBack() {
     this.nav.back();
+  }
+
+  /** 开启会签模态框 */
+  async phrasingModal(e: string, d?: any) {
+    const Data = {
+      title: e,
+      data: d
+    };
+    // componentProps 传值 d:数据
+    const modal = await this.modalController.create({
+      component: AddEditPhrasingPage,
+      componentProps: { data: Data }
+    });
+    await modal.present();
+    // 接收模态框传回的值
+    const data = await modal.onDidDismiss();
+    console.log(data);
+    if (data.data.result === 'change') {
+      this.Getoftenuse();
+    }
   }
 }

@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar color="primary" mode='ios'>
+  <ion-toolbar color="primary" mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text='返回' (click)="canGoBack()"></ion-back-button>
+      <ion-back-button text="返回" (click)="canGoBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>常用语设置</ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button [routerLink]="['/add-edit-phrasing']" [queryParams]="{ title: '添加' }">添加</ion-button>
-    </ion-buttons> -->
+    <ion-buttons slot="end">
+      <ion-button (click)="phrasingModal('添加')">添加</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -21,105 +21,27 @@
     >
   </div> -->
   <ion-list class="phrasingList" *ngIf="myList">
-    <div class="flexBox" *ngFor="let item of myList;let i = index">
+    <div class="flexBox" *ngFor="let item of myList; let i = index">
       <div class="flexLeftContent flex1W100 flexBox">
         <div class="flexLeftContent">
-          <span>{{i+1}}.</span>
+          <span>{{ i + 1 }}.</span>
         </div>
         <div class="flexRightContent cent">
           <div>
-            {{item.Text}}
-          </div>
-        </div>
-      </div>
-      <!-- <div class="flexRightContent minwidth flexBox">
-        <div>
-          <ion-button size="small" [routerLink]="['/add-edit-phrasing']" [queryParams]="{ title: '编辑' }">编辑</ion-button>
-        </div>
-        <div>
-          <ion-button size="small" (click)="delete()">删除</ion-button>
-        </div>
-      </div> -->
-    </div>
-    <!-- <div class="flexBox">
-      <div class="flexLeftContent flex1W100 flexBox">
-        <div class="flexLeftContent">
-          <span>2.</span>
-        </div>
-        <div class="flexRightContent cent">
-          <div>
-            签收
+            {{ item.Text }}
           </div>
         </div>
       </div>
       <div class="flexRightContent minwidth flexBox">
         <div>
-          <ion-button size="small">编辑</ion-button>
+          <ion-button size="small" (click)="phrasingModal('编辑', item)"
+            >编辑</ion-button
+          >
         </div>
         <div>
-          <ion-button size="small">删除</ion-button>
+          <ion-button size="small" (click)="delete(item.ID)">删除</ion-button>
         </div>
       </div>
     </div>
-    <div class="flexBox">
-      <div class="flexLeftContent flex1W100 flexBox">
-        <div class="flexLeftContent">
-          <span>3.</span>
-        </div>
-        <div class="flexRightContent cent">
-          <div>
-            提交
-          </div>
-        </div>
-      </div>
-      <div class="flexRightContent minwidth flexBox">
-        <div>
-          <ion-button size="small">编辑</ion-button>
-        </div>
-        <div>
-          <ion-button size="small">删除</ion-button>
-        </div>
-      </div>
-    </div>
-    <div class="flexBox">
-      <div class="flexLeftContent flex1W100 flexBox">
-        <div class="flexLeftContent">
-          <span>4.</span>
-        </div>
-        <div class="flexRightContent cent">
-          <div>
-            拒收
-          </div>
-        </div>
-      </div>
-      <div class="flexRightContent minwidth flexBox">
-        <div>
-          <ion-button size="small">编辑</ion-button>
-        </div>
-        <div>
-          <ion-button size="small">删除</ion-button>
-        </div>
-      </div>
-    </div>
-    <div class="flexBox">
-      <div class="flexLeftContent flex1W100 flexBox">
-        <div class="flexLeftContent">
-          <span>5.</span>
-        </div>
-        <div class="flexRightContent cent">
-          <div>
-            已阅
-          </div>
-        </div>
-      </div>
-      <div class="flexRightContent minwidth flexBox">
-        <div>
-          <ion-button size="small">编辑</ion-button>
-        </div>
-        <div>
-          <ion-button size="small">删除</ion-button>
-        </div>
-      </div>
-    </div> -->
   </ion-list>
 </ion-content>

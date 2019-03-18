@@ -426,7 +426,26 @@ export class MainindexService {
 
   /** 修改密码 */
   UpdateStaffInfo(UpdateStaffInfo: UpdateStaffInfoModel) {
-    return this.httpclient.post(ApiUrlManagement.UpdateStaffInfo, UpdateStaffInfo);
+    return this.httpclient.post(
+      ApiUrlManagement.UpdateStaffInfo,
+      UpdateStaffInfo
+    );
+  }
+  /** 添加编辑常用语 */
+  DailySave(DailySave: DailySaveModel) {
+    return this.httpclient.post(ApiUrlManagement.DailySave, DailySave);
+  }
+  /** 删除常用语 */
+  DailyDelete(id: string) {
+    return this.httpclient.post(
+      ApiUrlManagement.DailyDelete,
+      {},
+      {
+        params: {
+          id: id
+        }
+      }
+    );
   }
 }
 
@@ -537,4 +556,10 @@ export interface UpdateStaffInfoModel {
   newPassword?: string;
   /** 生日 */
   birthday?: any;
+}
+export interface DailySaveModel {
+  ID?: string;
+  Staff_ID?: string;
+  Amount: 0;
+  Text?: string;
 }
