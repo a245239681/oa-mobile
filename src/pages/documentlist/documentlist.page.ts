@@ -93,6 +93,7 @@ export class DocumentlistPage implements OnInit {
             if (res['State'] === 1) {
               console.log(res);
               this.listdataArr = res['Data']['PageOfResult'];
+              // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
               if (this.listdataArr.length < 10) {
                 this.nohasmore = true;
               } else {

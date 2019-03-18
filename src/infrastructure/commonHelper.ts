@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { FormGroup } from '../../node_modules/@angular/forms';
+import { ToastOptions } from '@ionic/core';
 
 @Injectable()
 export class CommonHelper {
@@ -24,19 +25,18 @@ export class CommonHelper {
    */
   public async presentToast(
     message: string = '操作完成',
-    duration: number = 2000,
-    showCloseButton: boolean = false
+    options?: ToastOptions
   ) {
     this.toast && this.toast.dismiss();
-    this.toast = await this.toastController.create({
+    this.toast = await this.toastController.create(Object.assign({
       message: message,
-      duration: duration,
+      duration: 2000,
       color: 'dark',
       mode: 'ios',
-      position: 'middle',
       cssClass: 'toastClass',
-      showCloseButton: showCloseButton
-    });
+      position: 'top',
+      showCloseButton: false
+    }, options));
     this.toast.present();
   }
 
