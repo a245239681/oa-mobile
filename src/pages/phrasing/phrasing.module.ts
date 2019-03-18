@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PhrasingPage } from './phrasing.page';
+import { AddEditPhrasingPageModule } from '../add-edit-phrasing/add-edit-phrasing.module';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    AddEditPhrasingPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PhrasingPage]

@@ -10,7 +10,7 @@ import { SignComponent } from './sign/sign.component';
 import { DepartmentSelectComponent } from './department-select/department-select.component';
 import { NextSelectComponent } from './next-select/next-select.component';
 import { ReadercomponentComponent } from './readercomponent/readercomponent.component';
-import { IonTreeViewModule } from 'ionic-tree-view';
+
 
 
 @NgModule({
@@ -28,7 +28,7 @@ import { IonTreeViewModule } from 'ionic-tree-view';
         IonicModule,
         FormsModule,
         CommonModule,
-        IonTreeViewModule
+       
     ],
     exports: [
         VerificationComponent,
