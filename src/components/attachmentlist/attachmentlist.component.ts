@@ -60,6 +60,11 @@ export class AttachmentlistComponent implements OnInit {
    * @param item
    */
   previewerAttchment(item: any) {
+    const mimeType = getFileMimeType(item.Extended);
+    if (mimeType === '') {
+      this.commonHelper.presentToast('不支持该格式文件预览');
+      return;
+    }
     if (this.platform.is('android') || this.platform.is('ios')) {
       const uri = encodeURI(item['Url']); // 文件的地址链接
       const fileUrl = this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
@@ -71,7 +76,7 @@ export class AttachmentlistComponent implements OnInit {
             .then(() => this.commonHelper.dismissLoading())
             .catch(() => {
               this.commonHelper.dismissLoading();
-              this.commonHelper.presentToast('文件打开失败，请安装WPS');
+              this.commonHelper.presentToast('不支持该格式文件预览');
             }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
         });
       }, () => {
