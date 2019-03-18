@@ -5,8 +5,8 @@
         <img src="../../assets/head.png" alt="" />
       </div>
       <div class="personText">
-        <p>{{personaldetails.GetUserName}}</p>
-        <p>{{personaldetails.DeptName}}</p>
+        <p>{{ personaldetails.GetUserName }}</p>
+        <p>{{ personaldetails.DeptName }}</p>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
         <i class="iconfont">&#xe955;</i>
       </div>
     </div>
-    <div class="flexBox" [routerLink]="['/phrasing']">
+    <div class="flexBox" (click)="toPhrasing()">
       <div class="flexLeftContent flexBox flex1W100">
         <div class="flexLeftContent">
           <i class="iconfont" style="color:#1e9fff">&#xe690;</i>

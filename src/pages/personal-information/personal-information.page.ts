@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-information',
@@ -9,7 +9,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PersonalInformationPage implements OnInit {
   myData = { Mobile: '', Phone: '' };
+  sex: string;
   constructor(
+    private router: Router,
     private activeRoute: ActivatedRoute,
     public actionSheetController: ActionSheetController,
     private nav: NavController
@@ -18,6 +20,7 @@ export class PersonalInformationPage implements OnInit {
       console.log(params);
       this.myData = JSON.parse(params['item']);
     });
+    this.sex = localStorage.getItem('Sex');
   }
 
   ngOnInit() {
@@ -44,6 +47,7 @@ export class PersonalInformationPage implements OnInit {
         },
         {
           text: '取消',
+          role: 'cancel',
           // icon: 'close',
           // cssClass: 'cacelClass',
           handler: () => {
@@ -60,17 +64,18 @@ export class PersonalInformationPage implements OnInit {
         {
           text: '男',
           handler: () => {
-            console.log('拍照 clicked');
+            this.sex = '男';
           }
         },
         {
           text: '女',
           handler: () => {
-            console.log('从手机相册选择 clicked');
+            this.sex = '女';
           }
         },
         {
           text: '取消',
+          role: 'cancel',
           // icon: 'close',
           handler: () => {
             console.log('取消 clicked');
@@ -91,6 +96,18 @@ export class PersonalInformationPage implements OnInit {
       default:
         break;
     }
+  }
+  timeDateChange(e) {
+    console.log(e);
+    console.log(e['detail']['value']);
+  }
+  toPhone(e: string) {
+    this.router.navigate(['change-phonenumber'], {
+      queryParams: {
+        title: e,
+        item: JSON.stringify(this.myData)
+      }
+    });
   }
   /** 返回 */
   canGoBack() {

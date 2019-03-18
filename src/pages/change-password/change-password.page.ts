@@ -68,4 +68,8 @@ export class ChangePasswordPage implements OnInit {
       );
     }
   }
+    /** 返回 */
+  canGoBack() {
+    this.nav.back();
+  }
 }

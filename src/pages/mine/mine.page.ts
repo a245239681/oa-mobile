@@ -48,7 +48,14 @@ export class MinePage implements OnInit {
       }
     });
   }
-
+  /** 跳转到常用语设置 */
+  toPhrasing() {
+    this.route.navigate(['phrasing'], {
+      queryParams: {
+        item: JSON.stringify(this.personaldetails)
+      }
+    });
+  }
   /** 详情 */
   GoDetails() {
     this.route.navigate(['personal-information'], {
