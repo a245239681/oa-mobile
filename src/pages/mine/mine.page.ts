@@ -70,7 +70,7 @@ export class MinePage implements OnInit {
   async presentEndAlert() {
     this.alertVC = await this.alertController.create({
       header: '提示',
-      message: '是否确定注销当前用户？',
+      message: '是否确定注销当前用户登陆？',
       buttons: [
         {
           text: '确定',
