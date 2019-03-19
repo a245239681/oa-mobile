@@ -170,5 +170,7 @@ export const ApiUrlManagement = {
   /** 请求个人信息详情 */
   GetStaffInfo: 'api/recieve/GetStaffInfo',
   /** 获取相关公文接口 */
-  RelationTree: 'api/recieve/RelationTree'
+  RelationTree: 'api/recieve/RelationTree',
+  /** 已办取回 */
+  Retrieve: 'api/recieve/Retrieve'
 };

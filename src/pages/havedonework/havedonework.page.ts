@@ -53,7 +53,8 @@ export class HavedoneworkPage implements OnInit {
     this.getdata();
   }
   ngOnInit() {
-    this.getdata();
+    // console.log('havedonework init');
+    // this.getdata();
   }
 
   /**
@@ -182,7 +183,9 @@ export class HavedoneworkPage implements OnInit {
       }
     });
   }
-
+  ionViewWillEnter() {
+    this.getdata();
+  }
   /**
    * 进入公文列表 1 收文已办 2 发文已办
    */

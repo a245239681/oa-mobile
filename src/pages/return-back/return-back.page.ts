@@ -15,6 +15,7 @@ export class ReturnBackPage implements OnInit {
   selectPerson: string;
   commitType: string;
   NextActionId: string;
+  selectItem: any = {};
   constructor(
     private mainservice: MainindexService,
     private nav: NavController,
@@ -31,10 +32,33 @@ export class ReturnBackPage implements OnInit {
     // this.ValidBack();
     this.getData();
   }
-  singleSelect(item: any, data: string) {
+  // singleselect(item, data, event) {
+  //   event.stopPropagation();
+  //   if (item.data.Type === 2) {
+  //     this.selectItem.checked = false;
+  //     item.checked = true;
+  //     this.selectItem = item;
+  //   } else {
+  //     item.expanded = !item.expanded;
+  //   }
+  // }
+
+  singleSelect(item: any, data: string, event) {
+    event.stopPropagation();
     console.log(item);
-    this.selectPerson = item['Id'];
-    this.NextActionId = data;
+
+    if (item.data.Type === 2) {
+      this.selectItem.checked = false;
+      item.checked = true;
+      this.selectItem = item;
+      this.selectPerson = item['value'];
+      this.NextActionId = data;
+      console.log(this.selectPerson);
+      console.log(this.NextActionId);
+    } else {
+      item.expanded = !item.expanded;
+    }
+
     // this.selected.emit({ items: [item] });
   }
   ionSelect(item, e) {
@@ -60,14 +84,27 @@ export class ReturnBackPage implements OnInit {
         }
       );
   }
+
+  generateData(item) {
+    return {
+      value: item.Id,
+      text: item.Label,
+      data: item,
+      children: item.Children.map(p => this.generateData(p))
+    };
+  }
+
   getData() {
     this.mainservice
       .getBackActionTree(this.itemmodel['Id'], this.itemmodel['ProcessType'])
       .subscribe(
-        res => {
+        (res: any) => {
           console.log(res);
           if (res['State'] === 1) {
-            this.tree = res['Data']['BackAllTree'];
+            this.tree = res.Data.BackAllTree.map(p => this.generateData(p));
+            console.log(this.tree);
+
+            // this.tree = res['Data']['BackAllTree'];
           } else {
             this.toast.presentToast('已无数据');
           }
@@ -78,7 +115,7 @@ export class ReturnBackPage implements OnInit {
       );
   }
   commit() {
-    const params = {
+    const parms = {
       id: this.itemmodel['Id'],
       // 主办id 单选
       NextActionId: this.NextActionId,
@@ -93,10 +130,11 @@ export class ReturnBackPage implements OnInit {
 
       ProcessType: this.itemmodel['ProcessType']
     };
-    this.mainservice.MoveCommit(params).subscribe(res => {
+    console.log(parms);
+    this.mainservice.MoveCommit(parms).subscribe(res => {
       if (res['State'] === 1) {
         this.toast.presentToast('退回成功');
-        this.route.navigate(['tabs']);
+        this.nav.navigateBack(['tabs']);
       } else {
         this.toast.presentToast(res['Message']);
       }
