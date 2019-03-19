@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary" mode='ios'>
+    <ion-buttons slot="start">
+      <ion-back-button text='返回' (click)="canGoBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+  <div class="sykys">
+    <input type="text" [(ngModel)]="searchStr" placeholder="请输入部门\联系人\号码" class="input">
+    <ion-icon name="search" class="syktb"></ion-icon>
+  </div>
+</ion-header>
+
+<ion-content style="--background: #EFEFEF;">
+  <h3 class="title-home" padding> 
+    <ion-icon name="people" color="primary" style="vertical-align: -3px;"></ion-icon>
+    <span class="primary">{{deptModel}}（{{num}}）</span>
+  </h3>
+  <ion-item *ngFor="let item of itemmodel" (click)="callMe(item)">
+    <span class="nameBOx" slot="start">
+      {{item.text}}
+    </span>
+    <div class="deil">
+      <span>手机：{{item.mobile}}</span> 
+      <span class="endPhone">电话：{{item.phone}}</span> 
+    </div>
+    <ion-icon name="call" slot="end" color="success"></ion-icon>
+  </ion-item>
+</ion-content>
