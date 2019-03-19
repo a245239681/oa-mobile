@@ -383,10 +383,14 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
+    if (this.showSign) {
+      this.goSign();
+      return;
+    }
 
-    if(this.itemmodel['documenttype'] == 3){
-      this.mainservice.SetDoRead(this.itemmodel['Id'],content).subscribe(res=>{
-         
+    if (this.itemmodel['documenttype'] == 3) {
+      this.mainservice.SetDoRead(this.itemmodel['Id'], content).subscribe(res => {
+
         this.toast.presentToast("操作成功");
         this.route.navigate(['tabs']);
       })
@@ -695,6 +699,29 @@ export class SubmissionPage implements OnInit {
     console.log(obj);
     if (obj.data.res) {
       this.base64 = obj.data.res;
+      const savemodel = <saveadviceModel>{
+        attitudeType: this.attitudeType,
+        content: this.CurAttitude,
+        coorType: this.itemmodel['CoorType'],
+        processType: this.itemmodel['ProcessType'],
+        relationId: this.itemmodel['Id'],
+        skipValid: false,
+        HandSign: this.base64
+      };
+
+      this.mainservice.saveadvice(savemodel).subscribe(
+        res => {
+          if (res['State'] === 1) {
+            this.toast.presentToast('签发成功');
+            this.route.navigate(['tabs']);
+          } else {
+            this.toast.presentToast('签发失败');
+          }
+        },
+        err => {
+          this.toast.presentToast('签发失败');
+        }
+      );
     }
   }
 
