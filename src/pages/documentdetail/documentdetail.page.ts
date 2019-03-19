@@ -26,11 +26,11 @@ export class DocumentdetailPage implements OnInit {
   title = '办理信息';
 
   /**
-   * 1 办理信息 2 流转信息 3 办文签  4 附件列表
+   * 1 办理信息 2 流转信息 3 附件列表  4 办文笺 5 发文笺
    */
   type = '1';
 
-  // 收发文类型 1 收文 2 发文 3 传阅
+  // 收发文类型 1 收文 2 发文 3 传阅 4 已办收文 5 已办发文 6 正文 7 相关公文
   documenttype: number;
 
   fileTransfer: FileTransferObject = this.transfer.create();
