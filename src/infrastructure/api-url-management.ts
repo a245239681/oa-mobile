@@ -161,7 +161,7 @@ export const ApiUrlManagement = {
   /**
    * 正文
    */
-  fileViewSends: 'api/recieve/FileViewSend',
+  fileViewSends: 'api/send/SendStemetFliePdf',
   /** 删除常用语 */
   DailyDelete: 'api/recieve/DailyDelete',
   /** 添加编辑常用语 */
