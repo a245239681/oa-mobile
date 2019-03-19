@@ -18,15 +18,13 @@ export class DocumentlistPage implements OnInit {
   // 列表数据
   listdataArr: any[] = [];
 
+  /** 搜索内容 */
   searchStr = '';
 
-  object = {
-    key: '11111'
-  };
-  // 当前页
+  /** 当前页 */
   currentPage = 1;
 
-  // 是否可以继续上拉
+  /** 是否可以继续上拉 */
   nohasmore = true;
 
   /** 1 收文 2 发文 3 传阅件 4 已办收文 5 已办发文 */
