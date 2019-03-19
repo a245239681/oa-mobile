@@ -1,4 +1,4 @@
-import { MainindexService } from 'src/service/maiindex/mainindex.service';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
@@ -14,6 +14,7 @@ import { getFileMimeType } from 'src/infrastructure/regular-expression';
 import { API_URL } from 'src/infrastructure/host-address';
 import { ApiUrlManagement } from 'src/infrastructure/api-url-management';
 import { environment } from 'src/environments/environment';
+import { MainindexService } from 'src/service/maiindex/mainindex.service';
 
 @Component({
   selector: 'app-documentdetail',
@@ -49,16 +50,18 @@ export class DocumentdetailPage implements OnInit {
     private file: File,
     private transfer: FileTransfer,
     private commonHelper: CommonHelper,
-    private mainIndexService:MainindexService
+    private mainindexService: MainindexService
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
       this.itemmodel = JSON.parse(params['item']);
-      
-      if(this.itemmodel['documenttype'] == 3){
-        this.mainIndexService.SetDoRead(this.itemmodel['Id'],'').subscribe(res=>{
-          console.log("传阅阅读",res)
-        });
+
+      if (this.itemmodel['documenttype'] == 3) {
+        this.mainindexService
+          .SetDoRead(this.itemmodel['Id'], '')
+          .subscribe(res => {
+            console.log('传阅阅读', res);
+          });
       }
     });
     /** 拟办意见的显示隐藏 */
@@ -156,7 +159,7 @@ export class DocumentdetailPage implements OnInit {
     browser.show();
   }
 
-   pushtoadvice() {
+  pushtoadvice() {
     this.itemmodel['IsShowNextStep'] = true;
     this.route.navigate(['submission'], {
       queryParams: {
@@ -165,13 +168,12 @@ export class DocumentdetailPage implements OnInit {
     });
   }
   getBack(item) {
-    console.log(item);
-  }
-
-  /**
-   * 返回
-   */
-  canGoBack() {
-    this.nav.back();
+    this.mainindexService
+      .Retrieve(item['Id'], item['ProcessType'], item['CoorType'])
+      .subscribe(res => {
+        if (res === 'ok') {
+          this.route.navigate(['havedonework']);
+        }
+      });
   }
 }

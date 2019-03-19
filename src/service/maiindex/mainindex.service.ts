@@ -465,7 +465,18 @@ export class MainindexService {
   RelationTree(id: string) {
     return this.httpclient.get(ApiUrlManagement.RelationTree + '?id=' + id);
   }
-
+  /** 已办取回 */
+  Retrieve(id: string, processType: string, coorType: string) {
+    return this.httpclient.get(
+      ApiUrlManagement.Retrieve +
+        '?id=' +
+        id +
+        '&processType=' +
+        processType +
+        '&coorType=' +
+        coorType
+    );
+  }
   /** 获取办文笺详情 */
   GetReceiveData(Id: string) {
     return this.httpclient.get(ApiUrlManagement.GetReceiveData, {
