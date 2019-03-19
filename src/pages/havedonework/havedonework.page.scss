@@ -1,3 +1,40 @@
+.sykys {
+  width: 100vw;
+  padding: 10px;
+  background-color: #4877FB;
+  position: relative;
+}
+
+.input {
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1px solid #c8cccf;
+  color: #6a6f77;
+  -web-kit-appearance: none;
+  -moz-appearance: none;
+  display: block;
+  outline: 0;
+  padding: 7px 30px 7px 10px;
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #7c7e83;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #7c7e83;
+}
+
+input::-webkit-input-placeholder {
+  color: #7c7e83;
+}
+
 .kp {
   position: relative;
   border-radius: 3px;
@@ -11,13 +48,13 @@
   padding: 5px 5px 5px 1rem;
 }
 
-.label {
-  display: inline-block;
-  min-width: 48%;
-  margin-right: 2%;
-  font-size: 0.6rem !important;
-  padding-top: 8px;
-  font-size: 14px;
+
+.syktb {
+  color: #4877FB;
+  font-size: 1.6rem;
+  position: absolute;
+  right: 18px;
+  top: 16px;
 }
 
 .label-nopa {
@@ -61,4 +98,21 @@
 
 .zan:active {
   background-color: rgba(63, 50, 50, 0.144);
+}
+
+.kpbt {
+  font-weight: 600
+}
+
+.label {
+  display: inline-block;
+  min-width: 45%;
+  margin-right: 5%;
+  font-size: 0.9rem !important;
+  padding-top: 8px;
+  font-size: 14px;
+}
+
+.label-nopa {
+  margin-right: 0;
 }
