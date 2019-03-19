@@ -134,7 +134,7 @@ export class DocumentdetailPage implements OnInit {
     browser.show();
   }
 
-  pushtoadvice() {
+   pushtoadvice() {
     this.itemmodel['IsShowNextStep'] = true;
     this.route.navigate(['submission'], {
       queryParams: {
@@ -143,11 +143,11 @@ export class DocumentdetailPage implements OnInit {
     });
   }
 
+
   /**
    * 返回
    */
   canGoBack() {
-    history.back();
-    return false;
+    this.nav.back();
   }
 }

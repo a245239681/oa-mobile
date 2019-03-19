@@ -3,7 +3,7 @@ import { saveadviceModel } from './../../service/maiindex/mainindex.service';
 import {
   NavController,
   AlertController,
-  ModalController
+  ModalController,
 } from '@ionic/angular';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -74,7 +74,7 @@ export class SubmissionPage implements OnInit {
     }
   };
   constructor(
-    private activeroute: ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
     private toast: CommonHelper,
     private nav: NavController,
@@ -84,10 +84,11 @@ export class SubmissionPage implements OnInit {
     public alertController: AlertController,
     public modalController: ModalController,
   ) {
-    this.activeroute.queryParams.subscribe((params: Params) => {
-      console.log(JSON.parse(params['item']));
-      this.itemmodel = JSON.parse(params['item']);
 
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+
+      this.itemmodel = JSON.parse(params.item);
+      console.log(this.itemmodel);
       if (this.userinfo.GetUserDegree() === 'true') {
         // 收文
         if (this.itemmodel['documenttype'] == 1) {
@@ -106,6 +107,7 @@ export class SubmissionPage implements OnInit {
       }
       this.getattitudeType();
     });
+
     if (
       this.itemmodel.ProcessType === 1 &&
       this.userinfo.GetUserDegree() === 'true'
@@ -621,22 +623,16 @@ export class SubmissionPage implements OnInit {
       )
       .subscribe(
         (data: any) => {
-          // if (data['State'] === 1) {
           var tempArr = data.Data;
           if (!tempArr) {
             tempArr = [];
           }
-          //this.modalSelectPeople(this.itemmodel,tempArr);
           this.route.navigate(['person-select'], {
             queryParams: {
               item: JSON.stringify(this.itemmodel),
               hasSelected: JSON.stringify(tempArr)
             }
           });
-          // }
-          // else {
-          //   this.toast.presentToast('已无数据');
-          // }
         },
         () => {
           this.toast.presentToast('请求失败');
@@ -644,13 +640,27 @@ export class SubmissionPage implements OnInit {
       );
   }
 
-  async modalSelectPeople(itemModel:any,tempArr:any[]) {
+  //模态出选人页面
+  async modalSelectPeople(itemModel: any, tempArr: any[]) {
     const modal = await this.modalController.create({
       component: PersonSelectPage,
       showBackdrop: true,
-      componentProps: { item: itemModel, hasSelected:  tempArr}
+      componentProps: { item: itemModel, hasSelected: tempArr }
     });
+    modal.present();
+    // 接收模态框传回的值
+    modal.onDidDismiss().then((backdata) => {
 
+    });
+  }
+
+  //模态出结束步骤
+  async modalEndAction(itemModel: any) {
+    const modal = await this.modalController.create({
+      component: PersonSelectPage,
+      showBackdrop: true,
+      componentProps: { item: itemModel }
+    });
     modal.present();
     // 接收模态框传回的值
     modal.onDidDismiss().then((backdata) => {
@@ -682,10 +692,10 @@ export class SubmissionPage implements OnInit {
   }
 
   /**
-   * 返回
+   * 关闭模态框
    */
-  canGoBack() {
-    this.nav.back();
+  closeclick() {
+    this.modalController.dismiss();
   }
 
   /** 开启会签模态框 */

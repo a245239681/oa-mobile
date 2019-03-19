@@ -138,7 +138,6 @@ export class AuthInterceptor implements HttpInterceptor {
               }
             }
           } else {
-            console.log('错误');
             this.deductRequestCount();
           }
         },

@@ -24,6 +24,7 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DocumentdetailPage]
+  declarations: [DocumentdetailPage],
+ 
 })
 export class DocumentdetailPageModule {}
