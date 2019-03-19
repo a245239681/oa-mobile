@@ -11,44 +11,47 @@
 </ion-header>
 
 <ion-content>
-  <ng-container
-    *ngTemplateOutlet="
-      treeTpl;
-      context: { $implicit: { items: tree, root: true } }
-    "
-  ></ng-container>
+  <div style="margin:1em">
+    <ion-radio-group>
+      <ng-container
+        *ngTemplateOutlet="treeTpl; context: { items: tree, level: 0 }"
+      ></ng-container>
+    </ion-radio-group>
+  </div>
 
-  <ng-template #treeTpl let-context>
+  <ng-template #treeTpl let-items="items" let-level="level" let-data="data">
     <ion-list mode="md">
-      <ion-radio-group>
-        <div
-          *ngFor="let item of context.items"
-          [ngClass]="context.root ? 'root' : ''"
-        >
-          <ion-icon
-            style="float: left;"
-            mode="md"
-            [name]="
-              item.hidden === false ? 'arrow-dropdown' : 'arrow-dropright'
-            "
-          >
-          </ion-icon>
-          <ion-radio
-            mode="md"
-            checked="item.checked"
-            (ionSelect)="singleSelect(item, context.data)"
-          ></ion-radio>
-          <ion-label> {{ item.Label }}</ion-label>
+      <div
+        *ngFor="let item of items"
+        [ngClass]="level === 0 ? 'root' : ''"
+        (click)="singleSelect(item, data, $event)"
+      >
+        <ion-icon
+          [ngStyle]="{ paddingLeft: level + 'em' }"
+          [ngClass]="{ hide: item.data.Type == 2 }"
+          [name]="item.expanded ? 'arrow-dropdown' : 'arrow-dropright'"
+        ></ion-icon>
+
+        <ion-radio
+          [(checked)]="item.checked"
+          *ngIf="item.data.Type == 2"
+          (click)="singleSelect(item, data, $event)"
+        ></ion-radio>
+
+        <ion-label> {{ item.text }}</ion-label>
+        <div *ngIf="item.expanded && item.children.length">
           <ng-container
             *ngTemplateOutlet="
               treeTpl;
               context: {
-                $implicit: { items: item.Children, root: false, data: item.Id }
+                items: item.children,
+                level: level + 1,
+                data: item.value
               }
             "
           ></ng-container>
         </div>
-      </ion-radio-group>
+      </div>
     </ion-list>
   </ng-template>
 </ion-content>

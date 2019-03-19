@@ -11,6 +11,7 @@ export class SignComponent implements OnInit {
   @Input() itemmodel: any;
   myData: any;
   title: string;
+  /** 正文模板 */
   templateType: string;
   constructor(
     public mainindexService: MainindexService,
@@ -23,6 +24,7 @@ export class SignComponent implements OnInit {
     console.log(this.itemmodel);
     if (this.itemmodel.documenttype === 1) {
       this.title = '收文登记表';
+      this.GetReceiveData(this.itemmodel.Id);
     } else if (this.itemmodel.documenttype === 2) {
       this.title = '发文拟稿';
       this.GetSendModelById(this.itemmodel.Id);
@@ -42,6 +44,22 @@ export class SignComponent implements OnInit {
           this.toast.presentToast('暂无数据');
         }
         console.log(r);
+      },
+      () => {
+        this.toast.presentToast('请求失败');
+      }
+    );
+  }
+  /** 请求办文笺详情 */
+  GetReceiveData(Id: string) {
+    this.mainindexService.GetReceiveData(Id).subscribe(
+      r => {
+        if (r) {
+          this.myData = r;
+          console.log(this.myData);
+        } else {
+          this.toast.presentToast('暂无数据');
+        }
       },
       () => {
         this.toast.presentToast('请求失败');

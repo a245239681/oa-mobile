@@ -13,6 +13,13 @@ export class AddresslistPage implements OnInit {
 
   title = '通讯录';
   items = [];
+
+  temp: any;
+  /**
+   * 搜索
+   */
+  searchStr = '';
+
   constructor(
     private nav: NavController,
     private mainindexservice: MainindexService,
@@ -26,6 +33,23 @@ export class AddresslistPage implements OnInit {
   }
 
   /**
+   * 搜索
+   */
+  SearchFilter(event: any) {
+    const val = event.toLowerCase();
+    // filter our data
+    const temp = this.temp.children.filter(function(d: any) {
+      return d.text.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.route.navigate(['mail-list'], {
+      queryParams: {
+        item: JSON.stringify(temp),
+        dept: JSON.stringify(this.temp.text)
+      }
+    });
+  }
+
+  /**
    * 获取通讯录数据列表
    */
   getMailList() {
@@ -34,7 +58,8 @@ export class AddresslistPage implements OnInit {
       if (res.State === 1) {
 
         this.items = res.Data[0].children;
-        console.log(this.items);
+        this.temp = res.Data[0];
+        // console.log(this.items);
       }
     });
   }
@@ -43,8 +68,8 @@ export class AddresslistPage implements OnInit {
    * 查看当前部门下的相关人员
    */
   mailShow(item: any, dept: any) {
-    console.log(item);
-    console.log(dept);
+    // console.log(item);
+    //  console.log(dept);
     this.route.navigate(['mail-list'], {
       queryParams: {
         item: JSON.stringify(item),

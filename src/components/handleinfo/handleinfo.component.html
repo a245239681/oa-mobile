@@ -4,10 +4,12 @@
       <span>{{header['Title']}}</span>
     </div>
     <!-- 收文 -->
-    <div *ngIf="itemmodel.documenttype == 1 || itemmodel.documenttype == 4 && header">
+    <div *ngIf="(itemmodel.documenttype == 1 || itemmodel.documenttype == 4) && header">
       <div>
         <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ header.Emergency }}</span>
-        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{header.FinishDate}}</span>
+        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{header.FinishDate.replace('-',
+          '年').replace('-', '月') +
+          '日'}}</span>
       </div>
       <div>
         <span class='texts'>来文文号：</span>
@@ -19,7 +21,7 @@
       </div>
     </div>
     <!-- 发文 -->
-    <div *ngIf="itemmodel.documenttype == 2 || itemmodel.documenttype == 5">
+    <div *ngIf="(itemmodel.documenttype == 2 || itemmodel.documenttype == 5) && header">
       <div>
         <span class='texts'>主&#12288;送：</span>
         <span class='texts'>{{ header.Department }}</span>
@@ -44,12 +46,12 @@
         </div>
         <div *ngFor="let subitem of item; let n = index" class="reny">
           <div>
-            <span class='texts' style="vertical-align: top;">部门：</span>
-            <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['DeptName'] }}</span>
+            <span class='texts'>部门：</span>
+            <span class='texts' style="width: 70%;display: inline-block;">{{ subitem['DeptName'] }}</span>
           </div>
           <div>
-            <span class='texts' style="vertical-align: top;">拟办意见：</span>
-            <span class='texts' style="width: 70%;display: inline-block;vertical-align: top;">{{ subitem['Content'] }}</span>
+            <span class='texts'>拟办意见：{{ subitem['Content'] }}</span>
+            <!-- <span class='texts' style="width: 70%;display: inline-block;"></span> -->
           </div>
           <div>
             <span class='texts'>{{ subitem['StaffName'] }} ({{ subitem['StaffDuty'] }})：{{ subitem['TimeStr'] }}</span>

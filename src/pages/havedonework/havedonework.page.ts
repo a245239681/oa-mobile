@@ -15,7 +15,7 @@ export class HavedoneworkPage implements OnInit {
   // 列表数据
   listdataArr: any[] = [];
 
-  // 当前页
+  /** 当前页 */
   currentPage = 1;
 
   // 收文已办 发文已办
@@ -53,7 +53,8 @@ export class HavedoneworkPage implements OnInit {
     this.getdata();
   }
   ngOnInit() {
-    this.getdata();
+    // console.log('havedonework init');
+    // this.getdata();
   }
 
   /**
@@ -71,7 +72,7 @@ export class HavedoneworkPage implements OnInit {
           if (res['State'] === 1) {
             console.log(res);
             this.listdataArr = res['Data']['PageOfResult'];
-            if (this.listdataArr.length < 20) {
+            if (this.listdataArr.length <= 20) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
@@ -105,6 +106,17 @@ export class HavedoneworkPage implements OnInit {
     this.getdata();
   }
 
+  /**监听回车搜索
+   *  @param event 根据页面传回来的event
+   *  @param search 搜索内容
+   */
+  onSearchKeyUp(event: any, search: string) {
+    this.currentPage = 1;
+    if ('Enter' === event.key) {
+      this.seachclick(search);
+    }
+  }
+
   /**
    * 下拉刷新
    */
@@ -126,11 +138,11 @@ export class HavedoneworkPage implements OnInit {
           if (res['State'] === 1) {
             console.log(res);
             const tempArr = res['Data']['PageOfResult'];
-            if (tempArr.length < 20) {
+            if (tempArr.length <= 20) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
-              this.currentPage++;
+              this.currentPage += 1;
             }
 
             tempArr.forEach(item => {
@@ -182,7 +194,9 @@ export class HavedoneworkPage implements OnInit {
       }
     });
   }
-
+  ionViewWillEnter() {
+    this.getdata();
+  }
   /**
    * 进入公文列表 1 收文已办 2 发文已办
    */
