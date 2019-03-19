@@ -4,42 +4,42 @@
   </div>
   <div class='neir'>
     <!-- 收文 -->
-    <div *ngIf="itemmodel.documenttype == 1">
+    <div *ngIf="itemmodel.documenttype == 1 && myData">
       <div>
-        <span class='texts' style='margin-right: 8%;'>紧急程度：{{ itemmodel.Emergency }}</span>
-        <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ itemmodel.FinishDate}}</span>
+        <span class='texts' style='margin-right: 8%;'>紧急程度：{{ myData.Emergency }}</span>
+        <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ myData.FinishDate}}</span>
       </div>
       <div>
         <span class='texts'>标题：</span>
-        <span class='texts'>{{ itemmodel.Title }}</span>
+        <span class='texts'>{{ myData.Title }}</span>
       </div>
       <div>
         <span class='texts'>来文单位：</span>
-        <span class='texts'>{{ itemmodel.Department }}</span>
+        <span class='texts'>{{ myData.Department }}</span>
       </div>
       <div>
         <span class='texts'>公文文号：</span>
-        <span class='texts'>{{ itemmodel.SerialNumber }}</span>
+        <span class='texts'>{{ myData.SerialNumber }}</span>
       </div>
       <div>
         <span class='texts'>处理类型：</span>
-        <span class='texts'>{{ itemmodel.DealType }}</span>
+        <span class='texts'>{{ myData.DealType }}</span>
       </div>
       <div>
         <span class='texts'>收文人：</span>
-        <span class='texts'>{{ itemmodel.Staff }}</span>
+        <span class='texts'>{{ myData.Staff }}</span>
       </div>
       <div>
         <span class='texts'>收件日期：</span>
-        <span class='texts'>{{ itemmodel.CreateDate }}</span>
+        <span class='texts'>{{ myData.CreateDate }}</span>
       </div>
       <div>
         <span class='texts'>来文落款时间：</span>
-        <span class='texts'>{{ itemmodel.Date }}</span>
+        <span class='texts'>{{ myData.Date }}</span>
       </div>
       <div>
         <span class='texts'>登记备注：</span>
-        <span class='texts'>{{ itemmodel.Remark }}</span>
+        <span class='texts'>{{ myData.Remark }}</span>
       </div>
     </div>
     <!-- 发文 -->
@@ -85,22 +85,27 @@
       <div>
         <span class='texts'>保密审查：</span>
         <span class='texts' *ngIf="myData.SecretCheck">
-          <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+          <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
+            mode='ios'></ion-icon>
         </span>
         <span class='texts' *ngIf="!myData.SecretCheck">
-          <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+          <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(153, 0, 0);"
+            mode='ios'></ion-icon>
         </span>
       </div>
       <div>
         <span class='texts'>依申请公开的理由：</span>
-        <div *ngFor="let item of this.myData.TypeStr">
-          <span class='texts' *ngIf="item.checkbox">
-            <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
-          </span>
-          <span class='texts' *ngIf="!item.checkbox">
-            <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
-          </span>
-          <span class='texts'>{{ item.text }}</span>
+        <div *ngFor="let item of this.myData.TypeStr" style='display: inline;'>
+          <div *ngIf="item.checkbox" style='display: inline;'>
+            <span class='texts'>
+              <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
+                mode='ios'></ion-icon>
+            </span>
+            <!-- <span class='texts' *ngIf="!item.checkbox">
+                  <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
+                </span> -->
+            <span class='texts'>{{ item.text }}</span>
+          </div>
         </div>
       </div>
       <div>
@@ -129,7 +134,7 @@
       </div>
       <div>
         <span class='texts'>签发时间：</span>
-        <span class='texts'>{{ myData.SignDate }}</span>
+        <span class='texts'>{{ myData.SignDate|date:'yyyy年MM月dd日 HH:mm' }}</span>
       </div>
     </div>
   </div>

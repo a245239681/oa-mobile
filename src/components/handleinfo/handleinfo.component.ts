@@ -104,9 +104,6 @@ export class HandleinfoComponent implements OnInit {
             if (res['State'] === 1) {
               this.bodyData = res['Data']['BodyData'];
               this.header = res['Data']['header'];
-              this.header.FinishDate =
-                this.header.FinishDate.replace('-', '年').replace('-', '月') +
-                '日';
               this.adcviceArr = [];
               this.keyArr = [];
               // tslint:disable-next-line:forin

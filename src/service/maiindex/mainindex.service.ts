@@ -215,9 +215,7 @@ export class MainindexService {
    *获取通讯录数据
    */
   getMaliList(): Observable<any> {
-    return this.httpclient.get(
-      ApiUrlManagement.getMail
-    );
+    return this.httpclient.get(ApiUrlManagement.getMail);
   }
 
   /**
@@ -401,10 +399,11 @@ export class MainindexService {
   }
 
   /**传阅阅读 */
-  SetDoRead(id  , content){
-    return this.httpclient.get(ApiUrlManagement.SetDoRead, {params:{id:id , content:content}});
+  SetDoRead(id, content) {
+    return this.httpclient.get(ApiUrlManagement.SetDoRead, {
+      params: { id: id, content: content }
+    });
   }
-
 
   /** 退回验证 */
   ValidBack(Id: string, processType: string, coorType: string) {
@@ -465,6 +464,15 @@ export class MainindexService {
   /** 获取相关公文 */
   RelationTree(id: string) {
     return this.httpclient.get(ApiUrlManagement.RelationTree + '?id=' + id);
+  }
+
+  /** 获取办文笺详情 */
+  GetReceiveData(Id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetReceiveData, {
+      params: {
+        Id: Id
+      }
+    });
   }
 }
 
