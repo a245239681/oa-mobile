@@ -153,7 +153,7 @@
       </div>
     </ion-item>
   </ion-list> -->
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" [disabled]="nohasmore">
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" [hidden]="nohasmore">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
