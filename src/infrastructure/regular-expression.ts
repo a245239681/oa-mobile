@@ -206,12 +206,6 @@ export function getFileMimeType(fileType: string): string {
     case 'xls':
       mimeType = 'application/vnd.ms-excel';
       break;
-    case 'zip':
-      mimeType = 'application/x-zip-compressed';
-      break;
-    case 'rar':
-      mimeType = 'application/octet-stream';
-      break;
     case 'pdf':
       mimeType = 'application/pdf';
       break;
@@ -221,8 +215,29 @@ export function getFileMimeType(fileType: string): string {
     case 'png':
       mimeType = 'image/png';
       break;
+    case 'gif':
+      mimeType = 'image/gif';
+      break;
+    case 'tif':
+      mimeType = 'image/tiff';
+      break;
+    case 'bmp':
+      mimeType = 'image/bmp';
+      break;
+    case 'mp4':
+      mimeType = 'video/mp4';
+      break;
+    case 'avi':
+      mimeType = 'video/x-msvideo';
+      break;
+    case 'flv':
+      mimeType = 'video/x-flv';
+      break;
+    case 'mp3':
+      mimeType = 'audio/mpeg';
+      break;
     default:
-      mimeType = 'application/' + fileType;
+      mimeType = '';
       break;
   }
   return mimeType;
