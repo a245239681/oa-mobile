@@ -50,30 +50,36 @@ export class CommonHelper {
     this.toast.present();
   }
 
+  private isLoading : Boolean;
   /**
    * 弹出loading
    * @param content 显示内容
    */
+
+
   public async presentLoading(content?: string) {
-    if (this.loading) {
-      this.loading.dismiss();
+    if (this.isLoading == true ) {
+      return ;
     }
+
+    this.isLoading  = true ;
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
       translucent: true
     });
-    this.loading.present();
+    await this.loading.present();
   }
   /**
    * 关闭loading
    */
-  public dismissLoading() {
-    setTimeout(() => {
-      if (this.loading) {
-        this.loading.dismiss();
-      }
-    }, 100);
+  public async dismissLoading() {
+    if (this.isLoading == true  && this.loading != null ) {
+      this.isLoading = false ;
+      this.loading.dismiss();
+      this.loading = null ;
+    }
+    
   }
 
   /**
