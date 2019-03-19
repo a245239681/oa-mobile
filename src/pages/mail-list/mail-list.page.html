@@ -6,24 +6,52 @@
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
   <div class="sykys">
-    <input type="text" [(ngModel)]="searchStr" placeholder="请输入部门\联系人\号码" class="input">
-    <ion-icon name="search" class="syktb"></ion-icon>
+    <ion-searchbar debounce="500" [(ngModel)]="searchStr" (ionChange)="SearchFilter(searchStr)" placeholder="请输入联系人\号码">
+    </ion-searchbar>
+    <!-- <input type="text" [(ngModel)]="searchStr" placeholder="请输入部门\联系人\号码" class="input">
+    <ion-icon name="search" class="syktb"></ion-icon> -->
   </div>
 </ion-header>
 
 <ion-content style="--background: #EFEFEF;">
-  <h3 class="title-home" padding> 
+  <h3 class="title-home" padding>
     <ion-icon name="people" color="primary" style="vertical-align: -3px;"></ion-icon>
     <span class="primary">{{deptModel}}（{{num}}）</span>
   </h3>
-  <ion-item *ngFor="let item of itemmodel" (click)="callMe(item)">
-    <span class="nameBOx" slot="start">
-      {{item.text}}
-    </span>
-    <div class="deil">
-      <span>手机：{{item.mobile}}</span> 
-      <span class="endPhone">电话：{{item.phone}}</span> 
-    </div>
-    <ion-icon name="call" slot="end" color="success"></ion-icon>
-  </ion-item>
+  <div *ngIf="!searchStr">
+    <ion-list>
+      <ion-item *ngFor="let item of itemmodel" (click)="callMe(item)">
+        <span class="nameBOx" slot="start">
+          {{item.text}}
+        </span>
+        <div class="deil">
+          <span>手机：{{item.mobile}}</span>
+          <span class="endPhone">电话：{{item.phone}}</span>
+        </div>
+        <ion-icon name="call" slot="end" color="success"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="!!searchStr">
+    <ion-list class="list list-ios hydrated" *ngFor="let dept of result">
+      <ion-list-header class="hydrated">
+        {{dept.text}}
+      </ion-list-header>
+      <ion-item *ngFor="let staff of dept.children" (click)="callMe(staff)">
+        <span class="nameBOx" slot="start">
+          {{staff.text}}
+        </span>
+        <div class="deil">
+          <span>手机：{{staff.mobile}}</span>
+          <span class="endPhone">电话：{{staff.phone}}</span>
+        </div>
+        <ion-icon name="call" slot="end" color="success"></ion-icon>
+      </ion-item>
+    </ion-list>
+    <ion-card *ngIf="result.length===0">
+      <ion-card-content>
+        没有数据
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

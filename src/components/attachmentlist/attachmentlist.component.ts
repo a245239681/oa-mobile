@@ -20,8 +20,10 @@ export class AttachmentlistComponent implements OnInit {
   // 传进来的itemmodel
   @Input() itemmodel: any;
 
+  /** 附件列表 */
   attachmentlistArr: any[] = [];
 
+  /** 附件的下载 */
   fileTransfer: FileTransferObject = this.transfer.create();
 
   constructor(

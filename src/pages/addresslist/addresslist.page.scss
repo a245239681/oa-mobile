@@ -85,3 +85,36 @@
       padding: 0 1rem;
       font-size: 16px!important;
   }
+  .list-ios {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -1px;
+    margin-bottom: 10px;
+    background: var(--ion-item-background,var(--ion-background-color,#fff));
+}
+.hydrated {
+    visibility: inherit;
+}
+.nameBOx {
+    display: block;
+    width: 15%;
+    -webkit-margin-end: 15px !important;
+    margin-inline-end: 15px !important;
+  }
+.deil {
+    width: 75%;
+  }
+  .deil > span {
+    display: block;
+    width: 100%;
+    padding-block-start: 0.5rem;
+  }
+  .deil > span.endPhone {
+    padding-block-end: 0.5rem;
+  }
+  .primary{
+      color: #4877fb;
+  }
+  .action-sheet-group.sc-ion-action-sheet-md:first-child {
+      margin-bottom: 5px;
+  }

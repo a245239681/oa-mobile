@@ -1,13 +1,14 @@
 <ion-content>
-  <div class='list' style='text-align: center'>
+  <!-- <div class='list' style='text-align: center'>
     <span class='bt'>{{title}}</span>
-  </div>
+  </div> -->
   <div class='neir'>
     <!-- 收文 -->
     <div *ngIf="itemmodel.documenttype == 1 && myData">
       <div>
         <span class='texts' style='margin-right: 8%;'>紧急程度：{{ myData.Emergency }}</span>
-        <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ myData.FinishDate | date:'yyyy年MM月dd日 HH:mm'}}</span>
+        <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ myData.FinishDate | date:'yyyy年MM月dd日
+          HH:mm'}}</span>
       </div>
       <div>
         <span class='texts'>标题：</span>
@@ -82,29 +83,39 @@
         <span class='texts'>政府信息公开类型：</span>
         <span class='texts'>{{ myData.PublicType }}</span>
       </div>
-      <div>
-        <span class='texts'>保密审查：</span>
-        <span class='texts' *ngIf="myData.SecretCheck">
-          <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
-            mode='ios'></ion-icon>
-        </span>
-        <span class='texts' *ngIf="!myData.SecretCheck">
-          <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(153, 0, 0);"
-            mode='ios'></ion-icon>
-        </span>
-      </div>
-      <div>
-        <span class='texts'>依申请公开的理由：</span>
-        <div *ngFor="let item of this.myData.TypeStr" style='display: inline;'>
-          <div *ngIf="item.checkbox" style='display: inline;'>
-            <span class='texts'>
-              <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
-                mode='ios'></ion-icon>
-            </span>
-            <!-- <span class='texts' *ngIf="!item.checkbox">
+      <div *ngIf="myData.PublicType !== '非政府信息'">
+        <!-- <div>
+          <span class='texts'>保密审查：</span>
+          <span class='texts' *ngIf="myData.SecretCheck">
+            <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
+              mode='ios'></ion-icon>
+          </span>
+          <span class='texts' *ngIf="!myData.SecretCheck">
+            <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(153, 0, 0);"
+              mode='ios'></ion-icon>
+          </span>
+        </div> -->
+        <div>
+          <span class='texts'>依申请公开的理由：</span>
+          <div *ngFor="let item of this.myData.TypeStr" style='display: inline;'>
+            <div *ngIf="item.checkbox" style='display: inline;'>
+              <!-- <span class='texts' *ngIf="!item.checkbox">
                   <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
                 </span> -->
-            <span class='texts'>{{ item.text }}</span>
+              <span class='texts'>
+                <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
+                  mode='ios'></ion-icon>
+              </span>
+              <span class='texts' *ngIf="item.text !== '其他理由'">{{ item.text }}</span>
+            </div>
+            <div *ngIf="item.text === '其他理由'" style='white-space:normal; word-break:break-all;'>
+              <span class='texts'>
+                <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
+                  mode='ios'></ion-icon>
+              </span>
+              <span class='texts'>{{ item.text }}：</span>
+              <span class='texts'>{{ item.other_text }}</span>
+            </div>
           </div>
         </div>
       </div>

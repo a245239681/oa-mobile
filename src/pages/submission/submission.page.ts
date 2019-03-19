@@ -284,7 +284,7 @@ export class SubmissionPage implements OnInit {
         });
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -377,10 +377,14 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
+    if (this.showSign) {
+      this.goSign();
+      return;
+    }
 
-    if(this.itemmodel['documenttype'] == 3){
-      this.mainservice.SetDoRead(this.itemmodel['Id'],content).subscribe(res=>{
-         
+    if (this.itemmodel['documenttype'] == 3) {
+      this.mainservice.SetDoRead(this.itemmodel['Id'], content).subscribe(res => {
+
         this.toast.presentToast("操作成功");
         this.route.navigate(['tabs']);
       })
@@ -598,7 +602,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
@@ -658,7 +662,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => {});
+    modal.onDidDismiss().then(backdata => { });
   }
 
   //模态出结束步骤
@@ -670,7 +674,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => {});
+    modal.onDidDismiss().then(backdata => { });
   }
 
   async goSign() {
@@ -686,6 +690,28 @@ export class SubmissionPage implements OnInit {
     console.log(obj);
     if (obj.data.res) {
       this.base64 = obj.data.res;
+      const savemodel = <saveadviceModel>{
+        attitudeType: this.attitudeType,
+        content: this.CurAttitude,
+        coorType: this.itemmodel['CoorType'],
+        processType: this.itemmodel['ProcessType'],
+        relationId: this.itemmodel['Id'],
+        skipValid: false,
+        HandSign: this.base64
+      };
+
+      this.mainservice.saveadvice(savemodel).subscribe(
+        res => {
+          if (res['State'] === 1) {
+            this.route.navigate(['sign-sussces']);
+          } else {
+            this.toast.presentToast('签发失败');
+          }
+        },
+        err => {
+          this.toast.presentToast('签发失败');
+        }
+      );
     }
   }
 
