@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   ActionSheetController,
   NavController,
-  ModalController
+  ModalController,
+  Platform
 } from '@ionic/angular';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
@@ -16,13 +17,15 @@ import { ChangePhonenumbersComponent } from './change-phonenumbers/change-phonen
 })
 export class PersonalInformationPage implements OnInit {
   myData: any;
+  sub: any;
   constructor(
     public actionSheetController: ActionSheetController,
     private nav: NavController,
     private mainindexservice: MainindexService,
     private toast: CommonHelper,
     private userinfo: UserInfo,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private platform: Platform
   ) {
     // this.activeRoute.queryParams.subscribe(params => {
     //   console.log(params);
@@ -31,7 +34,11 @@ export class PersonalInformationPage implements OnInit {
     this.GetStaffInfo(this.userinfo.getPersonageId());
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+      this.nav.back();
+    });
+  }
 
   /** 请求个人信息详情 */
   GetStaffInfo(id: string) {
@@ -48,7 +55,7 @@ export class PersonalInformationPage implements OnInit {
       }
     );
   }
-
+  /** 头像sheet */
   async headPortraitSheet() {
     const actionSheet = await this.actionSheetController.create({
       buttons: [
@@ -80,6 +87,7 @@ export class PersonalInformationPage implements OnInit {
     });
     await actionSheet.present();
   }
+  /** 性别sheet */
   async geenderSheet() {
     const actionSheet = await this.actionSheetController.create({
       buttons: [
@@ -109,6 +117,7 @@ export class PersonalInformationPage implements OnInit {
     });
     await actionSheet.present();
   }
+  /** sheet 弹出 */
   detailCheck(s: string) {
     switch (s) {
       case '头像':
