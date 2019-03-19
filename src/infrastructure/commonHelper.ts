@@ -74,7 +74,13 @@ export class CommonHelper {
    * 关闭loading
    */
   public async dismissLoading() {
-    if (this.isLoading == true  && this.loading != null ) {
+    if (this.isLoading == true) {
+      if(this.loading == null ){
+        setTimeout(() => {
+          this.dismissLoading();
+        }, 200);
+        return; 
+      }
       this.isLoading = false ;
       this.loading.dismiss();
       this.loading = null ;
