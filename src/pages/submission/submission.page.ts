@@ -12,6 +12,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { SignaturepadPage } from '../signaturepad/signaturepad.page';
 import { CountersignComponent } from 'src/components/countersign/countersign.component';
+import { PersonSelectPage } from '../person-select/person-select.page';
 
 @Component({
   selector: 'app-submission',
@@ -81,7 +82,7 @@ export class SubmissionPage implements OnInit {
     private mainservice: MainindexService,
     private userinfo: UserInfo,
     public alertController: AlertController,
-    public modalController: ModalController
+    public modalController: ModalController,
   ) {
     this.activeroute.queryParams.subscribe((params: Params) => {
       console.log(JSON.parse(params['item']));
@@ -611,7 +612,7 @@ export class SubmissionPage implements OnInit {
   /**
    * 跳到下一步时把上一个人选好的人的数据传下去--正常跳转进入下一步选人
    */
-  pushNextStep() {
+  async pushNextStep() {
     this.mainservice
       .commitSimulateEnd(
         this.itemmodel.Id,
@@ -622,10 +623,10 @@ export class SubmissionPage implements OnInit {
         (data: any) => {
           // if (data['State'] === 1) {
           var tempArr = data.Data;
-
           if (!tempArr) {
             tempArr = [];
           }
+          //this.modalSelectPeople(this.itemmodel,tempArr);
           this.route.navigate(['person-select'], {
             queryParams: {
               item: JSON.stringify(this.itemmodel),
@@ -641,6 +642,20 @@ export class SubmissionPage implements OnInit {
           this.toast.presentToast('请求失败');
         }
       );
+  }
+
+  async modalSelectPeople(itemModel:any,tempArr:any[]) {
+    const modal = await this.modalController.create({
+      component: PersonSelectPage,
+      showBackdrop: true,
+      componentProps: { item: itemModel, hasSelected:  tempArr}
+    });
+
+    modal.present();
+    // 接收模态框传回的值
+    modal.onDidDismiss().then((backdata) => {
+
+    });
   }
 
   async goSign() {

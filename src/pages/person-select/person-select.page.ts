@@ -6,7 +6,7 @@ import {
   PendingReaderModel
 } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, NavParams, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-person-select',
@@ -80,8 +80,18 @@ export class PersonSelectPage implements OnInit {
     private mainservice: MainindexService,
     private activeRoute: ActivatedRoute,
     private toast: CommonHelper,
-    private route: Router
+    private route: Router,
+    public modalController:ModalController
   ) {
+    // this.itemmodel = navParams.data.item;
+    // this.hasSelected = navParams.data.hasSelected;
+
+    // this.IsShowNextStep = this.itemmodel['IsShowNextStep'];
+    // console.log(this.itemmodel);
+
+    // console.log('已选数据');
+    // console.log(this.hasSelected);
+    // this.toast.dismissLoading();
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
       this.itemmodel = JSON.parse(params['item']);
@@ -127,7 +137,7 @@ export class PersonSelectPage implements OnInit {
       this.hostArr = items;
       console.log(this.hostArr);
     } else if (this.type == 2) {
-      
+
       this.coorperationArr = items;
       this.coorperationArr = this.coorperationArr.map(item => {
         return item['id'];
@@ -249,6 +259,7 @@ export class PersonSelectPage implements OnInit {
           if (res['State'] == 1) {
             this.toast.presentToast('提交成功');
             this.route.navigate(['tabs']);
+            // this.modalController.dismiss();
           } else {
             this.toast.presentToast(res['Message']);
           }
@@ -258,5 +269,12 @@ export class PersonSelectPage implements OnInit {
         }
       );
     }
+  }
+
+  /**
+   * 关闭
+   */
+  closeclick() {
+    this.modalController.dismiss();
   }
 }
