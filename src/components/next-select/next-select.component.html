@@ -7,7 +7,7 @@
 
   <!-- <ion-tree-view [items]="treeData" persistedName="persistedName" treeViewName="treeViewName"></ion-tree-view> -->
   
-  <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:departmentTree,root:true}}"></ng-container>
+  <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:departmentTree,root:true,level:0}}"></ng-container>
   <ng-template #treeTpl let-context>
     <ion-list>
       <div *ngFor="let item of context.items" [ngClass]="context.root?'root':''">
@@ -15,7 +15,7 @@
         <ion-checkbox [(checked)]="item.checked" [(ngModel)]="item.checked" (ionChange)="checkboxClick(item,$event.detail.checked)"></ion-checkbox>
         <ion-label (click)="itemClick(item)" [ngStyle]="{'color':colors[item.attributes?item.attributes.NodeType:'root']}">{{item.text}}</ion-label>
         <div style="clear:left" *ngIf="item.collapse!==false">
-          <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:item.children,root:false}}"></ng-container>
+          <ng-container *ngTemplateOutlet="treeTpl;context:{$implicit:{items:item.children,root:false,level:context.level+1}}"></ng-container>
         </div>
       </div>
     </ion-list>
