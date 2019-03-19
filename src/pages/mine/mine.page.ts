@@ -71,6 +71,14 @@ export class MinePage implements OnInit {
       }
     });
   }
+  /** 跳转到二维码 */
+  toQr(){
+    this.route.navigate(['qr-code'], {
+      queryParams: {
+        item: JSON.stringify(this.personaldetails)
+      }
+    });
+  }
   /** 详情 */
   GoDetails() {
     this.route.navigate(['personal-information'], {

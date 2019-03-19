@@ -50,7 +50,7 @@ export class HandleinfoComponent implements OnInit {
   constructor(private service: MainindexService, public toast: CommonHelper) {}
 
   ngOnInit() {
-    console.log(this.itemmodel);
+    // console.log(this.itemmodel);
     this.getdata();
   }
 
@@ -75,11 +75,11 @@ export class HandleinfoComponent implements OnInit {
               this.keyArr = [];
               // tslint:disable-next-line:forin
               for (const key in this.bodyData) {
-                console.log(key);
+                // console.log(key);
                 this.keyArr.push(key);
                 this.adcviceArr.push(this.bodyData[key]);
-                console.log(this.adcviceArr);
-                console.dir(this.adcviceArr);
+                // console.log(this.adcviceArr);
+                // console.dir(this.adcviceArr);
               }
             } else {
               this.toast.presentToast('暂无数据');
@@ -104,11 +104,11 @@ export class HandleinfoComponent implements OnInit {
               this.keyArr = [];
               // tslint:disable-next-line:forin
               for (const key in this.bodyData) {
-                console.log(key);
+                // console.log(key);
                 this.keyArr.push(key);
                 this.adcviceArr.push(this.bodyData[key]);
-                console.log(this.adcviceArr);
-                console.dir(this.adcviceArr);
+                // console.log(this.adcviceArr);
+                // console.dir(this.adcviceArr);
               }
             } else {
               this.toast.presentToast('暂无数据');
@@ -121,7 +121,7 @@ export class HandleinfoComponent implements OnInit {
     }
   }
   expression(i) {
-    console.log(i);
+    // console.log(i);
   }
   /**
    * 标题颜色
