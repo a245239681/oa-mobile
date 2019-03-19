@@ -11,6 +11,7 @@ export class SignComponent implements OnInit {
   @Input() itemmodel: any;
   myData: any;
   title: string;
+  /** 正文模板 */
   templateType: string;
   constructor(
     public mainindexService: MainindexService,
@@ -53,15 +54,12 @@ export class SignComponent implements OnInit {
   GetReceiveData(Id: string) {
     this.mainindexService.GetReceiveData(Id).subscribe(
       r => {
-        if (r['State'] === 1) {
-          this.myData = r['Data'];
-          this.templateType = r['templateType'];
-          this.myData.TypeStr = JSON.parse(this.myData.TypeStr);
+        if (r) {
+          this.myData = r;
           console.log(this.myData);
         } else {
           this.toast.presentToast('暂无数据');
         }
-        console.log(r);
       },
       () => {
         this.toast.presentToast('请求失败');

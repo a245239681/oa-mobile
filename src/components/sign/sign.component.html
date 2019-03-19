@@ -7,7 +7,7 @@
     <div *ngIf="itemmodel.documenttype == 1 && myData">
       <div>
         <span class='texts' style='margin-right: 8%;'>紧急程度：{{ myData.Emergency }}</span>
-        <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ myData.FinishDate}}</span>
+        <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ myData.FinishDate | date:'yyyy年MM月dd日 HH:mm'}}</span>
       </div>
       <div>
         <span class='texts'>标题：</span>
@@ -27,15 +27,15 @@
       </div>
       <div>
         <span class='texts'>收文人：</span>
-        <span class='texts'>{{ myData.Staff }}</span>
+        <span class='texts'>{{ myData.StaffName }}</span>
       </div>
       <div>
         <span class='texts'>收件日期：</span>
-        <span class='texts'>{{ myData.CreateDate }}</span>
+        <span class='texts'>{{ myData.CreateDate | date:'yyyy年MM月dd日 HH:mm' }}</span>
       </div>
       <div>
         <span class='texts'>来文落款时间：</span>
-        <span class='texts'>{{ myData.Date }}</span>
+        <span class='texts'>{{ myData.Date | date:'yyyy年MM月dd日 HH:mm' }}</span>
       </div>
       <div>
         <span class='texts'>登记备注：</span>
