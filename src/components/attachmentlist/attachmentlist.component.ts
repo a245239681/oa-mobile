@@ -48,6 +48,10 @@ export class AttachmentlistComponent implements OnInit {
         if (res['State'] === 1) {
           this.attachmentlistArr = res['Data'];
           console.log(this.attachmentlistArr);
+          if (this.attachmentlistArr.length === 1) {
+            // 如果附件只有1条则自动打开
+            this.previewerAttchment(this.attachmentlistArr[0]);
+          }
         } else {
           // this.toast.presentToast('暂无数据');
         }
@@ -73,20 +77,24 @@ export class AttachmentlistComponent implements OnInit {
       const fileUrl =
         this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
       this.commonHelper.presentLoading();
-      this.fileTransfer.download(uri, fileUrl).then(entry => {
-        entry.file(data => {
-          console.log(data);
-          this.fileOpener.open(fileUrl, getFileMimeType(item.Extended))
-            .then(() => this.commonHelper.dismissLoading())
-            .catch(() => {
-              this.commonHelper.dismissLoading();
-              this.commonHelper.presentToast('不支持该格式文件预览');
-            }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
-        });
-      }, () => {
-        this.commonHelper.dismissLoading();
-        this.commonHelper.presentToast('文件下载失败');
-      });
+      this.fileTransfer.download(uri, fileUrl).then(
+        entry => {
+          entry.file(data => {
+            console.log(data);
+            this.fileOpener
+              .open(fileUrl, getFileMimeType(item.Extended))
+              .then(() => this.commonHelper.dismissLoading())
+              .catch(() => {
+                this.commonHelper.dismissLoading();
+                this.commonHelper.presentToast('不支持该格式文件预览');
+              }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
+          });
+        },
+        () => {
+          this.commonHelper.dismissLoading();
+          this.commonHelper.presentToast('文件下载失败');
+        }
+      );
 
       return;
     }
