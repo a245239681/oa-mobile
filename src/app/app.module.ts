@@ -30,7 +30,7 @@ import { environment } from 'src/environments/environment';
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ rippleEffect: false, mode: 'md' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,0 +1,39 @@
+ion-list {
+  padding: 0;
+  position: relative;
+  top: 10px;
+  font-size: 4vw;
+  line-height: 1em;
+  clear: left;
+  >div {
+    padding: 10px 0;
+    // margin-left: 1em;
+    border-top: 1px solid #e0e0e0;
+    overflow: hidden;
+    &.root {
+      margin: 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    ion-icon {
+      float: left;
+      font-size: 1em;
+      width: 1.5em;
+      &.hide{
+        visibility: hidden;
+      }
+    }
+    ion-checkbox, ion-radio {
+      float: left !important;
+      height: 1em;
+      width: 1em;
+    }
+    ion-label{
+      float: left;
+      padding-left: 10px;
+      max-width: 80vw;
+    }
+  }
+  &.list-ios{
+    margin: 0;
+  }
+}

@@ -14,7 +14,7 @@ export class CommonHelper {
   constructor(
     public toastController: ToastController,
     private loadingCtrl: LoadingController
-  ) {}
+  ) { }
 
   /**
    * 显示toast
@@ -57,24 +57,23 @@ export class CommonHelper {
   public async presentLoading(content?: string) {
     if (this.loading) {
       this.loading.dismiss();
-    } else {
-      this.loading = await this.loadingCtrl.create({
-        spinner: 'crescent',
-        message: content,
-        translucent: true
-      });
-      console.log('开启');
-      this.loading.present();
     }
+    this.loading = await this.loadingCtrl.create({
+      spinner: 'crescent',
+      message: content,
+      translucent: true
+    });
+    this.loading.present();
   }
   /**
    * 关闭loading
    */
   public dismissLoading() {
-    if (this.loading) {
-      this.loading.dismiss();
-      console.log('关闭');
-    }
+    setTimeout(() => {
+      if (this.loading) {
+        this.loading.dismiss();
+      }
+    }, 500);
   }
 
   /**

@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar color="primary" mode="ios">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button text="返回"></ion-back-button>
     </ion-buttons>
     <ion-title>请选择</ion-title>
-    <ion-buttons slot="end" (click)="handinclick()">
-      提交
+    <ion-buttons slot="end">
+      <ion-button (click)="handinclick()">提交</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -18,7 +18,7 @@
           {{item['Label']}}
         </ion-label>
         <ion-list>
-          <ion-item *ngFor="let subitem of item['Children']" (click)="singleselect(subitem,i)">
+          <ion-item *ngFor="let subitem of item['Children']" (click)="singleselect(subitem,$event)">
             <ion-label>
               {{subitem['Label']}}
             </ion-label>
@@ -29,7 +29,25 @@
     </ion-label>
   </div>
   <div *ngIf="floor == 3">
-    <ion-label *ngIf="dataArr.length > 0">
+    <ion-radio-group>
+      <ng-container *ngTemplateOutlet="treeTpl;context:{items:treeData,level:0}"></ng-container>
+    </ion-radio-group>
+    <ng-template #treeTpl let-items="items" let-level="level">
+      <ion-list>
+        <div *ngFor="let item of items" [ngClass]="{'root':level===0}" (click)="singleselect(item,$event)">
+          <ion-icon [ngStyle]="{paddingLeft:level+'em'}" [ngClass]="{'hide':item.data.Type==2}" [name]="item.expanded?'arrow-dropdown':'arrow-dropright'"></ion-icon>
+          <ion-radio [(checked)]="item.checked" *ngIf="item.data.Type==2"></ion-radio>
+          <ion-label>{{item.text}}</ion-label>
+          <div *ngIf="item.expanded&&item.children.length">
+            <ng-container *ngTemplateOutlet="treeTpl;context:{items:item.children,level:level+1}"></ng-container>
+          </div>
+          <div *ngIf="item.expanded&&item.children.length===0" style="clear:left">
+              <span [ngStyle]="{paddingLeft:'calc(10px + 2.5em)'}"><small>没有可选择的项</small></span>
+          </div>
+        </div>
+      </ion-list>
+    </ng-template>
+    <!-- <ion-label *ngIf="dataArr.length > 0">
       <div *ngFor="let item of dataArr,let i = index">
         <ion-label>
           {{item['Label']}}
@@ -37,7 +55,7 @@
         <ion-list>
           <div *ngFor="let subitem of item['Children']">
             <ion-label>
-              {{subitem['Label']}}
+              {{subitem['Label']}}3
             </ion-label>
             <ion-list>
               <ion-item *ngFor="let subitem2 of subitem['Children'],let j = index" (click)="singleselect(subitem2,j)">
@@ -50,6 +68,6 @@
           </div>
         </ion-list>
       </div>
-    </ion-label>
+    </ion-label> -->
   </div>
 </ion-content>
