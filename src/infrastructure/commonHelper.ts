@@ -14,7 +14,7 @@ export class CommonHelper {
   constructor(
     public toastController: ToastController,
     private loadingCtrl: LoadingController
-  ) {}
+  ) { }
 
   /**
    * 显示toast
@@ -55,7 +55,9 @@ export class CommonHelper {
    * @param content 显示内容
    */
   public async presentLoading(content?: string) {
-    this.loading && this.loading.dismiss();
+    if (this.loading) {
+      this.loading.dismiss();
+    }
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
@@ -67,7 +69,11 @@ export class CommonHelper {
    * 关闭loading
    */
   public dismissLoading() {
-    this.loading && this.loading.dismiss();
+    setTimeout(() => {
+      if (this.loading) {
+        this.loading.dismiss();
+      }
+    }, 500);
   }
 
   /**
