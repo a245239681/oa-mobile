@@ -13,6 +13,9 @@ export class HandleinfoComponent implements OnInit {
   // 意见数组
   adcviceArr: any[] = [];
 
+  // 标题
+  header = {};
+
   bodyData: any;
 
   // 保存key的数组
@@ -67,6 +70,7 @@ export class HandleinfoComponent implements OnInit {
           res => {
             if (res['State'] === 1) {
               this.bodyData = res['Data']['BodyData'];
+              this.header = res['Data']['header'];
               this.adcviceArr = [];
               this.keyArr = [];
               // tslint:disable-next-line:forin
