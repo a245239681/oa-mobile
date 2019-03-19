@@ -5,6 +5,7 @@ import {
   CommitModel
 } from 'src/service/maiindex/mainindex.service';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-countersign',
@@ -26,7 +27,8 @@ export class CountersignComponent implements OnInit {
     public navParams: NavParams,
     public modalController: ModalController,
     private mainindexservice: MainindexService,
-    private toast: CommonHelper
+    private toast: CommonHelper,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -106,6 +108,7 @@ export class CountersignComponent implements OnInit {
         r => {
           if (r['State'] === 1) {
             console.log(r);
+            this.router.navigate(['tabs']);
             this.closemodal(r);
             this.toast.presentToast('提交成功');
           } else {

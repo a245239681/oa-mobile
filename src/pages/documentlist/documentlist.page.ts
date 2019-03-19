@@ -18,15 +18,13 @@ export class DocumentlistPage implements OnInit {
   // 列表数据
   listdataArr: any[] = [];
 
+  /** 搜索内容 */
   searchStr = '';
 
-  object = {
-    key: '11111'
-  };
-  // 当前页
+  /** 当前页 */
   currentPage = 1;
 
-  // 是否可以继续上拉
+  /** 是否可以继续上拉 */
   nohasmore = true;
 
   /** 1 收文 2 发文 3 传阅件 4 已办收文 5 已办发文 */
@@ -94,7 +92,7 @@ export class DocumentlistPage implements OnInit {
               console.log(res);
               this.listdataArr = res['Data']['PageOfResult'];
               // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
-              if (this.listdataArr.length < 10) {
+              if (this.listdataArr.length <= 20) {
                 this.nohasmore = true;
               } else {
                 this.nohasmore = false;
@@ -142,6 +140,16 @@ export class DocumentlistPage implements OnInit {
     this.getdata();
   }
 
+  /**监听回车搜索
+   *  @param event 根据页面传回来的event
+   *  @param search 搜索内容
+   */
+  onSearchKeyUp(event: any, search: string) {
+    if ('Enter' === event.key) {
+      this.seachclick(search);
+    }
+  }
+
   /**
    * 下拉刷新
    */
@@ -166,7 +174,7 @@ export class DocumentlistPage implements OnInit {
               this.listdataArr.push(item);
             });
 
-            if (tempArr.length < 10) {
+            if (tempArr.length <= 20) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;

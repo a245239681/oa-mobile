@@ -6,12 +6,10 @@
     <ion-title>已办工作</ion-title>
   </ion-toolbar>
   <div class="sykys">
-    <input type="text" [(ngModel)]="searchStr" placeholder="请输入标题" class="input">
+    <input type="searchStr" [(ngModel)]="searchStr" (keyup)="onSearchKeyUp($event, searchStr)" placeholder="请输入标题"
+      class="input">
     <ion-icon name="search" (click)="seachclick(searchStr)" class="syktb"></ion-icon>
   </div>
-</ion-header>
-
-<ion-content style="--background: #EFEFEF;">
   <ion-segment mode="md" (ionChange)="segmentChanged($event)" style=" background-color: white;">
     <ion-segment-button mode="md" value="1" checked>
       <ion-label>收文已办</ion-label>
@@ -20,9 +18,8 @@
       <ion-label>发文已办</ion-label>
     </ion-segment-button>
   </ion-segment>
-
-  <div style="height: 10px"></div>
-
+</ion-header>
+<ion-content style="--background: #EFEFEF;height: 10px">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
