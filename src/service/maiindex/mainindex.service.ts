@@ -456,6 +456,10 @@ export class MainindexService {
   GetStaffInfo(id: string) {
     return this.httpclient.get(ApiUrlManagement.GetStaffInfo + '?id=' + id);
   }
+  /** 获取相关公文 */
+  RelationTree(id: string) {
+    return this.httpclient.get(ApiUrlManagement.RelationTree + '?id=' + id);
+  }
 }
 
 // 保存意见的参数模型

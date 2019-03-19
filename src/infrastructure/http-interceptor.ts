@@ -96,12 +96,8 @@ export class AuthInterceptor implements HttpInterceptor {
   /**
    * 减去请求次数或者关闭loading
    */
-  private deductRequestCount() {
-    this.requestCount--;
-    if (this.requestCount <= 0) {
-      this.commonhelper.dismissLoading();
-    }
-
+  private deductRequestCount() {     
+  
     // if (this.requestCount > 1){
     //   this.requestCount--;
     // }else{
@@ -121,16 +117,12 @@ export class AuthInterceptor implements HttpInterceptor {
       url: this.apiUrl + req.url,
       body: this.param(req.body)
     });
-    // 避免连续多个loading闪屏
-    if (this.requestCount <= 0) {
-      this.commonhelper.presentLoading();
-    }
-    this.requestCount++;
+    this.commonhelper.presentLoading();
     return next.handle(authReq).pipe(
       tap(
         event => {
-          if (event instanceof HttpResponse) {
-            this.deductRequestCount();
+          this.commonhelper.dismissLoading();
+          if (event instanceof HttpResponse) { 
             if (event.url.indexOf(ApiUrlManagement.login) <= -1) {
               const apiReustl = event.body as ApiResult<{}>;
               if (apiReustl.State === 0 && apiReustl.Message) {
@@ -138,13 +130,12 @@ export class AuthInterceptor implements HttpInterceptor {
               }
             }
           } else {
-            console.log('错误');
-            this.deductRequestCount();
+            //console.log('错误');
+            // this.deductRequestCount();
           }
         },
         error => {
-          console.log('关闭');
-          this.deductRequestCount();
+          this.commonhelper.dismissLoading();
           // if (error.status === 401) {
           //   // this.messageService.add({ severity: 'error', summary: '错误消息', detail: '服务器出错，请稍后再试！' });
           //   this.route.navigateByUrl('login');

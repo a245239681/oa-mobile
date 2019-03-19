@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'secretinfoadvice', loadChildren: '../pages/secretinfoadvice/secretinfoadvice.module#SecretinfoadvicePageModule' },
   { path: 'return-back', loadChildren: '../pages/return-back/return-back.module#ReturnBackPageModule' },
   { path: 'mail-list', loadChildren: '../pages/mail-list/mail-list.module#MailListPageModule' },
+  { path: 'document-related', loadChildren: '../pages/document-related/document-related.module#DocumentRelatedPageModule' },
 
 
 ];

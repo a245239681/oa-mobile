@@ -166,12 +166,14 @@ export const ApiUrlManagement = {
   /**
    * 正文
    */
-  fileViewSends: 'api/recieve/FileViewSend',
+  fileViewSends: 'api/send/SendStemetFliePdf',
   /** 删除常用语 */
   DailyDelete: 'api/recieve/DailyDelete',
   /** 添加编辑常用语 */
   DailySave: 'api/recieve/DailySave ',
 
   /** 请求个人信息详情 */
-  GetStaffInfo: 'api/recieve/GetStaffInfo'
+  GetStaffInfo: 'api/recieve/GetStaffInfo',
+  /** 获取相关公文接口 */
+  RelationTree: 'api/recieve/RelationTree'
 };

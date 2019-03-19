@@ -27,8 +27,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     SignaturepadPageModule,
     CountersignModule,
+    
     RouterModule.forChild(routes)
   ],
-  declarations: [SubmissionPage]
+  declarations: [SubmissionPage],
 })
 export class SubmissionPageModule {}

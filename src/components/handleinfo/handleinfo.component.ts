@@ -13,6 +13,9 @@ export class HandleinfoComponent implements OnInit {
   // 意见数组
   adcviceArr: any[] = [];
 
+  // 标题
+  header = {};
+
   bodyData: any;
 
   // 保存key的数组
@@ -47,6 +50,7 @@ export class HandleinfoComponent implements OnInit {
   constructor(private service: MainindexService, public toast: CommonHelper) {}
 
   ngOnInit() {
+    // console.log(this.itemmodel);
     this.getdata();
   }
 
@@ -55,37 +59,70 @@ export class HandleinfoComponent implements OnInit {
    */
 
   getdata() {
-    this.service
-      .getallAttitudeList(
-        this.itemmodel['Id'],
-        this.itemmodel['ProcessType'],
-        this.itemmodel['CoorType']
-      )
-      .subscribe(
-        res => {
-          if (res['State'] === 1) {
-            this.bodyData = res['Data']['BodyData'];
-            this.adcviceArr = [];
-            this.keyArr = [];
-            // tslint:disable-next-line:forin
-            for (const key in this.bodyData) {
-              console.log(key);
-              this.keyArr.push(key);
-              this.adcviceArr.push(this.bodyData[key]);
-              console.log(this.adcviceArr);
-              console.dir(this.adcviceArr);
+    if (this.itemmodel.isRelated) {
+      this.service
+        .getallAttitudeList(
+          this.itemmodel['TargetId'],
+          this.itemmodel['ProcessType'],
+          this.itemmodel['CoorType']
+        )
+        .subscribe(
+          res => {
+            if (res['State'] === 1) {
+              this.bodyData = res['Data']['BodyData'];
+              this.header = res['Data']['header'];
+              this.adcviceArr = [];
+              this.keyArr = [];
+              // tslint:disable-next-line:forin
+              for (const key in this.bodyData) {
+                // console.log(key);
+                this.keyArr.push(key);
+                this.adcviceArr.push(this.bodyData[key]);
+                // console.log(this.adcviceArr);
+                // console.dir(this.adcviceArr);
+              }
+            } else {
+              this.toast.presentToast('暂无数据');
             }
-          } else {
-            this.toast.presentToast('暂无数据');
+          },
+          err => {
+            this.toast.presentToast('请求失败');
           }
-        },
-        err => {
-          this.toast.presentToast('请求失败');
-        }
-      );
+        );
+    } else {
+      this.service
+        .getallAttitudeList(
+          this.itemmodel['Id'],
+          this.itemmodel['ProcessType'],
+          this.itemmodel['CoorType']
+        )
+        .subscribe(
+          res => {
+            if (res['State'] === 1) {
+              this.bodyData = res['Data']['BodyData'];
+              this.header = res['Data']['header'];
+              this.adcviceArr = [];
+              this.keyArr = [];
+              // tslint:disable-next-line:forin
+              for (const key in this.bodyData) {
+                // console.log(key);
+                this.keyArr.push(key);
+                this.adcviceArr.push(this.bodyData[key]);
+                // console.log(this.adcviceArr);
+                // console.dir(this.adcviceArr);
+              }
+            } else {
+              this.toast.presentToast('暂无数据');
+            }
+          },
+          err => {
+            this.toast.presentToast('请求失败');
+          }
+        );
+    }
   }
   expression(i) {
-    console.log(i);
+    // console.log(i);
   }
   /**
    * 标题颜色

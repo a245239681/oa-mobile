@@ -25,7 +25,7 @@ export class CommonHelper {
    */
   public async presentToast(
     message: string = '操作完成',
-    color: string = 'dark',
+    color: string = 'success',
     cssClass: string = 'toastClass',
     mode: string = 'ios',
     position: string = 'top',
@@ -50,30 +50,42 @@ export class CommonHelper {
     this.toast.present();
   }
 
+  private isLoading : Boolean;
   /**
    * 弹出loading
    * @param content 显示内容
    */
+
+
   public async presentLoading(content?: string) {
-    if (this.loading) {
-      this.loading.dismiss();
+    if (this.isLoading == true ) {
+      return ;
     }
+
+    this.isLoading  = true ;
     this.loading = await this.loadingCtrl.create({
       spinner: 'crescent',
       message: content,
       translucent: true
     });
-    this.loading.present();
+    await this.loading.present();
   }
   /**
    * 关闭loading
    */
-  public dismissLoading() {
-    setTimeout(() => {
-      if (this.loading) {
-        this.loading.dismiss();
+  public async dismissLoading() {
+    if (this.isLoading == true) {
+      if(this.loading == null ){
+        setTimeout(() => {
+          this.dismissLoading();
+        }, 200);
+        return; 
       }
-    }, 500);
+      this.isLoading = false ;
+      this.loading.dismiss();
+      this.loading = null ;
+    }
+    
   }
 
   /**
