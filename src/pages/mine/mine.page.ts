@@ -52,7 +52,7 @@ export class MinePage implements OnInit {
   logout() {
     this.userinfo.removeToken();
     this.nav.navigateRoot('login');
-    this.toast.presentToast('注销成功');
+    this.toast.presentToast('注销成功,感谢您的使用！');
   }
 
   /** 修改密码 */
@@ -72,7 +72,7 @@ export class MinePage implements OnInit {
     });
   }
   /** 跳转到二维码 */
-  toQr(){
+  toQr() {
     this.route.navigate(['qr-code'], {
       queryParams: {
         item: JSON.stringify(this.personaldetails)

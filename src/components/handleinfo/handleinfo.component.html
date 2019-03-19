@@ -1,36 +1,37 @@
 <ion-content>
   <div class="kp">
-    <div class="bt">
+    <div class="bt" *ngIf="header">
       <span>{{header['Title']}}</span>
     </div>
     <!-- 收文 -->
-    <div *ngIf="itemmodel.documenttype == 1 || itemmodel.documenttype == 4">
+    <div *ngIf="(itemmodel.documenttype == 1 || itemmodel.documenttype == 4) && header">
       <div>
-        <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ header['Emergency'] }}</span>
-        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{header['FinishDate']}}</span>
+        <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ header.Emergency }}</span>
+        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{header.FinishDate.replace('-', '年').replace('-', '月') +
+            '日'}}</span>
       </div>
       <div>
         <span class='texts'>来文文号：</span>
-        <span class='texts'>{{ header['SerialNumber'] }}</span>
+        <span class='texts'>{{ header.SerialNumber }}</span>
       </div>
       <div>
         <span class='texts'>来文单位：</span>
-        <span class='texts'>{{ header['Department'] }}</span>
+        <span class='texts'>{{ header.Department }}</span>
       </div>
     </div>
     <!-- 发文 -->
-    <div *ngIf="itemmodel.documenttype == 2 || itemmodel.documenttype == 5">
+    <div *ngIf="(itemmodel.documenttype == 2 || itemmodel.documenttype == 5) && header">
       <div>
         <span class='texts'>主&#12288;送：</span>
-        <span class='texts'>{{ header['Department'] }}</span>
+        <span class='texts'>{{ header.Department }}</span>
       </div>
       <div>
         <span class='texts'>公文文号：</span>
-        <span class='texts'>{{ header['SerialNumber'] }}</span>
+        <span class='texts'>{{ header.SerialNumber }}</span>
       </div>
       <div>
         <span class='texts'>签&nbsp;发&nbsp;人：</span>
-        <span class='texts'>{{ header['AttituderName'] }}</span>
+        <span class='texts'>{{ header.AttituderName }}</span>
       </div>
     </div>
 

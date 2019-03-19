@@ -383,6 +383,20 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
+
+    if(this.itemmodel['documenttype'] == 3){
+      this.mainservice.SetDoRead(this.itemmodel['Id'],content).subscribe(res=>{
+         
+        this.toast.presentToast("操作成功");
+        this.route.navigate(['tabs']);
+      })
+      return;
+    }
+
+
+
+
+
     // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理
     if (this.sendStepName == '二校' ||
       this.sendStepName == '文印' ||

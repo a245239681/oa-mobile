@@ -90,8 +90,7 @@ export class MailListPage implements OnInit {
   }
 
   callIpnone(e: any) {
-
-
+    document.location.href = 'tel:' + e;
   }
 
   /**
