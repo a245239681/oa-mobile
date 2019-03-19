@@ -4,7 +4,7 @@
   </ion-toolbar>
   <div class="sykys">
     <input type="text" [(ngModel)]="searchStr" placeholder="请输入部门\联系人\号码" class="input">
-    <ion-icon name="search" class="syktb"></ion-icon>
+    <ion-icon name="search" (click)="SearchFilter(searchStr)"  class="syktb"></ion-icon>
   </div>
 </ion-header>
 
