@@ -132,7 +132,7 @@ export class CirculationinfoComponent implements OnInit {
                 item['children'] = res['Data'];
                 item.hidden = item['children'].length === 0;
                 if (res.Data.length === 0) {
-                  this.toast.presentToast('暂无数据');
+                  this.toast.presentToast('该模块下暂无数据');
                 } else {
                   item['children'].forEach(e => {
                     e.SignDate = this.sjdate(e.SignDate);
@@ -162,7 +162,7 @@ export class CirculationinfoComponent implements OnInit {
                 item['children'] = res['Data'];
                 item.hidden = item['children'].length === 0;
                 if (res.Data.length === 0) {
-                  this.toast.presentToast('暂无数据');
+                  this.toast.presentToast('该模块下暂无数据');
                 } else {
                   item['children'].forEach(e => {
                     e.SignDate = this.sjdate(e.SignDate);

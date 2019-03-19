@@ -22,10 +22,7 @@
     <ion-segment-button value="1" checked>
       <ion-label>办理信息</ion-label>
     </ion-segment-button>
-    <ion-segment-button
-      *ngIf="itemmodel['documenttype'] == 2 || itemmodel['documenttype'] == 5"
-      value="6"
-    >
+    <ion-segment-button *ngIf="itemmodel['ProcessType'] == 1" value="6">
       <ion-label>正文</ion-label>
     </ion-segment-button>
   </ion-segment></ion-content
