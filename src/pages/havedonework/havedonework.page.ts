@@ -77,14 +77,14 @@ export class HavedoneworkPage implements OnInit {
               this.nohasmore = false;
               this.currentPage += 1;
             }
-            this.listdataArr = this.listdataArr.map(item => {
-              if (item.Backable) {
-                item.color = '2';
-              } else {
-                item.color = '1';
-              }
-              return item;
-            });
+            // this.listdataArr = this.listdataArr.map(item => {
+            //   if (item.Backable) {
+            //     item.color = '2';
+            //   } else {
+            //     item.color = '1';
+            //   }
+            //   return item;
+            // });
           } else {
             this.toast.presentToast('已无数据');
           }
@@ -134,11 +134,11 @@ export class HavedoneworkPage implements OnInit {
             }
 
             tempArr.forEach(item => {
-              if (item.Backable) {
-                item.color = '2';
-              } else {
-                item.color = '1';
-              }
+              // if (item.Backable) {
+              //   item.color = '2';
+              // } else {
+              //   item.color = '1';
+              // }
               this.listdataArr.push(item);
             });
           } else {

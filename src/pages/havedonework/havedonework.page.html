@@ -22,7 +22,7 @@
   </ion-segment>
 
   <div style="height: 10px"></div>
-  
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
@@ -38,8 +38,8 @@
     <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
       <!-- 已办收文 -->
       <div *ngIf="type == 1">
-        <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '2'">{{item.Title}}</ion-note>
-        <ion-note color="primary" class="kpbt" *ngIf="item['color'] == '1'">{{item.Title}}</ion-note>
+        <ion-note color="danger" class="kpbt" *ngIf="item.Backable">{{item.Title}}</ion-note>
+        <ion-note color="primary" class="kpbt" *ngIf="!item.Backable">{{item.Title}}</ion-note>
         <div style="max-width: 330px">
           <div>
             <ion-label class="label">
@@ -62,8 +62,8 @@
 
       <!--  已办发文 -->
       <div *ngIf="type == 2">
-        <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '2'">{{item.Title}}</ion-note>
-        <ion-note color="primary" class="kpbt" *ngIf="item['color'] == '1'">{{item.Title}}</ion-note>
+        <ion-note color="danger" class="kpbt" *ngIf="item.Backable">{{item.Title}}</ion-note>
+        <ion-note color="primary" class="kpbt" *ngIf="!item.Backable">{{item.Title}}</ion-note>
         <div style="max-width: 330px">
           <div>
             <ion-label class="label">
@@ -83,7 +83,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-infinite-scroll threshold="100px"  [hidden]="nohasmore" (ionInfinite)="loadMoreData($event)">
+  <ion-infinite-scroll threshold="100px" [hidden]="nohasmore" (ionInfinite)="loadMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
