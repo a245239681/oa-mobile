@@ -45,12 +45,12 @@ export class DocumentRelatedPage implements OnInit {
         break;
       case '6':
         this.title = '正文';
-        this.previewerAttchment(this.itemmodel['Id']);
+        this.previewerAttchment(this.itemmodel['TargetId']);
         break;
     }
   }
   openDocument() {
-    this.previewerAttchment(this.itemmodel['Id']);
+    this.previewerAttchment(this.itemmodel['TargetId']);
   }
 
   /**
