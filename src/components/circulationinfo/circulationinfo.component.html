@@ -10,8 +10,8 @@
           <div class="reny">
             <h5 class="texts" style="font-weight:bold">活动名称：{{subitem['ActionName']}}</h5>
             <p class="texts">签收日期：{{ subitem['SignDate'] | date:"yyyy-MM-dd" }}</p>
-            <p class="texts">开始日期：{{ (subitem['Date'] ? subitem['Date'] : '').split(' - ')[0] | date:"yyyy-MM-dd" }}</p>
-            <p class="texts">结束日期：{{ (subitem['Date'] ? subitem['Date'] : '').split(' - ')[1] | date:"yyyy-MM-dd" }}</p>
+            <p class="texts">开始日期：{{ subitem['Date1'] | date:"yyyy-MM-dd" }}</p>
+            <p class="texts">结束日期：{{ subitem['Date2'] | date:"yyyy-MM-dd" }}</p>
             <div>
               <span class='texts' style='margin-right: 8%;vertical-align: top;'>经办用户：{{ subitem['ActUsr'] }}</span>
               <span class='texts' style="min-width: 50%;display: inline-block;vertical-align: top;">状态：{{

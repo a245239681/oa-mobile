@@ -45,12 +45,24 @@ export class CirculationinfoComponent implements OnInit {
         res => {
           console.log(res);
           if (res['State'] === 1) {
-            this.parenteArr = res['Data'];
+            const parenteArr = res['Data'];
             if (this.parenteArr) {
               this.parenteArr.forEach(
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
             }
+            parenteArr.forEach(e => {
+              e.children.forEach(el => {
+                el.SignDate = this.sjdate(el.SignDate);
+                el.Date1 = this.sjdate(
+                  (el.Date ? el.Date : '').split(' - ')[0]
+                );
+                el.Date2 = this.sjdate(
+                  (el.Date ? el.Date : '').split(' - ')[1]
+                );
+              });
+            });
+            this.parenteArr = parenteArr;
           } else {
             this.toast.presentToast('暂无数据');
           }
@@ -79,6 +91,13 @@ export class CirculationinfoComponent implements OnInit {
         }
       );
     }
+  }
+
+  // 转换
+  sjdate(dos: any) {
+    dos = dos.replace(/-/g, '/');
+    // dos = dos.substring(0, dos.length - 3);
+    return dos;
   }
 
   /**
