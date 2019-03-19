@@ -16,6 +16,6 @@
     <ion-input class="flexRightContent" placeholder="请输入办公电话" [(ngModel)]="data.Phone" style="padding-left: 20px !important"></ion-input>
   </div>
   <div style="margin-top: 2rem;padding: 0 2rem;">
-    <ion-button expand="block" (click)="submit()">保存</ion-button>
+    <ion-button expand="block" (click)="submit()" [disabled]='!data.Mobile||!data.Phone'>保存</ion-button>
   </div>
 </ion-content>

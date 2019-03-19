@@ -10,6 +10,7 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
 export class SignComponent implements OnInit {
   @Input() itemmodel: any;
   myData: any;
+  /** 标题 */
   title: string;
   /** 正文模板 */
   templateType: string;
