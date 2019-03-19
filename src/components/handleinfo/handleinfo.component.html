@@ -4,7 +4,7 @@
       <span>{{itemmodel['Title']}}</span>
     </div>
     <!-- 收文 -->
-    <div *ngIf="itemmodel.documenttype == 1">
+    <div *ngIf="itemmodel.documenttype == 1 || itemmodel.documenttype == 4">
       <div>
         <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ itemmodel['Emergency'] }}</span>
         <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{
@@ -21,7 +21,7 @@
       </div>
     </div>
     <!-- 发文 -->
-    <div *ngIf="itemmodel.documenttype == 2">
+    <div *ngIf="itemmodel.documenttype == 2 || itemmodel.documenttype == 5">
       <div>
         <span class='texts'>主&#12288;送：</span>
         <span class='texts'>{{ itemmodel['Department'] }}</span>

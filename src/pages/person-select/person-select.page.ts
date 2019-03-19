@@ -180,7 +180,6 @@ export class PersonSelectPage implements OnInit {
           });
         }
       }
-      console.log('haha');
       // 下一步数据在此组装完毕
       console.log(this.nextArr);
     }

@@ -1,3 +1,4 @@
+import { CommonHelper } from './../../infrastructure/commonHelper';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MainindexService } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,7 @@ export class SecretinfoadvicePage implements OnInit {
   itemmodel: any;
 
   title: string;
-  constructor(private mainservice: MainindexService, private activeRouter: ActivatedRoute, private route: Router) {
+  constructor(private mainservice: MainindexService, private toast: CommonHelper, private activeRouter: ActivatedRoute, private route: Router) {
     this.activeRouter.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
       this.title = params['title'];
@@ -25,6 +26,10 @@ export class SecretinfoadvicePage implements OnInit {
   }
 
   handinclick() {
+    if (this.textAreaValue.trim().length == 0) {
+      this.toast.presentToast('请填写意见后再提交');
+      return;
+    }
     if (this.title == '公开信息意见') {
       this.mainservice.OpenInfoAdvice(this.itemmodel['Id'], this.textAreaValue).subscribe((res) => {
         if (res['State'] == 1) {

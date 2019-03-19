@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { VerificationComponent } from './verification/verification.component';
 import { IonicModule } from '@ionic/angular';
 import { HandleinfoComponent } from './handleinfo/handleinfo.component';
 import { FormsModule } from '@angular/forms';
@@ -10,35 +9,29 @@ import { SignComponent } from './sign/sign.component';
 import { DepartmentSelectComponent } from './department-select/department-select.component';
 import { NextSelectComponent } from './next-select/next-select.component';
 import { ReadercomponentComponent } from './readercomponent/readercomponent.component';
-import { IonTreeViewModule } from 'ionic-tree-view';
-
+import { DocumentpaperComponent } from './documentpaper/documentpaper.component';
 
 @NgModule({
-    declarations: [
-        VerificationComponent,
-        HandleinfoComponent,
-        AttachmentlistComponent,
-        CirculationinfoComponent,
-        SignComponent,
-        DepartmentSelectComponent,
-        NextSelectComponent,
-        ReadercomponentComponent
-    ],
-    imports: [
-        IonicModule,
-        FormsModule,
-        CommonModule,
-        IonTreeViewModule
-    ],
-    exports: [
-        VerificationComponent,
-        HandleinfoComponent,
-        AttachmentlistComponent,
-        CirculationinfoComponent,
-        SignComponent,
-        DepartmentSelectComponent,
-        NextSelectComponent,
-        ReadercomponentComponent
-    ]
+  declarations: [
+    DocumentpaperComponent,
+    HandleinfoComponent,
+    AttachmentlistComponent,
+    CirculationinfoComponent,
+    SignComponent,
+    DepartmentSelectComponent,
+    NextSelectComponent,
+    ReadercomponentComponent
+  ],
+  imports: [IonicModule, FormsModule, CommonModule],
+  exports: [
+    DocumentpaperComponent,
+    HandleinfoComponent,
+    AttachmentlistComponent,
+    CirculationinfoComponent,
+    SignComponent,
+    DepartmentSelectComponent,
+    NextSelectComponent,
+    ReadercomponentComponent
+  ]
 })
-export class ComponentsModule { }
+export class ComponentsModule {}
