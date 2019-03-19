@@ -73,7 +73,7 @@ export class CommonHelper {
       if (this.loading) {
         this.loading.dismiss();
       }
-    }, 500);
+    }, 100);
   }
 
   /**

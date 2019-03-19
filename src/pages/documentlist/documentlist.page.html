@@ -6,7 +6,7 @@
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
   <div class="sykys">
-    <input type="text" [(ngModel)]="searchStr" placeholder="请输入标题\公文文号\来文单位\主送\拟稿人" class="input">
+    <input type="text" [(ngModel)]="searchStr" placeholder="请输入标题" class="input">
     <ion-icon name="search" (click)="seachclick(searchStr)" class="syktb"></ion-icon>
   </div>
 </ion-header>
@@ -72,26 +72,6 @@
         </div>
       </div>
 
-      <!--  已办发文 -->
-      <div *ngIf="title == '已办发文'">
-        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-        <div style="max-width: 330px">
-          <div>
-            <ion-label class="label">
-              公文文号：{{item.SerialNumber}}
-            </ion-label>
-          </div>
-          <div>
-            <ion-label class="label">
-              拟稿部门：{{item.DeptName}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              主&#12288;送：{{item.Department}}
-            </ion-label>
-          </div>
-        </div>
-      </div>
-
       <!-- 传阅 -->
       <div *ngIf="title == '传阅件'">
         <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
@@ -111,6 +91,26 @@
           </div>
         </div>
       </div>
+
+      <!--  已办发文 -->
+      <div *ngIf="title == '已办发文'">
+          <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
+          <div style="max-width: 330px">
+            <div>
+              <ion-label class="label">
+                公文文号：{{item.SerialNumber}}
+              </ion-label>
+            </div>
+            <div>
+              <ion-label class="label">
+                拟稿部门：{{item.DeptName}}
+              </ion-label>
+              <ion-label class="label label-nopa">
+                主&#12288;送：{{item.Department}}
+              </ion-label>
+            </div>
+          </div>
+        </div>
 
       <!-- 已办收文 -->
       <div *ngIf="title == '已办收文'">
