@@ -5,9 +5,11 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './documentpaper.component.html',
   styleUrls: ['./documentpaper.component.scss']
 })
-export class DocumentpaperComponent {
+export class DocumentpaperComponent implements OnInit {
   // 传进来的itemmodel
   @Input() itemmodel: any;
 
   constructor() {}
+
+  ngOnInit() {}
 }

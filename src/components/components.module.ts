@@ -10,6 +10,7 @@ import { DepartmentSelectComponent } from './department-select/department-select
 import { NextSelectComponent } from './next-select/next-select.component';
 import { ReadercomponentComponent } from './readercomponent/readercomponent.component';
 import { DocumentpaperComponent } from './documentpaper/documentpaper.component';
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DocumentpaperComponent } from './documentpaper/documentpaper.component'
     SignComponent,
     DepartmentSelectComponent,
     NextSelectComponent,
-    ReadercomponentComponent
+    ReadercomponentComponent,
+    VerificationComponent
   ],
   imports: [IonicModule, FormsModule, CommonModule],
   exports: [
@@ -31,7 +33,8 @@ import { DocumentpaperComponent } from './documentpaper/documentpaper.component'
     SignComponent,
     DepartmentSelectComponent,
     NextSelectComponent,
-    ReadercomponentComponent
+    ReadercomponentComponent,
+    VerificationComponent
   ]
 })
 export class ComponentsModule {}

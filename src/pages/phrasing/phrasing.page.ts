@@ -3,7 +3,8 @@ import {
   AlertController,
   ToastController,
   NavController,
-  ModalController
+  ModalController,
+  Platform
 } from '@ionic/angular';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { AddEditPhrasingPage } from '../add-edit-phrasing/add-edit-phrasing.page';
@@ -19,18 +20,22 @@ export class PhrasingPage implements OnInit {
 
   /** 常用语数组 */
   myList: any;
-
+  sub: any;
   constructor(
     public alertController: AlertController,
     public toastController: ToastController,
     private nav: NavController,
     public mainindexService: MainindexService,
     private modalController: ModalController,
-    private toast: CommonHelper
+    private toast: CommonHelper,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
     this.Getoftenuse();
+    this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+      this.nav.back();
+    });
   }
 
   /** 请求常用语列表 */
@@ -123,6 +128,11 @@ export class PhrasingPage implements OnInit {
     console.log(data);
     if (data.data.result === 'change') {
       this.Getoftenuse();
+    }
+  }
+  ionViewWillLeave() {
+    if (this.sub) {
+      this.sub.unsubscribe();
     }
   }
 }

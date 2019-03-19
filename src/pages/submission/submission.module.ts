@@ -9,6 +9,7 @@ import { SubmissionPage } from './submission.page';
 import { ComponentsModule } from 'src/components/components.module';
 import { SignaturepadPageModule } from '../signaturepad/signaturepad.module';
 import { CountersignModule } from 'src/components/countersign/countersign.module';
+import { PersonSelectPage } from '../person-select/person-select.page';
 
 const routes: Routes = [
   {
@@ -29,6 +30,6 @@ const routes: Routes = [
     CountersignModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SubmissionPage]
+  declarations: [SubmissionPage],
 })
 export class SubmissionPageModule {}
