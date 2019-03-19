@@ -9,14 +9,22 @@ page-signature {
 }
 
 .zbzt {
+    width: 5%;
+    text-align: center;
     display: inline-block;
-    height: 500px;
-    vertical-align: text-bottom
+    vertical-align: text-bottom;
+    position: relative;
 }
 
 .qxb {
     border: 2px solid black;
-    width: 90%;
+    width: 100%;
     display: inline-block;
-    margin-left: 5px
+    margin-left: 5px;
+    position: relative;
+}
+
+.sqb{
+    display: inline-block;
+    width: 95%;
 }
