@@ -46,8 +46,8 @@ export class CirculationinfoComponent implements OnInit {
           console.log(res);
           if (res['State'] === 1) {
             const parenteArr = res['Data'];
-            if (this.parenteArr) {
-              this.parenteArr.forEach(
+            if (parenteArr) {
+              parenteArr.forEach(
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
             }
@@ -77,7 +77,7 @@ export class CirculationinfoComponent implements OnInit {
           console.log(res);
           if (res['State'] === 1) {
             const parenteArr = res['Data'];
-            if (this.parenteArr) {
+            if (parenteArr) {
               this.parenteArr.forEach(
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
@@ -133,6 +133,16 @@ export class CirculationinfoComponent implements OnInit {
                 item.hidden = item['children'].length === 0;
                 if (res.Data.length === 0) {
                   this.toast.presentToast('暂无数据');
+                } else {
+                  item['children'].forEach(e => {
+                    e.SignDate = this.sjdate(e.SignDate);
+                    e.Date1 = this.sjdate(
+                      (e.Date ? e.Date : '').split(' - ')[0]
+                    );
+                    e.Date2 = this.sjdate(
+                      (e.Date ? e.Date : '').split(' - ')[1]
+                    );
+                  });
                 }
               } else {
                 this.toast.presentToast('暂无数据');
@@ -153,6 +163,16 @@ export class CirculationinfoComponent implements OnInit {
                 item.hidden = item['children'].length === 0;
                 if (res.Data.length === 0) {
                   this.toast.presentToast('暂无数据');
+                } else {
+                  item['children'].forEach(e => {
+                    e.SignDate = this.sjdate(e.SignDate);
+                    e.Date1 = this.sjdate(
+                      (e.Date ? e.Date : '').split(' - ')[0]
+                    );
+                    e.Date2 = this.sjdate(
+                      (e.Date ? e.Date : '').split(' - ')[1]
+                    );
+                  });
                 }
               } else {
                 this.toast.presentToast('暂无数据');

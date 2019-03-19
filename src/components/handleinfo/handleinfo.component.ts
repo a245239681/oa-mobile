@@ -100,6 +100,7 @@ export class HandleinfoComponent implements OnInit {
           res => {
             if (res['State'] === 1) {
               this.bodyData = res['Data']['BodyData'];
+              this.header = res['Data']['header'];
               this.adcviceArr = [];
               this.keyArr = [];
               // tslint:disable-next-line:forin
