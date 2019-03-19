@@ -25,7 +25,7 @@ export class CommonHelper {
    */
   public async presentToast(
     message: string = '操作完成',
-    color: string = 'dark',
+    color: string = 'success',
     cssClass: string = 'toastClass',
     mode: string = 'ios',
     position: string = 'top',
@@ -74,7 +74,13 @@ export class CommonHelper {
    * 关闭loading
    */
   public async dismissLoading() {
-    if (this.isLoading == true  && this.loading != null ) {
+    if (this.isLoading == true) {
+      if(this.loading == null ){
+        setTimeout(() => {
+          this.dismissLoading();
+        }, 200);
+        return; 
+      }
       this.isLoading = false ;
       this.loading.dismiss();
       this.loading = null ;

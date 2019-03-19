@@ -44,12 +44,18 @@ export class HavedoneworkPage implements OnInit {
    */
   segmentChanged(event: any) {
     console.log(event);
-    this.type = event.target.value;
+    this.searchStr = '';
+    if (event.target.value === '1') {
+      this.type = 1;
+    } else {
+      this.type = 2;
+    }
     this.getdata();
   }
   ngOnInit() {
     this.getdata();
   }
+
   /**
    * 获取列表数据
    */
@@ -65,12 +71,20 @@ export class HavedoneworkPage implements OnInit {
           if (res['State'] === 1) {
             console.log(res);
             this.listdataArr = res['Data']['PageOfResult'];
-            if (this.listdataArr.length < 10) {
+            if (this.listdataArr.length < 20) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
               this.currentPage += 1;
             }
+            // this.listdataArr = this.listdataArr.map(item => {
+            //   if (item.Backable) {
+            //     item.color = '2';
+            //   } else {
+            //     item.color = '1';
+            //   }
+            //   return item;
+            // });
           } else {
             this.toast.presentToast('已无数据');
           }
@@ -111,17 +125,22 @@ export class HavedoneworkPage implements OnInit {
           this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
             console.log(res);
-            const tempArr: any[] = res['Data']['PageOfResult'];
-            tempArr.forEach(item => {
-              this.listdataArr.push(item);
-            });
-
-            if (tempArr.length < 10) {
+            const tempArr = res['Data']['PageOfResult'];
+            if (tempArr.length < 20) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
               this.currentPage++;
             }
+
+            tempArr.forEach(item => {
+              // if (item.Backable) {
+              //   item.color = '2';
+              // } else {
+              //   item.color = '1';
+              // }
+              this.listdataArr.push(item);
+            });
           } else {
             this.toast.presentToast('已无数据');
           }
@@ -146,7 +165,7 @@ export class HavedoneworkPage implements OnInit {
    * 进入详情
    */
   pushIntodetail(item: any) {
-    if (this.type == 1) {
+    if (this.type === 1) {
       this.stype = 4;
       this.title = '已办收文';
     } else {

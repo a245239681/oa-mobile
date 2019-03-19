@@ -91,6 +91,11 @@ export const ApiUrlManagement = {
   getLeaderTree: 'api/recieve/GetLeaderTree',
 
   /**
+   * 获取通讯录数据
+   */
+  getMail: '/api/send/TreeDate',
+
+  /**
    * 获取部门人员数据
    */
   getDeptTreeCY: 'api/recieve/GetDeptTree_CY',
