@@ -168,5 +168,7 @@ export const ApiUrlManagement = {
   DailySave: 'api/recieve/DailySave ',
 
   /** 请求个人信息详情 */
-  GetStaffInfo: 'api/recieve/GetStaffInfo'
+  GetStaffInfo: 'api/recieve/GetStaffInfo',
+  /** 获取相关公文接口 */
+  RelationTree: 'api/recieve/RelationTree'
 };

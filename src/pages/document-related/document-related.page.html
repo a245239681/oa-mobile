@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button
+        text="返回"
+        style="display:block"
+        (click)="closemodal()"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-handleinfo [itemmodel]="itemmodel" *ngIf="type == '1'"></app-handleinfo>
+  <div class="parent" *ngIf="type == '6'">
+    <ion-button (click)="openDocument()" class="center"
+      >再次打开正文</ion-button
+    >
+  </div>
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="1" checked>
+      <ion-label>办理信息</ion-label>
+    </ion-segment-button>
+    <ion-segment-button
+      *ngIf="itemmodel['documenttype'] == 2 || itemmodel['documenttype'] == 5"
+      value="6"
+    >
+      <ion-label>正文</ion-label>
+    </ion-segment-button>
+  </ion-segment></ion-content
+>
