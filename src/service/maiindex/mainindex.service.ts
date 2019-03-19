@@ -212,8 +212,11 @@ export class MainindexService {
   }
 
   /**
-   *
+   *获取通讯录数据
    */
+  getMaliList(): Observable<any> {
+    return this.httpclient.get(ApiUrlManagement.getMail);
+  }
 
   /**
    * 获取局领导数据
@@ -395,6 +398,13 @@ export class MainindexService {
     });
   }
 
+  /**传阅阅读 */
+  SetDoRead(id, content) {
+    return this.httpclient.get(ApiUrlManagement.SetDoRead, {
+      params: { id: id, content: content }
+    });
+  }
+
   /** 退回验证 */
   ValidBack(Id: string, processType: string, coorType: string) {
     return this.httpclient.get(
@@ -466,6 +476,14 @@ export class MainindexService {
         '&coorType=' +
         coorType
     );
+  }
+  /** 获取办文笺详情 */
+  GetReceiveData(Id: string) {
+    return this.httpclient.get(ApiUrlManagement.GetReceiveData, {
+      params: {
+        Id: Id
+      }
+    });
   }
 }
 

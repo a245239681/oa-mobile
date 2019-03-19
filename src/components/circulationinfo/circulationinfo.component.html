@@ -9,12 +9,12 @@
         <div *ngFor="let subitem of item['children']; let n = index">
           <div class="reny">
             <h5 class="texts" style="font-weight:bold">活动名称：{{subitem['ActionName']}}</h5>
-            <p class="texts">签收日期：{{ subitem['SignDate']}}</p>
-            <p class="texts">开始日期：{{ subitem['Date1']}}</p>
-            <p class="texts">结束日期：{{ subitem['Date2']}}</p>
+            <p class="texts">签收日期：{{ subitem['SignDate']|date:'yyyy年MM月dd日 HH:mm'}}</p>
+            <p class="texts">开始日期：{{ subitem['Date1']|date:'yyyy年MM月dd日 HH:mm'}}</p>
+            <p class="texts">结束日期：{{ subitem['Date2']|date:'yyyy年MM月dd日 HH:mm'}}</p>
             <div>
-              <span class='texts' style='margin-right: 8%;vertical-align: top;'>经办用户：{{ subitem['ActUsr'] }}</span>
-              <span class='texts' style="min-width: 50%;display: inline-block;vertical-align: top;">状态：{{
+              <span class='texts' style='margin-right: 8%;'>经办用户：{{ subitem['ActUsr'] }}</span>
+              <span class='texts' style="min-width: 50%;display: inline-block;">状态：{{
                 subitem['State']
                 }}</span>
             </div>

@@ -52,11 +52,14 @@ export class ChangePasswordPage implements OnInit {
 
   ngOnInit() {
     console.log(this.myData);
-    this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+    if (this.platform.is("android")){
+      this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
       // this.nav.pop();
       // return true;
       this.nav.back();
     });
+    }
+    
   }
 
   /** 修改密码 */
@@ -72,7 +75,7 @@ export class ChangePasswordPage implements OnInit {
             this.nav.navigateRoot('login');
             this.toast.presentToast('修改成功');
           } else {
-            this.toast.presentToast('修改失败');
+            this.toast.presentToast(r['Data']);
           }
         },
         () => {

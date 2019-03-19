@@ -1,3 +1,4 @@
+import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
@@ -54,6 +55,12 @@ export class DocumentdetailPage implements OnInit {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
       this.itemmodel = JSON.parse(params['item']);
+      
+      if(this.itemmodel['documenttype'] == 3){
+        this.mainIndexService.SetDoRead(this.itemmodel['Id'],'').subscribe(res=>{
+          console.log("传阅阅读",res)
+        });
+      }
     });
     /** 拟办意见的显示隐藏 */
   }

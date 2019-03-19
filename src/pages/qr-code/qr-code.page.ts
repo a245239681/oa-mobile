@@ -17,7 +17,7 @@ export class QrCodePage implements OnInit {
   }
   /** 返回 */
   canGoBack() {
-    this.nav.back();
+   // this.nav.back();
   }
   ionViewWillLeave() {
     if (this.sub) {

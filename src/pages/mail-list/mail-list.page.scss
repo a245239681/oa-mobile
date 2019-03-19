@@ -1,0 +1,72 @@
+.sykys {
+  width: 100vw;
+  padding: 10px;
+  background-color: #4877fb;
+  position: relative;
+}
+.syktb {
+  color: #4877fb;
+  font-size: 1.6rem;
+  position: absolute;
+  right: 18px;
+  top: 16px;
+}
+.input {
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1px solid #c8cccf;
+  color: #6a6f77;
+  -web-kit-appearance: none;
+  -moz-appearance: none;
+  display: block;
+  outline: 0;
+  padding: 7px 30px 7px 10px;
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #7c7e83;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #7c7e83;
+}
+
+input::-webkit-input-placeholder {
+  color: #7c7e83;
+}
+.title-home {
+  background-color: #ffffff;
+}
+.title-home > span {
+  padding: 0 1rem;
+  font-size: 1rem !important;
+}
+.nameBOx {
+  display: block;
+  width: 15%;
+  -webkit-margin-end: 15px !important;
+  margin-inline-end: 15px !important;
+}
+.deil {
+  width: 75%;
+}
+.deil > span {
+  display: block;
+  width: 100%;
+  padding-block-start: 0.5rem;
+}
+.deil > span.endPhone {
+  padding-block-end: 0.5rem;
+}
+.primary{
+    color: #4877fb;
+}
+.action-sheet-group.sc-ion-action-sheet-md:first-child {
+    margin-bottom: 5px;
+}

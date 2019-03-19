@@ -1,9 +1,21 @@
 <ion-header>
   <ion-toolbar color="primary" mode='ios'>
-    <ion-title>通讯录</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
+  <div class="sykys">
+    <input type="text" [(ngModel)]="searchStr" placeholder="请输入部门\联系人\号码" class="input">
+    <ion-icon name="search" (click)="SearchFilter(searchStr)"  class="syktb"></ion-icon>
+  </div>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content style="--background: #EFEFEF;">
+  <h3 class="title-home" padding>
+    <ion-icon name="home" color="danger" style="vertical-align: -3px;"></ion-icon>
+    <span>南宁市住房保障和房产管理局</span>
+  </h3>
+  <ion-item *ngFor="let item of items" (click)="mailShow(item.children,item.text)" >
+    <ion-label>
+      {{item.text}}
+    </ion-label>
+  </ion-item>
 </ion-content>
