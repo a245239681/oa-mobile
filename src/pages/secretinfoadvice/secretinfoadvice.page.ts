@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SecretinfoadvicePage implements OnInit {
 
-  textAreaValue: string;
+  textAreaValue: string = '';
 
   itemmodel: any;
 
@@ -26,8 +26,9 @@ export class SecretinfoadvicePage implements OnInit {
   }
 
   handinclick() {
-    if (this.textAreaValue.trim().length == 0) {
-      this.toast.presentToast('请填写意见后再提交');
+    
+    if (this.textAreaValue.length == 0) {
+      this.toast.presentToast('请填写' + this.title);
       return;
     }
     if (this.title == '公开信息意见') {
