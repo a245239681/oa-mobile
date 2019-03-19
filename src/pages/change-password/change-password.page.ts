@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import {
   UpdateStaffInfoModel,
@@ -17,12 +17,14 @@ export class ChangePasswordPage implements OnInit {
   item: any;
   mima = '';
   myData: UpdateStaffInfoModel;
+  sub: any;
   constructor(
     private nav: NavController,
     private activeRoute: ActivatedRoute,
     private mainindexservice: MainindexService,
     private toast: CommonHelper,
-    private userinfo: UserInfo
+    private userinfo: UserInfo,
+    private platform: Platform
   ) {
     this.activeRoute.queryParams.subscribe(params => {
       console.log(params);
@@ -50,6 +52,11 @@ export class ChangePasswordPage implements OnInit {
 
   ngOnInit() {
     console.log(this.myData);
+    this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+      // this.nav.pop();
+      // return true;
+      this.nav.back();
+    });
   }
 
   /** 修改密码 */
@@ -74,8 +81,22 @@ export class ChangePasswordPage implements OnInit {
       );
     }
   }
+
   /** 返回 */
   canGoBack() {
+    // this.backState = true;
     this.nav.back();
+  }
+
+  ionViewWillLeave() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+    // if (!this.backState){
+    //   this.nav.back();
+    //   this.backState = true;
+    //   return false;
+    // }
+    // console.log('23123123');
   }
 }

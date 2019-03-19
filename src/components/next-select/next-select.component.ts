@@ -23,9 +23,9 @@ export class NextSelectComponent implements OnInit {
 
   departmentTree: any[]; // 部门树
 
-  showList: any[]; // 显示列表
+  // showList: any[]; // 显示列表
 
-  buttonList: any[]; // 目录列表
+  // buttonList: any[]; // 目录列表
 
   selectedList = {
     staffId: [], // 人员勾选列表
@@ -53,10 +53,10 @@ export class NextSelectComponent implements OnInit {
     console.log(this.hasSelected);
     switch (this.state) {
       case '0':
-        this.buttonList = [{
-          id: 'root',
-          text: '下一步'
-        }];
+        // this.buttonList = [{
+        //   id: 'root',
+        //   text: '下一步'
+        // }];
         this.departmentTree = [{
           id: '局领导',
           text: '局领导',
@@ -68,34 +68,33 @@ export class NextSelectComponent implements OnInit {
         }];
         break;
       case '1':
-        this.buttonList = [{
-          id: 'root',
-          text: '传阅'
-        }];
+        // this.buttonList = [{
+        //   id: 'root',
+        //   text: '传阅'
+        // }];
         this.departmentTree = [{
           id: '1',
-          level: 0,
           text: '南宁市住房保障和房产管理局',
           children: [],
         }];
         break;
     }
-    this.showList = this.departmentTree;
+    // this.showList = this.departmentTree;
   }
 
   /**
    * 目录点击事件
    * @param item 该目录
    */
-  indexClick(item: any) {
-    if (item.id === this.buttonList[this.buttonList.length - 1]) { return; }
-    if (item.id === 'root') {
-      this.showList = this.departmentTree;
-    } else {
-      this.showList = this.searchData(this.departmentTree, item.id).children;
-    }
-    this.popMenu(item.id);
-  }
+  // indexClick(item: any) {
+    // if (item.id === this.buttonList[this.buttonList.length - 1]) { return; }
+    // if (item.id === 'root') {
+    //   this.showList = this.departmentTree;
+    // } else {
+    //   this.showList = this.searchData(this.departmentTree, item.id).children;
+    // }
+  //   this.popMenu(item.id);
+  // }
 
   /**
    * 行点击事件
@@ -105,38 +104,44 @@ export class NextSelectComponent implements OnInit {
     if (item.attributes) {
       if (item.attributes.NodeType !== 'Dept') { return; }
     }
-    this.buttonList.push({
-      id: item.id,
-      text: item.text,
-    });
+    // this.buttonList.push({
+    //   id: item.id,
+    //   text: item.text,
+    // });
     switch (item.id) {
       case '局领导':
         if (item.children.length === 0) {
           this.getLeader((list) => {
             item.children = list;
+            item.children.forEach(x => x.parent = item);
             this.enterParent(item.children, item.id, item.checked);
-            this.showList = item.children;
+            // this.showList = item.children;
+            item.collapse = true;
           });
         } else {
-          this.showList = item.children;
+          item.collapse = !item.collapse;
+          // this.showList = item.children;
         }
         break;
       case '拟办':
         if (item.children.length === 0) {
           this.getDept((list) => {
             item.children = list;
+            item.children.forEach(x => x.parent = item);
             this.enterParent(item.children, item.id, item.checked);
-            this.showList = item.children;
+            item.collapse = true;
+            // this.showList = item.children;
           });
         } else {
-          this.showList = item.children;
+          item.collapse = !item.collapse;
+          // this.showList = item.children;
         }
         break;
       default:
         if (item.children.length === 0) {
           this.getPerson(item.id, (list) => {
             item.children = list;
-            item.children.forEach(x => { x.parent = item, x.level = item.level + 1 });
+            item.children.forEach(x => x.parent = item);
             item.collapse = true;
             this.enterParent(item.children, item.id, item.checked);
             // this.showList = item.children;
@@ -238,7 +243,7 @@ export class NextSelectComponent implements OnInit {
         } else { this.returnChecked(); }
         break;
       default:
-        // this.returnChecked();
+        this.returnChecked();
         break;
     }
   }
@@ -466,18 +471,18 @@ export class NextSelectComponent implements OnInit {
    * 目录跳转
    * @param id 目录id
    */
-  popMenu(id: string) {
-    const newList = [];
+  // popMenu(id: string) {
+    // const newList = [];
 
-    for (let i = 0; i < this.buttonList.length; i++) {
-      newList.push(this.buttonList[i]);
-      if (this.buttonList[i].id === id) {
-        break;
-      }
-    }
+    // for (let i = 0; i < this.buttonList.length; i++) {
+    //   newList.push(this.buttonList[i]);
+    //   if (this.buttonList[i].id === id) {
+    //     break;
+    //   }
+    // }
 
-    this.buttonList = newList;
-  }
+    // this.buttonList = newList;
+  // }
 
   /**
   * 查找前清空临时数据

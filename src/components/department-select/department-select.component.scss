@@ -3,3 +3,31 @@
   left: 20vw;
   width: 80vw;
 }
+
+ion-item {
+  --min-height: 22px;
+  // padding: 0;
+  // position: relative;
+  // top: 10px;
+  // font-size: 4vw;
+  // :host(ion-item) {
+  //   padding: 10px 0 !important;
+  //   margin-left: 1em !important;
+  //   border-top: 1px solid #e0e0e0;
+  //   overflow: hidden;
+  //   ion-checkbox, ion-radio{
+  //     float: left !important;
+  //     height: 1em;
+  //     width: 1em;
+  //   }
+  //   ion-label{
+  //     float: left;
+  //     padding-left: 10px !important;
+  //     max-width: 60vw;
+  //     line-height: 1;
+  //   }
+  // }
+  // &.list-ios{
+  //   margin: 0;
+  // }
+}

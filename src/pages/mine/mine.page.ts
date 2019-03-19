@@ -39,9 +39,10 @@ export class MinePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.personaldetails);
+    // console.log(this.personaldetails);
     this.appVersion.getVersionCode().then(value => {
-      this.versionCode = (value + '').indexOf('.') > -1 ? value.toString() : value + '.0';
+      this.versionCode =
+        (value + '').indexOf('.') > -1 ? value.toString() : value + '.0';
     });
     // this.versionCode = this.versionCode['__zone_symbol__value'];
     console.log(this.versionCode);

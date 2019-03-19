@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-qr-code',
@@ -7,11 +7,21 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./qr-code.page.scss']
 })
 export class QrCodePage implements OnInit {
-  constructor(private nav: NavController) {}
+  sub: any;
+  constructor(private nav: NavController, private platform: Platform) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+      this.nav.back();
+    });
+  }
   /** 返回 */
   canGoBack() {
     this.nav.back();
+  }
+  ionViewWillLeave() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 }
