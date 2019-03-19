@@ -137,9 +137,13 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.commonhelper.presentToast(apiReustl.Message);
               }
             }
+          } else {
+            console.log('错误');
+            this.deductRequestCount();
           }
         },
         error => {
+          console.log('关闭');
           this.deductRequestCount();
           // if (error.status === 401) {
           //   // this.messageService.add({ severity: 'error', summary: '错误消息', detail: '服务器出错，请稍后再试！' });

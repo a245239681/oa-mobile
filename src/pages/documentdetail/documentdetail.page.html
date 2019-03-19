@@ -15,6 +15,7 @@
   <app-circulationinfo [itemmodel]="itemmodel" *ngIf="type == '2'"></app-circulationinfo>
   <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == '3'"></app-attachmentlist>
   <app-sign [itemmodel]="itemmodel" *ngIf="type == '4' || type == '5'"></app-sign>
+  <app-documentpaper [itemmodel]="itemmodel" *ngIf="type == '7'"></app-documentpaper>
   <div class="parent" *ngIf="type == '6'" >
     <ion-button (click)="openDocument()" class="center">再次打开正文</ion-button>
   </div>
@@ -32,15 +33,15 @@
     <ion-segment-button *ngIf="itemmodel['documenttype'] == 2" value="5">
       <ion-label>发文笺</ion-label>
     </ion-segment-button>
-    <ion-segment-button *ngIf="itemmodel['documenttype'] == 2" value="6">
+    <ion-segment-button *ngIf="itemmodel['documenttype'] == 2 || itemmodel['documenttype'] == 5" value="6">
       <ion-label>正文</ion-label>
     </ion-segment-button>
     <ion-segment-button value="3">
       <ion-label>附件</ion-label>
     </ion-segment-button>
-    <!-- <ion-segment-button value="5">
+    <ion-segment-button value="7">
       <ion-label>相关公文</ion-label>
-    </ion-segment-button> -->
+    </ion-segment-button>
   </ion-segment>
   <!-- <div style="height: 1rem"></div> -->
   <!-- 在五个组件中切换 -->
