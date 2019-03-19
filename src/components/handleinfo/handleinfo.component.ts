@@ -14,7 +14,7 @@ export class HandleinfoComponent implements OnInit {
   adcviceArr: any[] = [];
 
   // 标题
-  header = {};
+  header: any;
 
   bodyData: any;
 
@@ -71,6 +71,9 @@ export class HandleinfoComponent implements OnInit {
             if (res['State'] === 1) {
               this.bodyData = res['Data']['BodyData'];
               this.header = res['Data']['header'];
+              this.header.FinishDate =
+                this.header.FinishDate.replace('-', '年').replace('-', '月') +
+                '日';
               this.adcviceArr = [];
               this.keyArr = [];
               // tslint:disable-next-line:forin
@@ -101,6 +104,9 @@ export class HandleinfoComponent implements OnInit {
             if (res['State'] === 1) {
               this.bodyData = res['Data']['BodyData'];
               this.header = res['Data']['header'];
+              this.header.FinishDate =
+                this.header.FinishDate.replace('-', '年').replace('-', '月') +
+                '日';
               this.adcviceArr = [];
               this.keyArr = [];
               // tslint:disable-next-line:forin
