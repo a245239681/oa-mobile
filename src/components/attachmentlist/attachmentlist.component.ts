@@ -4,7 +4,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Platform } from '@ionic/angular';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import {
+  FileTransfer,
+  FileTransferObject
+} from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { getFileMimeType } from 'src/infrastructure/regular-expression';
 
@@ -28,8 +31,8 @@ export class AttachmentlistComponent implements OnInit {
     private platform: Platform,
     private fileOpener: FileOpener,
     private transfer: FileTransfer,
-    private file: File,
-  ) { }
+    private file: File
+  ) {}
 
   ngOnInit() {
     this.getattchmentlis();
@@ -57,7 +60,7 @@ export class AttachmentlistComponent implements OnInit {
 
   /**
    * 点击跳到浏览器浏览附件
-   * @param item
+   * @param item 1
    */
   previewerAttchment(item: any) {
     const mimeType = getFileMimeType(item.Extended);
@@ -67,7 +70,8 @@ export class AttachmentlistComponent implements OnInit {
     }
     if (this.platform.is('android') || this.platform.is('ios')) {
       const uri = encodeURI(item['Url']); // 文件的地址链接
-      const fileUrl = this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
+      const fileUrl =
+        this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
       this.commonHelper.presentLoading();
       this.fileTransfer.download(uri, fileUrl).then(entry => {
         entry.file(data => {

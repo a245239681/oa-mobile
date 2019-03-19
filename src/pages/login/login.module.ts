@@ -1,5 +1,4 @@
 import { MainindexService } from './../../service/maiindex/mainindex.service';
-import { VerificationComponent } from './../../components/verification/verification.component';
 import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
