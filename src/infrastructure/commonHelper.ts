@@ -51,6 +51,7 @@ export class CommonHelper {
   }
 
   private isLoading : Boolean;
+  private retryCount : number  = 0 ;
   /**
    * 弹出loading
    * @param content 显示内容
@@ -76,11 +77,18 @@ export class CommonHelper {
   public async dismissLoading() {
     if (this.isLoading == true) {
       if(this.loading == null ){
+
+        if(this.retryCount > 5){
+          this.retryCount = 0 ;
+          return ;
+        }
         setTimeout(() => {
+          this.retryCount ++ ;
           this.dismissLoading();
-        }, 200);
+        }, 500);
         return; 
       }
+      this.retryCount = 0 ;
       this.isLoading = false ;
       this.loading.dismiss();
       this.loading = null ;

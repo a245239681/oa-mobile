@@ -395,6 +395,12 @@ export class MainindexService {
     });
   }
 
+  /**传阅阅读 */
+  SetDoRead(id  , content){
+    return this.httpclient.get(ApiUrlManagement.SetDoRead, {params:{id:id , content:content}});
+  }
+
+
   /** 退回验证 */
   ValidBack(Id: string, processType: string, coorType: string) {
     return this.httpclient.get(
