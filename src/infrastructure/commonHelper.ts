@@ -25,7 +25,7 @@ export class CommonHelper {
    */
   public async presentToast(
     message: string = '操作完成',
-    color: string = 'dark',
+    color: string = 'success',
     cssClass: string = 'toastClass',
     mode: string = 'ios',
     position: string = 'top',

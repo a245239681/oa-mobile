@@ -212,8 +212,13 @@ export class MainindexService {
   }
 
   /**
-   *
+   *获取通讯录数据
    */
+  getMaliList(): Observable<any> {
+    return this.httpclient.get(
+      ApiUrlManagement.getMail
+    );
+  }
 
   /**
    * 获取局领导数据

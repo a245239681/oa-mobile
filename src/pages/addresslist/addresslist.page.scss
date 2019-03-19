@@ -1,0 +1,87 @@
+.header-ios ion-toolbar:last-child {
+    --border-width: 0;
+  }
+  
+  .sykys {
+    width: 100vw;
+    padding: 10px;
+    background-color: #4877FB;
+    position: relative;
+  }
+  
+  .input {
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 1px solid #c8cccf;
+    color: #6a6f77;
+    -web-kit-appearance: none;
+    -moz-appearance: none;
+    display: block;
+    outline: 0;
+    padding: 7px 30px 7px 10px;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  ::-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #7c7e83;
+  }
+  
+  ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #7c7e83;
+  }
+  
+  input::-webkit-input-placeholder {
+    color: #7c7e83;
+  }
+  
+  .syktb {
+    color: #4877FB;
+    font-size: 1.6rem;
+    position: absolute;
+    right: 18px;
+    top: 16px;
+  }
+  
+  .kp {
+    position: relative;
+    border-radius: 3px;
+    background-color: white;
+    margin: 5px 10px;
+    min-height: 9vh;
+  }
+  
+  .kpnr {
+    width: 100%;
+    padding: 5px 5px 5px 1rem;
+  }
+  
+  .label {
+    display: inline-block;
+    min-width: 45%;
+    margin-right: 5%;
+    font-size: 0.9rem !important;
+    padding-top: 8px;
+    font-size: 14px;
+  }
+  
+  .label-nopa{
+    margin-right: 0;
+  }
+  
+  .kpbt {
+    font-weight: 600
+  }
+
+  .title-home{
+      background-color: #ffffff;
+     
+  }
+  .title-home >span{
+      padding: 0 1rem;
+      font-size: 16px!important;
+  }

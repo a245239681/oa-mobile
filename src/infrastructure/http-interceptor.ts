@@ -48,7 +48,7 @@ export class AuthInterceptor implements HttpInterceptor {
     @Inject(API_URL) private apiUrl,
     private userInfo: UserInfo,
     private commonhelper: CommonHelper
-  ) {}
+  ) { }
   /**
    * 序列化请求参数
    * @param obj 请求参数
@@ -96,8 +96,8 @@ export class AuthInterceptor implements HttpInterceptor {
   /**
    * 减去请求次数或者关闭loading
    */
-  private deductRequestCount() {     
-  
+  private deductRequestCount() {
+
     // if (this.requestCount > 1){
     //   this.requestCount--;
     // }else{
@@ -121,8 +121,9 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       tap(
         event => {
-          this.commonhelper.dismissLoading();
-          if (event instanceof HttpResponse) { 
+          // this.commonhelper.dismissLoading();
+          if (event instanceof HttpResponse) {
+            this.commonhelper.dismissLoading();
             if (event.url.indexOf(ApiUrlManagement.login) <= -1) {
               const apiReustl = event.body as ApiResult<{}>;
               if (apiReustl.State === 0 && apiReustl.Message) {
@@ -161,7 +162,7 @@ export class CachingInterceptor implements HttpInterceptor {
   /**
    *
    */
-  constructor(private cache: RequestCache) {}
+  constructor(private cache: RequestCache) { }
 
   intercept(
     req: HttpRequest<any>,
@@ -182,7 +183,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
   isCachable(req: HttpRequest<any>) {
     const urldata = [];
-    cacheUrl.forEach(function(item) {
+    cacheUrl.forEach(function (item) {
       urldata.push({ url: item.url });
     });
     // const  urldata = cacheUrl.filter(d => d.url)
