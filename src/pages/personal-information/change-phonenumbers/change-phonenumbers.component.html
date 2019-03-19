@@ -7,15 +7,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="phoneNumber">
+<ion-content class="phoneNumber" *ngIf="sws">
   <div class="flexBox changeFrom" *ngIf="data.title == '手机号码'">
     <span class="flexLeftContent">+86</span>
-    <ion-input class="flexRightContent" placeholder="请输入手机号码" [(ngModel)]="data.Mobile"></ion-input>
+    <ion-input class="flexRightContent" placeholder="请输入手机号码" [(ngModel)]="sws.Mobile"></ion-input>
   </div>
   <div class="flexBox changeFrom" *ngIf="data.title == '办公电话'">
-    <ion-input class="flexRightContent" placeholder="请输入办公电话" [(ngModel)]="data.Phone" style="padding-left: 20px !important"></ion-input>
+    <ion-input class="flexRightContent" placeholder="请输入办公电话" [(ngModel)]="sws.Phone" style="padding-left: 20px !important"></ion-input>
   </div>
   <div style="margin-top: 2rem;padding: 0 2rem;">
-    <ion-button expand="block" (click)="submit()" [disabled]='!data.Mobile||!data.Phone'>保存</ion-button>
+    <ion-button expand="block" (click)="submit()" [disabled]='!sws.Mobile||!sws.Phone'>保存</ion-button>
   </div>
 </ion-content>

@@ -174,5 +174,8 @@ export class PersonalInformationPage implements OnInit {
     // 接收模态框传回的值
     const data = await modal.onDidDismiss();
     console.log(data);
+    // this.myData.Mobile = data['result']['Mobile'];
+    // this.myData.Phone = data['result']['Phone'];
+    console.log(this.myData);
   }
 }
