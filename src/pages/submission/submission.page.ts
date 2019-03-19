@@ -284,7 +284,7 @@ export class SubmissionPage implements OnInit {
         });
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -602,7 +602,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
@@ -662,7 +662,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => {});
+    modal.onDidDismiss().then(backdata => { });
   }
 
   //模态出结束步骤
@@ -674,7 +674,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => {});
+    modal.onDidDismiss().then(backdata => { });
   }
 
   async goSign() {
@@ -703,8 +703,7 @@ export class SubmissionPage implements OnInit {
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
           if (res['State'] === 1) {
-            this.toast.presentToast('签发成功');
-            this.route.navigate(['tabs']);
+            this.route.navigate(['sign-sussces']);
           } else {
             this.toast.presentToast('签发失败');
           }
