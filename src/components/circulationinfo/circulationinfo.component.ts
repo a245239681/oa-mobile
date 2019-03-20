@@ -50,17 +50,17 @@ export class CirculationinfoComponent implements OnInit {
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
             }
-            this.parenteArr.forEach(e => {
-              e.children.forEach(el => {
-                el.SignDate = this.sjdate(el.SignDate);
-                el.Date1 = this.sjdate(
-                  (el.Date ? el.Date : '').split(' - ')[0]
-                );
-                el.Date2 = this.sjdate(
-                  (el.Date ? el.Date : '').split(' - ')[1]
-                );
-              });
-            });
+            // this.parenteArr.forEach(e => {
+            //   e.children.forEach(el => {
+            //     el.SignDate = this.sjdate(el.SignDate);
+            //     el.Date1 = this.sjdate(
+            //       (el.Date ? el.Date : '').split(' - ')[0]
+            //     );
+            //     el.Date2 = this.sjdate(
+            //       (el.Date ? el.Date : '').split(' - ')[1]
+            //     );
+            //   });
+            // });
           } else {
             this.toast.presentToast('暂无数据');
           }
@@ -79,17 +79,17 @@ export class CirculationinfoComponent implements OnInit {
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
             }
-            this.parenteArr.forEach(e => {
-              e.children.forEach(el => {
-                el.SignDate = this.sjdate(el.SignDate);
-                el.Date1 = this.sjdate(
-                  (el.Date ? el.Date : '').split(' - ')[0]
-                );
-                el.Date2 = this.sjdate(
-                  (el.Date ? el.Date : '').split(' - ')[1]
-                );
-              });
-            });
+            // this.parenteArr.forEach(e => {
+            //   e.children.forEach(el => {
+            //     el.SignDate = this.sjdate(el.SignDate);
+            //     el.Date1 = this.sjdate(
+            //       (el.Date ? el.Date : '').split(' - ')[0]
+            //     );
+            //     el.Date2 = this.sjdate(
+            //       (el.Date ? el.Date : '').split(' - ')[1]
+            //     );
+            //   });
+            // });
           } else {
             this.toast.presentToast('暂无数据');
           }
@@ -103,7 +103,7 @@ export class CirculationinfoComponent implements OnInit {
 
   // 转换
   sjdate(dos: any) {
-    dos = dos.replace(/-/g, '/');
+    dos = dos ? dos.replace(/-/g, '/') : dos;
     // dos = dos.substring(0, dos.length - 3);
     return dos;
   }
@@ -128,15 +128,15 @@ export class CirculationinfoComponent implements OnInit {
                 if (res.Data.length === 0) {
                   this.toast.presentToast('该模块下暂无数据');
                 } else {
-                  item['children'].forEach(e => {
-                    e.SignDate = this.sjdate(e.SignDate);
-                    e.Date1 = this.sjdate(
-                      (e.Date ? e.Date : '').split(' - ')[0]
-                    );
-                    e.Date2 = this.sjdate(
-                      (e.Date ? e.Date : '').split(' - ')[1]
-                    );
-                  });
+                  // item['children'].forEach(e => {
+                  //   e.SignDate = this.sjdate(e.SignDate);
+                  //   e.Date1 = this.sjdate(
+                  //     (e.Date ? e.Date : '').split(' - ')[0]
+                  //   );
+                  //   e.Date2 = this.sjdate(
+                  //     (e.Date ? e.Date : '').split(' - ')[1]
+                  //   );
+                  // });
                 }
               } else {
                 this.toast.presentToast('暂无数据');
@@ -157,15 +157,15 @@ export class CirculationinfoComponent implements OnInit {
                 if (res.Data.length === 0) {
                   this.toast.presentToast('该模块下暂无数据');
                 } else {
-                  item['children'].forEach(e => {
-                    e.SignDate = this.sjdate(e.SignDate);
-                    e.Date1 = this.sjdate(
-                      (e.Date ? e.Date : '').split(' - ')[0]
-                    );
-                    e.Date2 = this.sjdate(
-                      (e.Date ? e.Date : '').split(' - ')[1]
-                    );
-                  });
+                  // item['children'].forEach(e => {
+                  //   e.SignDate = this.sjdate(e.SignDate);
+                  //   e.Date1 = this.sjdate(
+                  //     (e.Date ? e.Date : '').split(' - ')[0]
+                  //   );
+                  //   e.Date2 = this.sjdate(
+                  //     (e.Date ? e.Date : '').split(' - ')[1]
+                  //   );
+                  // });
                 }
               } else {
                 this.toast.presentToast('暂无数据');

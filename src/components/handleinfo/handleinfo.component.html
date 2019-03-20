@@ -3,13 +3,11 @@
     <div class="bt" *ngIf="header">
       <span>{{header['Title']}}</span>
     </div>
-    <!-- 收文 -->
-    <div *ngIf="(itemmodel.documenttype == 1 || itemmodel.documenttype == 4) && header">
+    <!-- 收文 传阅 -->
+    <div *ngIf="(itemmodel.documenttype == 1 || itemmodel.documenttype == 3 ||  itemmodel.documenttype == 4) && header">
       <div>
         <span class='texts' style='margin-right: 8%;vertical-align: top;'>紧急程度：{{ header.Emergency }}</span>
-        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{header.FinishDate.replace('-',
-          '年').replace('-', '月') +
-          '日'}}</span>
+        <span class='texts' style="min-width: 58%;display: inline-block;vertical-align: top;">完成时限：{{ header.FinishDate | date:'yyyy年MM月dd日 HH:mm' }}</span>
       </div>
       <div>
         <span class='texts'>来文文号：</span>

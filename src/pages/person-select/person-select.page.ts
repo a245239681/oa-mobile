@@ -198,10 +198,12 @@ export class PersonSelectPage implements OnInit {
     }
 
     if (this.itemmodel.ItemActionName === '拟办') {
-      if (this.nextArr.length <= 0) {
+
+      if (this.nextArr.length <= 0 && this.DealType) {
         this.toast.presentToast('请在下一步中选择');
         return;
       }
+      
     }
 
     if (this.itemmodel.ItemActionName === '部门处理') {
