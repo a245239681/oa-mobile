@@ -31,23 +31,30 @@ export class ChangePhonenumbersComponent implements OnInit {
 
   /** 保存 */
   submit() {
-    this.data.Mobile = this.sws.Mobile;
-    this.data.Phone = this.sws.Phone;
-    this.mainindexservice.UpdateStaffInfo(this.data).subscribe(
-      r => {
-        if (r['State'] === 1) {
-          this.userinfo.Mobile('Mobile', this.data.Mobile);
-          this.userinfo.Phone('Phone', this.data.Phone);
-          this.toast.presentToast('修改成功');
-          this.closemodal();
-        } else {
-          this.toast.presentToast('修改失败');
+    const zz = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+
+    const xx = zz.test(this.sws.Mobile);
+    if (xx) {
+      this.data.Mobile = this.sws.Mobile;
+      this.data.Phone = this.sws.Phone;
+      this.mainindexservice.UpdateStaffInfo(this.data).subscribe(
+        r => {
+          if (r['State'] === 1) {
+            this.userinfo.Mobile('Mobile', this.data.Mobile);
+            this.userinfo.Phone('Phone', this.data.Phone);
+            this.toast.presentToast('修改成功');
+            this.closemodal();
+          } else {
+            this.toast.presentToast('修改失败');
+          }
+        },
+        () => {
+          this.toast.presentToast('请求失败');
         }
-      },
-      () => {
-        this.toast.presentToast('请求失败');
-      }
-    );
+      );
+    } else {
+      this.toast.presentToast('手机格式不正确！');
+    }
   }
 
   /** 关闭模态框 */
