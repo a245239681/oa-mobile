@@ -98,7 +98,7 @@
         <div>
           <span class='texts'>依申请公开的理由：</span>
           <div *ngFor="let item of this.myData.TypeStr" style='display: inline;'>
-            <div *ngIf="item.checkbox" style='display: inline;'>
+            <div *ngIf="item.text !== '其他理由' && item.checkbox" style='display: inline;'>
               <!-- <span class='texts' *ngIf="!item.checkbox">
                   <ion-icon name="close-circle-outline" style="vertical-align: middle;font-size: 1.2rem;" mode='ios'></ion-icon>
                 </span> -->
@@ -108,7 +108,7 @@
               </span>
               <span class='texts' *ngIf="item.text !== '其他理由'">{{ item.text }}</span>
             </div>
-            <div *ngIf="item.text === '其他理由'" style='white-space:normal; word-break:break-all;'>
+            <div *ngIf="item.text === '其他理由' && item.checkbox" style='white-space:normal; word-break:break-all;'>
               <span class='texts'>
                 <ion-icon name="checkmark-circle-outline" style="vertical-align: middle;font-size: 1.2rem;color: rgb(0, 153, 0);"
                   mode='ios'></ion-icon>
