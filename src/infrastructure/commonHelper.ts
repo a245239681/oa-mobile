@@ -52,14 +52,21 @@ export class CommonHelper {
 
   private isLoading : Boolean;
   private retryCount : number  = 0 ;
+  showLoading = true;
+  /**
+   * 阻止紧接下来的一次加载loading。
+   */
+  preventLoading() {
+    this.showLoading = false;
+    setTimeout(() => this.showLoading = true, 0);
+  }
+
   /**
    * 弹出loading
    * @param content 显示内容
    */
-
-
   public async presentLoading(content?: string) {
-    if (this.isLoading == true ) {
+    if (this.isLoading == true || !this.showLoading) {
       return ;
     }
 
