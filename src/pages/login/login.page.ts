@@ -131,7 +131,7 @@ export class LoginPage {
   }
 
   onUsernameChange() {
-    if (!this.isUserNameEmpty) {
+    if (this.loginInfo.username === '') {
       this.isUserNameEmpty = true;
     } else {
       this.isUserNameEmpty = false;
@@ -139,7 +139,7 @@ export class LoginPage {
   }
 
   onPasswordChange() {
-    if (!this.isPasswordEmpty) {
+    if (this.loginInfo.PassWord === '') {
       this.isPasswordEmpty = true;
     } else {
       if (this.loginInfo.PassWord.length < 3) {
