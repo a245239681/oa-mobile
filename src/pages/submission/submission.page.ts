@@ -137,9 +137,9 @@ export class SubmissionPage implements OnInit {
    */
   handleAdvice(type: number, value: any) {
     if (type === 0) {
-      this.saveadvice(value['advice']);
+      this.saveadvice(this.CurAttitude);
     } else {
-      this.handleInfo(value['advice']);
+      this.handleInfo(this.CurAttitude);
     }
   }
   /** 一般移交 */
@@ -333,6 +333,15 @@ export class SubmissionPage implements OnInit {
    * 保存意见
    */
   async saveadvice(content: string) {
+    if (!this.CurAttitude) {
+      this.toast.presentToast('请填写意见');
+      return;
+    }
+
+    if (this.CurAttitude && this.CurAttitude.length <= 0) {
+      this.toast.presentToast('请填写意见');
+      return;
+    }
     // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理---特殊情况
     if (
       this.sendStepName == '二校' ||
@@ -364,7 +373,7 @@ export class SubmissionPage implements OnInit {
         }
       );
     } else {
-      this.toast.presentToast('缺少参数');
+      // this.toast.presentToast('缺少参数');
     }
   }
 
@@ -564,7 +573,7 @@ export class SubmissionPage implements OnInit {
         }
       );
     } else {
-      this.toast.presentToast('缺少参数');
+      // this.toast.presentToast('缺少参数');
     }
   }
 
