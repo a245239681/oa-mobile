@@ -555,19 +555,7 @@ export class SubmissionPage implements OnInit {
                 processType: this.itemmodel.ProcessType
               };
               console.log(Data);
-              this.mainservice.commit(Data).subscribe(
-                r => {
-                  if (r['State'] === 1) {
-                    this.toast.presentToast('提交成功');
-                    this.nav.navigateBack('/documentlist');
-                  } else {
-                    this.toast.presentToast(r['Message']);
-                  }
-                },
-                () => {
-                  this.toast.presentToast('请求失败');
-                }
-              );
+              this.huiqian(Data);
             }
           }
         },
@@ -578,6 +566,46 @@ export class SubmissionPage implements OnInit {
     } else {
       this.toast.presentToast('缺少参数');
     }
+  }
+
+  /** 弹出提示 */
+  async huiqian(Data) {
+    this.alertVC = await this.alertController.create({
+      header: '提示',
+      message: '该提交将会将结束这条公文的处理，点击【确定】进行提交，点击【取消】取消提交。',
+      buttons: [
+        {
+          text: '确定',
+          cssClass: 'secondary',
+          handler: () => {
+            this.Commithq(Data);
+          }
+        },
+        {
+          text: '取消',
+          role: 'cancle',
+          cssClass: 'secondary',
+          handler: () => {}
+        }
+      ]
+    });
+    this.alertVC.present();
+  }
+
+  Commithq(Data: any) {
+    this.mainservice.commit(Data).subscribe(
+      r => {
+        if (r['State'] === 1) {
+          this.toast.presentToast('提交成功');
+          this.nav.navigateBack('/documentlist');
+        } else {
+          this.toast.presentToast(r['Message']);
+        }
+      },
+      () => {
+        this.toast.presentToast('请求失败');
+      }
+    );
   }
 
   /**
