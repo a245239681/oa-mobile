@@ -80,50 +80,58 @@ export class LoginPage {
     );
   }
   login(value: any) {
-    if (this.loginInfo.username === '') {
-      this.toast.presentToast(this.validationMessages.username.required);
-      return;
-    }
-    if (this.loginInfo.PassWord === '') {
-      this.toast.presentToast(this.validationMessages.PassWord.required);
-      return;
-    }
-    if (this.isPasswordLow) {
-      this.toast.presentToast(this.validationMessages.PassWord.minlength);
-      return;
-    }
+    // if (!this.isUserNameEmpty) {
+    //   this.isUserNameEmpty = true;
+    //   // this.toast.presentToast(this.validationMessages.username.required);
+    // } else {
+    //   this.isUserNameEmpty = false;
+    // }
+    // if (!this.isPasswordEmpty) {
+    //   this.isPasswordEmpty = true;
+    //   // this.toast.presentToast(this.validationMessages.PassWord.required);
+    // } else {
+    //   this.isPasswordEmpty = false;
+    // }
+    // if (!this.isPasswordLow) {
+    //   this.isPasswordLow = true;
+    //   // this.toast.presentToast(this.validationMessages.PassWord.minlength);
+    // } else {
+    //   this.isPasswordLow = false;
+    // }
 
-    this.loginservice.login(this.loginInfo).subscribe(res => {
-      if (res['State'] === 1) {
-        const userinfo = res['Data'];
-        /**
-         * 存token 存名字 存是否是领导
-         */
-        this.userinfo.SetToken(userinfo['OaApiToken']);
-        /** 个人信息 */
-        this.userinfo.SetUserName(userinfo.Name);
-        this.userinfo.SetUserDegree(userinfo.IsLeader);
-        this.userinfo.Sex(userinfo.Sex);
-        this.userinfo.Phone(userinfo.Phone);
-        this.userinfo.Mobile(userinfo.Mobile);
-        this.userinfo.DeptName(userinfo.DeptName);
-        const id = userinfo.ID + '';
-        this.userinfo.PersonageId(id, 'id');
-        this.userinfo.Birthday(userinfo.Birthday);
-        this.nav.navigateRoot('/tabs/tabs');
-        this.toast.presentToast(
-          '欢迎登陆住房局OA管理系统！',
-          'success',
-          'toast'
-        );
-      } else {
-        this.toast.presentToast(res['Message']);
-      }
-    });
+    if (this.loginInfo.username !== '' && this.loginInfo.PassWord !== '') {
+      this.loginservice.login(this.loginInfo).subscribe(res => {
+        if (res['State'] === 1) {
+          const userinfo = res['Data'];
+          /**
+           * 存token 存名字 存是否是领导
+           */
+          this.userinfo.SetToken(userinfo['OaApiToken']);
+          /** 个人信息 */
+          this.userinfo.SetUserName(userinfo.Name);
+          this.userinfo.SetUserDegree(userinfo.IsLeader);
+          this.userinfo.Sex(userinfo.Sex);
+          this.userinfo.Phone(userinfo.Phone);
+          this.userinfo.Mobile(userinfo.Mobile);
+          this.userinfo.DeptName(userinfo.DeptName);
+          const id = userinfo.ID + '';
+          this.userinfo.PersonageId(id, 'id');
+          this.userinfo.Birthday(userinfo.Birthday);
+          this.nav.navigateRoot('/tabs/tabs');
+          this.toast.presentToast(
+            '欢迎登陆住房局OA管理系统！',
+            'success',
+            'toast'
+          );
+        } else {
+          this.toast.presentToast(res['Message']);
+        }
+      });
+    }
   }
 
   onUsernameChange() {
-    if (this.loginInfo.username === '') {
+    if (!this.isUserNameEmpty) {
       this.isUserNameEmpty = true;
     } else {
       this.isUserNameEmpty = false;
@@ -131,7 +139,7 @@ export class LoginPage {
   }
 
   onPasswordChange() {
-    if (this.loginInfo.PassWord === '') {
+    if (!this.isPasswordEmpty) {
       this.isPasswordEmpty = true;
     } else {
       if (this.loginInfo.PassWord.length < 3) {

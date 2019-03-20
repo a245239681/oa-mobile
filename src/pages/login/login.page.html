@@ -9,7 +9,7 @@
           </div>
           <div class='wsrk'>
             <i class="iconfont tb"> &#xe61b;</i>
-            <input type="password" class="srk" placeholder="请输入密码" [(ngModel)]="loginInfo.PassWord" (change)="onPasswordChange()">
+            <input type="password" class="srk" placeholder="请输入密码" [(ngModel)]="loginInfo.PassWord" (blur)="onPasswordChange()">
           </div>
           
 
