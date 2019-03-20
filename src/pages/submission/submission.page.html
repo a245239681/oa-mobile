@@ -41,27 +41,26 @@
       </ion-grid> -->
       <ion-grid>
         <ion-row>
-            <ion-col size="6" size-lg>
-                <ion-button color="success" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-                  (click)="handleAdvice(1,adviceForm.value)" value="提交">{{handinButtonTitle}}</ion-button>
-                <ion-button *ngIf="IsShowHandinAndGiveButton" ion-button color="danger" value="提交并分发文件" (click)="handinandgiveFile()">
-                  提交并分发文件
-                </ion-button>
-              </ion-col>
+          <ion-col size="6" size-lg>
+            <ion-button color="success" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+              (click)="handleAdvice(1,adviceForm.value)" value="提交">{{handinButtonTitle}}</ion-button>
+            <ion-button *ngIf="IsShowHandinAndGiveButton" ion-button color="danger" value="提交并分发文件" (click)="handinandgiveFile()">
+              提交并分发文件
+            </ion-button>
+          </ion-col>
           <ion-col size="6" size-lg>
             <ion-button *ngIf="!IsOwner" color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
               (click)="handOver(adviceForm.value)" value="移交">移交</ion-button>
-              <ion-button *ngIf="IsOwner" color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+            <ion-button *ngIf="IsOwner" color="secondary" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
               (click)="ownerHandOver(adviceForm.value)" value="呈其他局领导">呈其他局领导</ion-button>
           </ion-col>
           <ion-col size="6" size-lg>
-              <ion-button color="warning" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
-                (click)="sendBack(adviceForm.value)" value="退回">退回</ion-button>
-            </ion-col>
+            <ion-button color="warning" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+              (click)="sendBack(adviceForm.value)" value="退回">退回</ion-button>
+          </ion-col>
           <ion-col size="6" size-lg *ngIf="itemmodel.documenttype == 2">
-              <ion-button color="primary" value="会签" (click)="countersignModal()" 
-              class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated">会签</ion-button>
-            </ion-col>
+            <ion-button color="primary" value="会签" (click)="countersignModal()" class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated">会签</ion-button>
+          </ion-col>
         </ion-row>
         <!-- <ion-row>
           <ion-col size="6" size-lg *ngIf="itemmodel.documenttype == 2">
