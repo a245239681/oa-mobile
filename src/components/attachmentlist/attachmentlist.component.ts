@@ -46,10 +46,8 @@ export class AttachmentlistComponent implements OnInit {
   getattchmentlis() {
     this.mainservice.getattchmentlist(this.itemmodel['Id']).subscribe(
       res => {
-        console.log(res);
         if (res['State'] === 1) {
           this.attachmentlistArr = res['Data'];
-          console.log(this.attachmentlistArr);
           if (this.attachmentlistArr.length === 1) {
             // 如果附件只有1条则自动打开
             this.previewerAttchment(this.attachmentlistArr[0]);
@@ -82,7 +80,6 @@ export class AttachmentlistComponent implements OnInit {
       this.fileTransfer.download(uri, fileUrl).then(
         entry => {
           entry.file(data => {
-            console.log(data);
             this.fileOpener
               .open(fileUrl, getFileMimeType(item.Extended))
               .then(() => this.commonHelper.dismissLoading())

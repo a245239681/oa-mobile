@@ -386,7 +386,8 @@ export class SubmissionPage implements OnInit {
       this.mainservice.SetDoRead(this.itemmodel['Id'], content).subscribe(res => {
 
         this.toast.presentToast("操作成功");
-        this.route.navigate(['tabs']);
+        //this.route.navigate(['tabs']);
+        this.nav.navigateBack("documentlist");
       })
       return;
     }
@@ -439,6 +440,7 @@ export class SubmissionPage implements OnInit {
             }
             // 不是领导的情况
             else {
+              console.log('');
               // 如果是协办的话点提交的接口就OK
               if (this.itemmodel['CoorType'] == 1) {
                 console.log('协办');
@@ -471,6 +473,7 @@ export class SubmissionPage implements OnInit {
                         }
                         // 拟办回到办公室
                         else if (res['Type'] == 610) {
+
                           // 610直接commit
                           console.log('看数据');
                           this.itemmodel['commitType'] = 610;
@@ -485,7 +488,9 @@ export class SubmissionPage implements OnInit {
                             )
                             .subscribe(res => {
                               if (res['State'] == 1) {
-                                this.route.navigate(['tabs']);
+                                this.toast.presentToast('提交成功');
+                                this.nav.navigateBack("documentlist");
+                                //this.route.navigate(['tabs']);
                               }
                             });
                         }
@@ -566,8 +571,9 @@ export class SubmissionPage implements OnInit {
           if (res['State'] === 1) {
             this.toast.presentToast('协办提交成功');
             // 返回列表
-            console.log(res);
-            this.route.navigate(['tabs']);
+            //console.log(res);
+            //this.route.navigate(['tabs']);
+            this.nav.navigateBack("documentlist");
           }
         },
         err => {
@@ -628,6 +634,8 @@ export class SubmissionPage implements OnInit {
    * 跳到下一步时把上一个人选好的人的数据传下去--正常跳转进入下一步选人
    */
   async pushNextStep() {
+    console.log('进入提交');
+    console.log(this.itemmodel);
     this.mainservice
       .commitSimulateEnd(
         this.itemmodel.Id,

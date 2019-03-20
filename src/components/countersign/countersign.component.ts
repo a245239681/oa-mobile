@@ -32,7 +32,6 @@ export class CountersignComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.data);
     this.getDeptTreeUntilMainDept();
     // 赋值给提交对象
     this.myData = {
@@ -69,7 +68,6 @@ export class CountersignComponent implements OnInit {
       res => {
         if (res['State'] === 1) {
           this.listdataArr = res['Data'];
-          // console.log(this.listdataArr);
         } else {
           this.toast.presentToast('已无数据');
         }
@@ -82,15 +80,11 @@ export class CountersignComponent implements OnInit {
 
   /** 勾选 */
   mutiSelect(item: any, checked: boolean) {
-    console.log(item);
-    console.log(checked);
     if (checked) {
       this.selectedList.push(item);
-      console.log(this.selectedList);
     } else {
       // 去掉没选中的如果之前选过的
       this.selectedList = this.selectedList.filter(data => data.id !== item.id);
-      console.log(this.selectedList);
     }
   }
 
@@ -102,12 +96,10 @@ export class CountersignComponent implements OnInit {
       cooperaters.push(e.id);
     });
     this.myData.cooperaters = cooperaters;
-    console.log(this.myData);
     if (this.myData.cooperaters.length !== 0) {
       this.mainindexservice.commit(this.myData).subscribe(
         r => {
           if (r['State'] === 1) {
-            console.log(r);
             this.router.navigate(['tabs']);
             this.closemodal(r);
             this.toast.presentToast('提交成功');

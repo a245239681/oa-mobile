@@ -41,7 +41,6 @@ export class EndActionPage implements OnInit {
    */
   getenddata() {
     this.mainservice.getendAction(this.itemmodel['Id'], this.itemmodel['ProcessType']).subscribe((res) => {
-      console.log(res);
       if (res['State'] == 1) {
         this.radioArr = res['Data'];
       } else {
@@ -57,11 +56,8 @@ export class EndActionPage implements OnInit {
    */
   handinclick() {
     if (this.selectitem) {
-      console.log('提交');
 
       this.mainservice.endActionStep(this.itemmodel['Id'], this.itemmodel['commitType'], this.selectitem['id'],this.itemmodel['ProcessType']).subscribe((res) => {
-        console.log('提交之后');
-        console.log(res);
         if (res['State'] == 1) {
           this.toast.presentToast('操作完成');
           this.router.navigate(['tabs']);
@@ -77,11 +73,8 @@ export class EndActionPage implements OnInit {
    */
   singleSelect(index: number) {
     this.radioArr[index]['checked'] = !this.radioArr[index]['checked'];
-    console.log(this.radioArr[index]['checked']);
-    console.log(this.radioArr[index]);
 
     if (this.radioArr[index]['checked'] == true) {
-      console.log('结束操作');
       this.selectitem = this.radioArr[index];
     } else {
       this.selectitem = null;

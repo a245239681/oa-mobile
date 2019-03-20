@@ -45,8 +45,6 @@ export class DocumentlistPage implements OnInit {
     private route: Router
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      console.log(params['type']);
-      console.log(params['second']);
       this.type = +params['type'];
       // this.title =
       //   this.type === 1 ? '收文待办' : this.type === 2 ? '发文待办' : '传阅件';
@@ -71,8 +69,12 @@ export class DocumentlistPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ionViewDidEnter(){
     this.getdata();
+  }
+
+  ngOnInit() {
+    
   }
   /**
    * 获取列表数据
@@ -89,14 +91,16 @@ export class DocumentlistPage implements OnInit {
             this.loading = false;
             this.ionRefresh.complete();
             if (res['State'] === 1) {
-              console.log(res);
               this.listdataArr = res['Data']['PageOfResult'];
               // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
-              if (this.listdataArr.length <= 20) {
+              if (
+                this.listdataArr.length < 20 ||
+                this.listdataArr.length >= res['Data']['TotalCount']
+              ) {
                 this.nohasmore = true;
               } else {
                 this.nohasmore = false;
-                this.currentPage += 1;
+                this.currentPage++;
               }
 
               if (this.type === 1) {
@@ -120,9 +124,8 @@ export class DocumentlistPage implements OnInit {
                 });
               }
             } else {
-              this.toast.presentToast('已无数据');
+              this.toast.presentToast('暂无数据');
             }
-            console.log(this.nohasmore);
           },
           err => {
             this.ionRefresh.complete();
@@ -136,7 +139,6 @@ export class DocumentlistPage implements OnInit {
    *搜索
    */
   seachclick(text: string) {
-    console.log(text);
     this.getdata();
   }
 
@@ -162,7 +164,6 @@ export class DocumentlistPage implements OnInit {
    * 上拉加载
    */
   loadMoreData(event) {
-    console.log('上拉加载');
     this.mainindexservice
       .getneedtodolist(this.currentPage, this.type, this.searchStr)
       .subscribe(
@@ -174,7 +175,10 @@ export class DocumentlistPage implements OnInit {
               this.listdataArr.push(item);
             });
 
-            if (tempArr.length <= 20) {
+            if (
+              tempArr.length < 20 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
+            ) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
@@ -204,7 +208,6 @@ export class DocumentlistPage implements OnInit {
           } else {
             this.toast.presentToast('已无数据');
           }
-          console.log(this.nohasmore);
         },
         err => {
           this.ionInfiniteScroll.complete();
@@ -234,8 +237,6 @@ export class DocumentlistPage implements OnInit {
       .signclick(item['Id'], item['ProcessType'], item['CoorType'])
       .subscribe(
         res => {
-          console.log('签收内容');
-          console.log(item);
           this.route.navigate(['documentdetail'], {
             queryParams: {
               item: JSON.stringify(item)

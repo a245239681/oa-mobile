@@ -58,7 +58,6 @@ export class AddresslistPage implements OnInit {
       }
      // return d.text.toLowerCase().indexOf(val) !== -1 || !val;
     });
-     console.log(this.result);
     // this.route.navigate(['mail-list'], {
     //   queryParams: {
     //     item: JSON.stringify(temp),
@@ -77,7 +76,6 @@ export class AddresslistPage implements OnInit {
 
         this.items = res.Data[0].children;
         this.temp = res.Data[0].children;
-         console.log(this.temp);
       }
     });
   }
@@ -86,9 +84,7 @@ export class AddresslistPage implements OnInit {
     const buttons = [{
       text: '呼叫  ' + e.mobile,
       handler: () => {
-        console.log(e.mobile);
         this.callIphone(e.mobile);
-        // console.log('Delete clicked');
       }
     },
     {
@@ -102,15 +98,13 @@ export class AddresslistPage implements OnInit {
       // icon: 'close',
       role: 'cancel',
       handler: () => {
-        // console.log('Cancel clicked');
       }
     }];
     if (e.phone) {
-      buttons.splice(1, 0, {
+      buttons.splice(2, 0, {
         text: '呼叫  ' + e.phone,
         handler: () => {
           this.callIphone(e.mobile);
-          // console.log('Play clicked');
         }
       });
     }
@@ -127,7 +121,6 @@ export class AddresslistPage implements OnInit {
    */
 
   callMe(item: any) {
-    console.log(item);
     this.presentActionSheet(item);
   }
 
@@ -139,8 +132,6 @@ export class AddresslistPage implements OnInit {
    * 查看当前部门下的相关人员
    */
   mailShow(item: any, dept: any) {
-    // console.log(item);
-    //  console.log(dept);
     this.route.navigate(['mail-list'], {
       queryParams: {
         item: JSON.stringify(item),

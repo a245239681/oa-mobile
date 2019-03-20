@@ -33,11 +33,9 @@ export class DocumentRelatedPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.itemmodel);
     this.itemmodel.isRelated = true;
   }
   segmentChanged(event: any) {
-    console.log('Segment changed', event.target.value);
     this.type = event.target.value;
     switch (event.target.value) {
       case '1':
@@ -63,7 +61,6 @@ export class DocumentRelatedPage implements OnInit {
       ApiUrlManagement.fileViewSends +
       '?relationId=' +
       relationId;
-    console.log(url);
     if (this.platform.is('android') || this.platform.is('ios')) {
       const uri = encodeURI(url); // 文件的地址链接
       const fileUrl =
@@ -72,7 +69,6 @@ export class DocumentRelatedPage implements OnInit {
       this.fileTransfer.download(uri, fileUrl).then(
         entry => {
           entry.file((data: any) => {
-            console.log(data);
             this.fileOpener
               .open(fileUrl, getFileMimeType('pdf'))
               .then(() => this.commonHelper.dismissLoading())

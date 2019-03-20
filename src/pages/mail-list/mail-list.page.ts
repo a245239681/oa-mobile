@@ -51,7 +51,6 @@ export class MailListPage implements OnInit {
       this.deptModel = JSON.parse(params['dept']);
       this.allListModel = JSON.parse(params['allList']);
       this.num = this.itemmodel.length;
-      console.log(this.itemmodel);
     });
   }
 
@@ -62,9 +61,7 @@ export class MailListPage implements OnInit {
     const buttons = [{
       text: '呼叫  ' + e.mobile,
       handler: () => {
-        console.log(e.mobile);
         this.callIpnone(e.mobile);
-        // console.log('Delete clicked');
       }
     },
     {
@@ -78,15 +75,13 @@ export class MailListPage implements OnInit {
       // icon: 'close',
       role: 'cancel',
       handler: () => {
-        // console.log('Cancel clicked');
       }
     }];
     if (e.phone) {
-      buttons.splice(1, 0, {
+      buttons.splice(2, 0, {
         text: '呼叫  ' + e.phone,
         handler: () => {
           this.callIpnone(e.mobile);
-          // console.log('Play clicked');
         }
       });
     }
@@ -117,7 +112,6 @@ export class MailListPage implements OnInit {
         });
       }
     });
-    // console.log(this.result);
 
   }
 
@@ -127,7 +121,6 @@ export class MailListPage implements OnInit {
    */
 
   callMe(item: any) {
-    console.log(item);
     this.presentActionSheet(item);
   }
 

@@ -36,7 +36,6 @@ export function equalValidetor(group: FormGroup): any {
   const password: FormControl = group.get('password') as FormControl;
   const pConfirm: FormControl = group.get('pConfirm') as FormControl;
   const valid: boolean = (password.value === pConfirm.value);
-  console.log('密码校验结果：' + valid);
   return valid ? null : { equal: { descs: '密码和确认密码不匹配' } };
 }
 

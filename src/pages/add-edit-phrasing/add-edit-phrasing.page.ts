@@ -37,7 +37,6 @@ export class AddEditPhrasingPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.data);
     this.Title = this.data.title === '添加' ? '添加常用语' : '修改常用语';
     this.staffId = localStorage.getItem('id');
     if (this.data.data) {
@@ -62,13 +61,11 @@ export class AddEditPhrasingPage implements OnInit {
   }
   /** 保存 */
   submit() {
-    console.log(this.text);
     if (this.data.data) {
       this.mydata.ID = this.data.data.ID;
       this.mydata.Staff_ID = this.staffId;
       this.mydata.Text = this.text;
       this.mainservice.DailySave(this.mydata).subscribe(res => {
-        console.log(res);
         if (res === true) {
           this.toast.presentToast('编辑成功');
           this.closemodal('change');
@@ -81,7 +78,6 @@ export class AddEditPhrasingPage implements OnInit {
       this.mydata.Staff_ID = this.staffId;
       this.mydata.Text = this.text;
       this.mainservice.DailySave(this.mydata).subscribe(res => {
-        console.log(res);
         if (res === true) {
           this.toast.presentToast('添加成功');
           this.closemodal('change');

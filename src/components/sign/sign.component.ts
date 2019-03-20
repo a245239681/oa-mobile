@@ -18,11 +18,9 @@ export class SignComponent implements OnInit {
     public mainindexService: MainindexService,
     private toast: CommonHelper
   ) {
-    console.log('构造函数');
   }
 
   ngOnInit() {
-    console.log(this.itemmodel);
     if (this.itemmodel.documenttype === 1) {
       this.title = '收文登记表';
       this.GetReceiveData(this.itemmodel.Id);
@@ -40,11 +38,9 @@ export class SignComponent implements OnInit {
           this.myData = r['Data'];
           this.templateType = r['templateType'];
           this.myData.TypeStr = JSON.parse(this.myData.TypeStr);
-          console.log(this.myData);
         } else {
           this.toast.presentToast('暂无数据');
         }
-        console.log(r);
       },
       () => {
         this.toast.presentToast('请求失败');
@@ -57,7 +53,6 @@ export class SignComponent implements OnInit {
       r => {
         if (r) {
           this.myData = r;
-          console.log(this.myData);
         } else {
           this.toast.presentToast('暂无数据');
         }

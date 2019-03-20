@@ -21,16 +21,13 @@ export class DocumentpaperComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.itemmodel);
     this.RelationTree();
   }
   RelationTree() {
     this.mainindexService.RelationTree(this.itemmodel['Id']).subscribe(
       res => {
-        console.log(res);
         if (res['State'] === 1) {
           this.attachmentlistArr = res['Data'];
-          console.log(this.attachmentlistArr);
           this.isData = this.attachmentlistArr['length'] > 0 ? true : false;
         }
       },
@@ -50,6 +47,5 @@ export class DocumentpaperComponent implements OnInit {
     await modal.present();
     // 接收模态框传回的值
     const data = await modal.onDidDismiss();
-    console.log(data);
   }
 }

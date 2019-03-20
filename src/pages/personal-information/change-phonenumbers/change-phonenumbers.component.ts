@@ -12,6 +12,9 @@ import { ModalController } from '@ionic/angular';
 export class ChangePhonenumbersComponent implements OnInit {
   /** 开启页面传过来的值 */
   @Input() data: any;
+
+  /** 办公号码、手机号码 */
+  sws: any;
   constructor(
     private mainindexservice: MainindexService,
     private userinfo: UserInfo,
@@ -20,11 +23,16 @@ export class ChangePhonenumbersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.data);
+    this.sws = {
+      Mobile: this.data.Mobile,
+      Phone: this.data.Phone
+    };
   }
 
   /** 保存 */
   submit() {
+    this.data.Mobile = this.sws.Mobile;
+    this.data.Phone = this.sws.Phone;
     this.mainindexservice.UpdateStaffInfo(this.data).subscribe(
       r => {
         if (r['State'] === 1) {
@@ -45,7 +53,7 @@ export class ChangePhonenumbersComponent implements OnInit {
   /** 关闭模态框 */
   closemodal(data?: any) {
     this.modalController.dismiss({
-      result: data
+      result: this.sws
     });
   }
 }
