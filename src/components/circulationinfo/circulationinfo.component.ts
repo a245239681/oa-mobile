@@ -43,7 +43,6 @@ export class CirculationinfoComponent implements OnInit {
     if (this.itemmodel.ProcessType === 2) {
       this.mainservice.getReciveDetailInfo(this.itemmodel['Id']).subscribe(
         res => {
-          console.log(res);
           if (res['State'] === 1) {
             this.parenteArr = res['Data'];
             if (this.parenteArr) {
@@ -73,7 +72,6 @@ export class CirculationinfoComponent implements OnInit {
     } else if (this.itemmodel.ProcessType === 1) {
       this.mainservice.Send_ActDetailTree(this.itemmodel['Id']).subscribe(
         res => {
-          console.log(res);
           if (res['State'] === 1) {
             this.parenteArr = res['Data'];
             if (this.parenteArr) {
@@ -114,7 +112,6 @@ export class CirculationinfoComponent implements OnInit {
    * 点击展示
    */
   getsubtitle(item) {
-    // console.log(itemid);
     // var item = this.parenteArr[itemid];
     // 如果有数据了就不请求了
     if (item['children'].length > 0) {
@@ -125,7 +122,6 @@ export class CirculationinfoComponent implements OnInit {
           .getReciveDetailInfo(this.itemmodel['Id'], item['ID'])
           .subscribe(
             res => {
-              console.log(res);
               if (res['State'] === 1) {
                 item['children'] = res['Data'];
                 item.hidden = item['children'].length === 0;
@@ -155,7 +151,6 @@ export class CirculationinfoComponent implements OnInit {
           .Send_ActDetailTree(this.itemmodel['Id'], item['ID'])
           .subscribe(
             res => {
-              console.log(res);
               if (res['State'] === 1) {
                 item['children'] = res['Data'];
                 item.hidden = item['children'].length === 0;
@@ -239,7 +234,6 @@ export class CirculationinfoComponent implements OnInit {
   //  * 分割线
   //  */
   // fgx(i: any, n: any) {
-  //   console.log(i);
   //   if (i.length > 1) {
   //     if (n < i.length - 1) {
   //       return true;

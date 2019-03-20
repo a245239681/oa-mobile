@@ -41,7 +41,6 @@ export class PhrasingPage implements OnInit {
   /** 请求常用语列表 */
   Getoftenuse() {
     this.mainindexService.getoftenuse().subscribe(r => {
-      console.log(r);
       if (r['State'] === 1) {
         this.myList = r['Data'];
       }
@@ -77,14 +76,12 @@ export class PhrasingPage implements OnInit {
           role: 'cancel',
           // cssClass: 'secondary',
           handler: blah => {
-            console.log('取消删除');
           }
         },
         {
           text: '确定',
           handler: () => {
             this.mainindexService.DailyDelete(id).subscribe(res => {
-              console.log(res);
               if (res === true) {
                 this.toast.presentToast('删除成功');
                 this.Getoftenuse();
@@ -101,7 +98,6 @@ export class PhrasingPage implements OnInit {
   }
   /** 删除 */
   delete(id) {
-    console.log(id);
     this.presentAlertConfirm(id);
   }
   /**
@@ -125,7 +121,6 @@ export class PhrasingPage implements OnInit {
     await modal.present();
     // 接收模态框传回的值
     const data = await modal.onDidDismiss();
-    console.log(data);
     if (data.data.result === 'change') {
       this.Getoftenuse();
     }

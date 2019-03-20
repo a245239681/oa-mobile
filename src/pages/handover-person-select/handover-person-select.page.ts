@@ -29,22 +29,16 @@ export class HandoverPersonSelectPage implements OnInit {
     private userinfo: UserInfo
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      // console.log(params);
       this.itemmodel = JSON.parse(params['item']);
       // this.IsShowNextStep = this.itemmodel['IsShowNextStep'];
-      console.dir(this.itemmodel);
       this.hasSelected = JSON.parse(params['hasSelected']);
-      // console.log('已选数据');
-      console.log(this.hasSelected);
       this.toast.dismissLoading();
     });
   }
   hostSelected(items: any) {
-    console.log(items);
     this.selectPerson = items.map(res => {
       return res['Id'];
     });
-    console.log(this.itemmodel);
   }
   ngOnInit() {
     if (

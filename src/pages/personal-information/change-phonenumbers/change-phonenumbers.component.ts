@@ -23,7 +23,6 @@ export class ChangePhonenumbersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.data);
     this.sws = {
       Mobile: this.data.Mobile,
       Phone: this.data.Phone
