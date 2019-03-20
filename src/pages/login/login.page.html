@@ -9,7 +9,7 @@
           </div>
           <div class='wsrk'>
             <i class="iconfont tb"> &#xe61b;</i>
-            <input type="password" class="srk" placeholder="请输入密码" [(ngModel)]="loginInfo.PassWord" (blur)="onPasswordChange()">
+            <input type="password" class="srk" placeholder="请输入密码" [(ngModel)]="loginInfo.PassWord" (change)="onPasswordChange()">
           </div>
           <!-- <ion-input class="srk" type="text" placeholder="请输入用户名" formControlName="username">
               <i class="iconfont tb">&#xe610;</i>

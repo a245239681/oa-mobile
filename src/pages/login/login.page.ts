@@ -80,18 +80,19 @@ export class LoginPage {
     );
   }
   login(value: any) {
-    if (this.isPasswordEmpty) {
-      this.toast.presentToast(this.validationMessages.PassWord.required);
+    if (this.loginInfo.username === '') {
+      this.toast.presentToast(this.validationMessages.username.required);
       return;
     }
-    if (this.isUserNameEmpty) {
-      this.toast.presentToast(this.validationMessages.username.required);
+    if (this.loginInfo.PassWord === '') {
+      this.toast.presentToast(this.validationMessages.PassWord.required);
       return;
     }
     if (this.isPasswordLow) {
       this.toast.presentToast(this.validationMessages.PassWord.minlength);
       return;
     }
+
     this.loginservice.login(this.loginInfo).subscribe(res => {
       if (res['State'] === 1) {
         const userinfo = res['Data'];
