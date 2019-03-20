@@ -24,7 +24,6 @@
   </ion-card>
   <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
     <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
-
       <!-- 收文待办  -->
       <div *ngIf="title == '收文待办'">
         <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '#D1202E'">{{item.Title}}</ion-note>

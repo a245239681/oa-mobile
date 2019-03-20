@@ -25,7 +25,6 @@ export class ReadercomponentComponent implements OnInit {
    */
   getdata(id: string) {
     this.mainservice.getDeptTreeCY(id).subscribe((res) => {
-      console.log(res);
       if (res['State'] == 1) {
         this.alldepartmentArr = res['Data'];
       }else {
@@ -37,11 +36,9 @@ export class ReadercomponentComponent implements OnInit {
   }
 
   itemClick(item: any,index:number) {
-    console.log('点击父');
     
     if (this.alldepartmentArr[index]['attributes']['NodeType'] == 'Dept' && this.alldepartmentArr[index]['children'].length < 1) {
       this.mainservice.getDeptTreeCY(this.alldepartmentArr[index]['id']).subscribe((res) => {
-        console.log(res);
         if (res['State'] == 1) {
            this.alldepartmentArr[index]['children'] = res['Data'];
         }else {
@@ -56,7 +53,6 @@ export class ReadercomponentComponent implements OnInit {
   }
 
   subitemclick() {
-    console.log('点击子')
   }
 
   /**

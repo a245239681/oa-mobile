@@ -54,7 +54,6 @@ export class DepartmentSelectComponent implements OnInit {
             this.selectedList.push(this.listdataArr[i]);
           }
           this.selected.emit({ items: this.selectedList });
-          // console.log('==========', this.listdataArr);
         } else {
           this.toast.presentToast('已无数据');
         }
@@ -66,15 +65,11 @@ export class DepartmentSelectComponent implements OnInit {
   }
 
   singleSelect(item: any) {
-    console.log(item);
     this.selected.emit({ items: [item] });
   }
 
   mutiSelect(item: any, checked: boolean) {
-    console.log(item);
-    console.log(checked);
     if (this.isSingleSlect === '3' || this.isSingleSlect === '4') {
-      // console.log('==========', this.listdataArr);
       if (checked) {
         this.selectList.push(item);
       } else {
@@ -82,7 +77,6 @@ export class DepartmentSelectComponent implements OnInit {
         this.selectList = this.selectList.filter(data => data.id !== item.id);
       }
       this.selected.emit({ items: this.selectList });
-      console.log(this.selected);
     } else {
       if (checked) {
         this.selectedList.push(item);
@@ -93,8 +87,6 @@ export class DepartmentSelectComponent implements OnInit {
         );
       }
       this.selected.emit({ items: this.selectedList });
-      console.log(this.selected);
     }
-    // console.log('==========', this.listdataArr);
   }
 }

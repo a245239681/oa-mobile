@@ -45,7 +45,6 @@ export class ReturnBackPage implements OnInit {
 
   singleSelect(item: any, data: string, event) {
     event.stopPropagation();
-    console.log(item);
 
     if (item.data.Type === 2) {
       this.selectItem.checked = false;
@@ -53,8 +52,6 @@ export class ReturnBackPage implements OnInit {
       this.selectItem = item;
       this.selectPerson = item['value'];
       this.NextActionId = data;
-      console.log(this.selectPerson);
-      console.log(this.NextActionId);
     } else {
       item.expanded = !item.expanded;
     }
@@ -62,8 +59,6 @@ export class ReturnBackPage implements OnInit {
     // this.selected.emit({ items: [item] });
   }
   ionSelect(item, e) {
-    console.log(item);
-    console.log(e);
   }
   ValidBack() {
     this.mainservice
@@ -74,7 +69,6 @@ export class ReturnBackPage implements OnInit {
       )
       .subscribe(
         res => {
-          console.log(res);
           if ((<any>res).State === 1) {
             this.commitType = '40';
           }
@@ -99,10 +93,8 @@ export class ReturnBackPage implements OnInit {
       .getBackActionTree(this.itemmodel['Id'], this.itemmodel['ProcessType'])
       .subscribe(
         (res: any) => {
-          console.log(res);
           if (res['State'] === 1) {
             this.tree = res.Data.BackAllTree.map(p => this.generateData(p));
-            console.log(this.tree);
 
             // this.tree = res['Data']['BackAllTree'];
           } else {
@@ -130,7 +122,6 @@ export class ReturnBackPage implements OnInit {
 
       ProcessType: this.itemmodel['ProcessType']
     };
-    console.log(parms);
     this.mainservice.MoveCommit(parms).subscribe(res => {
       if (res['State'] === 1) {
         this.toast.presentToast('退回成功');

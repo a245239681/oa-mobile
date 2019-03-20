@@ -80,7 +80,6 @@ export class LoginPage {
     );
   }
   login(value: any) {
-    console.log(value);
     if (this.isPasswordEmpty) {
       this.toast.presentToast(this.validationMessages.PassWord.required);
       return;
@@ -96,7 +95,6 @@ export class LoginPage {
     this.loginservice.login(this.loginInfo).subscribe(res => {
       if (res['State'] === 1) {
         const userinfo = res['Data'];
-        console.log(userinfo);
         /**
          * 存token 存名字 存是否是领导
          */
@@ -147,10 +145,8 @@ export class LoginPage {
   // 接口测试
   output() {
     // this.mainindexService.getmainindexdata().subscribe((res) => {
-    //   console.log(res);
     // });
     // this.mainindexService.getneedtodolist(1).subscribe((res) => {
-    //   console.log(res);
     //   this.nav.navigateForward("/tabs/tabs");
     // }, (err) => {
     // });

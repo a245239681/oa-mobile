@@ -43,7 +43,6 @@ export class HavedoneworkPage implements OnInit {
    * @param event 点击Segment
    */
   segmentChanged(event: any) {
-    console.log(event);
     this.searchStr = '';
     if (event.target.value === '1') {
       this.type = 1;
@@ -53,7 +52,6 @@ export class HavedoneworkPage implements OnInit {
     this.getdata();
   }
   ngOnInit() {
-    // console.log('havedonework init');
     // this.getdata();
   }
 
@@ -70,9 +68,11 @@ export class HavedoneworkPage implements OnInit {
         res => {
           this.ionRefresh.complete();
           if (res['State'] === 1) {
-            console.log(res);
             this.listdataArr = res['Data']['PageOfResult'];
-            if (this.listdataArr.length <= 20) {
+            if (
+              this.listdataArr.length < 20 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
+            ) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
@@ -87,9 +87,8 @@ export class HavedoneworkPage implements OnInit {
             //   return item;
             // });
           } else {
-            this.toast.presentToast('已无数据');
+            this.toast.presentToast('暂无数据');
           }
-          console.log(this.nohasmore);
         },
         err => {
           this.ionRefresh.complete();
@@ -102,7 +101,6 @@ export class HavedoneworkPage implements OnInit {
    *搜索
    */
   seachclick(text: string) {
-    console.log(text);
     this.getdata();
   }
 
@@ -128,7 +126,6 @@ export class HavedoneworkPage implements OnInit {
    * 上拉加载
    */
   loadMoreData(event) {
-    console.log('上拉加载');
     this.mainindexservice
       .getBrowserFile(this.currentPage, this.type, this.searchStr)
       .subscribe(
@@ -136,15 +133,7 @@ export class HavedoneworkPage implements OnInit {
           this.ionRefresh.complete();
           this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
-            console.log(res);
             const tempArr = res['Data']['PageOfResult'];
-            if (tempArr.length <= 20) {
-              this.nohasmore = true;
-            } else {
-              this.nohasmore = false;
-              this.currentPage += 1;
-            }
-
             tempArr.forEach(item => {
               // if (item.Backable) {
               //   item.color = '2';
@@ -153,10 +142,18 @@ export class HavedoneworkPage implements OnInit {
               // }
               this.listdataArr.push(item);
             });
+            if (
+              tempArr.length < 20 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
+            ) {
+              this.nohasmore = true;
+            } else {
+              this.nohasmore = false;
+              this.currentPage += 1;
+            }
           } else {
             this.toast.presentToast('已无数据');
           }
-          console.log(this.nohasmore);
         },
         err => {
           this.ionRefresh.complete();

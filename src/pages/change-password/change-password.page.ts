@@ -27,7 +27,6 @@ export class ChangePasswordPage implements OnInit {
     private platform: Platform
   ) {
     this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
       this.item = JSON.parse(params['item']);
     });
     this.myData = {
@@ -51,7 +50,6 @@ export class ChangePasswordPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.myData);
     if (this.platform.is("android")){
       this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
       // this.nav.pop();
@@ -67,7 +65,6 @@ export class ChangePasswordPage implements OnInit {
     if (this.myData.newPassword !== this.mima) {
       this.toast.presentToast('两次密码不一致');
     } else {
-      console.log(1);
       this.mainindexservice.UpdateStaffInfo(this.myData).subscribe(
         r => {
           if (r['State'] === 1) {
@@ -100,6 +97,5 @@ export class ChangePasswordPage implements OnInit {
     //   this.backState = true;
     //   return false;
     // }
-    // console.log('23123123');
   }
 }

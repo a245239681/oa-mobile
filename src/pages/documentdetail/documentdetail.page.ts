@@ -53,14 +53,12 @@ export class DocumentdetailPage implements OnInit {
     private mainindexService: MainindexService
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
-      console.log(params);
       this.itemmodel = JSON.parse(params['item']);
 
       if (this.itemmodel['documenttype'] == 3) {
         this.mainindexService
           .SetDoRead(this.itemmodel['Id'], '')
           .subscribe(res => {
-            console.log('传阅阅读', res);
           });
       }
     });
@@ -68,7 +66,6 @@ export class DocumentdetailPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.nbyj());
   }
 
   nbyj() {
@@ -87,7 +84,6 @@ export class DocumentdetailPage implements OnInit {
   }
 
   segmentChanged(event: any) {
-    console.log('Segment changed', event.target.value);
     this.type = event.target.value;
     switch (event.target.value) {
       case '1':
@@ -128,7 +124,6 @@ export class DocumentdetailPage implements OnInit {
       ApiUrlManagement.fileViewSends +
       '?relationId=' +
       relationId;
-    console.log(url);
     if (this.platform.is('android') || this.platform.is('ios')) {
       const uri = encodeURI(url); // 文件的地址链接
       const fileUrl =
@@ -137,7 +132,6 @@ export class DocumentdetailPage implements OnInit {
       this.fileTransfer.download(uri, fileUrl).then(
         entry => {
           entry.file((data: any) => {
-            console.log(data);
             this.fileOpener
               .open(fileUrl, getFileMimeType('pdf'))
               .then(() => this.commonHelper.dismissLoading())

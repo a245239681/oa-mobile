@@ -50,7 +50,6 @@ export class NextSelectComponent implements OnInit {
   colors = { Dept: '#f99d31', Staff: '#f87a85', root: '#4877fb' };
 
   ngOnInit() {
-    console.log(this.hasSelected);
     switch (this.state) {
       case '0':
         // this.buttonList = [{
@@ -166,7 +165,6 @@ export class NextSelectComponent implements OnInit {
           if (this.nbChecked) {
             checked = false;
             item.checked = false;
-            console.log(this.departmentTree);
             this.commonHelper.presentToast('不能同时选择局领导批示和拟办人');
             return false;
           }
@@ -501,7 +499,6 @@ export class NextSelectComponent implements OnInit {
   * @param nodeId 要查找的节点Id
   */
   getNode(json: any, nodeId: string) {
-    console.log('要查询的节点为：' + nodeId);
     // 1.第一层 root 深度遍历整个json
     for (let i = 0; i < json.length; i++) {
       if (this.node) {
@@ -514,7 +511,6 @@ export class NextSelectComponent implements OnInit {
       }
       // 2.有节点就开始找，一直递归下去
       if (obj.id === nodeId) {
-        console.log('ok ... ');
         this.node = obj; // 找到了与nodeId匹配的节点，结束递归
         break;
       } else {
