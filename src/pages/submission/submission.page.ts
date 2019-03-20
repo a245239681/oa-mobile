@@ -386,7 +386,8 @@ export class SubmissionPage implements OnInit {
       this.mainservice.SetDoRead(this.itemmodel['Id'], content).subscribe(res => {
 
         this.toast.presentToast("操作成功");
-        this.route.navigate(['tabs']);
+        //this.route.navigate(['tabs']);
+        this.nav.navigateBack("documentlist");
       })
       return;
     }
@@ -487,8 +488,9 @@ export class SubmissionPage implements OnInit {
                             )
                             .subscribe(res => {
                               if (res['State'] == 1) {
-                                this.route.navigate(['tabs']);
                                 this.toast.presentToast('提交成功');
+                                this.nav.navigateBack("documentlist");
+                                //this.route.navigate(['tabs']);
                               }
                             });
                         }
@@ -569,8 +571,9 @@ export class SubmissionPage implements OnInit {
           if (res['State'] === 1) {
             this.toast.presentToast('协办提交成功');
             // 返回列表
-            console.log(res);
-            this.route.navigate(['tabs']);
+            //console.log(res);
+            //this.route.navigate(['tabs']);
+            this.nav.navigateBack("documentlist");
           }
         },
         err => {

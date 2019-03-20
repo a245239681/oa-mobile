@@ -286,7 +286,8 @@ export class PersonSelectPage implements OnInit {
         res => {
           if (res['State'] == 1) {
             this.toast.presentToast('提交成功');
-            this.route.navigate(['tabs']);
+            //this.route.navigate(['tabs']);
+            this.nav.navigateBack("documentlist");
             // this.modalController.dismiss();
           } else {
             this.toast.presentToast(res['Message']);
