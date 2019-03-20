@@ -190,10 +190,11 @@ export class PersonSelectPage implements OnInit {
 
     if (this.hostArr.length > 0 && this.coorperationArr.length > 0) {
       var hostid = this.hostArr[0];
-      //大于-1包含该元素
-      if (this.coorperationArr.indexOf(hostid) > -1) {
-        this.toast.presentToast('主办和协办不能同时选择同一个部门');
-        return;
+      for (var i = 0 ; i < this.coorperationArr.length ; i++) {
+        if (this.coorperationArr[i] == hostid.id) {
+          this.toast.presentToast('主办和协办不能同时选择同一个部门');
+          return;
+        }
       }
     }
 
