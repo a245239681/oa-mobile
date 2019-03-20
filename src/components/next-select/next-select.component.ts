@@ -17,7 +17,7 @@ export class NextSelectComponent implements OnInit {
 
   @Input() state: string; // 状态 0：下一步 1：传阅
 
-  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean }>(); // 勾选回调
+  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean,state:string }>(); // 勾选回调
 
   @Input() hasSelected: any; // 已勾选传入
 
@@ -255,7 +255,7 @@ export class NextSelectComponent implements OnInit {
       deptId: [],
     };
     this.addChecked(this.departmentTree);
-    this.selected.emit({ items: this.selectedList, leaderChecked: this.leaderChecked, nbChecked: this.nbChecked });
+    this.selected.emit({ items: this.selectedList, leaderChecked: this.leaderChecked, nbChecked: this.nbChecked,state:this.state});
   }
 
   /**
