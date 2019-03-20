@@ -41,27 +41,32 @@ export class ChangePasswordPage implements OnInit {
       /** 生日 */
       birthday: this.item.Birthday
     };
+    if (!this.myData.sex || this.myData.sex == 'null') {
+      this.myData.sex = '';
+    }
+    if (!this.myData.birthday || this.myData.birthday == 'null') {
+      this.myData.birthday = '';
+    }
+  }
+
+  ngOnInit() {
+    if (this.platform.is('android')) {
+      this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+        // this.nav.pop();
+        // return true;
+        this.nav.back();
+      });
+    }
+  }
+
+  /** 修改密码 */
+  Confirm() {
     if (!this.myData.sex) {
       this.myData.sex = '';
     }
     if (!this.myData.birthday) {
       this.myData.birthday = '';
     }
-  }
-
-  ngOnInit() {
-    if (this.platform.is("android")){
-      this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
-      // this.nav.pop();
-      // return true;
-      this.nav.back();
-    });
-    }
-    
-  }
-
-  /** 修改密码 */
-  Confirm() {
     if (this.myData.newPassword !== this.mima) {
       this.toast.presentToast('两次密码不一致');
     } else {

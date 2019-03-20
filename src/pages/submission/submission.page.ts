@@ -373,7 +373,7 @@ export class SubmissionPage implements OnInit {
         }
       );
     } else {
-      this.toast.presentToast('缺少参数');
+      // this.toast.presentToast('缺少参数');
     }
   }
 
@@ -573,7 +573,7 @@ export class SubmissionPage implements OnInit {
         }
       );
     } else {
-      this.toast.presentToast('缺少参数');
+      // this.toast.presentToast('缺少参数');
     }
   }
 
