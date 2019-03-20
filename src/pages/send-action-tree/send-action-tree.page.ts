@@ -45,8 +45,12 @@ export class SendActionTreePage implements OnInit {
       this.selectItem.checked = false;
       item.checked = true;
       this.selectItem = item.data;
-      this.dataArr = item.value;
-      this.dataArr = data;
+      // this.dataArr = item.value;
+      if (Number(data).toString() === 'NaN') {
+        this.dataArr = this.treeData[0]['value'];
+      } else {
+        this.dataArr = data;
+      }
     } else {
       item.expanded = !item.expanded;
     }
