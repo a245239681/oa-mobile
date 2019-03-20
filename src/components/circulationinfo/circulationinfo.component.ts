@@ -103,7 +103,7 @@ export class CirculationinfoComponent implements OnInit {
 
   // 转换
   sjdate(dos: any) {
-    dos = dos.replace(/-/g, '/');
+    dos = dos ? dos.replace(/-/g, '/') : dos;
     // dos = dos.substring(0, dos.length - 3);
     return dos;
   }
