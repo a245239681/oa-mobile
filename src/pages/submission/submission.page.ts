@@ -1,5 +1,8 @@
 import { UserInfo } from 'src/infrastructure/user-info';
-import { saveadviceModel } from './../../service/maiindex/mainindex.service';
+import {
+  saveadviceModel,
+  CommitModel
+} from './../../service/maiindex/mainindex.service';
 import {
   NavController,
   AlertController,
@@ -86,7 +89,6 @@ export class SubmissionPage implements OnInit {
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params.item);
-      console.log(this.itemmodel);
       if (this.userinfo.GetUserDegree() === 'true') {
         // 收文
         if (this.itemmodel['documenttype'] == 1) {
@@ -134,12 +136,9 @@ export class SubmissionPage implements OnInit {
    * @param value 获取到的输入框的值
    */
   handleAdvice(type: number, value: any) {
-    console.log(value);
     if (type === 0) {
-      console.log('保存');
       this.saveadvice(value['advice']);
     } else {
-      console.log('提交');
       this.handleInfo(value['advice']);
     }
   }
@@ -230,7 +229,6 @@ export class SubmissionPage implements OnInit {
         )
         .subscribe(
           res => {
-            console.log(res);
             if ((<any>res).State === 1) {
               this.route.navigate(['return-back'], {
                 queryParams: {
@@ -301,7 +299,6 @@ export class SubmissionPage implements OnInit {
       )
       .subscribe(
         res => {
-          console.log(res);
           this.getoftenuse();
           if (res['State'] === 1) {
             this.attitudeType = res['Data']['Authority']['CurAttitudeType']; // 保存意见用到的type
@@ -323,7 +320,6 @@ export class SubmissionPage implements OnInit {
     this.mainservice.getoftenuse().subscribe(
       res => {
         if (res['State'] === 1) {
-          console.log(res);
           this.oftenuseArr = res['Data'];
         }
       },
@@ -360,7 +356,6 @@ export class SubmissionPage implements OnInit {
       await this.mainservice.saveadvice(savemodel).subscribe(
         res => {
           if (res['State'] === 1) {
-            console.log(res);
             this.toast.presentToast('保存意见成功');
           }
         },
@@ -377,11 +372,6 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
-    if (this.showSign) {
-      this.goSign();
-      return;
-    }
-
     if (this.itemmodel['documenttype'] == 3) {
       this.mainservice
         .SetDoRead(this.itemmodel['Id'], content)
@@ -437,10 +427,8 @@ export class SubmissionPage implements OnInit {
             }
             // 不是领导的情况
             else {
-              console.log('');
               // 如果是协办的话点提交的接口就OK
               if (this.itemmodel['CoorType'] == 1) {
-                console.log('协办');
                 this.handinxieban();
               } else {
                 // 调用提交的接口-----validnext
@@ -452,7 +440,6 @@ export class SubmissionPage implements OnInit {
                   )
                   .subscribe(
                     res => {
-                      console.log(res);
                       if (res['State'] == 1) {
                         // 协办
                         if (res['Ok'] == 'ok' && res['Type'] == 'BMCL') {
@@ -461,7 +448,6 @@ export class SubmissionPage implements OnInit {
                         // 结束
                         else if (res['Type'] == 400) {
                           // 弹出要结束的模态框 跳到下一步  展示结束步骤
-                          console.log('选结束');
                           this.presentEndAlert();
                         }
                         // 分件
@@ -471,10 +457,7 @@ export class SubmissionPage implements OnInit {
                         // 拟办回到办公室
                         else if (res['Type'] == 610) {
                           // 610直接commit
-                          console.log('看数据');
                           this.itemmodel['commitType'] = 610;
-                          console.log(this.itemmodel);
-                          console.log(this.itemmodel['commitType']);
                           this.mainservice
                             .commit_610(
                               this.itemmodel['Id'],
@@ -517,9 +500,13 @@ export class SubmissionPage implements OnInit {
                   this.itemmodel['CoorType']
                 )
                 .subscribe(res => {
-                  console.log(res);
                   if (res['State'] == 1) {
                     this.itemmodel['commitType'] = res['Type'];
+
+                    if (this.userinfo.GetUserDegree() === 'true') {
+                      this.goSign();
+                      return;
+                    }
 
                     if (this.userinfo.GetUserDegree() === 'true') {
                       this.toast.presentToast('领导签发');
@@ -604,7 +591,6 @@ export class SubmissionPage implements OnInit {
           if (res['State'] === 1) {
             this.toast.presentToast('协办提交成功');
             // 返回列表
-            //console.log(res);
             //this.route.navigate(['tabs']);
             this.nav.navigateBack('documentlist');
           }
@@ -667,8 +653,6 @@ export class SubmissionPage implements OnInit {
    * 跳到下一步时把上一个人选好的人的数据传下去--正常跳转进入下一步选人
    */
   async pushNextStep() {
-    console.log('进入提交');
-    console.log(this.itemmodel);
     this.mainservice
       .commitSimulateEnd(
         this.itemmodel.Id,
@@ -681,6 +665,8 @@ export class SubmissionPage implements OnInit {
           if (!tempArr) {
             tempArr = [];
           }
+          //把下一步的数据清掉
+          tempArr.Leaders = [];
           this.route.navigate(['person-select'], {
             queryParams: {
               item: JSON.stringify(this.itemmodel),
@@ -728,7 +714,6 @@ export class SubmissionPage implements OnInit {
     });
     await this.modal.present();
     const obj = await this.modal.onDidDismiss();
-    console.log(obj);
     if (obj.data.res) {
       this.base64 = obj.data.res;
       const savemodel = <saveadviceModel>{
@@ -744,7 +729,25 @@ export class SubmissionPage implements OnInit {
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
           if (res['State'] === 1) {
-            this.route.navigate(['sign-sussces']);
+            const comitmodel = <CommitModel>{
+              commitType: 30,
+              coorType: this.itemmodel['CoorType'],
+              processType: this.itemmodel['ProcessType'],
+              id: this.itemmodel['Id']
+            };
+
+            this.mainservice.commit(comitmodel).subscribe(
+              data => {
+                if (data['State'] === 1) {
+                  this.route.navigate(['sign-sussces']);
+                } else {
+                  this.toast.presentToast('签发失败');
+                }
+              },
+              err => {
+                this.toast.presentToast('签发失败');
+              }
+            );
           } else {
             this.toast.presentToast('签发失败');
           }
@@ -780,6 +783,5 @@ export class SubmissionPage implements OnInit {
     await modal.present();
     // 接收模态框传回的值
     const data = await modal.onDidDismiss();
-    console.log(data);
   }
 }

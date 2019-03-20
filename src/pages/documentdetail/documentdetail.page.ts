@@ -166,7 +166,7 @@ export class DocumentdetailPage implements OnInit {
       .Retrieve(item['Id'], item['ProcessType'], item['CoorType'])
       .subscribe(res => {
         if (res === 'ok') {
-          this.route.navigate(['havedonework']);
+          this.nav.navigateBack(['havedonework']);
         }
       });
   }

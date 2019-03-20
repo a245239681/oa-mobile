@@ -62,19 +62,12 @@ export class PersonSelectPage implements OnInit {
     // this.hasSelected = navParams.data.hasSelected;
 
     // this.IsShowNextStep = this.itemmodel['IsShowNextStep'];
-    // console.log(this.itemmodel);
 
-    // console.log('已选数据');
-    // console.log(this.hasSelected);
     // this.toast.dismissLoading();
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
       this.IsShowNextStep = this.itemmodel['IsShowNextStep'];
-      console.log('数据');
-      console.log(this.itemmodel);
       this.hasSelected = JSON.parse(params['hasSelected']);
-      console.log('已选数据');
-      console.log(this.hasSelected);
       this.toast.dismissLoading();
 
       //为了确保用户不做任何操作提交参数没有值需要进行组装模拟数据
@@ -114,11 +107,9 @@ export class PersonSelectPage implements OnInit {
   }
 
   hostSelected(items: any[]) {
-    console.log('host主办');
     //单选直接该数据
     if (this.type == 1) {
       this.hostArr = items;
-      console.log(this.hostArr);
     } else if (this.type == 2) {
 
       var temps = items;
@@ -129,13 +120,11 @@ export class PersonSelectPage implements OnInit {
       this.coorperationArr = this.coorperationArr.map(item => {
         return item['id'];
       });
-      console.log(this.coorperationArr);
     }
   }
 
   nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean) {
 
-    console.log(items);
     // 如果是传阅
     if (this.type == 3) {
       // 组装传阅数组
@@ -160,15 +149,12 @@ export class PersonSelectPage implements OnInit {
           this.readerArr.push(departmentModel);
         }
       }
-      console.log(this.readerArr);
     } else if (this.type == 4) {
-      //console.log(items);
       // 先直接拿到人的id数组  如果有部门id返回的话 就拿到部门里面的所有人的id
       this.nextArr = items['staffId'];
       if (items['deptId'].length > 0) {
         for (let i = 0; i < items['deptId'].length; i++) {
           this.mainservice.getDeptTreeCY(items['deptId'][i]).subscribe(res => {
-           // console.log('下一步组装数据');
             if (res['State'] == 1) {
               let tempArr = <any[]>res['Data'];
               tempArr = tempArr.map(item => {
@@ -182,7 +168,6 @@ export class PersonSelectPage implements OnInit {
         }
       }
       // 下一步数据在此组装完毕
-    //  console.log(this.nextArr);
     }
 
     if (this.type == 4) {
@@ -201,11 +186,6 @@ export class PersonSelectPage implements OnInit {
    * 提交
    */
   handin() {
-    console.log('提交');
-    console.log(this.hostArr);
-    console.log(this.coorperationArr);
-    console.log(this.readerArr);
-    console.log(this.nextArr);
 
 
     if (this.hostArr.length > 0 && this.coorperationArr.length > 0) {
@@ -281,7 +261,6 @@ export class PersonSelectPage implements OnInit {
         ProcessType: this.itemmodel['ProcessType']
       };
 
-      console.log(this.handleModel);
       this.mainservice.lasthandinStep(this.handleModel).subscribe(
         res => {
           if (res['State'] == 1) {

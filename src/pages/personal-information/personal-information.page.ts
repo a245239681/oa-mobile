@@ -28,7 +28,6 @@ export class PersonalInformationPage implements OnInit {
     private platform: Platform
   ) {
     // this.activeRoute.queryParams.subscribe(params => {
-    //   console.log(params);
     //   this.myId = JSON.parse(params['item']['id']);
     // });
     this.GetStaffInfo(this.userinfo.getPersonageId());
@@ -64,14 +63,12 @@ export class PersonalInformationPage implements OnInit {
           // icon: 'trash',
           // cssClass: 'sheetClass',
           handler: () => {
-            console.log('拍照 clicked');
           }
         },
         {
           text: '从手机相册选择',
           // cssClass: 'sheetClass',
           handler: () => {
-            console.log('从手机相册选择 clicked');
           }
         },
         {
@@ -80,7 +77,6 @@ export class PersonalInformationPage implements OnInit {
           // icon: 'close',
           // cssClass: 'cacelClass',
           handler: () => {
-            console.log('取消 clicked');
           }
         }
       ]
@@ -110,7 +106,6 @@ export class PersonalInformationPage implements OnInit {
           role: 'cancel',
           // icon: 'close',
           handler: () => {
-            console.log('取消 clicked');
           }
         }
       ]
@@ -132,8 +127,6 @@ export class PersonalInformationPage implements OnInit {
   }
   // 修改生日
   timeDateChange(e) {
-    console.log(e);
-    console.log(e['detail']['value']);
     this.myData.Birthday = e.detail.value;
     this.Confirm();
   }
@@ -145,7 +138,6 @@ export class PersonalInformationPage implements OnInit {
 
   /** 修改信息 */
   Confirm() {
-    console.log(1);
     this.mainindexservice.UpdateStaffInfo(this.myData).subscribe(
       r => {
         if (r['State'] === 1) {
@@ -164,7 +156,6 @@ export class PersonalInformationPage implements OnInit {
   /** 开启修改手机号，办公电话号码 */
   async countersignModal(d: any) {
     this.myData.title = d;
-    console.log(this.myData);
     // componentProps 传值 d:数据
     const modal = await this.modalController.create({
       component: ChangePhonenumbersComponent,
@@ -173,9 +164,7 @@ export class PersonalInformationPage implements OnInit {
     await modal.present();
     // 接收模态框传回的值
     const data = await modal.onDidDismiss();
-    console.log(data);
     // this.myData.Mobile = data['result']['Mobile'];
     // this.myData.Phone = data['result']['Phone'];
-    console.log(this.myData);
   }
 }
