@@ -563,7 +563,6 @@ export class SubmissionPage implements OnInit {
                 /** 操作业务的获取 */
                 processType: this.itemmodel.ProcessType
               };
-              console.log(Data);
               this.huiqian(Data);
             }
           }

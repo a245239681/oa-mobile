@@ -111,7 +111,6 @@ export class PersonSelectPage implements OnInit {
         temp.push(this.hostArr[i].id);
       }
       this.hostArr = temp;
-      console.log(this.hostArr);
     } else if (selectType == '2') {
       this.coorperationArr = items;
       var temp = [];
@@ -119,15 +118,11 @@ export class PersonSelectPage implements OnInit {
         temp.push(this.coorperationArr[i].id);
       }
       this.coorperationArr = temp;
-      console.log(this.coorperationArr);
     }
   }
 
   //state 0 下一步 1 传阅  
   nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean,state:string) {
-
-    console.log(leaderChecked)
-    console.log(nbChecked);
     // 如果是传阅
     if (state == '1') {
       // 组装传阅数组
