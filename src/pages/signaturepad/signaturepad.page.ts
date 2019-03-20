@@ -31,14 +31,12 @@ export class SignaturepadPage extends ModalController
   canvasResize() {
     const canvas = document.querySelector('canvas');
     this.signaturePad.set('minWidth', 2);
-    console.log(canvas.offsetWidth);
     this.signaturePad.set('canvasWidth', 340);
 
     this.signaturePad.set('canvasHeight', 500);
   }
 
   ngAfterViewInit() {
-    console.log('Reset Model Screen');
     this.signaturePad.clear();
     this.canvasResize();
   }
@@ -69,7 +67,6 @@ export class SignaturepadPage extends ModalController
     let size: number; // canvas初始大小
 
     if (edg % 90 !== 0) {
-      console.error('旋转角度必须是90的倍数!');
       throw new Error('旋转角度必须是90的倍数!');
     }
     edg = (edg % 360) + 360;

@@ -40,16 +40,13 @@ export class SendActionTreePage implements OnInit {
   }
 
   singleselect(item: TreeItem, data, event) {
-    console.log(item);
     event.stopPropagation();
     if (item.data.Type === 2) {
       this.selectItem.checked = false;
       item.checked = true;
       this.selectItem = item.data;
       this.dataArr = item.value;
-      console.log(this.selectItem);
       this.dataArr = data;
-      console.log(data);
     } else {
       item.expanded = !item.expanded;
     }
@@ -69,18 +66,15 @@ export class SendActionTreePage implements OnInit {
       .GetActionTreeSend(this.itemmodel['Id'], this.itemmodel['ProcessType'])
       .toPromise();
     // .subscribe((res: any) => {
-    console.log(res);
 
     if (res.State === 1) {
       this.floor = res.Data[0].Type === 2 ? 2 : 3;
       this.treeData = res.Data.map(p => this.generateData(p));
     }
 
-    console.log(this.treeData);
     return;
     if (res['State'] == 1) {
       this.dataArr = res['Data'];
-      console.log(this.dataArr);
       if (this.dataArr.length > 0) {
         var tempArr = <any[]>this.dataArr[0]['Children'];
 
@@ -114,7 +108,6 @@ export class SendActionTreePage implements OnInit {
     };
 
     this.mainservice.LastSendActionStep(handlemodel).subscribe(res => {
-      console.log(res);
       if (res['State'] == 1) {
         this.toast.presentToast('提交成功');
         this.route.navigate(['tabs']);
