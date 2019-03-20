@@ -4,17 +4,19 @@ import { Observable } from 'rxjs';
 import { ApiUrlManagement } from 'src/infrastructure/api-url-management';
 import { HttpClient } from '@angular/common/http';
 import { identifierModuleUrl } from '@angular/compiler';
+import { CommonHelper } from 'src/infrastructure/commonHelper';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainindexService {
-  constructor(private httpclient: HttpClient) {}
+  constructor(private httpclient: HttpClient, private commonHelper: CommonHelper) {}
 
   /**
    * 获取首页条数
    */
   getmainindexdata(): Observable<any> {
+    // this.commonHelper.preventLoading();
     return this.httpclient.get<any>(
       ApiUrlManagement.MainindexData + '?tag=oa_receive_l'
     );
