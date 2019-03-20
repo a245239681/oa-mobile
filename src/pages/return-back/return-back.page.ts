@@ -58,8 +58,7 @@ export class ReturnBackPage implements OnInit {
 
     // this.selected.emit({ items: [item] });
   }
-  ionSelect(item, e) {
-  }
+  ionSelect(item, e) {}
   ValidBack() {
     this.mainservice
       .ValidBack(
@@ -125,7 +124,7 @@ export class ReturnBackPage implements OnInit {
     this.mainservice.MoveCommit(parms).subscribe(res => {
       if (res['State'] === 1) {
         this.toast.presentToast('退回成功');
-        this.nav.navigateBack(['tabs']);
+        this.nav.navigateBack(['documentlist']);
       } else {
         this.toast.presentToast(res['Message']);
       }

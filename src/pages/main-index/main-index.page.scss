@@ -56,3 +56,10 @@ ion-note {
   top: 4.5vw;
   right: 16vw;
 }
+
+ion-title {
+  -webkit-padding-start: 0px;
+  padding-inline-start: 0px;
+  -webkit-padding-end: 0px;
+  padding-inline-end: 0px;
+}
