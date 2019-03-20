@@ -80,25 +80,9 @@ export class LoginPage {
     );
   }
   login(value: any) {
-    // if (!this.isUserNameEmpty) {
-    //   this.isUserNameEmpty = true;
-    //   // this.toast.presentToast(this.validationMessages.username.required);
-    // } else {
-    //   this.isUserNameEmpty = false;
-    // }
-    // if (!this.isPasswordEmpty) {
-    //   this.isPasswordEmpty = true;
-    //   // this.toast.presentToast(this.validationMessages.PassWord.required);
-    // } else {
-    //   this.isPasswordEmpty = false;
-    // }
-    // if (!this.isPasswordLow) {
-    //   this.isPasswordLow = true;
-    //   // this.toast.presentToast(this.validationMessages.PassWord.minlength);
-    // } else {
-    //   this.isPasswordLow = false;
-    // }
-
+    if (this.loginInfo.username === '' || this.loginInfo.PassWord === '') {
+      this.toast.presentToast('用户名或密码不能为空！');
+    }
     if (this.loginInfo.username !== '' && this.loginInfo.PassWord !== '') {
       this.loginservice.login(this.loginInfo).subscribe(res => {
         if (res['State'] === 1) {
