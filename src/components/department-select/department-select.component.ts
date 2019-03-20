@@ -41,17 +41,18 @@ export class DepartmentSelectComponent implements OnInit {
             if (this.isSingleSlect === '1') {
               if (this.listdataArr[i].id === this.hasSelected.PrimaryDeptId) {
                 this.listdataArr[i].checked = true;
+                this.selectedList.push(this.listdataArr[i]);
               }
             } else if (this.isSingleSlect === '2') {
               if (this.hasSelected.Cooperaters) {
                 this.hasSelected.Cooperaters.forEach((element: string) => {
                   if (this.listdataArr[i].id === element) {
                     this.listdataArr[i].checked = true;
+                    this.selectedList.push(this.listdataArr[i]);
                   }
                 });
               }
             }
-            this.selectedList.push(this.listdataArr[i]);
           }
           this.selected.emit({ items: this.selectedList });
         } else {
