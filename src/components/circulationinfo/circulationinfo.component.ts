@@ -50,6 +50,14 @@ export class CirculationinfoComponent implements OnInit {
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
             }
+            this.parenteArr = this.parenteArr.map(v => {
+              v.children = v.children.map(cv => {
+                   cv.SignDate = cv.SignDate.replace(/-/ig, '/');
+                   cv.Date = cv.Date.replace(/-/ig, '/');
+                   return cv;
+                });
+                return v;
+            });
             // this.parenteArr.forEach(e => {
             //   e.children.forEach(el => {
             //     el.SignDate = this.sjdate(el.SignDate);
@@ -79,6 +87,14 @@ export class CirculationinfoComponent implements OnInit {
                 (v, i) => (v.hidden = v.children.length === 0 || i > 0)
               );
             }
+            this.parenteArr = this.parenteArr.map(v => {
+              v.children = v.children.map(cv => {
+                   cv.SignDate = cv.SignDate.replace(/-/ig, '/');
+                   cv.Date = cv.Date.replace(/-/ig, '/');
+                   return cv;
+                });
+                return v;
+            });
             // this.parenteArr.forEach(e => {
             //   e.children.forEach(el => {
             //     el.SignDate = this.sjdate(el.SignDate);
@@ -99,6 +115,7 @@ export class CirculationinfoComponent implements OnInit {
         }
       );
     }
+   
   }
 
   // 转换
