@@ -155,6 +155,7 @@ export class DocumentlistPage implements OnInit {
    */
 
   doRefresh(event) {
+    // this.toast.preventLoading();
     this.getdata();
   }
 
@@ -162,6 +163,7 @@ export class DocumentlistPage implements OnInit {
    * 上拉加载
    */
   loadMoreData(event) {
+    // this.toast.preventLoading();
     this.mainindexservice
       .getneedtodolist(this.currentPage, this.type, this.searchStr)
       .subscribe(
