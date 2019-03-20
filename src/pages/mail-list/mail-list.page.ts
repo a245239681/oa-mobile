@@ -67,7 +67,7 @@ export class MailListPage implements OnInit {
     {
       text: '发送短信至' + e.mobile,
       handler: () => {
-        document.location.href = 'mms:' + e.mobile;
+        document.location.href = 'sms:' + e.mobile;
       }
     },
     {
