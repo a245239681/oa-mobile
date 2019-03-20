@@ -70,6 +70,13 @@ export class ChangePasswordPage implements OnInit {
     if (this.myData.newPassword !== this.mima) {
       this.toast.presentToast('两次密码不一致');
     } else {
+      // 长度为3-20位包含数字、字母、特殊字符的密码
+      const mima = /^[^\u4e00-\u9fa5]{3,20}$/;
+
+      if (!mima.test(this.myData.newPassword)) {
+        this.toast.presentToast('密码格式不正确，最小长度为3,且不能输入汉字！');
+        return;
+      }
       this.mainindexservice.UpdateStaffInfo(this.myData).subscribe(
         r => {
           if (r['State'] === 1) {
