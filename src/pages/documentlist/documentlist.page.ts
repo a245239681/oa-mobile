@@ -69,8 +69,12 @@ export class DocumentlistPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ionViewDidEnter(){
     this.getdata();
+  }
+
+  ngOnInit() {
+    
   }
   /**
    * 获取列表数据
