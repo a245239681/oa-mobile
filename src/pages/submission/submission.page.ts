@@ -284,7 +284,7 @@ export class SubmissionPage implements OnInit {
         });
     }
   }
-  ngOnInit() { }
+  ngOnInit() {}
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -383,18 +383,15 @@ export class SubmissionPage implements OnInit {
     }
 
     if (this.itemmodel['documenttype'] == 3) {
-      this.mainservice.SetDoRead(this.itemmodel['Id'], content).subscribe(res => {
-
-        this.toast.presentToast("操作成功");
-        //this.route.navigate(['tabs']);
-        this.nav.navigateBack("documentlist");
-      })
+      this.mainservice
+        .SetDoRead(this.itemmodel['Id'], content)
+        .subscribe(res => {
+          this.toast.presentToast('操作成功');
+          //this.route.navigate(['tabs']);
+          this.nav.navigateBack('documentlist');
+        });
       return;
     }
-
-
-
-
 
     // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理
     if (
@@ -473,7 +470,6 @@ export class SubmissionPage implements OnInit {
                         }
                         // 拟办回到办公室
                         else if (res['Type'] == 610) {
-
                           // 610直接commit
                           console.log('看数据');
                           this.itemmodel['commitType'] = 610;
@@ -489,7 +485,7 @@ export class SubmissionPage implements OnInit {
                             .subscribe(res => {
                               if (res['State'] == 1) {
                                 this.toast.presentToast('提交成功');
-                                this.nav.navigateBack("documentlist");
+                                this.nav.navigateBack('documentlist');
                                 //this.route.navigate(['tabs']);
                               }
                             });
@@ -513,42 +509,79 @@ export class SubmissionPage implements OnInit {
           // 发文流程
           else if (this.itemmodel['documenttype'] == 2) {
             // this.toast.presentToast('发文暂不处理');
-            this.mainservice
-              .getToastType(
-                this.itemmodel['Id'],
-                this.itemmodel['ProcessType'],
-                this.itemmodel['CoorType']
-              )
-              .subscribe(res => {
-                console.log(res);
-                if (res['State'] == 1) {
-                  this.itemmodel['commitType'] = res['Type'];
+            if (this.itemmodel['CoorType'] !== 3) {
+              this.mainservice
+                .getToastType(
+                  this.itemmodel['Id'],
+                  this.itemmodel['ProcessType'],
+                  this.itemmodel['CoorType']
+                )
+                .subscribe(res => {
+                  console.log(res);
+                  if (res['State'] == 1) {
+                    this.itemmodel['commitType'] = res['Type'];
 
-                  if (this.userinfo.GetUserDegree() === 'true') {
-                    this.toast.presentToast('领导签发');
-                    return;
-                  }
+                    if (this.userinfo.GetUserDegree() === 'true') {
+                      this.toast.presentToast('领导签发');
+                      return;
+                    }
 
-                  // 如果步骤名称是保密信息意见
-                  if (
-                    this.sendStepName == '保密信息意见' ||
-                    this.sendStepName == '公开信息意见'
-                  ) {
-                    this.route.navigate(['secretinfoadvice'], {
+                    // 如果步骤名称是保密信息意见
+                    if (
+                      this.sendStepName == '保密信息意见' ||
+                      this.sendStepName == '公开信息意见'
+                    ) {
+                      this.route.navigate(['secretinfoadvice'], {
+                        queryParams: {
+                          item: JSON.stringify(this.itemmodel),
+                          title: this.sendStepName
+                        }
+                      });
+                      return;
+                    }
+                    this.route.navigate(['send-action-tree'], {
                       queryParams: {
-                        item: JSON.stringify(this.itemmodel),
-                        title: this.sendStepName
+                        item: JSON.stringify(this.itemmodel)
                       }
                     });
-                    return;
                   }
-                  this.route.navigate(['send-action-tree'], {
-                    queryParams: {
-                      item: JSON.stringify(this.itemmodel)
-                    }
-                  });
+                });
+            } else {
+              // 赋值给提交对象
+              const Data = {
+                /** 业务Id */
+                id: this.itemmodel.Id,
+                nextActionId: 0,
+                isSendMsg: false,
+                isSnedSms: false,
+                nextUserId: '',
+                primaryDeptId: '',
+                leaders: [],
+                /** 勾选id数组 */
+                cooperaters: [],
+                readers: [],
+                commitType: 0,
+                /** 操作业务的获取 */
+                coorType: this.itemmodel.CoorType,
+                count: 0,
+                /** 操作业务的获取 */
+                processType: this.itemmodel.ProcessType
+              };
+              console.log(Data);
+              this.mainservice.commit(Data).subscribe(
+                r => {
+                  if (r['State'] === 1) {
+                    this.toast.presentToast('提交成功');
+                    this.nav.navigateBack('/documentlist');
+                  } else {
+                    this.toast.presentToast(r['Message']);
+                  }
+                },
+                () => {
+                  this.toast.presentToast('请求失败');
                 }
-              });
+              );
+            }
           }
         },
         err => {
@@ -573,7 +606,7 @@ export class SubmissionPage implements OnInit {
             // 返回列表
             //console.log(res);
             //this.route.navigate(['tabs']);
-            this.nav.navigateBack("documentlist");
+            this.nav.navigateBack('documentlist');
           }
         },
         err => {
@@ -608,7 +641,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => { }
+          handler: () => {}
         }
       ]
     });
@@ -670,7 +703,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => { });
+    modal.onDidDismiss().then(backdata => {});
   }
 
   //模态出结束步骤
@@ -682,7 +715,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => { });
+    modal.onDidDismiss().then(backdata => {});
   }
 
   async goSign() {
