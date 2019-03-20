@@ -28,6 +28,10 @@ const routes: Routes = [
   { path: 'sign-sussces', loadChildren: '../pages/sign-sussces/sign-sussces.module#SignSusscesPageModule' },
 
 
+  { path: 'forget', loadChildren: '../pages/forget/forget.module#ForgetPageModule' },
+
+
+
 
 ];
 
