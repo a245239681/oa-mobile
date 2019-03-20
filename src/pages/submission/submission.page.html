@@ -47,7 +47,8 @@
               (click)="handleAdvice(1,adviceForm.value)" value="提交">{{handinButtonTitle}}</ion-button>
           </ion-col>
           <ion-col size="6" size-lg *ngIf="IsShowHandinAndGiveButton">
-            <ion-button ion-button color="danger" value="提交并分发文件" (click)="handinandgiveFile()">
+            <ion-button class="ion-color ion-color-secondary button button-full button-solid ion-activatable ion-focusable hydrated"
+             color="danger" value="提交并分发文件" (click)="handinandgiveFile()">
               提交并分发文件
             </ion-button>
           </ion-col>
