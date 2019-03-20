@@ -92,7 +92,7 @@ export class SubmissionPage implements OnInit {
       if (this.userinfo.GetUserDegree() === 'true') {
         // 收文
         if (this.itemmodel['documenttype'] == 1) {
-          this.handinButtonTitle = '提交并返回代理人';
+          this.handinButtonTitle = '提交并返回办理人';
           // 是否展示提交并分发文件
           this.IsShowHandinAndGiveButton = true;
         }
