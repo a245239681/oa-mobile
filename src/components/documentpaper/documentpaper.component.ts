@@ -37,8 +37,8 @@ export class DocumentpaperComponent implements OnInit {
     );
   }
 
-  /** 开启会签模态框 */
   async toDetail(d?: any) {
+    d.documenttype = 1;
     // componentProps 传值 d:数据
     const modal = await this.modalController.create({
       component: DocumentRelatedPage,

@@ -7,6 +7,5 @@ export class ForgetService {
   constructor() { }
 
   all(){
-    console.log("hello word")
   }
 }
