@@ -27,8 +27,6 @@ export class PersonSelectPage implements OnInit {
 
   isDepartmentSelect = true;
 
-  isSingleSelect = true;
-
   // 记录主办的数组
   // 记录主办的数组
   hostArr: any[] = [];
@@ -90,12 +88,10 @@ export class PersonSelectPage implements OnInit {
       case '1': // 主办
         this.type = 1;
         this.isDepartmentSelect = true;
-        this.isSingleSelect = true;
         break;
       case '2': // 协办
         this.type = 2;
         this.isDepartmentSelect = true;
-        this.isSingleSelect = false;
         break;
       case '3': // 传阅
         this.type = 3;
@@ -106,27 +102,29 @@ export class PersonSelectPage implements OnInit {
     }
   }
 
-  hostSelected(items: any[]) {
+  hostSelected(items: any[], selectType:string) {
     //单选直接该数据
-    if (this.type == 1) {
+    if (selectType == '1') {
       this.hostArr = items;
-    } else if (this.type == 2) {
-
-      var temps = items;
-
-      
-
+      var temp = [];
+      for (var i = 0; i < this.hostArr.length; i ++) {
+        temp.push(this.hostArr[i].id);
+      }
+      this.hostArr = temp;
+    } else if (selectType == '2') {
       this.coorperationArr = items;
-      this.coorperationArr = this.coorperationArr.map(item => {
-        return item['id'];
-      });
+      var temp = [];
+      for (var i = 0; i < this.coorperationArr.length; i ++) {
+        temp.push(this.coorperationArr[i].id);
+      }
+      this.coorperationArr = temp;
     }
   }
 
-  nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean) {
-
+  //state 0 下一步 1 传阅  
+  nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean,state:string) {
     // 如果是传阅
-    if (this.type == 3) {
+    if (state == '1') {
       // 组装传阅数组
       this.readerArr = [];
       // 组装选中的部门为模型
@@ -149,7 +147,7 @@ export class PersonSelectPage implements OnInit {
           this.readerArr.push(departmentModel);
         }
       }
-    } else if (this.type == 4) {
+    } else if (state == '0') {
       // 先直接拿到人的id数组  如果有部门id返回的话 就拿到部门里面的所有人的id
       this.nextArr = items['staffId'];
       if (items['deptId'].length > 0) {
@@ -169,8 +167,8 @@ export class PersonSelectPage implements OnInit {
       }
       // 下一步数据在此组装完毕
     }
-
-    if (this.type == 4) {
+    //下一步
+    if (state == '0') {
       this.IsSelectNiBan = nbChecked;
     }
   }
@@ -186,12 +184,10 @@ export class PersonSelectPage implements OnInit {
    * 提交
    */
   handin() {
-
-
     if (this.hostArr.length > 0 && this.coorperationArr.length > 0) {
       var hostid = this.hostArr[0];
       for (var i = 0 ; i < this.coorperationArr.length ; i++) {
-        if (this.coorperationArr[i] == hostid.id) {
+        if (this.coorperationArr[i] == hostid) {
           this.toast.presentToast('主办和协办不能同时选择同一个部门');
           return;
         }
@@ -243,7 +239,7 @@ export class PersonSelectPage implements OnInit {
       this.handleModel = {
         id: this.itemmodel['Id'],
         // 主办id 单选
-        primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0]['id'] : '',
+        primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0] : '',
 
         cooperaters: this.coorperationArr,
         /**
