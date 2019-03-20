@@ -1,5 +1,5 @@
 import { UserInfo } from 'src/infrastructure/user-info';
-import { saveadviceModel } from './../../service/maiindex/mainindex.service';
+import { saveadviceModel, CommitModel } from './../../service/maiindex/mainindex.service';
 import {
   NavController,
   AlertController,
@@ -377,10 +377,6 @@ export class SubmissionPage implements OnInit {
    * 提交
    */
   handleInfo(content: string) {
-    if (this.showSign) {
-      this.goSign();
-      return;
-    }
 
     if (this.itemmodel['documenttype'] == 3) {
       this.mainservice.SetDoRead(this.itemmodel['Id'], content).subscribe(res => {
@@ -525,7 +521,7 @@ export class SubmissionPage implements OnInit {
                   this.itemmodel['commitType'] = res['Type'];
 
                   if (this.userinfo.GetUserDegree() === 'true') {
-                    this.toast.presentToast('领导签发');
+                    this.goSign();
                     return;
                   }
 
@@ -695,7 +691,7 @@ export class SubmissionPage implements OnInit {
     });
     await this.modal.present();
     const obj = await this.modal.onDidDismiss();
-    console.log(obj);
+    console.log(this.itemmodel);
     if (obj.data.res) {
       this.base64 = obj.data.res;
       const savemodel = <saveadviceModel>{
@@ -711,7 +707,25 @@ export class SubmissionPage implements OnInit {
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
           if (res['State'] === 1) {
-            this.route.navigate(['sign-sussces']);
+            const comitmodel = <CommitModel>{
+              commitType: 30,
+              coorType: this.itemmodel['CoorType'],
+              processType: this.itemmodel['ProcessType'],
+              id: this.itemmodel['Id'],
+            };
+
+            this.mainservice.commit(comitmodel).subscribe(
+              data => {
+                if (data['State'] === 1) {
+                  this.route.navigate(['sign-sussces']);
+                } else {
+                  this.toast.presentToast('签发失败');
+                }
+              },
+              err => {
+                this.toast.presentToast('签发失败');
+              }
+            );
           } else {
             this.toast.presentToast('签发失败');
           }
