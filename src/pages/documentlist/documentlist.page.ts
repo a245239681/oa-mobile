@@ -92,11 +92,14 @@ export class DocumentlistPage implements OnInit {
               console.log(res);
               this.listdataArr = res['Data']['PageOfResult'];
               // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
-              if (this.listdataArr.length <= 20) {
+              if (
+                this.listdataArr.length < 20 ||
+                this.listdataArr.length >= res['Data']['TotalCount']
+              ) {
                 this.nohasmore = true;
               } else {
                 this.nohasmore = false;
-                this.currentPage += 1;
+                this.currentPage++;
               }
 
               if (this.type === 1) {
@@ -120,7 +123,7 @@ export class DocumentlistPage implements OnInit {
                 });
               }
             } else {
-              this.toast.presentToast('已无数据');
+              this.toast.presentToast('暂无数据');
             }
             console.log(this.nohasmore);
           },
@@ -174,7 +177,10 @@ export class DocumentlistPage implements OnInit {
               this.listdataArr.push(item);
             });
 
-            if (tempArr.length <= 20) {
+            if (
+              tempArr.length < 20 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
+            ) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;

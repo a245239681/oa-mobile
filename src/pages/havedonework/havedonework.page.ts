@@ -72,7 +72,10 @@ export class HavedoneworkPage implements OnInit {
           if (res['State'] === 1) {
             console.log(res);
             this.listdataArr = res['Data']['PageOfResult'];
-            if (this.listdataArr.length <= 20) {
+            if (
+              this.listdataArr.length < 20 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
+            ) {
               this.nohasmore = true;
             } else {
               this.nohasmore = false;
@@ -87,7 +90,7 @@ export class HavedoneworkPage implements OnInit {
             //   return item;
             // });
           } else {
-            this.toast.presentToast('已无数据');
+            this.toast.presentToast('暂无数据');
           }
           console.log(this.nohasmore);
         },
@@ -138,13 +141,6 @@ export class HavedoneworkPage implements OnInit {
           if (res['State'] === 1) {
             console.log(res);
             const tempArr = res['Data']['PageOfResult'];
-            if (tempArr.length <= 20) {
-              this.nohasmore = true;
-            } else {
-              this.nohasmore = false;
-              this.currentPage += 1;
-            }
-
             tempArr.forEach(item => {
               // if (item.Backable) {
               //   item.color = '2';
@@ -153,6 +149,15 @@ export class HavedoneworkPage implements OnInit {
               // }
               this.listdataArr.push(item);
             });
+            if (
+              tempArr.length < 20 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
+            ) {
+              this.nohasmore = true;
+            } else {
+              this.nohasmore = false;
+              this.currentPage += 1;
+            }
           } else {
             this.toast.presentToast('已无数据');
           }
