@@ -112,3 +112,33 @@ input:focus {
     text-align: center;
     color: red;
 }
+// 重新设置页面布局样式
+.wsrk{
+    padding-bottom: 20px !important;
+    box-sizing: border-box;
+}
+.wsrk:nth-last-child(2){
+    padding-bottom: 0px;
+}
+.bg{
+    background-size: 100% 50%;
+}
+// 忘记密码样式
+.forget{
+    display: inline-block;
+    left: 50%;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 6vh;
+    color: rgb(72,119,251);
+}
+a{
+    text-decoration:none;
+}
+.login-form{
+    padding: 63px 30px 25px 30px !important;
+}
+.forget_center{
+    width: 100%;
+    text-align: center;
+}
