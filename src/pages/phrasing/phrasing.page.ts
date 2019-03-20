@@ -43,6 +43,8 @@ export class PhrasingPage implements OnInit {
     this.mainindexService.getoftenuse().subscribe(r => {
       if (r['State'] === 1) {
         this.myList = r['Data'];
+      } else {
+        this.myList = [];
       }
     });
   }
@@ -75,8 +77,7 @@ export class PhrasingPage implements OnInit {
           text: '取消',
           role: 'cancel',
           // cssClass: 'secondary',
-          handler: blah => {
-          }
+          handler: blah => {}
         },
         {
           text: '确定',
@@ -86,7 +87,7 @@ export class PhrasingPage implements OnInit {
                 this.toast.presentToast('删除成功');
                 this.Getoftenuse();
               } else {
-                this.toast.presentToast(res + '');
+                this.toast.presentToast('删除失败');
               }
             });
           }
