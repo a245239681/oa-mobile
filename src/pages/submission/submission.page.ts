@@ -625,6 +625,8 @@ export class SubmissionPage implements OnInit {
           if (!tempArr) {
             tempArr = [];
           }
+          //把下一步的数据清掉
+          tempArr.Leaders = [];
           this.route.navigate(['person-select'], {
             queryParams: {
               item: JSON.stringify(this.itemmodel),
