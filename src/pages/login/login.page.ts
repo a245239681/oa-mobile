@@ -82,6 +82,7 @@ export class LoginPage {
   login(value: any) {
     if (this.loginInfo.username === '' || this.loginInfo.PassWord === '') {
       this.toast.presentToast('用户名或密码不能为空！');
+      return;
     }
     if (this.loginInfo.username !== '' && this.loginInfo.PassWord !== '') {
       this.loginservice.login(this.loginInfo).subscribe(res => {
