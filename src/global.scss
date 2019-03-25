@@ -59,3 +59,13 @@ ion-picker-column .picker-opts {
 .action-sheet-button-inner {
   font-weight: normal;
 }
+
+/** logading样式 */
+.logading-class > ion-backdrop{
+  opacity: 0 !important;
+}
+.logading-class > .loading-wrapper.sc-ion-loading-ios {
+  color: white;
+  background-color: black !important;
+  opacity: 0.5 !important;
+}
