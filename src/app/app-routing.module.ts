@@ -26,13 +26,7 @@ const routes: Routes = [
   { path: 'mail-list', loadChildren: '../pages/mail-list/mail-list.module#MailListPageModule' },
   { path: 'document-related', loadChildren: '../pages/document-related/document-related.module#DocumentRelatedPageModule' },
   { path: 'sign-sussces', loadChildren: '../pages/sign-sussces/sign-sussces.module#SignSusscesPageModule' },
-
-
   { path: 'forget', loadChildren: '../pages/forget/forget.module#ForgetPageModule' },
-
-
-
-
 ];
 
 @NgModule({
