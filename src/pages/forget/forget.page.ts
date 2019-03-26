@@ -12,7 +12,6 @@ export class ForgetPage implements OnInit {
   constructor(private forgetService: ForgetService) { }
  
   ngOnInit() {
-    this.forgetService.all();
   }
 
 }
