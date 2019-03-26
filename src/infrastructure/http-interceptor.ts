@@ -107,9 +107,9 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // 判断是否需要loading，Loading true：不需要loading
+    // 判断是否需要loading的post请求，需要在请求前添加loading字段，loading true：不需要loading
     if (req.method === 'POST') {
-      if (!req.body.Loading) {
+      if (!req.body.loading) {
         this.commonhelper.presentLoading();
       }
       // 删除不需要发送的loading字段
