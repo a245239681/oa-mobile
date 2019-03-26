@@ -14,7 +14,7 @@ export class CommonHelper {
   constructor(
     public toastController: ToastController,
     private loadingCtrl: LoadingController
-  ) { }
+  ) {}
 
   /**
    * 显示toast
@@ -50,24 +50,33 @@ export class CommonHelper {
     this.toast.present();
   }
 
-  private isLoading : Boolean;
-  private retryCount : number  = 0 ;
+  private isLoading: Boolean;
+  private retryCount: number = 0;
+  showLoading = true;
+  /**
+   * 阻止紧接下来的一次加载loading。
+   */
+  preventLoading() {
+    this.showLoading = false;
+    setTimeout(() => (this.showLoading = true), 0);
+  }
+
   /**
    * 弹出loading
    * @param content 显示内容
    */
-
-
   public async presentLoading(content?: string) {
-    if (this.isLoading == true ) {
-      return ;
+    if (this.isLoading == true || !this.showLoading) {
+      return;
     }
 
-    this.isLoading  = true ;
+    this.isLoading = true;
     this.loading = await this.loadingCtrl.create({
-      spinner: 'crescent',
       message: content,
-      translucent: true
+      translucent: true,
+      spinner: 'bubbles',
+      mode: 'ios',
+      cssClass: 'logading-class'
     });
     await this.loading.present();
   }
@@ -76,24 +85,22 @@ export class CommonHelper {
    */
   public async dismissLoading() {
     if (this.isLoading == true) {
-      if(this.loading == null ){
-
-        if(this.retryCount > 5){
-          this.retryCount = 0 ;
-          return ;
+      if (this.loading == null) {
+        if (this.retryCount > 5) {
+          this.retryCount = 0;
+          return;
         }
         setTimeout(() => {
-          this.retryCount ++ ;
+          this.retryCount++;
           this.dismissLoading();
         }, 500);
-        return; 
+        return;
       }
-      this.retryCount = 0 ;
-      this.isLoading = false ;
+      this.retryCount = 0;
+      this.isLoading = false;
       this.loading.dismiss();
-      this.loading = null ;
+      this.loading = null;
     }
-    
   }
 
   /**

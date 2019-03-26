@@ -1,22 +1,32 @@
 .bg {
-  height: 45vw;
+  height: 75vw;
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
   background-image: url(/assets/bg.png);
 }
 
-.title {
+h1.title {
   position: absolute;
   width: 16vw;
   height: 16vw;
   margin: 0 0 0 -8vw;
   background: url(/assets/image/hyymlogo.png) center;
   left: 50%;
-  top: 25vw;
-  background-size: 100%;
-  // border-radius: 50%;
+  top: 52vw;
+  background-size: 75%;
   background-repeat: no-repeat;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0px 0px 7px 2px #8ab5ff;
+}
+p.title{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 67vw;
+  text-align: center;
+  color: #4c8dff;
 }
 
 .block {
@@ -55,4 +65,11 @@ ion-note {
   position: absolute;
   top: 4.5vw;
   right: 16vw;
+}
+
+ion-title {
+  -webkit-padding-start: 0px;
+  padding-inline-start: 0px;
+  -webkit-padding-end: 0px;
+  padding-inline-end: 0px;
 }

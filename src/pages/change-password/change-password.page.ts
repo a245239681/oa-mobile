@@ -41,30 +41,42 @@ export class ChangePasswordPage implements OnInit {
       /** 生日 */
       birthday: this.item.Birthday
     };
+    if (!this.myData.sex || this.myData.sex == 'null') {
+      this.myData.sex = '';
+    }
+    if (!this.myData.birthday || this.myData.birthday == 'null') {
+      this.myData.birthday = '';
+    }
+  }
+
+  ngOnInit() {
+    if (this.platform.is('android')) {
+      this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
+        // this.nav.pop();
+        // return true;
+        this.nav.back();
+      });
+    }
+  }
+
+  /** 修改密码 */
+  Confirm() {
     if (!this.myData.sex) {
       this.myData.sex = '';
     }
     if (!this.myData.birthday) {
       this.myData.birthday = '';
     }
-  }
-
-  ngOnInit() {
-    if (this.platform.is("android")){
-      this.sub = this.platform.backButton.subscribeWithPriority(9999, () => {
-      // this.nav.pop();
-      // return true;
-      this.nav.back();
-    });
-    }
-    
-  }
-
-  /** 修改密码 */
-  Confirm() {
     if (this.myData.newPassword !== this.mima) {
       this.toast.presentToast('两次密码不一致');
     } else {
+      // 长度为3-20位包含数字、字母、特殊字符的密码
+      const mima = /^[^\u4e00-\u9fa5]{3,20}$/;
+
+      if (!mima.test(this.myData.newPassword)) {
+        this.toast.presentToast('密码格式不正确，最小长度为3,且不能输入汉字！');
+        return;
+      }
       this.mainindexservice.UpdateStaffInfo(this.myData).subscribe(
         r => {
           if (r['State'] === 1) {

@@ -58,6 +58,7 @@ export class ForgetService {
     }
   }
 
+<<<<<<< HEAD
   // 表单验证
   changTag(item: any,index: number,status: number){
     if(item[index].data === ""){
@@ -99,6 +100,9 @@ export class ForgetService {
       }
     });
     return item;
+=======
+  all(){
+>>>>>>> 856a7a0d8d0c1b2b5b818892e3fd3dc60c30a600
   }
   // 表单统一验证核心
   authCode(type,status){

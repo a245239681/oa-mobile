@@ -92,7 +92,7 @@ export class SubmissionPage implements OnInit {
       if (this.userinfo.GetUserDegree() === 'true') {
         // 收文
         if (this.itemmodel['documenttype'] == 1) {
-          this.handinButtonTitle = '提交并返回代理人';
+          this.handinButtonTitle = '提交并返回办理人';
           // 是否展示提交并分发文件
           this.IsShowHandinAndGiveButton = true;
         }
@@ -137,9 +137,9 @@ export class SubmissionPage implements OnInit {
    */
   handleAdvice(type: number, value: any) {
     if (type === 0) {
-      this.saveadvice(value['advice']);
+      this.saveadvice(this.CurAttitude);
     } else {
-      this.handleInfo(value['advice']);
+      this.handleInfo(this.CurAttitude);
     }
   }
   /** 一般移交 */
@@ -333,6 +333,15 @@ export class SubmissionPage implements OnInit {
    * 保存意见
    */
   async saveadvice(content: string) {
+    if (!this.CurAttitude) {
+      this.toast.presentToast('请填写意见');
+      return;
+    }
+
+    if (this.CurAttitude && this.CurAttitude.length <= 0) {
+      this.toast.presentToast('请填写意见');
+      return;
+    }
     // 发文流程 如果是处于二校之后的步骤就直接提示到PC端处理---特殊情况
     if (
       this.sendStepName == '二校' ||
@@ -554,7 +563,6 @@ export class SubmissionPage implements OnInit {
                 /** 操作业务的获取 */
                 processType: this.itemmodel.ProcessType
               };
-              console.log(Data);
               this.huiqian(Data);
             }
           }

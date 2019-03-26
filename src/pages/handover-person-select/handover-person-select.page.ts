@@ -87,7 +87,7 @@ export class HandoverPersonSelectPage implements OnInit {
     this.mainservice.MoveCommit(params).subscribe(res => {
       if (res['State'] === 1) {
         this.toast.presentToast('移交成功');
-        this.route.navigate(['tabs']);
+        this.nav.navigateBack(['documentlist']);
       } else {
         this.toast.presentToast(res['Message']);
       }
