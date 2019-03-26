@@ -13,7 +13,7 @@ export class DepartmentSelectComponent implements OnInit {
 
   @Input() hasSelected: any;
 
-  @Output() selected = new EventEmitter<{ items: any[],type: string }>();
+  @Output() selected = new EventEmitter<{ items: any[]; type: string }>();
 
   // 列表数据
   listdataArr: any[] = [];
@@ -54,9 +54,12 @@ export class DepartmentSelectComponent implements OnInit {
               }
             }
           }
-          this.selected.emit({ items: this.selectedList,type:this.isSingleSlect });
+          this.selected.emit({
+            items: this.selectedList,
+            type: this.isSingleSlect
+          });
         } else {
-          this.toast.presentToast('已无数据');
+          this.toast.presentToast('暂无数据');
         }
       },
       err => {
@@ -66,7 +69,7 @@ export class DepartmentSelectComponent implements OnInit {
   }
 
   singleSelect(item: any) {
-    this.selected.emit({ items: [item],type:this.isSingleSlect });
+    this.selected.emit({ items: [item], type: this.isSingleSlect });
   }
 
   mutiSelect(item: any, checked: boolean) {
@@ -77,7 +80,7 @@ export class DepartmentSelectComponent implements OnInit {
         // 去掉没选中的如果之前选过的
         this.selectList = this.selectList.filter(data => data.id !== item.id);
       }
-      this.selected.emit({ items: this.selectList,type:this.isSingleSlect });
+      this.selected.emit({ items: this.selectList, type: this.isSingleSlect });
     } else {
       if (checked) {
         this.selectedList.push(item);
@@ -87,7 +90,10 @@ export class DepartmentSelectComponent implements OnInit {
           data => data.id !== item.id
         );
       }
-      this.selected.emit({ items: this.selectedList,type:this.isSingleSlect });
+      this.selected.emit({
+        items: this.selectedList,
+        type: this.isSingleSlect
+      });
     }
   }
 }
