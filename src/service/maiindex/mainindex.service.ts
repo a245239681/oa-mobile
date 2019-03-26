@@ -1,9 +1,7 @@
-import { ApiResult } from './../../interfaces/api-result';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiUrlManagement } from 'src/infrastructure/api-url-management';
 import { HttpClient } from '@angular/common/http';
-import { identifierModuleUrl } from '@angular/compiler';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
 
 @Injectable({
@@ -29,7 +27,7 @@ export class MainindexService {
   getneedtodolist(
     page: number,
     type: number = 1,
-    searchStr?: string
+    searchStr?: string,
   ): Observable<any> {
     // 收文待办
     if (type == 1) {
@@ -37,7 +35,7 @@ export class MainindexService {
         type: '传阅件;批办件',
         pageNumber: page,
         pageSize: 20,
-        query: searchStr
+        query: searchStr,
       });
     } else {
       // 2 发文待办  3传阅件
@@ -48,7 +46,7 @@ export class MainindexService {
       return this.httpclient.post<any>(url, {
         pageNumber: page,
         pageSize: 20,
-        query: searchStr
+        query: searchStr,
       });
     }
   }
