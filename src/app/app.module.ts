@@ -30,7 +30,7 @@ import { environment } from 'src/environments/environment';
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot({ rippleEffect: false, mode: 'md' }),
+    IonicModule.forRoot({}),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -63,4 +63,4 @@ import { environment } from 'src/environments/environment';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
