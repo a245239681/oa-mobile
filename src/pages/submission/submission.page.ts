@@ -76,6 +76,7 @@ export class SubmissionPage implements OnInit {
       required: '意见不能为空'
     }
   };
+  
   constructor(
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
