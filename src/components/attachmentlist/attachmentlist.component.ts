@@ -1,8 +1,8 @@
 import { CommonHelper } from './../../infrastructure/commonHelper';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { Platform } from '@ionic/angular';
+import { Platform, LoadingController } from '@ionic/angular';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import {
   FileTransfer,
@@ -16,7 +16,7 @@ import { getFileMimeType } from 'src/infrastructure/regular-expression';
   templateUrl: './attachmentlist.component.html',
   styleUrls: ['./attachmentlist.component.scss']
 })
-export class AttachmentlistComponent implements OnInit {
+export class AttachmentlistComponent implements OnInit,OnDestroy {
   // 传进来的itemmodel
   @Input() itemmodel: any;
 
@@ -26,6 +26,8 @@ export class AttachmentlistComponent implements OnInit {
   /** 附件的下载 */
   fileTransfer: FileTransferObject = this.transfer.create();
 
+  loading: HTMLIonLoadingElement;
+
   constructor(
     private mainservice: MainindexService,
     private commonHelper: CommonHelper,
@@ -33,8 +35,9 @@ export class AttachmentlistComponent implements OnInit {
     private platform: Platform,
     private fileOpener: FileOpener,
     private transfer: FileTransfer,
-    private file: File
-  ) {}
+    private file: File,
+    private loadingCtrl: LoadingController,
+  ) { }
 
   ngOnInit() {
     this.getattchmentlis();
@@ -66,7 +69,7 @@ export class AttachmentlistComponent implements OnInit {
    * 点击跳到浏览器浏览附件
    * @param item 1
    */
-  previewerAttchment(item: any) {
+  async previewerAttchment(item: any) {
     const mimeType = getFileMimeType(item.Extended);
     if (mimeType === '') {
       this.commonHelper.presentToast('不支持该格式文件预览');
@@ -76,21 +79,45 @@ export class AttachmentlistComponent implements OnInit {
       const uri = encodeURI(item['Url']); // 文件的地址链接
       const fileUrl =
         this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
-      this.commonHelper.presentLoading();
+
+      this.loading = await this.loadingCtrl.create({
+        message: '正在加载：0%',
+        translucent: true,
+        spinner: 'bubbles',
+        mode: 'ios',
+        cssClass: 'logading-class',
+      });
+      await this.loading.present();
+
+      let no = 1;
+
+      this.fileTransfer.onProgress((progressEvent) => {
+        if (progressEvent.lengthComputable) {
+          no = progressEvent.loaded / progressEvent.total * 100;
+        }
+      });
+
+      const timer = setInterval(() => {
+        this.loading.message = '正在加载：' + Math.floor(no) + '%';
+        if (no >= 99) {
+          clearInterval(timer);
+        }
+      }, 300);
+
       this.fileTransfer.download(uri, fileUrl).then(
         entry => {
           entry.file(data => {
             this.fileOpener
               .open(fileUrl, getFileMimeType(item.Extended))
-              .then(() => this.commonHelper.dismissLoading())
+              .then(() => this.loading.dismiss())
               .catch(() => {
-                this.commonHelper.dismissLoading();
+                this.loading.dismiss();
                 this.commonHelper.presentToast('不支持该格式文件预览');
               }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
           });
         },
         () => {
-          this.commonHelper.dismissLoading();
+          this.loading.dismiss();
           this.commonHelper.presentToast('文件下载失败');
         }
       );
@@ -100,4 +127,14 @@ export class AttachmentlistComponent implements OnInit {
     const browser = this.browser.create(item['Url']);
     browser.show();
   }
+
+  ngOnDestroy(): void {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+    if (this.fileTransfer) {
+      this.fileTransfer.abort();
+    }
+  }
+
 }

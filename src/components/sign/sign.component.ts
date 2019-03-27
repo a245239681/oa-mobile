@@ -38,13 +38,14 @@ export class SignComponent implements OnInit {
           this.myData = r['Data'];
           this.templateType = r['templateType'];
           this.myData.TypeStr = JSON.parse(this.myData.TypeStr);
-        } else {
-          this.toast.presentToast('暂无数据');
         }
+        // else {
+        //   this.toast.presentToast('暂无数据');
+        // }
       },
-      () => {
-        this.toast.presentToast('请求失败');
-      }
+      // () => {
+      //   this.toast.presentToast('请求失败');
+      // }
     );
   }
   /** 请求办文笺详情 */

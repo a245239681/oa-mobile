@@ -2,9 +2,9 @@
   <!-- <div class='list' style='text-align: center'>
     <span class='bt'>{{title}}</span>
   </div> -->
-  <div class='neir'>
+  <div class='neir' *ngIf="myData">
     <!-- 收文 -->
-    <div *ngIf="itemmodel.documenttype == 1 && myData">
+    <div *ngIf="itemmodel.documenttype == 1">
       <div>
         <span class='texts' style='margin-right: 8%;'>紧急程度：{{ myData.Emergency }}</span>
         <span class='texts' style="min-width: 56%;display: inline-block;">办结时限：{{ myData.FinishDate | date:'yyyy年MM月dd日
@@ -44,7 +44,7 @@
       </div>
     </div>
     <!-- 发文 -->
-    <div *ngIf="itemmodel.documenttype == 2 && myData">
+    <div *ngIf="itemmodel.documenttype == 2">
       <div>
         <span class='texts' style='margin-right: 8%;'>密级：{{ myData.Secret }}</span>
         <span class='texts' style="min-width: 56%;display: inline-block;">紧急程度：{{
