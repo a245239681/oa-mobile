@@ -1,11 +1,11 @@
 <div class="input_content">
     <div class="input_text">
-        <div class="input_font">
-            <input type="text" [placeholder]="header.name" [(ngModel)]="header.name">
-            <button class="input_but">获取验证码</button>
+        <div class="input_font" *ngFor="let item of (status == 0 ? typeLink : typePass); let index = index; trackBy: trackByItem">
+            <span class="iconfont iconfont_left">{{ item.icon }}</span>
+            <input [class.err_bor]="item.errTitle" (keyup)="changTag(index)" [class.padd_right]="item.but" [type]="item.inputType" [placeholder]="item.msg" [(ngModel)]="item.data">
+            <button *ngIf="item.but" class="input_but" (click)="clickName()">获取验证码</button>
+            <span [class.err_show]="item.errTitle"  class="err_font">{{ item.errTitle }}</span>
         </div>
-        <div class="input_font">
-            <input type="text" [placeholder]="header.name">
-        </div>    
+        <button class="input_but_next" (click)="submit(typeLink)">{{ status === 0 ? '下一步' : '提交' }}</button>
     </div>    
 </div>

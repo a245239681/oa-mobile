@@ -1,4 +1,5 @@
-export class Hero {
-    id: number;
-    name: string;
+export interface TypeInterface {
+    imp: string;
+    but: boolean;
+    verify: Array<any>;
   }

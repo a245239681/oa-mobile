@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule,FormControl } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -24,5 +24,4 @@ const routes: Routes = [
   declarations: [ForgetModulePage]
 })
 export class ForgetModulePageModule {
-  name = new FormControl('');
 }
