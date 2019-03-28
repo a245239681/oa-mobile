@@ -2,7 +2,7 @@
   class=""
   [ngClass]="{ treeContent: selectedType !== '3' && selectedType !== '4' }"
 >
-  <ion-list class="checkClass" *ngIf="isSingleSlect === '1'">
+  <ion-list class="checkClass" *ngIf="selectedType === '1'">
     <ion-radio-group>
       <ion-item *ngFor="let item of listdataArr; let i = index">
         <ion-radio
