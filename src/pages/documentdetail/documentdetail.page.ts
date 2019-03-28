@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NavController, Platform, LoadingController } from '@ionic/angular';
@@ -16,12 +15,27 @@ import { ApiUrlManagement } from 'src/infrastructure/api-url-management';
 import { environment } from 'src/environments/environment';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 
+// /** 综合接口返回的各页面数据 */
+// export interface MyData {
+//   /** 办理信息 */
+//   getAttitudeList: any;
+//   /** 流转信息 */
+//   flowInfo: any;
+//   /** 收发文笺 */
+//   receiveSendModel: any;
+//   /** 收发文附件 */
+//   attachModel: any;
+//   /** 相关公文 */
+//   relationModel: any;
+// }
 @Component({
   selector: 'app-documentdetail',
   templateUrl: './documentdetail.page.html',
   styleUrls: ['./documentdetail.page.scss']
 })
 export class DocumentdetailPage implements OnInit, OnDestroy {
+  /** 综合接口返回的各页面数据 */
+  myData: any;
   /**
    * 列表传进来的item
    */
@@ -52,22 +66,65 @@ export class DocumentdetailPage implements OnInit, OnDestroy {
     private transfer: FileTransfer,
     private commonHelper: CommonHelper,
     private mainindexService: MainindexService,
-    private loadingCtrl: LoadingController,
+    private loadingCtrl: LoadingController
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
 
-      if (this.itemmodel['documenttype'] == 3) {
+      if (this.itemmodel['documenttype'] === 3) {
         this.mainindexService
           .SetDoRead(this.itemmodel['Id'], '')
-          .subscribe(res => {
-          });
+          .subscribe(res => {});
       }
     });
     /** 拟办意见的显示隐藏 */
   }
 
   ngOnInit() {
+    this.getdata();
+  }
+
+  /**
+   * 综合信息
+   */
+  getdata() {
+    this.commonHelper.presentLoading();
+    this.mainindexService
+      .getallAttitudeList(
+        this.itemmodel['Id'],
+        this.itemmodel['ProcessType'],
+        this.itemmodel['CoorType']
+      )
+      .subscribe(
+        res => {
+          this.commonHelper.dismissLoading();
+          if (res['State'] === 1) {
+            this.myData = {
+              /** 办理信息 */
+              getAttitudeList: {
+                /** 内容 */
+                BodyData: res.Data.BodyData,
+                /** 标题头 */
+                Header: res.Data.Header
+              },
+              /** 流转信息 */
+              flowInfo: res.Data.FlowInfo,
+              /** 收发文笺 */
+              receiveSendInfo: res.Data.ReceiveSendInfo,
+              /** 收发文附件 */
+              attachInfo: res.Data.AttachInfo,
+              /** 相关公文 */
+              relationInfo: res.Data.RelationInfo
+            };
+            console.log(this.myData);
+          } else {
+            this.commonHelper.presentToast('暂无数据');
+          }
+        },
+        err => {
+          this.commonHelper.presentToast('请求失败');
+        }
+      );
   }
 
   nbyj() {
@@ -136,15 +193,15 @@ export class DocumentdetailPage implements OnInit, OnDestroy {
         translucent: true,
         spinner: 'bubbles',
         mode: 'ios',
-        cssClass: 'logading-class',
+        cssClass: 'logading-class'
       });
       await this.loading.present();
 
       let no = 1;
 
-      this.fileTransfer.onProgress((progressEvent) => {
+      this.fileTransfer.onProgress(progressEvent => {
         if (progressEvent.lengthComputable) {
-          no = progressEvent.loaded / progressEvent.total * 100;
+          no = (progressEvent.loaded / progressEvent.total) * 100;
         }
       });
 

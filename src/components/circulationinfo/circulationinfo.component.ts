@@ -8,7 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./circulationinfo.component.scss']
 })
 export class CirculationinfoComponent implements OnInit {
+  /** 业务详情 */
   @Input() itemmodel: any;
+  /** 页面信息 */
+  @Input() itemmodelData: any;
 
   forecolors = {
     协办部门: '#4877FB',
@@ -40,79 +43,79 @@ export class CirculationinfoComponent implements OnInit {
    * 获取数据
    */
   getdata() {
-    if (this.itemmodel.ProcessType === 2) {
-      this.mainservice.getReciveDetailInfo(this.itemmodel['Id']).subscribe(
-        res => {
-          if (res['State'] === 1) {
-            this.parenteArr = res['Data'];
-            if (this.parenteArr) {
-              this.parenteArr.forEach(
-                (v, i) => (v.hidden = v.children.length === 0 || i > 0)
-              );
-            }
-            /** IOS需要把-转换为/否则会报错 */
-            // this.parenteArr = this.parenteArr.map(v => {
-            //   v.children = v.children.map(cv => {
-            //     cv.SignDate = cv.SignDate
-            //       ? cv.SignDate.replace(/-/gi, '/')
-            //       : cv.SignDate;
-            //     cv.Date = cv.Date ? cv.Date.replace(/-/gi, '/') : cv.Date;
-            //     return cv;
-            //   });
-            //   return v;
-            // });
-            /** 改进，把时间转换封装 */
-            this.parenteArr.forEach(e => {
-              e.children.forEach(el => {
-                el.SignDate = this.sjdate(el.SignDate);
-                el.Date = this.sjdate(el.Date);
-              });
-            });
-          } else {
-            this.toast.presentToast('暂无数据');
-          }
-        },
-        err => {
-          this.toast.presentToast('请求失败');
-        }
-      );
-    } else if (this.itemmodel.ProcessType === 1) {
-      this.mainservice.Send_ActDetailTree(this.itemmodel['Id']).subscribe(
-        res => {
-          if (res['State'] === 1) {
-            this.parenteArr = res['Data'];
-            if (this.parenteArr) {
-              this.parenteArr.forEach(
-                (v, i) => (v.hidden = v.children.length === 0 || i > 0)
-              );
-            }
-            /** IOS需要把-转换为/否则会报错 */
-            // this.parenteArr = this.parenteArr.map(v => {
-            //   v.children = v.children.map(cv => {
-            //     cv.SignDate = cv.SignDate
-            //       ? cv.SignDate.replace(/-/gi, '/')
-            //       : cv.SignDate;
-            //     cv.Date = cv.Date ? cv.Date.replace(/-/gi, '/') : cv.Date;
-            //     return cv;
-            //   });
-            //   return v;
-            // });
-            /** 改进，把时间转换封装 */
-            this.parenteArr.forEach(e => {
-              e.children.forEach(el => {
-                el.SignDate = this.sjdate(el.SignDate);
-                el.Date = this.sjdate(el.Date);
-              });
-            });
-          } else {
-            this.toast.presentToast('暂无数据');
-          }
-        },
-        err => {
-          this.toast.presentToast('请求失败');
-        }
+    // if (this.itemmodel.ProcessType === 2) {
+    //   this.mainservice.getReciveDetailInfo(this.itemmodel['Id']).subscribe(
+    //     res => {
+    //       if (res['State'] === 1) {
+    this.parenteArr = this.itemmodelData;
+    if (this.parenteArr) {
+      this.parenteArr.forEach(
+        (v, i) => (v.hidden = v.children.length === 0 || i > 0)
       );
     }
+    /** IOS需要把-转换为/否则会报错 */
+    // this.parenteArr = this.parenteArr.map(v => {
+    //   v.children = v.children.map(cv => {
+    //     cv.SignDate = cv.SignDate
+    //       ? cv.SignDate.replace(/-/gi, '/')
+    //       : cv.SignDate;
+    //     cv.Date = cv.Date ? cv.Date.replace(/-/gi, '/') : cv.Date;
+    //     return cv;
+    //   });
+    //   return v;
+    // });
+    /** 改进，把时间转换封装 */
+    this.parenteArr.forEach(e => {
+      e.children.forEach(el => {
+        el.SignDate = this.sjdate(el.SignDate);
+        el.Date = this.sjdate(el.Date);
+      });
+    });
+    //     } else {
+    //       this.toast.presentToast('暂无数据');
+    //     }
+    //   },
+    //   err => {
+    //     this.toast.presentToast('请求失败');
+    //   }
+    // );
+    // if (this.itemmodel.ProcessType === 1) {
+    //   this.mainservice.Send_ActDetailTree(this.itemmodel['Id']).subscribe(
+    //     res => {
+    //       if (res['State'] === 1) {
+    //         this.parenteArr = res['Data'];
+    //         if (this.parenteArr) {
+    //           this.parenteArr.forEach(
+    //             (v, i) => (v.hidden = v.children.length === 0 || i > 0)
+    //           );
+    //         }
+    //         /** IOS需要把-转换为/否则会报错 */
+    //         // this.parenteArr = this.parenteArr.map(v => {
+    //         //   v.children = v.children.map(cv => {
+    //         //     cv.SignDate = cv.SignDate
+    //         //       ? cv.SignDate.replace(/-/gi, '/')
+    //         //       : cv.SignDate;
+    //         //     cv.Date = cv.Date ? cv.Date.replace(/-/gi, '/') : cv.Date;
+    //         //     return cv;
+    //         //   });
+    //         //   return v;
+    //         // });
+    //         /** 改进，把时间转换封装 */
+    //         this.parenteArr.forEach(e => {
+    //           e.children.forEach(el => {
+    //             el.SignDate = this.sjdate(el.SignDate);
+    //             el.Date = this.sjdate(el.Date);
+    //           });
+    //         });
+    //       } else {
+    //         this.toast.presentToast('暂无数据');
+    //       }
+    //     },
+    //     err => {
+    //       this.toast.presentToast('请求失败');
+    //     }
+    //   );
+    // }
   }
 
   // 转换

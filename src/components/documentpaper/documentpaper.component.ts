@@ -10,8 +10,10 @@ import { DocumentRelatedPage } from 'src/pages/document-related/document-related
   styleUrls: ['./documentpaper.component.scss']
 })
 export class DocumentpaperComponent implements OnInit {
-  // 传进来的itemmodel
+  /** 业务详情 */
   @Input() itemmodel: any;
+  /** 页面信息 */
+  @Input() itemmodelData: any;
   attachmentlistArr: any;
   isData: boolean;
   constructor(
@@ -24,17 +26,17 @@ export class DocumentpaperComponent implements OnInit {
     this.RelationTree();
   }
   RelationTree() {
-    this.mainindexService.RelationTree(this.itemmodel['Id']).subscribe(
-      res => {
-        if (res['State'] === 1) {
-          this.attachmentlistArr = res['Data'];
-          this.isData = this.attachmentlistArr['length'] > 0 ? true : false;
-        }
-      },
-      err => {
-        this.toast.presentToast('请求失败');
-      }
-    );
+    // this.mainindexService.RelationTree(this.itemmodel['Id']).subscribe(
+    //   res => {
+    //     if (res['State'] === 1) {
+    this.attachmentlistArr = this.itemmodelData;
+    this.isData = this.attachmentlistArr.length > 0 ? true : false;
+    //     }
+    //   },
+    //   err => {
+    //     this.toast.presentToast('请求失败');
+    //   }
+    // );
   }
 
   async toDetail(d?: any) {

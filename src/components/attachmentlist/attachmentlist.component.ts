@@ -16,9 +16,11 @@ import { getFileMimeType } from 'src/infrastructure/regular-expression';
   templateUrl: './attachmentlist.component.html',
   styleUrls: ['./attachmentlist.component.scss']
 })
-export class AttachmentlistComponent implements OnInit,OnDestroy {
-  // 传进来的itemmodel
+export class AttachmentlistComponent implements OnInit, OnDestroy {
+  /** 业务详情 */
   @Input() itemmodel: any;
+  /** 页面信息 */
+  @Input() itemmodelData: any;
 
   /** 附件列表 */
   attachmentlistArr: any[] = [];
@@ -36,8 +38,8 @@ export class AttachmentlistComponent implements OnInit,OnDestroy {
     private fileOpener: FileOpener,
     private transfer: FileTransfer,
     private file: File,
-    private loadingCtrl: LoadingController,
-  ) { }
+    private loadingCtrl: LoadingController
+  ) {}
 
   ngOnInit() {
     this.getattchmentlis();
@@ -50,6 +52,7 @@ export class AttachmentlistComponent implements OnInit,OnDestroy {
     this.mainservice.getattchmentlist(this.itemmodel['Id']).subscribe(
       res => {
         if (res['State'] === 1) {
+          // this.attachmentlistArr = this.itemmodelData;
           this.attachmentlistArr = res['Data'];
           if (this.attachmentlistArr.length === 1) {
             // 如果附件只有1条则自动打开
@@ -85,15 +88,15 @@ export class AttachmentlistComponent implements OnInit,OnDestroy {
         translucent: true,
         spinner: 'bubbles',
         mode: 'ios',
-        cssClass: 'logading-class',
+        cssClass: 'logading-class'
       });
       await this.loading.present();
 
       let no = 1;
 
-      this.fileTransfer.onProgress((progressEvent) => {
+      this.fileTransfer.onProgress(progressEvent => {
         if (progressEvent.lengthComputable) {
-          no = progressEvent.loaded / progressEvent.total * 100;
+          no = (progressEvent.loaded / progressEvent.total) * 100;
         }
       });
 
@@ -136,5 +139,4 @@ export class AttachmentlistComponent implements OnInit,OnDestroy {
       this.fileTransfer.abort();
     }
   }
-
 }
