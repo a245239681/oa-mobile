@@ -135,10 +135,12 @@ export class CirculationinfoComponent implements OnInit {
       item.hidden = !item.hidden;
     } else {
       if (this.itemmodel.ProcessType === 2) {
+        this.toast.presentLoading();
         this.mainservice
           .getReciveDetailInfo(this.itemmodel['Id'], item['ID'])
           .subscribe(
             res => {
+              this.toast.dismissLoading();
               if (res['State'] === 1) {
                 item['children'] = res['Data'];
                 item.hidden = item['children'].length === 0;
@@ -164,14 +166,17 @@ export class CirculationinfoComponent implements OnInit {
               }
             },
             err => {
+              this.toast.dismissLoading();
               this.toast.presentToast('请求失败');
             }
           );
       } else if (this.itemmodel.ProcessType === 1) {
+        this.toast.presentLoading();
         this.mainservice
           .Send_ActDetailTree(this.itemmodel['Id'], item['ID'])
           .subscribe(
             res => {
+              this.toast.dismissLoading();
               if (res['State'] === 1) {
                 item['children'] = res['Data'];
                 item.hidden = item['children'].length === 0;
@@ -197,6 +202,7 @@ export class CirculationinfoComponent implements OnInit {
               }
             },
             err => {
+              this.toast.dismissLoading();
               this.toast.presentToast('请求失败');
             }
           );

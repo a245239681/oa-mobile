@@ -86,6 +86,7 @@ export class HandleinfoComponent implements OnInit {
             }
           },
           err => {
+            this.commonHelper.dismissLoading();
             this.commonHelper.presentToast('请求失败');
           }
         );
