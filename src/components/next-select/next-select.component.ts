@@ -17,7 +17,7 @@ export class NextSelectComponent implements OnInit {
 
   @Input() state: string; // 状态 0：下一步 1：传阅
 
-  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean,state:string }>(); // 勾选回调
+  @Output() selected = new EventEmitter<{ items: any, leaderChecked: boolean, nbChecked: boolean, state: string }>(); // 勾选回调
 
   @Input() hasSelected: any; // 已勾选传入
 
@@ -86,12 +86,12 @@ export class NextSelectComponent implements OnInit {
    * @param item 该目录
    */
   // indexClick(item: any) {
-    // if (item.id === this.buttonList[this.buttonList.length - 1]) { return; }
-    // if (item.id === 'root') {
-    //   this.showList = this.departmentTree;
-    // } else {
-    //   this.showList = this.searchData(this.departmentTree, item.id).children;
-    // }
+  // if (item.id === this.buttonList[this.buttonList.length - 1]) { return; }
+  // if (item.id === 'root') {
+  //   this.showList = this.departmentTree;
+  // } else {
+  //   this.showList = this.searchData(this.departmentTree, item.id).children;
+  // }
   //   this.popMenu(item.id);
   // }
 
@@ -255,7 +255,7 @@ export class NextSelectComponent implements OnInit {
       deptId: [],
     };
     this.addChecked(this.departmentTree);
-    this.selected.emit({ items: this.selectedList, leaderChecked: this.leaderChecked, nbChecked: this.nbChecked,state:this.state});
+    this.selected.emit({ items: this.selectedList, leaderChecked: this.leaderChecked, nbChecked: this.nbChecked, state: this.state });
   }
 
   /**
@@ -360,6 +360,7 @@ export class NextSelectComponent implements OnInit {
    * @param fun 回调
    */
   getDept(fun: (list: any) => void) {
+    this.commonHelper.presentLoading();
     this.mainindexservice.getDeptTreeUntilMainDept().subscribe((res) => {
       if (res['State'] === 1) {
         const data = res.Data;
@@ -376,9 +377,11 @@ export class NextSelectComponent implements OnInit {
         fun(data);
       } else {
         this.commonHelper.presentToast('已无数据');
+        this.commonHelper.dismissLoading();
       }
     }, () => {
       this.commonHelper.presentToast('请求失败');
+      this.commonHelper.dismissLoading();
     });
   }
 
@@ -387,6 +390,7 @@ export class NextSelectComponent implements OnInit {
    * @param fun 回调
    */
   getLeader(fun: (list: any) => void) {
+    this.commonHelper.presentLoading();
     this.mainindexservice.getLeaderTree().subscribe((res) => {
       if (res['State'] === 1) {
         const data = res.Data.children;
@@ -404,8 +408,10 @@ export class NextSelectComponent implements OnInit {
       } else {
         this.commonHelper.presentToast('已无数据');
       }
+      this.commonHelper.dismissLoading();
     }, () => {
       this.commonHelper.presentToast('请求失败');
+      this.commonHelper.dismissLoading();
     });
   }
 
@@ -415,7 +421,7 @@ export class NextSelectComponent implements OnInit {
    * @param id 部门id
    */
   getPerson(id: string, fun: (list: any) => void) {
-
+    this.commonHelper.presentLoading();
     this.mainindexservice.getDeptTreeCY(id).subscribe((res) => {
       if (res['State'] === 1) {
         const data = res.Data;
@@ -444,8 +450,10 @@ export class NextSelectComponent implements OnInit {
       } else {
         this.commonHelper.presentToast('已无数据');
       }
+      this.commonHelper.dismissLoading();
     }, () => {
       this.commonHelper.presentToast('请求失败');
+      this.commonHelper.dismissLoading();
     });
   }
 
@@ -470,16 +478,16 @@ export class NextSelectComponent implements OnInit {
    * @param id 目录id
    */
   // popMenu(id: string) {
-    // const newList = [];
+  // const newList = [];
 
-    // for (let i = 0; i < this.buttonList.length; i++) {
-    //   newList.push(this.buttonList[i]);
-    //   if (this.buttonList[i].id === id) {
-    //     break;
-    //   }
-    // }
+  // for (let i = 0; i < this.buttonList.length; i++) {
+  //   newList.push(this.buttonList[i]);
+  //   if (this.buttonList[i].id === id) {
+  //     break;
+  //   }
+  // }
 
-    // this.buttonList = newList;
+  // this.buttonList = newList;
   // }
 
   /**
