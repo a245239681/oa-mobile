@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary" mode='ios'>
-    <ion-title>南宁市住房局OA管理系统</ion-title>
+    <ion-title>我的工作</ion-title>
   </ion-toolbar>
   <div class="bg">
     <h1 class="title"></h1>
@@ -13,10 +13,15 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
-  <div class="block" [ngStyle]="{'background-color':item.bgcolor,'background-image':'url(/assets/'+(i+1)+'.png)','color':item.forecolor}"
-    *ngFor="let item of titleArr, let i = index" (click)="pushDocumentList(i)">
-    <ion-label [ngStyle]="{'borderTopColor':item.forecolor}">{{item.text}}</ion-label>
-    <ion-note color="danger" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</ion-note>
-    <ion-icon name="arrow-round-forward"></ion-icon>
+  <div class="block_margin">
+    <div class="block"
+    *ngFor="let item of titleArr, let i = index" (click)="pushDocumentList(i)" [class]="item.borderTop" >
+    <div class="div_img" [ngStyle]="{'background-image':'url(/assets/'+(i+1)+'.png)'}"></div>
+    <div class="block_right">
+      <ion-label>{{item.text}}</ion-label>
+      <ion-note class="ion_right" color="danger" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</ion-note>
+    </div>
   </div>
+  </div>
+  
 </ion-content>
