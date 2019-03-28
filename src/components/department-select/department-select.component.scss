@@ -5,7 +5,7 @@
 }
 
 ion-item {
-  --min-height: 22px;
+  // --min-height: 22px;
   // padding: 0;
   // position: relative;
   // top: 10px;
@@ -31,3 +31,16 @@ ion-item {
   //   margin: 0;
   // }
 }
+.checkClass ion-checkbox {
+  vertical-align: middle;
+}
+
+.checkClass ion-label {
+  line-height: 100%;
+  padding-left: 10px;
+  color: #4877fb;
+}
+
+// .checkClass ion-icon {
+//   float: right;
+// }
