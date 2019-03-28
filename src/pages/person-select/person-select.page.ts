@@ -47,6 +47,11 @@ export class PersonSelectPage implements OnInit {
 
   // 是否显示下一步
   IsShowNextStep = true;
+  zbSelected = [];  // 传入组件的主办选择
+  xbSelected = []; // 传入组件的协办选择
+
+  zblist = []; // 主办部门列表
+  xblist = []; // 协办部门列表
 
   constructor(
     private nav: NavController,
@@ -54,7 +59,7 @@ export class PersonSelectPage implements OnInit {
     private activeRoute: ActivatedRoute,
     private toast: CommonHelper,
     private route: Router,
-    public modalController:ModalController
+    public modalController: ModalController,
   ) {
     // this.itemmodel = navParams.data.item;
     // this.hasSelected = navParams.data.hasSelected;
@@ -69,11 +74,11 @@ export class PersonSelectPage implements OnInit {
       this.toast.dismissLoading();
 
       //为了确保用户不做任何操作提交参数没有值需要进行组装模拟数据
-      this.hostArr = this.hasSelected.PrimaryDeptId ? this.hasSelected.PrimaryDeptId: [];
-      this.coorperationArr = this.hasSelected.Cooperaters ? this.hasSelected.Cooperaters: [];
-      this.nextArr = this.hasSelected.Leaders ? this.hasSelected.Leaders: [];
+      this.hostArr = this.hasSelected.PrimaryDeptId ? this.hasSelected.PrimaryDeptId : [];
+      this.coorperationArr = this.hasSelected.Cooperaters ? this.hasSelected.Cooperaters : [];
+      this.nextArr = this.hasSelected.Leaders ? this.hasSelected.Leaders : [];
       //组装传阅数据
-      this.readerArr = this.hasSelected.Readers ? this.hasSelected.Readers: [];
+      this.readerArr = this.hasSelected.Readers ? this.hasSelected.Readers : [];
     });
   }
 
@@ -81,6 +86,7 @@ export class PersonSelectPage implements OnInit {
     if (this.itemmodel.DealType === '传阅件') {
       this.DealType = false;
     }
+    this.getDepartment();
   }
 
   segmentChanged(event: any) {
@@ -102,27 +108,67 @@ export class PersonSelectPage implements OnInit {
     }
   }
 
-  hostSelected(items: any[], selectType:string) {
+  getDepartment() {
+    this.toast.presentLoading();
+    this.mainservice.getDeptTreeUntilMainDept().subscribe(
+      res => {
+        if (res['State'] === 1) {
+          this.zblist = JSON.parse(JSON.stringify(res['Data'])); // 此处深拷贝不要介意
+          this.xblist = JSON.parse(JSON.stringify(res['Data'])); // 此处深拷贝不要介意
+          for (let i = 0; i < res['Data'].length; i++) {
+            if (this.zblist[i].id === this.hasSelected.PrimaryDeptId) {
+              this.zblist[i].checked = true;
+              this.zbSelected.push(this.zblist[i]);
+            }
+            if (this.hasSelected.Cooperaters) {
+              this.hasSelected.Cooperaters.forEach((element: string) => {
+                if (this.xblist[i].id === element) {
+                  this.xblist[i].checked = true;
+                  this.xbSelected.push(this.xblist[i]);
+                }
+              });
+            }
+          }
+          console.log(this.zblist);
+          console.log(this.xblist);
+          this.hostSelected(this.zbSelected, '1'); // 初始化主办选择
+          this.hostSelected(this.xbSelected, '2'); // 初始化协办选择
+          this.toast.dismissLoading();
+        } else {
+          this.toast.presentToast('暂无数据');
+          this.toast.dismissLoading();
+        }
+      },
+      err => {
+        this.toast.presentToast('请求失败');
+        this.toast.dismissLoading();
+      }
+    );
+  }
+
+  hostSelected(items: any[], selectType: string) {
     //单选直接该数据
     if (selectType == '1') {
       this.hostArr = items;
       var temp = [];
-      for (var i = 0; i < this.hostArr.length; i ++) {
+      for (var i = 0; i < this.hostArr.length; i++) {
         temp.push(this.hostArr[i].id);
       }
       this.hostArr = temp;
     } else if (selectType == '2') {
       this.coorperationArr = items;
       var temp = [];
-      for (var i = 0; i < this.coorperationArr.length; i ++) {
+      for (var i = 0; i < this.coorperationArr.length; i++) {
         temp.push(this.coorperationArr[i].id);
       }
       this.coorperationArr = temp;
     }
+    console.log(this.hostArr);
+    console.log(this.coorperationArr);
   }
 
   //state 0 下一步 1 传阅  
-  nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean,state:string) {
+  nextSelected(items: any, leaderChecked: boolean, nbChecked: boolean, state: string) {
     // 如果是传阅
     if (state == '1') {
       // 组装传阅数组
@@ -186,7 +232,7 @@ export class PersonSelectPage implements OnInit {
   handin() {
     if (this.hostArr.length > 0 && this.coorperationArr.length > 0) {
       var hostid = this.hostArr[0];
-      for (var i = 0 ; i < this.coorperationArr.length ; i++) {
+      for (var i = 0; i < this.coorperationArr.length; i++) {
         if (this.coorperationArr[i] == hostid) {
           this.toast.presentToast('主办和协办不能同时选择同一个部门');
           return;
@@ -200,7 +246,7 @@ export class PersonSelectPage implements OnInit {
         this.toast.presentToast('请在下一步中选择');
         return;
       }
-      
+
     }
 
     if (this.itemmodel.ItemActionName === '部门处理') {
@@ -219,63 +265,63 @@ export class PersonSelectPage implements OnInit {
       this.itemmodel['commitType'] = 600;
     }
 
-      //是传阅件的时候传阅和下一步不能同时提交
+    //是传阅件的时候传阅和下一步不能同时提交
     if (!this.DealType) {
       if (this.nextArr.length > 0 && this.readerArr.length > 0) {
         this.toast.presentToast('传阅和下一步不能同时提交');
         return;
       }
     }
-  
-      if (this.DealType === false) {
-       // this.hostArr = [];
-        if (this.readerArr.length > 0) {
-          this.itemmodel['commitType'] = 200;
-        } else {
-          this.itemmodel['commitType'] = 600;
-        }
+
+    if (this.DealType === false) {
+      // this.hostArr = [];
+      if (this.readerArr.length > 0) {
+        this.itemmodel['commitType'] = 200;
+      } else {
+        this.itemmodel['commitType'] = 600;
       }
-      //参数模型
-      this.handleModel = {
-        id: this.itemmodel['Id'],
-        // 主办id 单选
-        primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0] : '',
-
-        cooperaters: this.coorperationArr,
-        /**
-         * 下一步
-         */
-        leaders: this.nextArr,
-
-        /**
-         * 传阅
-         */
-        readers: this.readerArr,
-
-        // 模态框
-        commitType: this.itemmodel['commitType'],
-
-        CoorType: this.itemmodel['CoorType'],
-
-        ProcessType: this.itemmodel['ProcessType']
-      };
-
-      this.mainservice.lasthandinStep(this.handleModel).subscribe(
-        res => {
-          if (res['State'] == 1) {
-            this.toast.presentToast('提交成功');
-            //this.route.navigate(['tabs']);
-            this.nav.navigateBack("documentlist");
-            // this.modalController.dismiss();
-          } else {
-            this.toast.presentToast(res['Message']);
-          }
-        },
-        err => {
-          this.toast.presentToast('请求失败');
-        }
-      );
     }
+    //参数模型
+    this.handleModel = {
+      id: this.itemmodel['Id'],
+      // 主办id 单选
+      primaryDeptId: this.hostArr.length > 0 ? this.hostArr[0] : '',
+
+      cooperaters: this.coorperationArr,
+      /**
+       * 下一步
+       */
+      leaders: this.nextArr,
+
+      /**
+       * 传阅
+       */
+      readers: this.readerArr,
+
+      // 模态框
+      commitType: this.itemmodel['commitType'],
+
+      CoorType: this.itemmodel['CoorType'],
+
+      ProcessType: this.itemmodel['ProcessType']
+    };
+
+    this.mainservice.lasthandinStep(this.handleModel).subscribe(
+      res => {
+        if (res['State'] == 1) {
+          this.toast.presentToast('提交成功');
+          //this.route.navigate(['tabs']);
+          this.nav.navigateBack("documentlist");
+          // this.modalController.dismiss();
+        } else {
+          this.toast.presentToast(res['Message']);
+        }
+      },
+      err => {
+        this.toast.presentToast('请求失败');
+      }
+    );
+  }
 
   /**
    * 关闭
