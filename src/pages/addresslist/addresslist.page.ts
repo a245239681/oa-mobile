@@ -51,19 +51,17 @@ export class AddresslistPage implements OnInit {
     this.result = [];
     const me = this;
     this.temp.forEach(function(d: any) {
-      if (d.children.length !== 0) {
-        const items = d.children.filter(
-          s =>
-            (s.text ? s.text.indexOf(val) : '') !== -1 ||
-            (s.mobile ? s.mobile.indexOf(val) : '') !== -1 ||
-            ('' + s.phone ? ('' + s.phone).indexOf(val) : '') !== -1
-        );
-        if (items.length > 0) {
-          me.result.push({
-            text: d.text,
-            children: items
-          });
-        }
+      const items = d.children.filter(
+        s =>
+          (s.text ? s.text.indexOf(val) : -1) !== -1 ||
+          (s.mobile ? s.mobile.indexOf(val) : -1) !== -1 ||
+          ('' + s.phone ? ('' + s.phone).indexOf(val) : -1) !== -1
+      );
+      if (items.length > 0) {
+        me.result.push({
+          text: d.text,
+          children: items
+        });
       }
       // return d.text.toLowerCase().indexOf(val) !== -1 || !val;
     });
