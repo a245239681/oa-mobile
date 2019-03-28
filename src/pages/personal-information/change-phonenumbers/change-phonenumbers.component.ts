@@ -37,8 +37,10 @@ export class ChangePhonenumbersComponent implements OnInit {
     if (xx) {
       this.data.Mobile = this.sws.Mobile;
       this.data.Phone = this.sws.Phone;
+      this.toast.presentLoading();
       this.mainindexservice.UpdateStaffInfo(this.data).subscribe(
         r => {
+          this.toast.dismissLoading();
           if (r['State'] === 1) {
             this.userinfo.Mobile('Mobile', this.data.Mobile);
             this.userinfo.Phone('Phone', this.data.Phone);
@@ -49,6 +51,7 @@ export class ChangePhonenumbersComponent implements OnInit {
           }
         },
         () => {
+          this.toast.dismissLoading();
           this.toast.presentToast('请求失败');
         }
       );
