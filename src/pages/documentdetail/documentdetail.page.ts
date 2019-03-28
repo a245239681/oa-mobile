@@ -1,7 +1,6 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, LoadingController } from '@ionic/angular';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { CommonHelper } from 'src/infrastructure/commonHelper';
@@ -16,12 +15,27 @@ import { ApiUrlManagement } from 'src/infrastructure/api-url-management';
 import { environment } from 'src/environments/environment';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 
+// /** 综合接口返回的各页面数据 */
+// export interface MyData {
+//   /** 办理信息 */
+//   getAttitudeList: any;
+//   /** 流转信息 */
+//   flowInfo: any;
+//   /** 收发文笺 */
+//   receiveSendModel: any;
+//   /** 收发文附件 */
+//   attachModel: any;
+//   /** 相关公文 */
+//   relationModel: any;
+// }
 @Component({
   selector: 'app-documentdetail',
   templateUrl: './documentdetail.page.html',
   styleUrls: ['./documentdetail.page.scss']
 })
-export class DocumentdetailPage implements OnInit {
+export class DocumentdetailPage implements OnInit, OnDestroy {
+  /** 综合接口返回的各页面数据 */
+  myData: any;
   /**
    * 列表传进来的item
    */
@@ -39,6 +53,7 @@ export class DocumentdetailPage implements OnInit {
   documenttype: number;
 
   fileTransfer: FileTransferObject = this.transfer.create();
+  loading: HTMLIonLoadingElement;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -50,22 +65,66 @@ export class DocumentdetailPage implements OnInit {
     private file: File,
     private transfer: FileTransfer,
     private commonHelper: CommonHelper,
-    private mainindexService: MainindexService
+    private mainindexService: MainindexService,
+    private loadingCtrl: LoadingController
   ) {
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.itemmodel = JSON.parse(params['item']);
 
-      if (this.itemmodel['documenttype'] == 3) {
+      if (this.itemmodel['documenttype'] === 3) {
         this.mainindexService
           .SetDoRead(this.itemmodel['Id'], '')
-          .subscribe(res => {
-          });
+          .subscribe(res => {});
       }
     });
     /** 拟办意见的显示隐藏 */
   }
 
   ngOnInit() {
+    this.getdata();
+  }
+
+  /**
+   * 综合信息
+   */
+  getdata() {
+    this.commonHelper.presentLoading();
+    this.mainindexService
+      .getallAttitudeList(
+        this.itemmodel['Id'],
+        this.itemmodel['ProcessType'],
+        this.itemmodel['CoorType']
+      )
+      .subscribe(
+        res => {
+          this.commonHelper.dismissLoading();
+          if (res['State'] === 1) {
+            this.myData = {
+              /** 办理信息 */
+              getAttitudeList: {
+                /** 内容 */
+                BodyData: res.Data.BodyData,
+                /** 标题头 */
+                Header: res.Data.Header
+              },
+              /** 流转信息 */
+              flowInfo: res.Data.FlowInfo,
+              /** 收发文笺 */
+              receiveSendInfo: res.Data.ReceiveSendInfo,
+              /** 收发文附件 */
+              attachInfo: res.Data.AttachInfo,
+              /** 相关公文 */
+              relationInfo: res.Data.RelationInfo
+            };
+            console.log(this.myData);
+          } else {
+            this.commonHelper.presentToast('暂无数据');
+          }
+        },
+        err => {
+          this.commonHelper.presentToast('请求失败');
+        }
+      );
   }
 
   nbyj() {
@@ -118,7 +177,7 @@ export class DocumentdetailPage implements OnInit {
    * 点击跳到浏览器浏览正文
    * @param relationId Id
    */
-  previewerAttchment(relationId: string) {
+  async previewerAttchment(relationId: string) {
     const url =
       environment.url +
       ApiUrlManagement.fileViewSends +
@@ -128,21 +187,45 @@ export class DocumentdetailPage implements OnInit {
       const uri = encodeURI(url); // 文件的地址链接
       const fileUrl =
         this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
-      this.commonHelper.presentLoading();
+
+      this.loading = await this.loadingCtrl.create({
+        message: '正在加载：0%',
+        translucent: true,
+        spinner: 'bubbles',
+        mode: 'ios',
+        cssClass: 'logading-class'
+      });
+      await this.loading.present();
+
+      let no = 1;
+
+      this.fileTransfer.onProgress(progressEvent => {
+        if (progressEvent.lengthComputable) {
+          no = (progressEvent.loaded / progressEvent.total) * 100;
+        }
+      });
+
+      const timer = setInterval(() => {
+        this.loading.message = '正在加载：' + Math.floor(no) + '%';
+        if (no >= 99) {
+          clearInterval(timer);
+        }
+      }, 300);
+
       this.fileTransfer.download(uri, fileUrl).then(
         entry => {
           entry.file((data: any) => {
             this.fileOpener
               .open(fileUrl, getFileMimeType('pdf'))
-              .then(() => this.commonHelper.dismissLoading())
+              .then(() => this.loading.dismiss())
               .catch(() => {
-                this.commonHelper.dismissLoading();
+                this.loading.dismiss();
                 this.commonHelper.presentToast('文件打开失败，请安装WPS');
               }); // showOpenWithDialog使用手机上安装的程序打开下载的文件
           });
         },
         () => {
-          this.commonHelper.dismissLoading();
+          this.loading.dismiss();
           this.commonHelper.presentToast('文件下载失败');
         }
       );
@@ -151,6 +234,15 @@ export class DocumentdetailPage implements OnInit {
     }
     const browser = this.browser.create(url);
     browser.show();
+  }
+
+  ngOnDestroy(): void {
+    if (this.loading) {
+      this.loading.dismiss();
+    }
+    if (this.fileTransfer) {
+      this.fileTransfer.abort();
+    }
   }
 
   pushtoadvice() {

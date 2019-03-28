@@ -5,11 +5,14 @@
     </ion-buttons>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
-  <div class="sykys">
+  <!-- <div class="sykys">
     <ion-searchbar debounce="500" [(ngModel)]="searchStr" (ionChange)="SearchFilter(searchStr)" placeholder="请输入联系人\号码">
     </ion-searchbar>
-    <!-- <input type="text" [(ngModel)]="searchStr" placeholder="请输入部门\联系人\号码" class="input">
-    <ion-icon name="search" class="syktb"></ion-icon> -->
+  </div> -->
+  <div class="sykys">
+    <input type="searchStr" [(ngModel)]="searchStr" value='searchStr' #input (keyup)="SearchFilter(searchStr)" placeholder="请输入联系人/号码"
+      class="input">
+    <ion-icon name="search" (click)="SearchFilter(searchStr)" class="syktb"></ion-icon>
   </div>
 </ion-header>
 

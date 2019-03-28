@@ -77,8 +77,10 @@ export class ChangePasswordPage implements OnInit {
         this.toast.presentToast('密码格式不正确，最小长度为3,且不能输入汉字！');
         return;
       }
+      this.toast.presentLoading();
       this.mainindexservice.UpdateStaffInfo(this.myData).subscribe(
         r => {
+          this.toast.dismissLoading();
           if (r['State'] === 1) {
             this.userinfo.removeToken();
             this.nav.navigateRoot('login');
@@ -88,6 +90,7 @@ export class ChangePasswordPage implements OnInit {
           }
         },
         () => {
+          this.toast.dismissLoading();
           this.toast.presentToast('请求失败');
         }
       );

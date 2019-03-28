@@ -14,27 +14,25 @@
 </ion-header>
 
 <ion-content style="padding:0">
-  <app-handleinfo [itemmodel]="itemmodel" *ngIf="type == '1'"></app-handleinfo>
-  <app-circulationinfo
-    [itemmodel]="itemmodel"
-    *ngIf="type == '2'"
-  ></app-circulationinfo>
-  <app-attachmentlist
-    [itemmodel]="itemmodel"
-    *ngIf="type == '3'"
-  ></app-attachmentlist>
-  <app-sign
-    [itemmodel]="itemmodel"
-    *ngIf="type == '4' || type == '5'"
-  ></app-sign>
-  <app-documentpaper
-    [itemmodel]="itemmodel"
-    *ngIf="type == '7'"
-  ></app-documentpaper>
-  <div class="parent" *ngIf="type == '6'">
-    <ion-button (click)="openDocument()" class="center"
-      >再次打开正文</ion-button
-    >
+  <div *ngIf="myData">
+    <!-- 办理信息 -->
+    <app-handleinfo [itemmodel]="itemmodel" [itemmodelData]="myData.getAttitudeList" [hidden]="type != '1'">
+    </app-handleinfo>
+    <!-- 流转信息 -->
+    <app-circulationinfo [itemmodel]="itemmodel" [itemmodelData]="myData.flowInfo" [hidden]="type != '2'">
+    </app-circulationinfo>
+    <!-- 附件 -->
+    <app-attachmentlist [itemmodel]="itemmodel" *ngIf="type == '3'" >
+    </app-attachmentlist>
+    <!-- 收发文笺 -->
+    <app-sign [itemmodel]="itemmodel" [itemmodelData]="myData.receiveSendInfo" [hidden]="type != '4'"></app-sign>
+    <app-sign [itemmodel]="itemmodel" [itemmodelData]="myData.receiveSendInfo" [hidden]="type != '5'"></app-sign>
+    <!-- 相关公文 -->
+    <app-documentpaper [itemmodel]="itemmodel" [itemmodelData]="myData.relationInfo" [hidden]="type != '7'"></app-documentpaper>
+    <!-- 正文 -->
+    <div class="parent" [hidden]="type != '6'">
+      <ion-button (click)="openDocument()" class="center">再次打开正文</ion-button>
+    </div>
   </div>
 
   <ion-segment (ionChange)="segmentChanged($event)">
@@ -50,10 +48,7 @@
     <ion-segment-button *ngIf="itemmodel['documenttype'] == 2" value="5">
       <ion-label>发文笺</ion-label>
     </ion-segment-button>
-    <ion-segment-button
-      *ngIf="itemmodel['documenttype'] == 2 || itemmodel['documenttype'] == 5"
-      value="6"
-    >
+    <ion-segment-button *ngIf="itemmodel['documenttype'] == 2 || itemmodel['documenttype'] == 5" value="6">
       <ion-label>正文</ion-label>
     </ion-segment-button>
     <ion-segment-button value="3">

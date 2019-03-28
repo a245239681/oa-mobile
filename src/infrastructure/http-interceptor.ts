@@ -40,7 +40,7 @@ export class AuthInterceptor implements HttpInterceptor {
   /**
    * http请求数
    */
-  private requestCount: number = 0;
+  private requestCount = 0;
   /**
    *
    */
@@ -48,7 +48,7 @@ export class AuthInterceptor implements HttpInterceptor {
     @Inject(API_URL) private apiUrl,
     private userInfo: UserInfo,
     private commonhelper: CommonHelper
-  ) { }
+  ) {}
   /**
    * 序列化请求参数
    * @param obj 请求参数
@@ -97,11 +97,9 @@ export class AuthInterceptor implements HttpInterceptor {
    * 减去请求次数或者关闭loading
    */
   private deductRequestCount() {
-
     // if (this.requestCount > 1){
     //   this.requestCount--;
     // }else{
-
     // }
   }
 
@@ -109,6 +107,16 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // 判断是否需要loading的post请求，需要在请求前添加loading字段，loading true：不需要loading
+    // if (req.method === 'POST') {
+    //   if (!req.body.loading) {
+    //     this.commonhelper.presentLoading();
+    //   }
+    //   // 删除不需要发送的loading字段
+    //   delete req.body.Loading;
+    // } else {
+    //   this.commonhelper.presentLoading();
+    // }
     const authHeader = 'Bearer ' + this.userInfo.GetToken();
     const authReq = req.clone({
       headers: req.headers
@@ -121,7 +129,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       tap(
         event => {
-          //临时去除全局拦截
+          // 临时去除全局拦截
           // this.commonhelper.dismissLoading();
           if (event instanceof HttpResponse) {
             // this.commonhelper.dismissLoading();
@@ -162,7 +170,7 @@ export class CachingInterceptor implements HttpInterceptor {
   /**
    *
    */
-  constructor(private cache: RequestCache) { }
+  constructor(private cache: RequestCache) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -183,7 +191,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
   isCachable(req: HttpRequest<any>) {
     const urldata = [];
-    cacheUrl.forEach(function (item) {
+    cacheUrl.forEach(function(item) {
       urldata.push({ url: item.url });
     });
     // const  urldata = cacheUrl.filter(d => d.url)
