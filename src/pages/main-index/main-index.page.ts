@@ -13,10 +13,10 @@ export class MainIndexPage implements OnInit {
   // 关闭下拉
   @ViewChild(IonRefresher) ionRefresh: IonRefresher;
   titleArr = [
-    { text: '收文待办', bgcolor: '#e7fae3', forecolor: '#67c554' },
-    { text: '发文待办', bgcolor: '#fdeff0', forecolor: '#f87a85' },
-    { text: '传阅件', bgcolor: '#e3f6fc', forecolor: '#4877fb' },
-    { text: '已办工作', bgcolor: '#faf7e4', forecolor: '#f1cb14' }
+    { text: '收文待办', bgcolor: '#e7fae3', forecolor: '#67c554',borderTop: 'bor_top block' },
+    { text: '发文待办', bgcolor: '#fdeff0', forecolor: '#f87a85' ,borderTop: 'block'},
+    { text: '传阅查看', bgcolor: '#e3f6fc', forecolor: '#4877fb' ,borderTop: 'bor_bottom bor_top block'},
+    { text: '已办业务', bgcolor: '#faf7e4', forecolor: '#f1cb14',borderTop: 'bor_bottom block' }
   ];
 
   countArr: number[] = [];
