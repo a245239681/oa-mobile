@@ -2,18 +2,18 @@
   class=""
   [ngClass]="{ treeContent: selectedType !== '3' && selectedType !== '4' }"
 >
-  <ion-list *ngIf="selectedType === '1'">
+  <ion-list class="checkClass" *ngIf="isSingleSlect === '1'">
     <ion-radio-group>
       <ion-item *ngFor="let item of listdataArr; let i = index">
         <ion-radio
           [(checked)]="listdataArr[i].checked"
           (ionSelect)="singleSelect(item)"
         ></ion-radio>
-        <ion-label (click)="item.checked=true">{{ item['text'] }}</ion-label>
+        <ion-label (click)="item.checked = true">{{ item['text'] }}</ion-label>
       </ion-item>
     </ion-radio-group>
   </ion-list>
-  <ion-list *ngIf="selectedType === '2'">
+  <ion-list class="checkClass" *ngIf="selectedType === '2'">
     <ion-item *ngFor="let item of listdataArr; let i = index">
       <ion-checkbox
         [(checked)]="listdataArr[i].checked"
@@ -24,7 +24,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-list mode="md" *ngIf="selectedType === '3'">
+  <ion-list class="checkClass" mode="md" *ngIf="selectedType === '3'">
     <ion-item *ngFor="let item of listdataArr; let i = index">
       <ion-checkbox
         [(checked)]="listdataArr[i].checked"
@@ -33,7 +33,7 @@
       <ion-label>{{ item['Label'] }}</ion-label>
     </ion-item>
   </ion-list>
-  <ion-list mode="md" *ngIf="selectedType === '4'">
+  <ion-list class="checkClass" mode="md" *ngIf="selectedType === '4'">
     <ion-radio-group>
       <ion-item *ngFor="let item of listdataArr; let i = index">
         <ion-label>{{ item['Label'] }}</ion-label>
