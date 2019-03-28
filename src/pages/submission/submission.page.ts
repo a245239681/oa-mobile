@@ -76,7 +76,7 @@ export class SubmissionPage implements OnInit {
       required: '意见不能为空'
     }
   };
-  
+
   constructor(
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
@@ -109,10 +109,7 @@ export class SubmissionPage implements OnInit {
       this.getattitudeType();
     });
 
-    if (
-      this.itemmodel.ProcessType === 1 &&
-      this.userinfo.GetUserDegree() === 'true'
-    ) {
+    if (this.itemmodel.ProcessType === 1 && this.userinfo.GetUserDegree() === 'true') {
       this.IsOwner = true;
     } else {
       this.IsOwner = false;
@@ -283,7 +280,7 @@ export class SubmissionPage implements OnInit {
         });
     }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * 获取保存意见需要的attitudeType open接口
@@ -594,7 +591,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
@@ -664,7 +661,7 @@ export class SubmissionPage implements OnInit {
           text: '取消',
           role: 'cancle',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
@@ -726,7 +723,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => {});
+    modal.onDidDismiss().then(backdata => { });
   }
 
   //模态出结束步骤
@@ -738,7 +735,7 @@ export class SubmissionPage implements OnInit {
     });
     modal.present();
     // 接收模态框传回的值
-    modal.onDidDismiss().then(backdata => {});
+    modal.onDidDismiss().then(backdata => { });
   }
 
   async goSign() {
