@@ -291,6 +291,7 @@ export class SubmissionPage implements OnInit {
     // if (this.itemmodel['IsPrimaryDept'] == true) {
     //   this.itemmodel['CoorType'] = 1;
     // }
+    this.toast.presentLoading();
     this.mainservice
       .getattitudeType(
         this.itemmodel['Id'],
@@ -319,6 +320,7 @@ export class SubmissionPage implements OnInit {
   getoftenuse() {
     this.mainservice.getoftenuse().subscribe(
       res => {
+        this.toast.dismissLoading();
         if (res['State'] === 1) {
           this.oftenuseArr = res['Data'];
         }
