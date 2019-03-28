@@ -117,13 +117,14 @@ export class AuthInterceptor implements HttpInterceptor {
       url: this.apiUrl + req.url,
       body: this.param(req.body)
     });
-    this.commonhelper.presentLoading();
+    // this.commonhelper.presentLoading();
     return next.handle(authReq).pipe(
       tap(
         event => {
+          //临时去除全局拦截
           // this.commonhelper.dismissLoading();
           if (event instanceof HttpResponse) {
-            this.commonhelper.dismissLoading();
+            // this.commonhelper.dismissLoading();
             if (event.url.indexOf(ApiUrlManagement.login) <= -1) {
               const apiReustl = event.body as ApiResult<{}>;
               if (apiReustl.State === 0 && apiReustl.Message) {
@@ -135,7 +136,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         },
         error => {
-          this.commonhelper.dismissLoading();
+          // this.commonhelper.dismissLoading();
           // if (error.status === 401) {
           //   // this.messageService.add({ severity: 'error', summary: '错误消息', detail: '服务器出错，请稍后再试！' });
           //   this.route.navigateByUrl('login');
