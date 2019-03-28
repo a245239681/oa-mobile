@@ -144,7 +144,9 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         },
         error => {
-          // this.commonhelper.dismissLoading();
+          if (this.commonhelper) {
+            this.commonhelper.dismissLoading();
+          }
           // if (error.status === 401) {
           //   // this.messageService.add({ severity: 'error', summary: '错误消息', detail: '服务器出错，请稍后再试！' });
           //   this.route.navigateByUrl('login');

@@ -116,7 +116,6 @@ export class LoginPage {
           }
         },
         () => {
-          this.toast.dismissLoading();
           this.toast.presentToast('登录失败！');
         }
       );
