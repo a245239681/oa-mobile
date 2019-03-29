@@ -65,7 +65,7 @@ export class DocumentlistPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.getdata();
+    this.doRefresh();
   }
 
   ngOnInit() {}
@@ -77,12 +77,12 @@ export class DocumentlistPage implements OnInit {
     this.listdataArr = [];
     // this.ionInfiniteScroll.disabled = false;
     if (this.type === 1 || this.type === 2 || this.type === 3) {
-      this.toast.presentLoading();
+      // this.toast.presentLoading();
       this.mainindexservice
         .getneedtodolist(this.currentPage, this.type, this.searchStr)
         .subscribe(
           res => {
-            this.toast.dismissLoading();
+            // this.toast.dismissLoading();
             this.loading = false;
             this.ionRefresh.complete();
             if (res['State'] === 1) {
@@ -152,7 +152,7 @@ export class DocumentlistPage implements OnInit {
    * 下拉刷新
    */
 
-  doRefresh(event) {
+  doRefresh(event?) {
     // this.toast.preventLoading();
     this.getdata();
   }
@@ -162,12 +162,12 @@ export class DocumentlistPage implements OnInit {
    */
   loadMoreData(event) {
     // this.toast.preventLoading();
-    this.toast.presentLoading();
+    // this.toast.presentLoading();
     this.mainindexservice
       .getneedtodolist(this.currentPage, this.type, this.searchStr)
       .subscribe(
         res => {
-          this.toast.dismissLoading();
+          // this.toast.dismissLoading();
           this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
             const tempArr: any[] = res['Data']['PageOfResult'];

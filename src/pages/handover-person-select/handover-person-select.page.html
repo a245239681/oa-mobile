@@ -11,6 +11,7 @@
 </ion-header>
 
 <ion-content>
+  <!-- 3:收文 4:发文-->
   <department-select *ngIf="isshow" [selectedType]="'3'" [listdataArr]="hasSelected" [selectedList]="hasSelected"
     (selected)="hostSelected($event.items)"></department-select>
   <department-select *ngIf="!isshow" [selectedType]="'4'" [listdataArr]="hasSelected" [selectedList]="hasSelected"

@@ -12,7 +12,7 @@
 <ion-content>
   <ion-list mode="md">
     <ion-item *ngFor="let item of listdataArr; let i = index">
-      <ion-checkbox [(checked)]="listdataArr[i].checked" [(ngModel)]="listdataArr[i].checked" (ionChange)="mutiSelect(item, $event.detail.checked)"></ion-checkbox>
+      <ion-checkbox mode="md" [(checked)]="listdataArr[i].checked" [(ngModel)]="listdataArr[i].checked" (ionChange)="mutiSelect(item, $event.detail.checked)"></ion-checkbox>
       <ion-label>{{ item['text'] }} </ion-label>
     </ion-item>
   </ion-list>

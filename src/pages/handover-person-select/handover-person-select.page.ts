@@ -36,6 +36,7 @@ export class HandoverPersonSelectPage implements OnInit {
     });
   }
   hostSelected(items: any) {
+    // console.log(items);
     this.selectPerson = items.map(res => {
       return res['Id'];
     });
