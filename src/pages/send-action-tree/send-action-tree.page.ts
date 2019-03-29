@@ -66,11 +66,12 @@ export class SendActionTreePage implements OnInit {
   }
 
   async getdata() {
+    this.toast.presentLoading();
     let res: any = await this.mainservice
       .GetActionTreeSend(this.itemmodel['Id'], this.itemmodel['ProcessType'])
       .toPromise();
     // .subscribe((res: any) => {
-
+    this.toast.dismissLoading();
     if (res.State === 1) {
       this.floor = res.Data[0].Type === 2 ? 2 : 3;
       this.treeData = res.Data.map(p => this.generateData(p));
@@ -110,8 +111,9 @@ export class SendActionTreePage implements OnInit {
       ProcessType: this.itemmodel['ProcessType'],
       CoorType: this.itemmodel['CoorType']
     };
-
+    this.toast.presentLoading();
     this.mainservice.LastSendActionStep(handlemodel).subscribe(res => {
+      this.toast.dismissLoading();
       if (res['State'] == 1) {
         this.toast.presentToast('提交成功');
         this.route.navigate(['tabs']);

@@ -40,7 +40,9 @@ export class EndActionPage implements OnInit {
    * 获取数据
    */
   getenddata() {
+    this.toast.presentLoading();
     this.mainservice.getendAction(this.itemmodel['Id'], this.itemmodel['ProcessType']).subscribe((res) => {
+      this.toast.dismissLoading();
       if (res['State'] == 1) {
         this.radioArr = res['Data'];
       } else {
@@ -56,8 +58,9 @@ export class EndActionPage implements OnInit {
    */
   handinclick() {
     if (this.selectitem) {
-
+      this.toast.presentLoading();
       this.mainservice.endActionStep(this.itemmodel['Id'], this.itemmodel['commitType'], this.selectitem['id'],this.itemmodel['ProcessType']).subscribe((res) => {
+        this.toast.dismissLoading();
         if (res['State'] == 1) {
           this.toast.presentToast('操作完成');
           this.router.navigate(['tabs']);
