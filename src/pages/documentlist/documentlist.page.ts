@@ -1,11 +1,9 @@
-import { loginModel } from './../../service/login/login.service';
 import { CommonHelper } from './../../infrastructure/commonHelper';
 import { MainindexService } from './../../service/maiindex/mainindex.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, IonRefresher, IonInfiniteScroll } from '@ionic/angular';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { getDateDiff } from 'src/infrastructure/regular-expression';
-import { concat } from 'rxjs/operators';
 
 @Component({
   selector: 'app-documentlist',
@@ -27,11 +25,8 @@ export class DocumentlistPage implements OnInit {
   /** 是否可以继续上拉 */
   nohasmore = true;
 
-  /** 1 收文 2 发文 3 传阅件 4 已办收文 5 已办发文 */
+  /** 1 收文 2 发文 3 传阅件 */
   type = 1;
-
-  /** 1  已办收文 2  已办发文 */
-  stype = 1;
 
   title = '公文列表';
 

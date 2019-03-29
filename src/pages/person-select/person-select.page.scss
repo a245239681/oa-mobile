@@ -13,6 +13,7 @@ ion-segment {
     height: 20vw;
     border: none;
     min-width: auto;
+
     ion-label {
       margin-top: 7.5vw;
       color: #333333;
@@ -26,5 +27,6 @@ ion-segment {
       }
     }
   }
-  --indicator-color-checked : transparent;
+
+  --indicator-color-checked: transparent;
 }

@@ -14,7 +14,8 @@
 
 <ion-content style="--background: #EFEFEF;">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
+      refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-card *ngIf="listdataArr.length===0&&!loading">
@@ -91,75 +92,10 @@
           </div>
         </div>
       </div>
-
-      <!--  已办发文 -->
-      <!-- <div *ngIf="title == '已办发文'">
-          <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-          <div style="max-width: 330px">
-            <div>
-              <ion-label class="label">
-                公文文号：{{item.SerialNumber}}
-              </ion-label>
-            </div>
-            <div>
-              <ion-label class="label">
-                拟稿部门：{{item.DeptName}}
-              </ion-label>
-              <ion-label class="label label-nopa">
-                主&#12288;送：{{item.Department}}
-              </ion-label>
-            </div>
-          </div>
-        </div> -->
-
-      <!-- 已办收文 -->
-      <!-- <div *ngIf="title == '已办收文'">
-        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-        <div style="max-width: 330px">
-          <div>
-            <ion-label class="label">
-              公文文号：{{item.SerialNumber}}
-            </ion-label>
-            <ion-label class="label  label-nopa">
-              处理类型：{{item.DealType}}
-            </ion-label>
-          </div>
-          <div>
-            <ion-label class="label">
-              来文单位：{{item.Department}}
-            </ion-label>
-            <ion-label class="label label-nopa">
-              收件日期：{{item.CreateDate}}
-            </ion-label>
-          </div>
-        </div>
-      </div> -->
     </ion-card-content>
   </ion-card>
-
-  <!-- <ion-list>
-    <ion-item *ngFor="let item of listdataArr,let i = index" (click)="pushIntodetail(item)">
-      <ion-note color="danger" *ngIf="type == 1 && item['color'] == 'red'">{{item.Emergency}}</ion-note>
-      <ion-note color="warning" *ngIf="type == 1 && item['color'] == 'yellow'">{{item.Emergency}}</ion-note>
-      <ion-note color="primary" *ngIf="type == 1 && item['color'] == 'black'">{{item.Emergency}}</ion-note>
-     
-      <div padding style="max-width: 285px">
-        <ion-label>
-          {{item['Title']}}
-        </ion-label>
-        <ion-label style="padding-top: 8px;font-size:14px;">
-          经办人：{{item.Staff}}
-        </ion-label>
-      </div>
-    </ion-item>
-  </ion-list> -->
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" [hidden]="nohasmore">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-
-
-<!-- <span *ngIf="type == 1 && item['color'] == 'red'" style="color: red">{{item.Emergency}} &nbsp;&nbsp;</span>
-     <span *ngIf="type == 1 && item['color'] == 'yellow'" style="color: yellow">{{item.Emergency}} &nbsp;&nbsp; </span>
-     <span *ngIf="type == 1 && item['color'] == 'black'" style="color: black">{{item.Emergency}} &nbsp;&nbsp; </span> -->
