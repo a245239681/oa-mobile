@@ -53,6 +53,7 @@ export class HavedoneworkPage implements OnInit {
   }
   ngOnInit() {
     // this.getdata();
+    this.doRefresh();
   }
 
   /**
@@ -62,12 +63,12 @@ export class HavedoneworkPage implements OnInit {
     this.currentPage = 1;
     this.listdataArr = [];
     this.ionInfiniteScroll.disabled = false;
-    this.toast.presentLoading();
+    // this.toast.presentLoading();
     this.mainindexservice
       .getBrowserFile(this.currentPage, this.type, this.searchStr)
       .subscribe(
         res => {
-          this.toast.dismissLoading();
+          // this.toast.dismissLoading();
           this.ionRefresh.complete();
           if (res['State'] === 1) {
             this.listdataArr = res['Data']['PageOfResult'];
@@ -120,7 +121,7 @@ export class HavedoneworkPage implements OnInit {
   /**
    * 下拉刷新
    */
-  doRefresh(event) {
+  doRefresh(event?) {
     this.getdata();
   }
 
@@ -128,12 +129,12 @@ export class HavedoneworkPage implements OnInit {
    * 上拉加载
    */
   loadMoreData(event) {
-    this.toast.presentLoading();
+    // this.toast.presentLoading();
     this.mainindexservice
       .getBrowserFile(this.currentPage, this.type, this.searchStr)
       .subscribe(
         res => {
-          this.toast.dismissLoading();
+          // this.toast.dismissLoading();
           this.ionRefresh.complete();
           this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
