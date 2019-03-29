@@ -75,7 +75,7 @@ export class DocumentlistPage implements OnInit {
   getdata() {
     this.currentPage = 1;
     this.listdataArr = [];
-    this.ionInfiniteScroll.disabled = false;
+    // this.ionInfiniteScroll.disabled = false;
     if (this.type === 1 || this.type === 2 || this.type === 3) {
       this.toast.presentLoading();
       this.mainindexservice
