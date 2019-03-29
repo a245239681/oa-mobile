@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DocumentlistPage } from './documentlist.page';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgZorroAntdMobileModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DocumentlistPage]

@@ -32,7 +32,9 @@ export class SecretinfoadvicePage implements OnInit {
       return;
     }
     if (this.title == '公开信息意见') {
+      this.toast.presentLoading();
       this.mainservice.OpenInfoAdvice(this.itemmodel['Id'], this.textAreaValue).subscribe((res) => {
+        this.toast.dismissLoading();
         if (res['State'] == 1) {
           this.route.navigate(['send-action-tree'], {
             queryParams: {
@@ -43,7 +45,9 @@ export class SecretinfoadvicePage implements OnInit {
       });
     }
     else {
+      this.toast.presentLoading();
       this.mainservice.SecretInfoAdvice(this.itemmodel['Id'], this.textAreaValue).subscribe((res) => {
+        this.toast.dismissLoading();
         if (res['State'] == 1) {
           this.route.navigate(['send-action-tree'], {
             queryParams: {
