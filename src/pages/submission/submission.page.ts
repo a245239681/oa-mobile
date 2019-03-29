@@ -147,7 +147,8 @@ export class SubmissionPage implements OnInit {
     if (!value['advice']) {
       this.toast.presentToast('请先填写意见');
       return false;
-    } else {
+    } 
+    else {
       if (this.itemmodel.ProcessType === 2) {
         if (
           this.itemmodel.IsPrimaryDept ||
@@ -179,6 +180,7 @@ export class SubmissionPage implements OnInit {
         }
       } else if (this.itemmodel.ProcessType === 1) {
         // let commitType: string;
+        this.toast.presentLoading();
         this.mainservice
           .ValidMove(
             this.itemmodel['Id'],
@@ -186,6 +188,7 @@ export class SubmissionPage implements OnInit {
             this.itemmodel.CoorType
           )
           .subscribe(res => {
+            this.toast.dismissLoading();
             if (res.State === 1) {
               // commitType = '60';
               this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
@@ -221,6 +224,7 @@ export class SubmissionPage implements OnInit {
       this.toast.presentToast('请先填写意见');
       return false;
     } else {
+      this.toast.presentLoading();
       this.mainservice
         .ValidBack(
           this.itemmodel['Id'],
@@ -229,6 +233,7 @@ export class SubmissionPage implements OnInit {
         )
         .subscribe(
           res => {
+            this.toast.dismissLoading();
             if ((<any>res).State === 1) {
               this.route.navigate(['return-back'], {
                 queryParams: {
@@ -252,9 +257,11 @@ export class SubmissionPage implements OnInit {
       this.toast.presentToast('请先填写意见');
       return false;
     } else {
+      this.toast.presentLoading();
       this.mainservice
         .ValidLeader2Leader(this.itemmodel['Id'])
         .subscribe(res => {
+          this.toast.dismissLoading();
           if (res === 'ok') {
             this.mainservice.GetFlow_YJ_DeptStaffTree().subscribe(
               (data: any) => {
@@ -364,8 +371,10 @@ export class SubmissionPage implements OnInit {
         skipValid: false,
         HandSign: this.base64
       };
+      this.toast.presentLoading();
       await this.mainservice.saveadvice(savemodel).subscribe(
         res => {
+          this.toast.dismissLoading();
           if (res['State'] === 1) {
             this.toast.presentToast('保存意见成功');
           }
@@ -415,7 +424,9 @@ export class SubmissionPage implements OnInit {
         skipValid: false,
         HandSign: this.base64
       };
-
+      
+      //提交菊花
+      this.toast.presentLoading();
       this.mainservice.saveadvice(savemodel).subscribe(
         res => {
           // 收文流程
@@ -458,6 +469,7 @@ export class SubmissionPage implements OnInit {
                         // 结束
                         else if (res['Type'] == 400) {
                           // 弹出要结束的模态框 跳到下一步  展示结束步骤
+                          this.toast.dismissLoading();
                           this.presentEndAlert();
                         }
                         // 分件
@@ -476,6 +488,7 @@ export class SubmissionPage implements OnInit {
                               this.itemmodel['CoorType']
                             )
                             .subscribe(res => {
+                              this.toast.dismissLoading();
                               if (res['State'] == 1) {
                                 this.toast.presentToast('提交成功');
                                 this.nav.navigateBack('documentlist');
@@ -511,6 +524,7 @@ export class SubmissionPage implements OnInit {
                   this.itemmodel['CoorType']
                 )
                 .subscribe(res => {
+                  this.toast.dismissLoading();
                   if (res['State'] == 1) {
                     this.itemmodel['commitType'] = res['Type'];
 
@@ -545,6 +559,7 @@ export class SubmissionPage implements OnInit {
                   }
                 });
             } else {
+              this.toast.dismissLoading();
               // 会签
               // 赋值给提交对象
               const Data = {
@@ -633,6 +648,7 @@ export class SubmissionPage implements OnInit {
       .subscribe(
         res => {
           if (res['State'] === 1) {
+            this.toast.dismissLoading();
             this.toast.presentToast('协办提交成功');
             // 返回列表
             // this.route.navigate(['tabs']);
@@ -711,6 +727,7 @@ export class SubmissionPage implements OnInit {
           }
           //把下一步的数据清掉
           tempArr.Leaders = [];
+          this.toast.dismissLoading();
           this.route.navigate(['person-select'], {
             queryParams: {
               item: JSON.stringify(this.itemmodel),
