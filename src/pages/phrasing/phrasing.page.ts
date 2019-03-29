@@ -82,7 +82,9 @@ export class PhrasingPage implements OnInit {
         {
           text: '确定',
           handler: () => {
+            this.toast.presentLoading();
             this.mainindexService.DailyDelete(id).subscribe(res => {
+              this.toast.dismissLoading();
               if (res === true) {
                 this.toast.presentToast('删除成功');
                 this.Getoftenuse();
@@ -108,7 +110,7 @@ export class PhrasingPage implements OnInit {
     this.nav.back();
   }
 
-  /** 开启会签模态框 */
+  /** 编辑  */
   async phrasingModal(e: string, d?: any) {
     const Data = {
       title: e,
