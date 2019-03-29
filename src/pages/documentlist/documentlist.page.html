@@ -14,7 +14,7 @@
 
 <ion-content style="--background: #EFEFEF;">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中..." pullMin = 80>
     </ion-refresher-content>
   </ion-refresher>
   <ion-card *ngIf="listdataArr.length===0&&!loading">
