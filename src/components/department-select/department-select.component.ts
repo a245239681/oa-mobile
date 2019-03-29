@@ -24,11 +24,21 @@ export class DepartmentSelectComponent implements OnInit {
     private toast: CommonHelper
   ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  singleSelect(item: any) {
-    this.selected.emit({ items: [item], type: this.selectedType });
+  singleSelect(item: any, checked: boolean) {
+    if (checked) {
+      for (let i = 0; i < this.listdataArr.length; i++) {
+        if (this.listdataArr[i].id !== item.id) {
+          this.listdataArr[i].checked = false;
+        } else if (this.listdataArr[i].Id !== item.Id) {
+          this.listdataArr[i].checked = false;
+        }
+      }
+      this.selected.emit({ items: [item], type: this.selectedType });
+    }
+    // console.log(item);
+    // console.log(this.selected);
   }
 
   mutiSelect(item: any, checked: boolean) {
