@@ -24,6 +24,8 @@ import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from 'src/components/components.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { environment } from 'src/environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +40,9 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     IonicModule,
     AppRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    BrowserAnimationsModule,
+    NgZorroAntdMobileModule
   ],
   providers: [
     StatusBar,
