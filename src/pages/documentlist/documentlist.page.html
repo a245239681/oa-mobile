@@ -12,7 +12,7 @@
   </div>
 </ion-header>
 
-<ion-content style="--background: #EFEFEF;width: 100vw;float: left;">
+<ion-content style="--background: #EFEFEF;width: 100vw;float: left;height:100%;overflow: hidden;">
   <ion-card *ngIf="this.state.listdataArr.length===0">
     <ion-card-content>
       没有数据
@@ -20,7 +20,7 @@
   </ion-card>
   <PullToRefresh style="height:100%;" class="roll" [direction]="this.state.direction"
     [(ngModel)]="this.state.refreshState" [endReachedRefresh]="this.state.nohasmore" (onRefresh)="pullToRefresh($event)"
-    [footerIndicator]="this.state.footerIndicator">
+    [footerIndicator]="this.state.footerIndicator" [distanceToRefresh]='50'>
     <ion-card class="kp" *ngFor="let item of this.state.listdataArr,let i = index">
       <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
         <!-- 收文待办  -->
