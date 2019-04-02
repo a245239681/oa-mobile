@@ -14,7 +14,7 @@ export class DocumentlistPage implements OnInit {
   @ViewChild(IonRefresher) ionRefresh: IonRefresher;
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
   // 列表数据
-  listdataArr: any[] = [];
+  // listdataArr: any[] = [];
 
   /** 搜索内容 */
   searchStr = '';
@@ -23,14 +23,34 @@ export class DocumentlistPage implements OnInit {
   currentPage = 1;
 
   /** 是否可以继续上拉 */
-  nohasmore = true;
+  // nohasmore = true;
 
   /** 1 收文 2 发文 3 传阅件 */
   type = 1;
 
   title = '公文列表';
 
-  loading = false;
+  /** 上拉提示框 */
+  hint = false;
+
+  /** 拉动刷新初始 */
+  state = {
+    refreshState: {
+      currentState: 'deactivate',
+      drag: false
+    },
+    direction: '',
+    /** 是否自动触发上拉加载，ps：暂时不可用 */
+    nohasmore: false,
+    /** 列表数据 */
+    listdataArr: [],
+    footerIndicator: {
+      activate: '松开可刷新',
+      deactivate: '',
+      release: '刷新中...',
+      finish: '完成刷新'
+    }
+  };
 
   constructor(
     private nav: NavController,
@@ -54,14 +74,13 @@ export class DocumentlistPage implements OnInit {
         case 3:
           this.title = '传阅件';
           break;
-        case 4:
-          this.title = '已办收文';
-          break;
-        default:
-          this.title = '已办发文';
-          break;
       }
     });
+  }
+
+  /** 返回 */
+  Goback() {
+    this.nav.navigateBack(['tabs']);
   }
 
   ionViewDidEnter() {
@@ -70,65 +89,70 @@ export class DocumentlistPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  pullToRefresh(event) {
+    // 自动触发
+    if (event === 'endReachedRefresh') {
+      this.loadMoreData();
+      // this.state.refreshState.currentState = 'release';
+      // this.state.refreshState.currentState = 'finish';
+    } else {
+      // 下拉刷新
+      if (event === 'down') {
+        this.getdata();
+      } else {
+        // 上拉加载
+        this.loadMoreData();
+      }
+    }
+  }
+
   /**
    * 获取列表数据
    */
   getdata() {
     this.currentPage = 1;
-    this.listdataArr = [];
-    this.ionInfiniteScroll.disabled = false;
+    this.state.listdataArr = [];
+    // this.ionInfiniteScroll.disabled = false;
     if (this.type === 1 || this.type === 2 || this.type === 3) {
       this.toast.presentLoading();
       this.mainindexservice
         .getneedtodolist(this.currentPage, this.type, this.searchStr)
-        .subscribe(
-          res => {
-            this.toast.dismissLoading();
-            this.loading = false;
-            this.ionRefresh.complete();
-            if (res['State'] === 1) {
-              this.listdataArr = res['Data']['PageOfResult'];
-              // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
-              if (
-                this.listdataArr.length < 20 ||
-                this.listdataArr.length >= res['Data']['TotalCount']
-              ) {
-                this.nohasmore = true;
-              } else {
-                this.nohasmore = false;
-                this.currentPage++;
-              }
-
-              if (this.type === 1) {
-                this.listdataArr = this.listdataArr.map(item => {
-                  const dates = getDateDiff(
-                    item['FinishDate'],
-                    new Date().toDateString()
-                  );
-                  if (
-                    item['Emergency'] === '特急' ||
-                    item['Emergency'] === '紧急' ||
-                    dates <= 3
-                  ) {
-                    item['color'] = '#D1202E';
-                  } else if (dates > 3 && dates <= 7) {
-                    item['color'] = '#F99D31';
-                  } else {
-                    item['color'] = '#2D3479';
-                  }
-                  return item;
-                });
-              }
-            } else {
-              this.toast.presentToast('暂无数据');
+        .subscribe(res => {
+          this.toast.dismissLoading();
+          this.hint = true;
+          // this.loading = false;
+          // this.ionRefresh.complete();
+          if (res['State'] === 1) {
+            this.state.listdataArr = res['Data']['PageOfResult'];
+            // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
+            if (res['Data']['PageOfResult'].length >= 10) {
+              this.currentPage++;
             }
-          },
-          err => {
-            this.toast.dismissLoading();
-            this.ionRefresh.complete();
-            this.toast.presentToast('请求失败');
+            if (this.type === 1) {
+              this.state.listdataArr = this.state.listdataArr.map(item => {
+                const dates = getDateDiff(
+                  item['FinishDate'],
+                  new Date().toDateString()
+                );
+                if (
+                  item['Emergency'] === '特急' ||
+                  item['Emergency'] === '紧急' ||
+                  dates <= 3
+                ) {
+                  item['color'] = '#D1202E';
+                } else if (dates > 3 && dates <= 7) {
+                  item['color'] = '#F99D31';
+                } else {
+                  item['color'] = '#2D3479';
+                }
+                return item;
+              });
+            }
+          } else {
+            this.toast.presentToast('暂无数据');
           }
-        );
+        });
     }
   }
 
@@ -161,49 +185,51 @@ export class DocumentlistPage implements OnInit {
   /**
    * 上拉加载
    */
-  loadMoreData(event) {
+  loadMoreData(event?) {
     this.toast.presentLoading();
+    this.hint = false;
     this.mainindexservice
       .getneedtodolist(this.currentPage, this.type, this.searchStr)
       .subscribe(
         res => {
           this.toast.dismissLoading();
-          this.ionInfiniteScroll.complete();
+          this.hint = true;
+          // this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
-            const tempArr: any[] = res['Data']['PageOfResult'];
-            tempArr.forEach(item => {
-              this.listdataArr.push(item);
-            });
-
-            if (
-              tempArr.length < 20 ||
-              this.listdataArr.length >= res['Data']['TotalCount']
-            ) {
-              this.nohasmore = true;
+            if (this.state.listdataArr.length >= res['Data']['TotalCount']) {
+              this.state.refreshState.currentState = 'finish';
+              this.toast.presentToast('已无数据！');
             } else {
-              this.nohasmore = false;
-              this.currentPage++;
-            }
-
-            if (this.type === 1) {
-              this.listdataArr = this.listdataArr.map(item => {
-                const dates = getDateDiff(
-                  item['FinishDate'],
-                  new Date().toDateString()
-                );
-                if (
-                  item['Emergency'] === '特急' ||
-                  item['Emergency'] === '紧急' ||
-                  dates <= 3
-                ) {
-                  item['color'] = '#D1202E';
-                } else if (dates > 3 && dates <= 7) {
-                  item['color'] = '#F99D31';
-                } else {
-                  item['color'] = '#2D3479';
-                }
-                return item;
+              // this.state.refreshState.currentState = 'release';
+              // this.state.refreshState.currentState = 'release';
+              this.state.refreshState.currentState = 'finish';
+              const tempArr: any[] = res['Data']['PageOfResult'];
+              tempArr.forEach(item => {
+                this.state.listdataArr.push(item);
               });
+              if (res['Data']['PageOfResult'].length >= 10) {
+                this.currentPage++;
+              }
+              if (this.type === 1) {
+                this.state.listdataArr = this.state.listdataArr.map(item => {
+                  const dates = getDateDiff(
+                    item['FinishDate'],
+                    new Date().toDateString()
+                  );
+                  if (
+                    item['Emergency'] === '特急' ||
+                    item['Emergency'] === '紧急' ||
+                    dates <= 3
+                  ) {
+                    item['color'] = '#D1202E';
+                  } else if (dates > 3 && dates <= 7) {
+                    item['color'] = '#F99D31';
+                  } else {
+                    item['color'] = '#2D3479';
+                  }
+                  return item;
+                });
+              }
             }
           } else {
             this.toast.presentToast('已无数据');
@@ -211,7 +237,7 @@ export class DocumentlistPage implements OnInit {
         },
         err => {
           this.toast.dismissLoading();
-          this.ionInfiniteScroll.complete();
+          // this.ionInfiniteScroll.complete();
           this.toast.presentToast('请求失败');
         }
       );
