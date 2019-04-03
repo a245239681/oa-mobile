@@ -40,6 +40,10 @@ input::-webkit-input-placeholder {
   color: #7c7e83;
 }
 
+ion-item{
+  --border-style: 0;
+}
+
 .syktb {
   color: #4877FB;
   font-size: 1.6rem;

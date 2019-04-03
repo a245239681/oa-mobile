@@ -23,10 +23,10 @@
       refreshingText="刷新中..." pullMin=80>
     </ion-refresher-content>
   </ion-refresher>
-  <List *ngFor="let item of this.state.listdataArr,let i = index" class="kp">
-    <ListItem [platform]="'ios'" [wrap]="true" class="kpnr">
+  <ion-list *ngFor="let item of this.listdataArr,let i = index" class="kp">
+    <ion-item class="kpnr" (click)="pushIntodetail(item)">
       <!-- 收文待办  -->
-      <div *ngIf="title == '收文待办'">
+      <div *ngIf="title == '收文待办'" style="width: 100%;">
         <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '#D1202E'">{{item.Title}}</ion-note>
         <ion-note color="warning" class="kpbt" *ngIf="item['color'] == '#F99D31'">{{item.Title}}</ion-note>
         <ion-note color="primary" class="kpbt" *ngIf="item['color'] == '#2D3479'">{{item.Title}}</ion-note>
@@ -49,9 +49,50 @@
           </div>
         </div>
       </div>
-    </ListItem>
-  </List>
-  <ion-infinite-scroll threshold="15%" (ionInfinite)="loadMoreData($event)" *ngIf="!nohasmore">
+      <!-- 发文待办 -->
+      <div *ngIf="title == '发文待办'">
+        <ion-note color="primary" class="kpbt" *ngIf="title == '发文待办' || title == '已办发文'">{{item.Title}}</ion-note>
+        <div style="max-width: 330px">
+          <div>
+            <ion-label class="label">
+              拟稿部门：{{item.DeptName}}
+            </ion-label>
+            <ion-label class="label label-nopa">
+              主&#12288;送：{{item.Department}}
+            </ion-label>
+          </div>
+          <div>
+            <ion-label class="label">
+              当前活动：{{item.CurAction}}
+            </ion-label>
+            <ion-label class="label label-nopa">
+              状态：{{item.ItemStatus}}
+            </ion-label>
+          </div>
+        </div>
+      </div>
+      <!-- 传阅 -->
+      <div *ngIf="title == '传阅件'">
+        <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
+        <div style="max-width: 330px">
+          <div>
+            <ion-label class="label">
+              收件日期：{{item.CreateDate}}
+            </ion-label>
+          </div>
+          <div>
+            <ion-label class="label">
+              来文单位：{{item.Department}}
+            </ion-label>
+            <ion-label class="label label-nopa">
+              来文文号：{{item.SerialNumber}}
+            </ion-label>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreData($event)" *ngIf="!nohasmore">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

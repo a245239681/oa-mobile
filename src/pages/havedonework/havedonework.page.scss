@@ -21,6 +21,10 @@
   font-size: 0.9rem;
 }
 
+ion-item{
+  --border-style: 0;
+}
+
 ::-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
   color: #7c7e83;

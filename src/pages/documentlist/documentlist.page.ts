@@ -15,7 +15,7 @@ export class DocumentlistPage implements OnInit {
   /** 上拉加载 */
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
   // 列表数据
-  // listdataArr: any[] = [];
+  listdataArr: any[] = [];
 
   /** 搜索内容 */
   searchStr = '';
@@ -33,28 +33,6 @@ export class DocumentlistPage implements OnInit {
 
   /** 没有数据提示框 */
   hint = false;
-
-  /** 拉动刷新初始 */
-  state = {
-    refreshState: {
-      currentState: 'down',
-      drag: false
-    },
-    direction: '',
-    /** 是否自动触发上拉加载，ps：暂时不可用 */
-    endReachedRefresh: true,
-    /** 列表数组 */
-    listdataArr: [],
-    footerIndicator: {
-      // 开始调用
-      activate: '松开可加载',
-      deactivate: '',
-      // 调用中
-      release: '',
-      // 调用完成后
-      finish: ''
-    }
-  };
 
   constructor(
     private nav: NavController,
@@ -126,13 +104,13 @@ export class DocumentlistPage implements OnInit {
           // this.loading = false;
           this.ionRefresh.complete();
           if (res['State'] === 1) {
-            this.state.listdataArr = res['Data']['PageOfResult'];
+            this.listdataArr = res['Data']['PageOfResult'];
             // 判断是否有数据
-            this.hint = this.state.listdataArr.length === 0 ? true : false;
+            this.hint = this.listdataArr.length === 0 ? true : false;
             // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
             if (
-              this.state.listdataArr.length < 10 ||
-              this.state.listdataArr.length >= res['Data']['TotalCount']
+              this.listdataArr.length < 10 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
             ) {
               this.nohasmore = true;
             } else {
@@ -140,7 +118,7 @@ export class DocumentlistPage implements OnInit {
               this.currentPage++;
             }
             if (this.type === 1) {
-              this.state.listdataArr = this.state.listdataArr.map(item => {
+              this.listdataArr = this.listdataArr.map(item => {
                 const dates = getDateDiff(
                   item['FinishDate'],
                   new Date().toDateString()
@@ -206,11 +184,11 @@ export class DocumentlistPage implements OnInit {
           if (res['State'] === 1) {
             const tempArr: any[] = res['Data']['PageOfResult'];
             tempArr.forEach(item => {
-              this.state.listdataArr.push(item);
+              this.listdataArr.push(item);
             });
             if (
-              this.state.listdataArr.length < 10 ||
-              this.state.listdataArr.length >= res['Data']['TotalCount']
+              this.listdataArr.length < 10 ||
+              this.listdataArr.length >= res['Data']['TotalCount']
             ) {
               this.nohasmore = true;
             } else {
@@ -218,7 +196,7 @@ export class DocumentlistPage implements OnInit {
               this.currentPage++;
             }
             if (this.type === 1) {
-              this.state.listdataArr = this.state.listdataArr.map(item => {
+              this.listdataArr = this.listdataArr.map(item => {
                 const dates = getDateDiff(
                   item['FinishDate'],
                   new Date().toDateString()
