@@ -109,7 +109,7 @@ export class DocumentlistPage implements OnInit {
             this.hint = this.listdataArr.length === 0 ? true : false;
             // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
             if (
-              this.listdataArr.length < 10 ||
+              this.listdataArr.length < 20 ||
               this.listdataArr.length >= res['Data']['TotalCount']
             ) {
               this.nohasmore = true;
@@ -187,7 +187,7 @@ export class DocumentlistPage implements OnInit {
               this.listdataArr.push(item);
             });
             if (
-              this.listdataArr.length < 10 ||
+              this.listdataArr.length < 20 ||
               this.listdataArr.length >= res['Data']['TotalCount']
             ) {
               this.nohasmore = true;
