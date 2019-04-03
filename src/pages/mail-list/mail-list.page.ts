@@ -6,10 +6,9 @@ import { ApiUrlManagement } from 'src/infrastructure/api-url-management';
 @Component({
   selector: 'app-mail-list',
   templateUrl: './mail-list.page.html',
-  styleUrls: ['./mail-list.page.scss'],
+  styleUrls: ['./mail-list.page.scss']
 })
 export class MailListPage implements OnInit {
-
   /**
    * 列表传进来的数据
    */
@@ -27,7 +26,7 @@ export class MailListPage implements OnInit {
 
   allListModel: any;
 
-    /**
+  /**
    * 搜索
    */
   searchStr = '';
@@ -37,7 +36,7 @@ export class MailListPage implements OnInit {
    */
   title = '部门相关人员';
 
-   /**
+  /**
    * 搜索结果
    */
   result = [];
@@ -54,29 +53,29 @@ export class MailListPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async presentActionSheet(e: any) {
-    const buttons = [{
-      text: '呼叫  ' + e.mobile,
-      handler: () => {
-        this.callIpnone(e.mobile);
+    const buttons = [
+      {
+        text: '呼叫  ' + e.mobile,
+        handler: () => {
+          this.callIpnone(e.mobile);
+        }
+      },
+      {
+        text: '发送短信至' + e.mobile,
+        handler: () => {
+          document.location.href = 'sms:' + e.mobile;
+        }
+      },
+      {
+        text: '取消',
+        // icon: 'close',
+        role: 'cancel',
+        handler: () => {}
       }
-    },
-    {
-      text: '发送短信至' + e.mobile,
-      handler: () => {
-        document.location.href = 'sms:' + e.mobile;
-      }
-    },
-    {
-      text: '取消',
-      // icon: 'close',
-      role: 'cancel',
-      handler: () => {
-      }
-    }];
+    ];
     if (e.phone) {
       buttons.splice(2, 0, {
         text: '呼叫  ' + e.phone,
@@ -93,7 +92,7 @@ export class MailListPage implements OnInit {
     await actionSheet.present();
   }
 
-    /**
+  /**
    * 搜索
    */
   SearchFilter(event: any) {
@@ -102,19 +101,20 @@ export class MailListPage implements OnInit {
     this.result = [];
     const me = this;
     this.allListModel.forEach(function(d: any) {
-      const items = d.children.filter(s => s.text.indexOf(val) !== -1
-       || s.mobile.indexOf(val) !== -1
-       || ('' + s.phone).indexOf(val) !== -1 );
-      if ( items.length > 0) {
+      const items = d.children.filter(
+        s =>
+          (s.text ? s.text.indexOf(val) : -1) !== -1 ||
+          (s.mobile ? s.mobile.indexOf(val) : -1) !== -1 ||
+          ('' + s.phone ? ('' + s.phone).indexOf(val) : -1) !== -1
+      );
+      if (items.length > 0) {
         me.result.push({
           text: d.text,
           children: items
         });
       }
     });
-
   }
-
 
   /**
    * 电话
@@ -129,11 +129,10 @@ export class MailListPage implements OnInit {
   }
 
   /**
-  * 返回
-  */
+   * 返回
+   */
   canGoBack() {
     history.back();
     return false;
   }
-
 }

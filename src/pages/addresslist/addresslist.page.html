@@ -2,12 +2,14 @@
   <ion-toolbar color="primary" mode='ios'>
     <ion-title>{{title}}</ion-title>
   </ion-toolbar>
-  <div class="sykys">
-    <!-- <ion-input [(ngModel)]="searchStr" (ionChange)="SearchFilter(searchStr)" placeholder="请输入联系人\号码" class="input"></ion-input> -->
-    <!-- <input type="text" [(ngModel)]="searchStr" (change)="SearchFilter(searchStr)" placeholder="请输入联系人\号码" class="input"> -->
+  <!-- <div class="sykys">
     <ion-searchbar debounce="500" [(ngModel)]="searchStr" (ionChange)="SearchFilter(searchStr)" placeholder="请输入联系人\号码">
     </ion-searchbar>
-    <!-- <ion-icon name="search" (click)="SearchFilter(searchStr)" class="syktb"></ion-icon> -->
+  </div> -->
+  <div class="sykys">
+    <input type="searchStr" [(ngModel)]="searchStr" value='searchStr' #input (keyup)="SearchFilter(searchStr)" placeholder="请输入联系人/号码"
+      class="input">
+    <ion-icon name="search" (click)="SearchFilter(searchStr)" class="syktb"></ion-icon>
   </div>
 </ion-header>
 

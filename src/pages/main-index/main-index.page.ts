@@ -13,10 +13,30 @@ export class MainIndexPage implements OnInit {
   // 关闭下拉
   @ViewChild(IonRefresher) ionRefresh: IonRefresher;
   titleArr = [
-    { text: '收文待办', bgcolor: '#e7fae3', forecolor: '#67c554',borderTop: 'bor_top block' },
-    { text: '发文待办', bgcolor: '#fdeff0', forecolor: '#f87a85' ,borderTop: 'block'},
-    { text: '传阅查看', bgcolor: '#e3f6fc', forecolor: '#4877fb' ,borderTop: 'bor_bottom bor_top block'},
-    { text: '已办业务', bgcolor: '#faf7e4', forecolor: '#f1cb14',borderTop: 'bor_bottom block' }
+    {
+      text: '收文待办',
+      bgcolor: '#e7fae3',
+      forecolor: '#67c554',
+      borderTop: 'bor_top block'
+    },
+    {
+      text: '发文待办',
+      bgcolor: '#fdeff0',
+      forecolor: '#f87a85',
+      borderTop: 'block'
+    },
+    {
+      text: '传阅查看',
+      bgcolor: '#e3f6fc',
+      forecolor: '#4877fb',
+      borderTop: 'bor_bottom bor_top block'
+    },
+    {
+      text: '已办业务',
+      bgcolor: '#faf7e4',
+      forecolor: '#f1cb14',
+      borderTop: 'bor_bottom block'
+    }
   ];
 
   countArr: number[] = [];
@@ -28,8 +48,15 @@ export class MainIndexPage implements OnInit {
     private route: Router
   ) {}
 
-  ngOnInit() {
+  // 每次进入页面之前都执行一次
+  ionViewDidEnter() {
+    // this.doRefresh();
     this.getdata();
+  }
+
+  ngOnInit() {
+    // this.getdata();
+    // console.log(1);
   }
 
   /**

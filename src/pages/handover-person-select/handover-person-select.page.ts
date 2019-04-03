@@ -36,6 +36,7 @@ export class HandoverPersonSelectPage implements OnInit {
     });
   }
   hostSelected(items: any) {
+    // console.log(items);
     this.selectPerson = items.map(res => {
       return res['Id'];
     });
@@ -61,6 +62,26 @@ export class HandoverPersonSelectPage implements OnInit {
         }
       });
   }
+
+  // getDepartment() {
+  //   this.toast.presentLoading();
+  //   this.mainservice.getDeptTreeUntilMainDept().subscribe(
+  //     res => {
+  //       if (res['State'] === 1) {
+  //         this.list = (res['Data']);
+  //         this.toast.dismissLoading();
+  //       } else {
+  //         this.toast.presentToast('暂无数据');
+  //         this.toast.dismissLoading();
+  //       }
+  //     },
+  //     err => {
+  //       this.toast.presentToast('请求失败');
+  //       this.toast.dismissLoading();
+  //     }
+  //   );
+  // }
+
   /** 提交 */
   handin() {
     const params = {

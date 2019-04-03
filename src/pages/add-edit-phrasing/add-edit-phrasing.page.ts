@@ -65,7 +65,9 @@ export class AddEditPhrasingPage implements OnInit {
       this.mydata.ID = this.data.data.ID;
       this.mydata.Staff_ID = this.staffId;
       this.mydata.Text = this.text;
+      this.toast.presentLoading();
       this.mainservice.DailySave(this.mydata).subscribe(res => {
+        this.toast.dismissLoading();
         if (res === true) {
           this.toast.presentToast('编辑成功');
           this.closemodal('change');
@@ -77,7 +79,9 @@ export class AddEditPhrasingPage implements OnInit {
       this.mydata.ID = '0';
       this.mydata.Staff_ID = this.staffId;
       this.mydata.Text = this.text;
+      this.toast.presentLoading();
       this.mainservice.DailySave(this.mydata).subscribe(res => {
+        this.toast.dismissLoading();
         if (res === true) {
           this.toast.presentToast('添加成功');
           this.closemodal('change');

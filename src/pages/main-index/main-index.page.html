@@ -2,26 +2,26 @@
   <ion-toolbar color="primary" mode='ios'>
     <ion-title>我的工作</ion-title>
   </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
+      refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div class="bg">
     <h1 class="title"></h1>
     <p class="title">住房局OA管理系统</p>
   </div>
-</ion-header>
-
-<ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
-    </ion-refresher-content>
-  </ion-refresher>
   <div class="block_margin">
-    <div class="block"
-    *ngFor="let item of titleArr, let i = index" (click)="pushDocumentList(i)" [class]="item.borderTop" >
-    <div class="div_img" [ngStyle]="{'background-image':'url(/assets/'+(i+1)+'.png)'}"></div>
-    <div class="block_right">
-      <ion-label>{{item.text}}</ion-label>
-      <ion-note class="ion_right" color="danger" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})</ion-note>
+    <div class="block" *ngFor="let item of titleArr, let i = index" (click)="pushDocumentList(i)"
+      [class]="item.borderTop">
+      <div class="div_img" [ngStyle]="{'background-image':'url(/assets/'+(i+1)+'.png)'}"></div>
+      <div class="block_right">
+        <ion-label>{{item.text}}</ion-label>
+        <ion-note class="ion_right" color="danger" *ngIf="countArr.length && countArr[i] > 0">({{countArr[i]}})
+        </ion-note>
+      </div>
     </div>
   </div>
-  </div>
-  
 </ion-content>

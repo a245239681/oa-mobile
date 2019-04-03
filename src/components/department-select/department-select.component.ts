@@ -9,18 +9,14 @@ import { CommonHelper } from 'src/infrastructure/commonHelper';
 })
 export class DepartmentSelectComponent implements OnInit {
   // 1:主办 2：协办 3：收文移交 4: 发文移交
-  @Input() isSingleSlect: string;
+  @Input() selectedType: string;
 
-  @Input() hasSelected: any;
-
-  @Output() selected = new EventEmitter<{ items: any[],type: string }>();
+  @Output() selected = new EventEmitter<{ items: any[]; type: string }>();
 
   // 列表数据
-  listdataArr: any[] = [];
-  // 移交列表数组
-  handoverListdataArr: any[] = [];
+  @Input() listdataArr: any[] = [];
 
-  selectedList = [];
+  @Input() selectedList = [];
   /** 移交选中的数组 */
   selectList = [];
   constructor(
@@ -28,56 +24,32 @@ export class DepartmentSelectComponent implements OnInit {
     private toast: CommonHelper
   ) {}
 
-  ngOnInit() {
-    if (this.isSingleSlect === '3' || this.isSingleSlect === '4') {
-      this.handoverListdataArr = this.hasSelected;
-    }
+  ngOnInit() {}
 
-    this.mainindexservice.getDeptTreeUntilMainDept().subscribe(
-      res => {
-        if (res['State'] === 1) {
-          this.listdataArr = res['Data'];
-          for (let i = 0; i < this.listdataArr.length; i++) {
-            if (this.isSingleSlect === '1') {
-              if (this.listdataArr[i].id === this.hasSelected.PrimaryDeptId) {
-                this.listdataArr[i].checked = true;
-                this.selectedList.push(this.listdataArr[i]);
-              }
-            } else if (this.isSingleSlect === '2') {
-              if (this.hasSelected.Cooperaters) {
-                this.hasSelected.Cooperaters.forEach((element: string) => {
-                  if (this.listdataArr[i].id === element) {
-                    this.listdataArr[i].checked = true;
-                    this.selectedList.push(this.listdataArr[i]);
-                  }
-                });
-              }
-            }
-          }
-          this.selected.emit({ items: this.selectedList,type:this.isSingleSlect });
-        } else {
-          this.toast.presentToast('已无数据');
+  singleSelect(item: any, checked: boolean) {
+    if (checked) {
+      for (let i = 0; i < this.listdataArr.length; i++) {
+        if (this.listdataArr[i].id !== item.id) {
+          this.listdataArr[i].checked = false;
+        } else if (this.listdataArr[i].Id !== item.Id) {
+          this.listdataArr[i].checked = false;
         }
-      },
-      err => {
-        this.toast.presentToast('请求失败');
       }
-    );
-  }
-
-  singleSelect(item: any) {
-    this.selected.emit({ items: [item],type:this.isSingleSlect });
+      this.selected.emit({ items: [item], type: this.selectedType });
+    }
+    // console.log(item);
+    // console.log(this.selected);
   }
 
   mutiSelect(item: any, checked: boolean) {
-    if (this.isSingleSlect === '3' || this.isSingleSlect === '4') {
+    if (this.selectedType === '3' || this.selectedType === '4') {
       if (checked) {
         this.selectList.push(item);
       } else {
         // 去掉没选中的如果之前选过的
         this.selectList = this.selectList.filter(data => data.id !== item.id);
       }
-      this.selected.emit({ items: this.selectList,type:this.isSingleSlect });
+      this.selected.emit({ items: this.selectList, type: this.selectedType });
     } else {
       if (checked) {
         this.selectedList.push(item);
@@ -87,7 +59,10 @@ export class DepartmentSelectComponent implements OnInit {
           data => data.id !== item.id
         );
       }
-      this.selected.emit({ items: this.selectedList,type:this.isSingleSlect });
+      this.selected.emit({
+        items: this.selectedList,
+        type: this.selectedType
+      });
     }
   }
 }
