@@ -12,15 +12,15 @@
   </div>
 </ion-header>
 
-<ion-content style="--background: #EFEFEF;overflow-y: hidden;">
+<ion-content style="--background: #EFEFEF;">
   <ion-card *ngIf="hint">
     <ion-card-content>
       没有数据
     </ion-card-content>
   </ion-card>
-  <PullToRefresh style="height:99%;" class="roll" [direction]="this.state.direction"
-    [(ngModel)]="this.state.refreshState" [endReachedRefresh]="this.state.nohasmore" (onRefresh)="pullToRefresh($event)"
-    [footerIndicator]="this.state.footerIndicator" [distanceToRefresh]='50'>
+  <PullToRefresh style="height:100%;" class="roll" [direction]="this.state.direction"
+    [(ngModel)]="this.state.refreshState" [endReachedRefresh]="this.state.endReachedRefresh"
+    (onRefresh)="pullToRefresh($event)" [footerIndicator]="this.state.footerIndicator" [distanceToRefresh]='50'>
     <ion-card class="kp" *ngFor="let item of this.state.listdataArr,let i = index">
       <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
         <!-- 收文待办  -->
@@ -95,7 +95,13 @@
     <!-- <div *ngIf="this.hint && this.state.listdataArr.length!==0 && this.state.listdataArr.length >= 20"
       class="am-pull-to-refresh-indicator am-pull-to-refresh-footer-indicator" style="margin-bottom:0;">上拉可刷新数据
     </ion-content> -->
+
   </PullToRefresh>
+  <ion-infinite-scroll threshold="15%" (ionInfinite)="loadMoreData($event)" *ngIf="!nohasmore">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
   <!-- <ng-template #loading>
     <Icon type="loading"></Icon>
   </ng-template> -->

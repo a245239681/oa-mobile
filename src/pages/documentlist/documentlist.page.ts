@@ -12,6 +12,7 @@ import { getDateDiff } from 'src/infrastructure/regular-expression';
 })
 export class DocumentlistPage implements OnInit {
   @ViewChild(IonRefresher) ionRefresh: IonRefresher;
+  /** 上拉加载 */
   @ViewChild(IonInfiniteScroll) ionInfiniteScroll: IonInfiniteScroll;
   // 列表数据
   // listdataArr: any[] = [];
@@ -23,7 +24,7 @@ export class DocumentlistPage implements OnInit {
   currentPage = 1;
 
   /** 是否可以继续上拉 */
-  // nohasmore = true;
+  nohasmore = true;
 
   /** 1 收文 2 发文 3 传阅件 */
   type = 1;
@@ -36,12 +37,12 @@ export class DocumentlistPage implements OnInit {
   /** 拉动刷新初始 */
   state = {
     refreshState: {
-      currentState: 'deactivate',
+      currentState: 'down',
       drag: false
     },
     direction: '',
     /** 是否自动触发上拉加载，ps：暂时不可用 */
-    nohasmore: false,
+    endReachedRefresh: true,
     /** 列表数组 */
     listdataArr: [],
     footerIndicator: {
@@ -130,7 +131,13 @@ export class DocumentlistPage implements OnInit {
             // 判断是否有数据
             this.hint = this.state.listdataArr.length === 0 ? true : false;
             // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
-            if (res['Data']['PageOfResult'].length >= 10) {
+            if (
+              this.state.listdataArr.length < 10 ||
+              this.state.listdataArr.length >= res['Data']['TotalCount']
+            ) {
+              this.nohasmore = true;
+            } else {
+              this.nohasmore = false;
               this.currentPage++;
             }
             if (this.type === 1) {
@@ -196,42 +203,40 @@ export class DocumentlistPage implements OnInit {
       .subscribe(
         res => {
           this.toast.dismissLoading();
-          // this.ionInfiniteScroll.complete();
+          this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
-            if (this.state.listdataArr.length >= res['Data']['TotalCount']) {
-              this.state.refreshState.currentState = 'finish';
-              this.toast.presentToast('已无数据！');
+            const tempArr: any[] = res['Data']['PageOfResult'];
+            tempArr.forEach(item => {
+              this.state.listdataArr.push(item);
+            });
+            if (
+              this.state.listdataArr.length < 10 ||
+              this.state.listdataArr.length >= res['Data']['TotalCount']
+            ) {
+              this.nohasmore = true;
             } else {
-              // this.state.refreshState.currentState = 'release';
-              // this.state.refreshState.currentState = 'release';
-              this.state.refreshState.currentState = 'finish';
-              const tempArr: any[] = res['Data']['PageOfResult'];
-              tempArr.forEach(item => {
-                this.state.listdataArr.push(item);
+              this.nohasmore = false;
+              this.currentPage++;
+            }
+            if (this.type === 1) {
+              this.state.listdataArr = this.state.listdataArr.map(item => {
+                const dates = getDateDiff(
+                  item['FinishDate'],
+                  new Date().toDateString()
+                );
+                if (
+                  item['Emergency'] === '特急' ||
+                  item['Emergency'] === '紧急' ||
+                  dates <= 3
+                ) {
+                  item['color'] = '#D1202E';
+                } else if (dates > 3 && dates <= 7) {
+                  item['color'] = '#F99D31';
+                } else {
+                  item['color'] = '#2D3479';
+                }
+                return item;
               });
-              if (res['Data']['PageOfResult'].length >= 10) {
-                this.currentPage++;
-              }
-              if (this.type === 1) {
-                this.state.listdataArr = this.state.listdataArr.map(item => {
-                  const dates = getDateDiff(
-                    item['FinishDate'],
-                    new Date().toDateString()
-                  );
-                  if (
-                    item['Emergency'] === '特急' ||
-                    item['Emergency'] === '紧急' ||
-                    dates <= 3
-                  ) {
-                    item['color'] = '#D1202E';
-                  } else if (dates > 3 && dates <= 7) {
-                    item['color'] = '#F99D31';
-                  } else {
-                    item['color'] = '#2D3479';
-                  }
-                  return item;
-                });
-              }
             }
           } else {
             this.toast.presentToast('已无数据');
