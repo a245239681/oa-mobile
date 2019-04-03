@@ -117,7 +117,6 @@ export class DocumentlistPage implements OnInit {
   getdata() {
     this.currentPage = 1;
     // this.state.listdataArr = [];
-    // this.ionInfiniteScroll.disabled = false;
     if (this.type === 1 || this.type === 2 || this.type === 3) {
       this.toast.presentLoading();
       this.mainindexservice
@@ -125,7 +124,7 @@ export class DocumentlistPage implements OnInit {
         .subscribe(res => {
           this.toast.dismissLoading();
           // this.loading = false;
-          // this.ionRefresh.complete();
+          this.ionRefresh.complete();
           if (res['State'] === 1) {
             this.state.listdataArr = res['Data']['PageOfResult'];
             // 判断是否有数据

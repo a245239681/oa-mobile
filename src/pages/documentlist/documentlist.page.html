@@ -18,93 +18,43 @@
       没有数据
     </ion-card-content>
   </ion-card>
-  <PullToRefresh style="height:100%;" class="roll" [direction]="this.state.direction"
-    [(ngModel)]="this.state.refreshState" [endReachedRefresh]="this.state.endReachedRefresh"
-    (onRefresh)="pullToRefresh($event)" [footerIndicator]="this.state.footerIndicator" [distanceToRefresh]='50'>
-    <ion-card class="kp" *ngFor="let item of this.state.listdataArr,let i = index">
-      <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
-        <!-- 收文待办  -->
-        <div *ngIf="title == '收文待办'">
-          <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '#D1202E'">{{item.Title}}</ion-note>
-          <ion-note color="warning" class="kpbt" *ngIf="item['color'] == '#F99D31'">{{item.Title}}</ion-note>
-          <ion-note color="primary" class="kpbt" *ngIf="item['color'] == '#2D3479'">{{item.Title}}</ion-note>
-          <div style="max-width: 330px">
-            <div>
-              <ion-label class="label">
-                来文单位：{{item.Department}}
-              </ion-label>
-              <ion-label class="label label-nopa">
-                经办人：{{item.Staff}}
-              </ion-label>
-            </div>
-            <div>
-              <ion-label class="label">
-                当前活动：{{item.ItemActionName}}
-              </ion-label>
-              <ion-label class="label label-nopa">
-                状态：{{item.ItemStatus}}
-              </ion-label>
-            </div>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
+      refreshingText="刷新中..." pullMin=80>
+    </ion-refresher-content>
+  </ion-refresher>
+  <List *ngFor="let item of this.state.listdataArr,let i = index" class="kp">
+    <ListItem [platform]="'ios'" [wrap]="true" class="kpnr">
+      <!-- 收文待办  -->
+      <div *ngIf="title == '收文待办'">
+        <ion-note color="danger" class="kpbt" *ngIf="item['color'] == '#D1202E'">{{item.Title}}</ion-note>
+        <ion-note color="warning" class="kpbt" *ngIf="item['color'] == '#F99D31'">{{item.Title}}</ion-note>
+        <ion-note color="primary" class="kpbt" *ngIf="item['color'] == '#2D3479'">{{item.Title}}</ion-note>
+        <div style="max-width: 330px">
+          <div>
+            <ion-label class="label">
+              来文单位：{{item.Department}}
+            </ion-label>
+            <ion-label class="label label-nopa">
+              经办人：{{item.Staff}}
+            </ion-label>
+          </div>
+          <div>
+            <ion-label class="label">
+              当前活动：{{item.ItemActionName}}
+            </ion-label>
+            <ion-label class="label label-nopa">
+              状态：{{item.ItemStatus}}
+            </ion-label>
           </div>
         </div>
-
-        <!-- 发文待办 -->
-        <div *ngIf="title == '发文待办'">
-          <ion-note color="primary" class="kpbt" *ngIf="title == '发文待办' || title == '已办发文'">{{item.Title}}</ion-note>
-          <div style="max-width: 330px">
-            <div>
-              <ion-label class="label">
-                拟稿部门：{{item.DeptName}}
-              </ion-label>
-              <ion-label class="label label-nopa">
-                主&#12288;送：{{item.Department}}
-              </ion-label>
-            </div>
-            <div>
-              <ion-label class="label">
-                当前活动：{{item.CurAction}}
-              </ion-label>
-              <ion-label class="label label-nopa">
-                状态：{{item.ItemStatus}}
-              </ion-label>
-            </div>
-          </div>
-        </div>
-
-        <!-- 传阅 -->
-        <div *ngIf="title == '传阅件'">
-          <ion-note color="primary" class="kpbt">{{item.Title}}</ion-note>
-          <div style="max-width: 330px">
-            <div>
-              <ion-label class="label">
-                收件日期：{{item.CreateDate}}
-              </ion-label>
-            </div>
-            <div>
-              <ion-label class="label">
-                来文单位：{{item.Department}}
-              </ion-label>
-              <ion-label class="label label-nopa">
-                来文文号：{{item.SerialNumber}}
-              </ion-label>
-            </div>
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-    <!-- <div *ngIf="this.hint && this.state.listdataArr.length!==0 && this.state.listdataArr.length >= 20"
-      class="am-pull-to-refresh-indicator am-pull-to-refresh-footer-indicator" style="margin-bottom:0;">上拉可刷新数据
-    </ion-content> -->
-
-  </PullToRefresh>
+      </div>
+    </ListItem>
+  </List>
   <ion-infinite-scroll threshold="15%" (ionInfinite)="loadMoreData($event)" *ngIf="!nohasmore">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
-  <!-- <ng-template #loading>
-    <Icon type="loading"></Icon>
-  </ng-template> -->
   <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
       refreshingText="刷新中..." pullMin=80>
