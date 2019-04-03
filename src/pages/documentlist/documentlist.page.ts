@@ -30,7 +30,7 @@ export class DocumentlistPage implements OnInit {
 
   title = '公文列表';
 
-  /** 上拉提示框 */
+  /** 没有数据提示框 */
   hint = false;
 
   /** 拉动刷新初始 */
@@ -42,13 +42,16 @@ export class DocumentlistPage implements OnInit {
     direction: '',
     /** 是否自动触发上拉加载，ps：暂时不可用 */
     nohasmore: false,
-    /** 列表数据 */
+    /** 列表数组 */
     listdataArr: [],
     footerIndicator: {
-      activate: '松开可刷新',
+      // 开始调用
+      activate: '松开可加载',
       deactivate: '',
-      release: '刷新中...',
-      finish: '完成刷新'
+      // 调用中
+      release: '',
+      // 调用完成后
+      finish: ''
     }
   };
 
@@ -112,7 +115,7 @@ export class DocumentlistPage implements OnInit {
    */
   getdata() {
     this.currentPage = 1;
-    this.state.listdataArr = [];
+    // this.state.listdataArr = [];
     // this.ionInfiniteScroll.disabled = false;
     if (this.type === 1 || this.type === 2 || this.type === 3) {
       this.toast.presentLoading();
@@ -120,11 +123,12 @@ export class DocumentlistPage implements OnInit {
         .getneedtodolist(this.currentPage, this.type, this.searchStr)
         .subscribe(res => {
           this.toast.dismissLoading();
-          this.hint = true;
           // this.loading = false;
           // this.ionRefresh.complete();
           if (res['State'] === 1) {
             this.state.listdataArr = res['Data']['PageOfResult'];
+            // 判断是否有数据
+            this.hint = this.state.listdataArr.length === 0 ? true : false;
             // this.listdataArr.forEach(x => x.ItemActionName = '拟办');
             if (res['Data']['PageOfResult'].length >= 10) {
               this.currentPage++;
@@ -187,13 +191,11 @@ export class DocumentlistPage implements OnInit {
    */
   loadMoreData(event?) {
     this.toast.presentLoading();
-    this.hint = false;
     this.mainindexservice
       .getneedtodolist(this.currentPage, this.type, this.searchStr)
       .subscribe(
         res => {
           this.toast.dismissLoading();
-          this.hint = true;
           // this.ionInfiniteScroll.complete();
           if (res['State'] === 1) {
             if (this.state.listdataArr.length >= res['Data']['TotalCount']) {
