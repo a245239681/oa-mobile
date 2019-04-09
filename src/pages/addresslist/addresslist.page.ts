@@ -110,7 +110,7 @@ export class AddresslistPage implements OnInit {
       buttons.splice(2, 0, {
         text: '呼叫  ' + e.phone,
         handler: () => {
-          this.callIphone(e.mobile);
+          this.callIphone(e.phone);
         }
       });
     }

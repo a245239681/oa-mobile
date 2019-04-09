@@ -80,7 +80,7 @@ export class MailListPage implements OnInit {
       buttons.splice(2, 0, {
         text: '呼叫  ' + e.phone,
         handler: () => {
-          this.callIpnone(e.mobile);
+          this.callIpnone(e.phone);
         }
       });
     }
