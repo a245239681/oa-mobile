@@ -34,7 +34,7 @@ export class MainindexService {
       return this.httpclient.post<any>(ApiUrlManagement.needtododata, {
         type: '传阅件;批办件',
         pageNumber: page,
-        pageSize: 10,
+        pageSize: 20,
         query: searchStr,
       });
     } else {
@@ -45,7 +45,7 @@ export class MainindexService {
           : ApiUrlManagement.getReceives_read;
       return this.httpclient.post<any>(url, {
         pageNumber: page,
-        pageSize: 10,
+        pageSize: 20,
         query: searchStr,
       });
     }

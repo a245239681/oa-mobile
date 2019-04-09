@@ -21,20 +21,21 @@
 </ion-header>
 <ion-content style="--background: #EFEFEF;height: 10px">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
+      refreshingText="刷新中...">
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-card *ngIf="listdataArr.length===0&&!loading">
+  <ion-card *ngIf="hint">
     <ion-card-content>
       没有数据
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="kp" *ngFor="let item of listdataArr,let i = index">
-    <ion-card-content class="kpnr" (click)="pushIntodetail(item)">
+  <ion-list class="kp" *ngFor="let item of listdataArr,let i = index">
+    <ion-item class="kpnr" (click)="pushIntodetail(item)">
       <!-- 已办收文 -->
-      <div *ngIf="type == 1">
+      <div *ngIf="type == 1" style="width: 100%;">
         <ion-note color="danger" class="kpbt" *ngIf="item.Backable">{{item.Title}}</ion-note>
         <ion-note color="primary" class="kpbt" *ngIf="!item.Backable">{{item.Title}}</ion-note>
         <div style="max-width: 330px">
@@ -77,8 +78,8 @@
           </div>
         </div>
       </div>
-    </ion-card-content>
-  </ion-card>
+    </ion-item>
+  </ion-list>
 
   <ion-infinite-scroll threshold="100px" [hidden]="nohasmore" (ionInfinite)="loadMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中…">

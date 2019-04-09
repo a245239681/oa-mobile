@@ -2,23 +2,12 @@
   --border-width: 0;
 }
 
-.am-pull-to-refresh-content-wrapper {
-  overflow: hidden;
-}
-
-.vh-85 {
-  height: 85vh;
-}
-
 .sykys {
   width: 100vw;
   padding: 10px;
   background-color: #4877FB;
   position: relative;
-}
-
-.roll>.am-pull-to-refresh-content-wrapper {
-  height: 100%;
+  margin-top: -1px;
 }
 
 .input {
@@ -49,6 +38,10 @@
 
 input::-webkit-input-placeholder {
   color: #7c7e83;
+}
+
+ion-item{
+  --border-style: 0;
 }
 
 .syktb {
