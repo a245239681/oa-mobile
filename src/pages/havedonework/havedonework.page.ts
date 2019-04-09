@@ -30,6 +30,10 @@ export class HavedoneworkPage implements OnInit {
 
   // 是否可以继续上拉
   nohasmore = true;
+
+  /** 没有数据提示框 */
+  hint = false;
+
   constructor(
     private nav: NavController,
     private route: Router,
@@ -72,6 +76,8 @@ export class HavedoneworkPage implements OnInit {
           this.ionRefresh.complete();
           if (res['State'] === 1) {
             this.listdataArr = res['Data']['PageOfResult'];
+            // 判断是否有数据
+            this.hint = this.listdataArr.length === 0 ? true : false;
             if (
               this.listdataArr.length < 20 ||
               this.listdataArr.length >= res['Data']['TotalCount']
