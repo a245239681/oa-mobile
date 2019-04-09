@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://192.168.50.230:6688/',
+  url: 'https://oa-api.nnfcxx.com/',
   // url: 'http://www.oa.intlive.com/',
 };
 
