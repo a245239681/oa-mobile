@@ -10,6 +10,8 @@ import {
 } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { getFileMimeType } from 'src/infrastructure/regular-expression';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-attachmentlist',
@@ -39,7 +41,7 @@ export class AttachmentlistComponent implements OnInit, OnDestroy {
     private transfer: FileTransfer,
     private file: File,
     private loadingCtrl: LoadingController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getattchmentlis();
@@ -54,10 +56,10 @@ export class AttachmentlistComponent implements OnInit, OnDestroy {
         if (res['State'] === 1) {
           // this.attachmentlistArr = this.itemmodelData;
           this.attachmentlistArr = res['Data'];
-          if (this.attachmentlistArr.length === 1) {
-            // 如果附件只有1条则自动打开
-            this.previewerAttchment(this.attachmentlistArr[0]);
-          }
+          // if (this.attachmentlistArr.length === 1) {
+          //   // 如果附件只有1条则自动打开
+          //   this.previewerAttchment(this.attachmentlistArr[0]);
+          // }
         } else {
           // this.toast.presentToast('暂无数据');
         }
@@ -78,8 +80,20 @@ export class AttachmentlistComponent implements OnInit, OnDestroy {
       this.commonHelper.presentToast('不支持该格式文件预览');
       return;
     }
+
+    var arrUrl = item.Url.split("//");
+    var filelink = arrUrl.length >= 3 ? arrUrl[2] : '';
     if (this.platform.is('android') || this.platform.is('ios')) {
-      const uri = encodeURI(item['Url']); // 文件的地址链接
+
+
+      if (filelink === '') {
+        this.commonHelper.presentToast('打开文件出错，请重新上传');
+        return;
+      }
+
+      const uri = encodeURI(environment.url + filelink); // 文件的地址链接
+
+      alert(uri);
       const fileUrl =
         this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
 
@@ -127,7 +141,7 @@ export class AttachmentlistComponent implements OnInit, OnDestroy {
 
       return;
     }
-    const browser = this.browser.create(item['Url']);
+    const browser = this.browser.create(environment.url + filelink);
     browser.show();
   }
 
