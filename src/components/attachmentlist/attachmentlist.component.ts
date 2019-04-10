@@ -47,6 +47,19 @@ export class AttachmentlistComponent implements OnInit, OnDestroy {
     this.getattchmentlis();
   }
 
+  recurrence(item: any) {
+
+    if (item.children.length < 1) {
+
+      return;
+    }else {
+      item.children.forEach(element => {
+
+        this.recurrence(element);
+      });
+    }
+  } 
+
   /**
    * 获取附件
    */
