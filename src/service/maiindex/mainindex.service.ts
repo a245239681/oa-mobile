@@ -485,6 +485,13 @@ export class MainindexService {
       }
     });
   }
+
+  /**
+   * 检查更新
+   */
+  checkUpdate() {
+    return this.httpclient.get(ApiUrlManagement.checkUpdate);
+  }
 }
 
 // 保存意见的参数模型

@@ -8,7 +8,8 @@ import {
   RegularExpression
 } from 'src/infrastructure/regular-expression';
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-login',
@@ -53,9 +54,60 @@ export class LoginPage {
     private fb: FormBuilder,
     private mainindexService: MainindexService,
     public nav: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private appVision: AppVersion,
+    private alertController: AlertController
   ) {
     this.creatForm();
+    this.checkUpdate();
+  }
+
+  /**
+   * 检查更新
+   */
+  checkUpdate() {
+    this.mainindexService.checkUpdate().subscribe((res: any) => {
+      if (res.State === 1) {
+        this.appVision.getVersionNumber().then((visonNumber) => {
+          console.log(parseFloat(visonNumber));
+          console.log(parseFloat(res['Data']['appVersion']));
+          if (parseFloat(visonNumber) < parseFloat(res['Data']['appVersion'])) {
+            console.log('请前往更新');
+            this.presentUpdate();
+          } else {
+            console.log('不用更新');
+            alert('不用更新');
+          }
+        });
+      }else {
+        console.log('错误');
+      }
+    }, err => {
+
+    });
+  }
+
+  /**
+   * 弹出更新窗口
+   */
+ async presentUpdate() {
+   let alertVC = await this.alertController.create({
+      header: '更新提示n',
+      message:
+        '前点击确定前往更新',
+      buttons: [
+        {
+          text: '确定',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        },
+      ],
+      keyboardClose: false,
+      backdropDismiss: false
+    });
+    alertVC.present();
   }
 
   creatForm() {
@@ -141,15 +193,5 @@ export class LoginPage {
       }
       this.isPasswordEmpty = false;
     }
-  }
-
-  // 接口测试
-  output() {
-    // this.mainindexService.getmainindexdata().subscribe((res) => {
-    // });
-    // this.mainindexService.getneedtodolist(1).subscribe((res) => {
-    //   this.nav.navigateForward("/tabs/tabs");
-    // }, (err) => {
-    // });
   }
 }

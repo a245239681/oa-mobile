@@ -183,5 +183,10 @@ export const ApiUrlManagement = {
   SetDoRead: 'api/recieve/SetDoRead',
 
   /** 请求办文笺详情 */
-  GetReceiveData: 'api/recieve/GetReceiveData'
+  GetReceiveData: 'api/recieve/GetReceiveData',
+
+  /**
+   * 检查更新
+   */
+  checkUpdate: 'api/recieve/GetVersion'
 };
