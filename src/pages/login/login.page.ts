@@ -10,6 +10,7 @@ import {
 import { MainindexService } from 'src/service/maiindex/mainindex.service';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,8 @@ export class LoginPage {
     public nav: NavController,
     private modalController: ModalController,
     private appVision: AppVersion,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private appBroswer: InAppBrowser
   ) {
     this.creatForm();
     this.checkUpdate();
@@ -75,12 +77,10 @@ export class LoginPage {
             console.log('请前往更新');
             this.presentUpdate();
           } else {
-            console.log('不用更新');
-            alert('不用更新');
           }
         });
       }else {
-        console.log('错误');
+        
       }
     }, err => {
 
@@ -92,20 +92,23 @@ export class LoginPage {
    */
  async presentUpdate() {
    let alertVC = await this.alertController.create({
-      header: '更新提示n',
+      header: '更新提示',
       message:
-        '前点击确定前往更新',
+        '请点击确定前往更新',
       buttons: [
         {
           text: '确定',
           cssClass: 'secondary',
           handler: () => {
-
+            const browser = this.appBroswer.create('https://fir.im/g7sq','_system');
+            browser.show();
+            return false;
           }
         },
       ],
       keyboardClose: false,
-      backdropDismiss: false
+      backdropDismiss: false,
+      mode: 'ios'
     });
     alertVC.present();
   }
