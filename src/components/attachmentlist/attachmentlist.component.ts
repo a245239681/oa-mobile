@@ -105,8 +105,7 @@ export class AttachmentlistComponent implements OnInit, OnDestroy {
       }
 
       const uri = encodeURI(environment.url + filelink); // 文件的地址链接
-
-      alert(uri);
+      
       const fileUrl =
         this.file.cacheDirectory + uri.substr(uri.lastIndexOf('/') + 1); // 文件的下载地址
 
